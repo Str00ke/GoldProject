@@ -33,6 +33,7 @@ namespace NItem
         public float criticalChance;
         public float crititalDamage;
         [Space]
+        public EPartType itemPartType;
         public EItemType itemType;
         [Space]
         public Sprite itemUiSprite;
