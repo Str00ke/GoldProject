@@ -13,6 +13,7 @@ public class CombatManager : MonoBehaviour
     public int nbCharsPlayed = 0;
     public GameObject attackButton;
     public Character charSelected = null;
+    public Text turnsText;
 
     [Header("Enemies")]
     public List<Enemy> enemies;
@@ -38,6 +39,7 @@ public class CombatManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        turnsText = GameObject.Find("TurnsNumber").GetComponent<Text>();
         attackButton = GameObject.Find("AttackButton");
         attackButton.SetActive(false);
         labelAlly = GameObject.Find("LabelAllySelected").GetComponent<Text>();
@@ -57,12 +59,20 @@ public class CombatManager : MonoBehaviour
         {
             attackButton.SetActive(false);
         }
-        if(chars.Count> 0 && nbCharsPlayed >= chars.Count && !enemAttacking) 
-        {
-            EnemiesAttack();
-        }
+        ChangeTexts();
     }
 
+
+    public void CreateRoster()
+    {
+        for (int i = 0; i < rosterSize; ++i)
+        {
+            GameObject temp = Instantiate(CharPrefab);
+            temp.GetComponent<Character>().teamPosition = i;
+            temp.GetComponent<Character>().CreateChar("Character0" + i);
+            temp.GetComponent<Character>().ChangePos();
+        }
+    }
     public void ChangeTexts() 
     {
         if (charSelected)
@@ -90,6 +100,14 @@ public class CombatManager : MonoBehaviour
         }
     }
 
+    public void AttackEnemy()
+    {
+        enemySelected.TakeDamage(Mathf.Round(Random.Range(charSelected.damageRange.x, charSelected.damageRange.y)));
+        charSelected.hasPlayed = true;
+        nbCharsPlayed++;
+        charSelected.isSelected = false;
+        charSelected = null;
+    }
     public void EnemiesAttack()
     {
         enemAttacking = true;
@@ -106,23 +124,32 @@ public class CombatManager : MonoBehaviour
             order[rnd] = order[j];
             order[j] = tmpInt;
         }
-        int k = 0;
-        while (k < order.Length - 1) 
-        {
-
-            delay += Time.deltaTime;
-            if(delay > attackDuration)
-            {
-                AttackAlly(enemies[k], chars[Random.Range(0, chars.Count)]);
-                delay = 0;
-                ++k;
-            }
-        }
+        StartCoroutine(EnemyAttack(order));
         TurnPassed();
+    }
+    IEnumerator EnemyAttack(int[] order) 
+    {
+        int k = 0;
+        while (k < order.Length)
+        {
+            enemies[k].isAttacking = true;
+            AttackAlly(enemies[k], chars[Random.Range(0, chars.Count)]);
+            yield return new WaitForSeconds(2.0f);
+            enemies[k].isAttacking = false;
+            ++k;
+        }
+        turnsText.text = "" + turnNumber;
+        yield return null;
+    }
+    public void AttackAlly(Enemy attacker, Character attacked)
+    {
+        attacked.TakeDamage(Mathf.Round(Random.Range(attacker.damageRange.x, attacker.damageRange.y)));
+        attacker.hasPlayed = true;
     }
     public void TurnPassed() 
     {
         nbCharsPlayed = 0;
+        turnNumber++;
         enemAttacking = false;
         foreach (Character c in chars)
         {
@@ -132,19 +159,6 @@ public class CombatManager : MonoBehaviour
         {
             e.hasPlayed = false;
         }
-    }
-    public void AttackEnemy() 
-    {
-        enemySelected.TakeDamage(Mathf.Round(Random.Range(charSelected.damageRange.x, charSelected.damageRange.y)));
-        charSelected.hasPlayed = true;
-        nbCharsPlayed++;
-        charSelected.isSelected = false;
-        charSelected = null;
-    }
-    public void AttackAlly(Enemy attacker, Character attacked) 
-    {
-        attacked.TakeDamage(Mathf.Round(Random.Range(attacker.damageRange.x, attacker.damageRange.y)));
-        attacker.hasPlayed = true;
     }
     public void RemoveEnemy(int numPos) 
     {
@@ -174,17 +188,6 @@ public class CombatManager : MonoBehaviour
                 e.teamPosition--;
                 e.ChangePos();
             }
-        }
-    }
-
-    public void CreateRoster()  
-    {
-        for(int i = 0; i < rosterSize; ++i)
-        {
-            GameObject temp = Instantiate(CharPrefab);
-            temp.GetComponent<Character>().teamPosition = i;
-            temp.GetComponent<Character>().CreateChar("Character0" + i );
-            temp.GetComponent<Character>().ChangePos();
         }
     }
 

@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour, IPointerDownHandler
     [Header("CombatVariables")]
     public bool hasPlayed;
     public bool isSelected;
+    public bool isAttacking;
     public SpriteRenderer thisColor;
     public Color selectedColor;
     public Color highlightColor;
@@ -62,12 +63,15 @@ public class Enemy : MonoBehaviour, IPointerDownHandler
     }
     public void ChangeColor() 
     {
-        if (isSelected)
+        if (isSelected && !isAttacking)
         {
             thisColor.color = selectedColor;
-        }else if(!isSelected)
+        }else if(!isSelected && !isAttacking)
         {
             thisColor.color = baseColor;
+        }else if (isAttacking) 
+        {
+            thisColor.color = highlightColor;
         }
     }
 
@@ -92,7 +96,7 @@ public class Enemy : MonoBehaviour, IPointerDownHandler
             isSelected = true;
             CombatManager.combatManager.enemySelected = this;
         }
-        CombatManager.combatManager.ChangeTexts();
+        //CombatManager.combatManager.ChangeTexts();
     }
     public void OnPointerUp(PointerEventData eventData) 
     {
@@ -115,10 +119,10 @@ public class Enemy : MonoBehaviour, IPointerDownHandler
         dmg = dmg - armor / 100;
         health -= dmg;
         Debug.Log("Health" + health + "   dmg" + dmg);
-        StartCoroutine(ReduceSlider(dmg, durationDecreaseHealth));
+        StartCoroutine(TakeDamageCor(dmg, durationDecreaseHealth));
     }
 
-    IEnumerator ReduceSlider(float value, float duration)
+    IEnumerator TakeDamageCor(float value, float duration)
     {
         var startValue = healthBar.value;
         Debug.Log(healthBar.value);
@@ -129,13 +133,22 @@ public class Enemy : MonoBehaviour, IPointerDownHandler
         {
             ratio = elapsed / duration;
             healthBar.value = Mathf.Lerp(startValue, endValue, ratio);
+            if(healthBar.value <= 0) 
+            {
+                break;
+            }
             elapsed += Time.deltaTime;
             yield return null;
         }
         healthBar.value = endValue;
-        if (health <= 0 && elapsed >= duration)
+        if (health <= 0)
         {
             CombatManager.combatManager.RemoveEnemy(teamPosition);
+        }
+        //CHECK AFTER ALLY ATTACK IF ALLIES HAVE ALL PLAYED
+        if (CombatManager.combatManager.chars.Count > 0 && CombatManager.combatManager.nbCharsPlayed >= CombatManager.combatManager.chars.Count && !CombatManager.combatManager.enemAttacking)
+        {
+            CombatManager.combatManager.EnemiesAttack();
         }
     }
     IEnumerator ChangePosCoroutine(float duration)

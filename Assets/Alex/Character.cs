@@ -128,7 +128,7 @@ public class Character : MonoBehaviour, IPointerDownHandler
                 isSelected = true;
                 CombatManager.combatManager.charSelected = this;
             }
-            CombatManager.combatManager.ChangeTexts();
+            //CombatManager.combatManager.ChangeTexts();
         }
     }
 
