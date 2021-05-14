@@ -16,6 +16,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private GameObject inventoryGo;
     [SerializeField] private GameObject itemPrefab;
     [SerializeField] private RectTransform rectTransformInventoryContent;
+    [SerializeField] private GameObject panelItem;
 
     [Header("Item Choosing")]
     [SerializeField] private GameObject playerItemSelectionGo;
@@ -29,6 +30,7 @@ public class Inventory : MonoBehaviour
     {
         playerItemSelectionGo.SetActive(false);
         itemStatsGo.SetActive(false);
+        panelItem.SetActive(false);
         //inventoryGo.SetActive(false);
     }
 
@@ -58,12 +60,16 @@ public class Inventory : MonoBehaviour
         nItem.GetComponent<Image>().color = col;
         
         Button buttonNItem = nItem.GetComponent<Button>();
-        buttonNItem.onClick.AddListener(() => ToggleItemChoosingScreen(nItem) /*ToggleItemStatsScreen(iii)*/ );
+
         itemList.Add(nItem);
+
+        buttonNItem.onClick.AddListener(() => ShowItemPanel(nItem) /*ToggleItemStatsScreen(iii)*/ );
     }
 
     public void DeleteItem(GameObject item)
     {
+        panelItem.SetActive(false);
+
         if (itemList.Count % 5 == 0)
         {
             nbLines--;
@@ -82,19 +88,45 @@ public class Inventory : MonoBehaviour
         rectTransformInventoryContent.sizeDelta = newSize;
     }
 
+    private void ShowItemPanel(GameObject item)
+    {
+        panelItem.SetActive(true);
+
+        ItemInInventory iii = item.GetComponent<ItemInInventory>();
+
+        // Move panel
+        panelItem.transform.position = item.transform.position + new Vector3(110f, 0f, 0f);
+
+        for (int i = 0; i < 3; i++)
+            panelItem.transform.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
+
+        panelItem.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => ToggleItemChoosingScreen(item));
+        panelItem.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => ToggleItemStatsScreen(iii));
+        panelItem.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => DeleteItem(item));
+    }
+
+    public void CloseItemPanel()
+    {
+        panelItem.SetActive(false);
+    }
+
     #endregion
 
     #region ItemChoosingPart
 
     private void ToggleItemChoosingScreen(GameObject itemGo)
     {
+        panelItem.SetActive(false);
+
         ItemInInventory item = itemGo.GetComponent<ItemInInventory>();
 
         playerItemSelectionGo.SetActive(!playerItemSelectionGo.activeSelf);
 
         /* Set item to set */
         itemSelection.GetComponent<Image>().sprite = item.item.itemUiSprite;
-        itemSelection.GetComponent<Button>().onClick.AddListener(() => ToggleItemStatsScreen(item));
+        Button btnItemSelected = itemSelection.GetComponent<Button>();
+        btnItemSelected.onClick.RemoveAllListeners();
+        btnItemSelected.onClick.AddListener(() => ToggleItemStatsScreen(item));
 
         /* Get current characters */
         Character[] characters = new Character[3];
@@ -119,6 +151,7 @@ public class Inventory : MonoBehaviour
             if (characters[i].head != null)
             {
                 NItem.ItemScriptableObject head = characters[i].head;
+                items.transform.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
                 items.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => ToggleItemStatsScreen(head));
             }
 
@@ -126,6 +159,7 @@ public class Inventory : MonoBehaviour
             if (characters[i].body != null)
             {
                 NItem.ItemScriptableObject body = characters[i].body;
+                items.transform.GetChild(1).GetComponent<Button>().onClick.RemoveAllListeners();
                 items.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => ToggleItemStatsScreen(body));
             }
 
@@ -133,6 +167,7 @@ public class Inventory : MonoBehaviour
             if (characters[i].weapon != null)
             {
                 NItem.ItemScriptableObject weapon = characters[i].weapon;
+                items.transform.GetChild(2).GetComponent<Button>().onClick.RemoveAllListeners();
                 items.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => ToggleItemStatsScreen(weapon));
             }
 
@@ -140,6 +175,7 @@ public class Inventory : MonoBehaviour
             if (characters[i].gem != null)
             {
                 NItem.ItemScriptableObject gem = characters[i].gem;
+                items.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
                 items.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => ToggleItemStatsScreen(gem));
             }
         }
@@ -164,7 +200,11 @@ public class Inventory : MonoBehaviour
                 continue;
 
             Character slotCharacter = characters[i];
-            slots[i].transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => SetChoosedItem(slotCharacter, item.item, itemGo));
+
+            Button setButton = slots[i].transform.GetChild(2).GetComponent<Button>();
+
+            setButton.onClick.RemoveAllListeners();
+            setButton.onClick.AddListener(() => SetChoosedItem(slotCharacter, item.item, itemGo));
         }
     }
 
@@ -219,11 +259,11 @@ public class Inventory : MonoBehaviour
                 break;
         }
 
-        // character refresh stats
-        DeleteItem(itemGo);
-
         if (lastItem != null)
             AddItem(lastItem);
+
+        // character refresh stats
+        DeleteItem(itemGo);
 
         CloseItemChoosingScreen();
     }
@@ -235,6 +275,7 @@ public class Inventory : MonoBehaviour
     public void ToggleItemStatsScreen(ItemInInventory item)
     {
         itemStatsGo.SetActive(true);
+        panelItem.SetActive(false);
 
         itemStatsGo.transform.GetChild(1).GetComponent<Image>().sprite = item.item.itemUiSprite;
 
@@ -252,7 +293,6 @@ public class Inventory : MonoBehaviour
 
     public void ToggleItemStatsScreen(NItem.ItemScriptableObject item)
     {
-        Debug.Log("Pop");
         itemStatsGo.SetActive(true);
 
         itemStatsGo.transform.GetChild(1).GetComponent<Image>().sprite = item.itemUiSprite;

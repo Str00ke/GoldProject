@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f1b7c176c2dab46b42dfb6a9ffe6bb, type: 3}
   m_Name: Item 1
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: bbbbbb
   health: 0
   armor: 0
   attack: 0
   dodge: 0
   criticalChance: 0
   crititalDamage: 0
-  itemType: 0
-  itemUiSprite: {fileID: 0}
+  itemPartType: 0
+  itemType: 3
+  itemUiSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
