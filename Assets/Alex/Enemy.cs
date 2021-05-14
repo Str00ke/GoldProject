@@ -1,52 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Enemy : MonoBehaviour, IPointerDownHandler
+public class Enemy : Characters
 {
-    [Header("Labels")]
-    public string enemyName;
-    [Header("Stats")]
-    public float health;
-    public float maxHealth;
-    public Vector2 damageRange;
-    public int dodge;
-    public float critChance;
-    public float critDamage;
-    public int armor;
-    public Slider healthBar;
-
-
-    [Header("CombatVariables")]
-    public bool hasPlayed;
-    public bool isSelected;
-    public bool isAttacking;
-    public SpriteRenderer thisColor;
-    public Color selectedColor;
-    public Color highlightColor;
-    public Color baseColor;
-    public float durationDecreaseHealth; //animation time in seconds
-
-    [Header("Position")]
-    public int teamPosition;
-    public Transform posInitial;
-    public float offsetPos = 1.0f;
-    public float speedMove = 1.0f;
-    public float durationMove = 1.0f;
-
-
     void Start()
     {
         CombatManager.combatManager.enemies.Add(this);
-        durationDecreaseHealth = 1.5f;
+        anim = this.GetComponent<Animator>();
+        thisColor = this.GetComponent<SpriteRenderer>();
         durationMove = 1.0f;
-        health = maxHealth;
         healthBar = this.GetComponentInChildren<Slider>();
+        health = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = health;
-        thisColor = this.GetComponent<SpriteRenderer>();
+        durationDecreaseHealth = 1.5f;
         posInitial = GameObject.Find("Pos00Enemy").transform;
         ChangePos();
     }
@@ -57,25 +27,23 @@ public class Enemy : MonoBehaviour, IPointerDownHandler
         ChangeColor();
     }
 
-    public void ChangePos()
-    {
-        StartCoroutine(ChangePosCoroutine(durationMove));
-    }
-    public void ChangeColor() 
+    public override void ChangeColor()
     {
         if (isSelected && !isAttacking)
         {
             thisColor.color = selectedColor;
-        }else if(!isSelected && !isAttacking)
+        }
+        else if (!isSelected && !isAttacking)
         {
             thisColor.color = baseColor;
-        }else if (isAttacking) 
+        }
+        else if (isAttacking)
         {
-            thisColor.color = highlightColor;
+            thisColor.color = hasPlayedColor;
         }
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public override void OnPointerDown(PointerEventData eventData)
     {
         if (isSelected)
         {
@@ -84,7 +52,6 @@ public class Enemy : MonoBehaviour, IPointerDownHandler
                 isSelected = false;
                 CombatManager.combatManager.enemySelected = null;
             }
-            Debug.Log("Lol");
         }
         else if (!isSelected)
         {
@@ -96,33 +63,11 @@ public class Enemy : MonoBehaviour, IPointerDownHandler
             isSelected = true;
             CombatManager.combatManager.enemySelected = this;
         }
+
+        ChangeColor();
         //CombatManager.combatManager.ChangeTexts();
     }
-    public void OnPointerUp(PointerEventData eventData) 
-    {
-    }
-
-    public void ChangeStats(string name, float maxHP, Vector2 dmgRange, int dodg, float critCh, float critDmg, int armr, int position)
-    {
-        enemyName = name;
-        maxHealth = maxHP;
-        damageRange = dmgRange;
-        dodge = dodg;
-        critChance = critCh;
-        critDamage = critDmg;
-        armor = armr;
-        teamPosition = position;
-    }
-    public void TakeDamage(float dmg) 
-    {
-        Debug.Log(dmg);
-        dmg = dmg - armor / 100;
-        health -= dmg;
-        Debug.Log("Health" + health + "   dmg" + dmg);
-        StartCoroutine(TakeDamageCor(dmg, durationDecreaseHealth));
-    }
-
-    IEnumerator TakeDamageCor(float value, float duration)
+    public override IEnumerator TakeDamageCor(float value, float duration)
     {
         var startValue = healthBar.value;
         Debug.Log(healthBar.value);
@@ -133,7 +78,7 @@ public class Enemy : MonoBehaviour, IPointerDownHandler
         {
             ratio = elapsed / duration;
             healthBar.value = Mathf.Lerp(startValue, endValue, ratio);
-            if(healthBar.value <= 0) 
+            if (healthBar.value <= 0)
             {
                 break;
             }
@@ -143,6 +88,7 @@ public class Enemy : MonoBehaviour, IPointerDownHandler
         healthBar.value = endValue;
         if (health <= 0)
         {
+            isDead = true;
             CombatManager.combatManager.RemoveEnemy(teamPosition);
         }
         //CHECK AFTER ALLY ATTACK IF ALLIES HAVE ALL PLAYED
@@ -151,18 +97,5 @@ public class Enemy : MonoBehaviour, IPointerDownHandler
             CombatManager.combatManager.EnemiesAttack();
         }
     }
-    IEnumerator ChangePosCoroutine(float duration)
-    {
-        Vector3 startPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-        Vector3 endPos = new Vector3(posInitial.position.x + offsetPos * teamPosition, posInitial.position.y, posInitial.position.z);
-        float elapsed = 0.0f;
-        float ratio = 0.0f;
-        while (elapsed < duration)
-        {
-            ratio = elapsed / duration;
-            this.transform.position = Vector3.Lerp(startPos, endPos, ratio);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-    }
+
 }

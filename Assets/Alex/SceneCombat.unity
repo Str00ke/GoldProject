@@ -587,6 +587,7 @@ MonoBehaviour:
   nbCharsPlayed: 0
   attackButton: {fileID: 0}
   charSelected: {fileID: 0}
+  turnsText: {fileID: 0}
   enemies: []
   labelEnemy: {fileID: 0}
   statsEnemy: {fileID: 0}
@@ -1715,6 +1716,14 @@ PrefabInstance:
     - target: {fileID: 4510668456567727198, guid: 1994534d80af304419248f54d40c1441, type: 3}
       propertyPath: maxHealth
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510668456567727198, guid: 1994534d80af304419248f54d40c1441, type: 3}
+      propertyPath: damageRange.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510668456567727198, guid: 1994534d80af304419248f54d40c1441, type: 3}
+      propertyPath: damageRange.y
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1994534d80af304419248f54d40c1441, type: 3}

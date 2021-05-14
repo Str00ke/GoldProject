@@ -89,7 +89,7 @@ public class CombatManager : MonoBehaviour
         }
         if (enemySelected)
         {
-            labelEnemy.text = enemySelected.enemyName;
+            labelEnemy.text = enemySelected.charName;
             statsEnemy.text = "Health  " + enemySelected.health + "\nArmor  " + enemySelected.armor
                 + "\nDodge  " + enemySelected.dodge + "\nDamage  " + enemySelected.damageRange.x + " - " + enemySelected.damageRange.y
                 + "\nCritic Chance  " + enemySelected.critChance * 100 + "%" + "\nCritic Damage  " + enemySelected.critDamage * 100 + "%";
@@ -102,7 +102,7 @@ public class CombatManager : MonoBehaviour
 
     public void AttackEnemy()
     {
-        enemySelected.TakeDamage(Mathf.Round(Random.Range(charSelected.damageRange.x, charSelected.damageRange.y)));
+        enemySelected.TakeDamageFrom(charSelected);
         charSelected.hasPlayed = true;
         nbCharsPlayed++;
         charSelected.isSelected = false;
@@ -132,8 +132,13 @@ public class CombatManager : MonoBehaviour
         int k = 0;
         while (k < order.Length)
         {
+            int randAllyAttacked = Random.Range(0, chars.Count);
+            while (chars[randAllyAttacked].isDead) 
+            {
+                randAllyAttacked = Random.Range(0, chars.Count);
+            }
             enemies[k].isAttacking = true;
-            AttackAlly(enemies[k], chars[Random.Range(0, chars.Count)]);
+            AttackAlly(enemies[k], chars[randAllyAttacked]);
             yield return new WaitForSeconds(2.0f);
             enemies[k].isAttacking = false;
             ++k;
@@ -143,7 +148,7 @@ public class CombatManager : MonoBehaviour
     }
     public void AttackAlly(Enemy attacker, Character attacked)
     {
-        attacked.TakeDamage(Mathf.Round(Random.Range(attacker.damageRange.x, attacker.damageRange.y)));
+        attacked.TakeDamageFrom(attacker);
         attacker.hasPlayed = true;
     }
     public void TurnPassed() 
@@ -153,11 +158,13 @@ public class CombatManager : MonoBehaviour
         enemAttacking = false;
         foreach (Character c in chars)
         {
-            c.hasPlayed = false;
+            if(!c.isDead)
+                c.hasPlayed = false;
         }
         foreach (Enemy e in enemies)
         {
-            e.hasPlayed = false;
+            if (!e.isDead)
+                e.hasPlayed = false;
         }
     }
     public void RemoveEnemy(int numPos) 

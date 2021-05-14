@@ -387,6 +387,7 @@ GameObject:
   - component: {fileID: 2169942591526643202}
   - component: {fileID: 2169942591526643260}
   - component: {fileID: 2169942591526643263}
+  - component: {fileID: -3420722700975039485}
   m_Layer: 0
   m_Name: Char
   m_TagString: Untagged
@@ -474,6 +475,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   charName: Ally01
   health: 15
+  maxHealth: 0
   damageRange: {x: 5, y: 8}
   dodge: 15
   critChance: 0.25
@@ -482,14 +484,18 @@ MonoBehaviour:
   healthBar: {fileID: 1479856780}
   hasPlayed: 0
   isSelected: 0
+  isAttacking: 0
   thisColor: {fileID: 0}
   selectedColor: {r: 0.29654682, g: 0.5283019, b: 0.38611743, a: 1}
-  highlightColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
+  hasPlayedColor: {r: 0.4056604, g: 0.4056604, b: 0.4056604, a: 1}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
+  durationDecreaseHealth: 0
   teamPosition: 0
   posInitial: {fileID: 0}
   offsetPos: 1.5
   speedMove: 1
+  durationMove: 1
+  anim: {fileID: 0}
 --- !u!61 &2169942591526643263
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -516,3 +522,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &-3420722700975039485
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2169942591526643203}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
