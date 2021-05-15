@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class CombatManager : MonoBehaviour
 {
@@ -9,8 +10,7 @@ public class CombatManager : MonoBehaviour
     public GameObject CharPrefab;
     public static CombatManager combatManager = null;
     public List<Character> chars;
-    public int turnNumber = 0;
-    public int nbCharsPlayed = 0;
+    public List<Characters> fightersList;
     public GameObject attackButton;
     public Character charSelected = null;
     public Text turnsText;
@@ -26,7 +26,12 @@ public class CombatManager : MonoBehaviour
     public Text labelAlly;
     public Text statsAlly;
 
+    [Header("FightVariable")]
+    public int turnNumber = 0;
+    public int nbCharsPlayed = 0;
+    public int currCharAttacking = 0;
     public int rosterSize;
+
     private void Awake()
     {
         if (combatManager == null)
@@ -73,12 +78,42 @@ public class CombatManager : MonoBehaviour
             temp.GetComponent<Character>().ChangePos();
         }
     }
+    public void CharAttack() 
+    {
+        if(fightersList[currCharAttacking].charType == Characters.CharType.ENEMY && fightersList[currCharAttacking].CanAttack)
+        {
+        }
+        else if(fightersList[currCharAttacking].charType == Characters.CharType.ALLY && fightersList[currCharAttacking].CanAttack) 
+        {
+        }
+    }
+    public void NextCharAttack() 
+    {
+        fightersList[currCharAttacking].CanAttack = false;
+        currCharAttacking++;
+        fightersList[currCharAttacking].CanAttack = true;
+    }
+    public void FightBegins() 
+    {
+        foreach(Character c in chars) 
+        {
+            fightersList.Add(c);
+        }
+        foreach(Enemy e in enemies) 
+        {
+            fightersList.Add(e);
+        }
+        //SORT BY INITIATIVE
+        fightersList = fightersList.OrderBy(e => e.initiative).ToList();
+        fightersList.Reverse();
+        fightersList[currCharAttacking].CanAttack = true;
+    }
     public void ChangeTexts() 
     {
         if (charSelected)
         {
             labelAlly.text = charSelected.charName;
-            statsAlly.text = "Health  " + charSelected.health + "\nArmor  " + charSelected.armor
+            statsAlly.text = "Health  " + charSelected.health + "\nArmor  " + charSelected.armor + "\nInitiative   " + charSelected.initiative
                 + "\nDodge  " + charSelected.dodge + "\nDamage  " + charSelected.damageRange.x + " - " + charSelected.damageRange.y
                 + "\nCritic Chance  " + charSelected.critChance* 100 + "%" + "\nCritic Damage  " + charSelected.critDamage * 100 + "%";
         }
@@ -90,7 +125,7 @@ public class CombatManager : MonoBehaviour
         if (enemySelected)
         {
             labelEnemy.text = enemySelected.charName;
-            statsEnemy.text = "Health  " + enemySelected.health + "\nArmor  " + enemySelected.armor
+            statsEnemy.text = "Health  " + enemySelected.health + "\nArmor  " + enemySelected.armor + "\nInitiative   " + enemySelected.initiative
                 + "\nDodge  " + enemySelected.dodge + "\nDamage  " + enemySelected.damageRange.x + " - " + enemySelected.damageRange.y
                 + "\nCritic Chance  " + enemySelected.critChance * 100 + "%" + "\nCritic Damage  " + enemySelected.critDamage * 100 + "%";
         }else 
@@ -104,7 +139,7 @@ public class CombatManager : MonoBehaviour
     {
         enemySelected.TakeDamageFrom(charSelected);
         charSelected.hasPlayed = true;
-        nbCharsPlayed++;
+        NextCharAttack();
         charSelected.isSelected = false;
         charSelected = null;
     }
@@ -128,7 +163,7 @@ public class CombatManager : MonoBehaviour
         TurnPassed();
     }
     IEnumerator EnemyAttack(int[] order) 
-    {
+    {   
         int k = 0;
         while (k < order.Length)
         {
@@ -137,10 +172,10 @@ public class CombatManager : MonoBehaviour
             {
                 randAllyAttacked = Random.Range(0, chars.Count);
             }
-            enemies[k].isAttacking = true;
+            enemies[k].CanAttack = true;
             AttackAlly(enemies[k], chars[randAllyAttacked]);
             yield return new WaitForSeconds(2.0f);
-            enemies[k].isAttacking = false;
+            enemies[k].CanAttack = false;
             ++k;
         }
         turnsText.text = "" + turnNumber;

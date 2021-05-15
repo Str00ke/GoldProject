@@ -474,20 +474,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charName: Ally01
+  charType: 0
   health: 15
   maxHealth: 0
   damageRange: {x: 5, y: 8}
+  initiative: 0
   dodge: 15
   critChance: 0.25
   critDamage: 1
   armor: 10
   healthBar: {fileID: 1479856780}
+  isDead: 0
   hasPlayed: 0
+  CanAttack: 0
   isSelected: 0
-  isAttacking: 0
   thisColor: {fileID: 0}
   selectedColor: {r: 0.29654682, g: 0.5283019, b: 0.38611743, a: 1}
   hasPlayedColor: {r: 0.4056604, g: 0.4056604, b: 0.4056604, a: 1}
+  AttackColor: {r: 0, g: 1, b: 0, a: 1}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   durationDecreaseHealth: 0
   teamPosition: 0

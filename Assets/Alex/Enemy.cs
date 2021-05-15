@@ -9,12 +9,14 @@ public class Enemy : Characters
     void Start()
     {
         CombatManager.combatManager.enemies.Add(this);
+        charType = CharType.ENEMY; 
         anim = this.GetComponent<Animator>();
         thisColor = this.GetComponent<SpriteRenderer>();
         durationMove = 1.0f;
         healthBar = this.GetComponentInChildren<Slider>();
         health = maxHealth;
         healthBar.maxValue = maxHealth;
+        initiative = Random.Range(1, 14);
         healthBar.value = health;
         durationDecreaseHealth = 1.5f;
         posInitial = GameObject.Find("Pos00Enemy").transform;
@@ -27,21 +29,6 @@ public class Enemy : Characters
         ChangeColor();
     }
 
-    public override void ChangeColor()
-    {
-        if (isSelected && !isAttacking)
-        {
-            thisColor.color = selectedColor;
-        }
-        else if (!isSelected && !isAttacking)
-        {
-            thisColor.color = baseColor;
-        }
-        else if (isAttacking)
-        {
-            thisColor.color = hasPlayedColor;
-        }
-    }
 
     public override void OnPointerDown(PointerEventData eventData)
     {

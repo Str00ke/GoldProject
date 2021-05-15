@@ -11,6 +11,7 @@ public class Character : Characters
     private void Awake()
     {
         CombatManager.combatManager.chars.Add(this);
+        charType = CharType.ALLY;
         anim = this.GetComponent<Animator>();
         thisColor = this.GetComponent<SpriteRenderer>();
         durationMove = 1.0f;
@@ -49,6 +50,7 @@ public class Character : Characters
         maxHealth = Random.Range(15,30);
         damageRange = new Vector2(Random.Range(5, 8), Random.Range(10, 12));
         dodge = Random.Range(5, 25);
+        initiative = Random.Range(1, 14);
         critChance = Random.Range(0.1f, 0.25f);
         critDamage = Random.Range(0.75f, 1);
         armor = Random.Range(10, 25);

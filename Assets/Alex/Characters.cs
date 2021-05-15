@@ -9,10 +9,23 @@ public class Characters : MonoBehaviour, IPointerDownHandler
 {
     [Header("Labels")]
     public string charName;
+    public enum CharType 
+    {
+        ENEMY,
+        ALLY
+    }
+    public CharType charType;
+    public enum WeaponType 
+    {
+        MELEE,
+        RANGE
+    }
+    WeaponType weaponType;
     [Header("Stats")]
     public float health;
     public float maxHealth;
     public Vector2 damageRange;
+    public int initiative;
     public int dodge;
     public float critChance;
     public float critDamage;
@@ -21,13 +34,14 @@ public class Characters : MonoBehaviour, IPointerDownHandler
 
 
     [Header("CombatVariables")]
-    public bool isDead = false;
+    public bool isDead;
     public bool hasPlayed;
+    public bool CanAttack;
     public bool isSelected;
-    public bool isAttacking;
     public SpriteRenderer thisColor;
     public Color selectedColor;
     public Color hasPlayedColor;
+    public Color AttackColor;
     public Color baseColor;
     public float durationDecreaseHealth; //animation time in seconds
 
@@ -54,8 +68,24 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     {
         StartCoroutine(ChangePosCoroutine(durationMove));
     }
-    public virtual void ChangeColor()
+    public void ChangeColor()
     {
+        if (isSelected && !CanAttack && !hasPlayed)
+        {
+            thisColor.color = selectedColor;
+        }
+        else if (!isSelected && !CanAttack && !hasPlayed)
+        {
+            thisColor.color = baseColor;
+        }
+        else if (CanAttack)
+        {
+            thisColor.color = AttackColor;
+        }else if (hasPlayed)
+        {
+            thisColor.color = hasPlayedColor;
+        }
+        /*
         if (isSelected && !hasPlayed)
         {
             thisColor.color = selectedColor;
@@ -67,7 +97,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
         else if (hasPlayed)
         {
             thisColor.color = hasPlayedColor;
-        }
+        }*/
     }
 
     public virtual void OnPointerDown(PointerEventData eventData) 
@@ -76,7 +106,11 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     public virtual void OnPointerUp(PointerEventData eventData)
     {
     }
+    //-------------------------------------------------ASSIGN ABILITIES------------------------------------------
+    public void AssignAbilities() 
+    {
 
+    }
     public void ChangeStats(string name, float maxHP, Vector2 dmgRange, int dodg, float critCh, float critDmg, int armr, int position)
     {
         charName = name;
