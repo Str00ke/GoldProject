@@ -14,13 +14,13 @@ public class CombatManager : MonoBehaviour
     public GameObject attackButton;
     public Character charSelected = null;
     public Text turnsText;
+    public GameObject attackerCursor;
 
     [Header("Enemies")]
     public List<Enemy> enemies;
     public Text labelEnemy;
     public Text statsEnemy;
     public Enemy enemySelected = null;
-    public bool enemAttacking = false;
     public float delay = 0.0f;
     public float attackDuration = 1.0f;
     public Text labelAlly;
@@ -28,6 +28,7 @@ public class CombatManager : MonoBehaviour
 
     [Header("FightVariable")]
     public int turnNumber = 0;
+    bool fightBegun;
     public int nbCharsPlayed = 0;
     public int currCharAttacking = 0;
     public int rosterSize;
@@ -45,6 +46,7 @@ public class CombatManager : MonoBehaviour
     void Start()
     {
         turnsText = GameObject.Find("TurnsNumber").GetComponent<Text>();
+        attackerCursor = GameObject.Find("AttackerCursor");
         attackButton = GameObject.Find("AttackButton");
         attackButton.SetActive(false);
         labelAlly = GameObject.Find("LabelAllySelected").GetComponent<Text>();
@@ -56,7 +58,7 @@ public class CombatManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(charSelected && enemySelected)
+        if(fightBegun && fightersList[currCharAttacking].charType == Characters.CharType.ALLY && enemySelected)
         {
             attackButton.SetActive(true);
         }
@@ -78,35 +80,55 @@ public class CombatManager : MonoBehaviour
             temp.GetComponent<Character>().ChangePos();
         }
     }
-    public void CharAttack() 
+
+    public void FightBegins()
     {
-        if(fightersList[currCharAttacking].charType == Characters.CharType.ENEMY && fightersList[currCharAttacking].CanAttack)
+        foreach (Character c in chars)
         {
+            fightersList.Add(c);
         }
-        else if(fightersList[currCharAttacking].charType == Characters.CharType.ALLY && fightersList[currCharAttacking].CanAttack) 
+        foreach (Enemy e in enemies)
         {
+            fightersList.Add(e);
+        }
+        //SORT BY INITIATIVE
+        SortFightersInit();
+        fightersList[currCharAttacking].CanAttack = true;
+        MoveAttackCursor();
+        fightBegun = true;
+        CharAttack(currCharAttacking);
+    }
+    public void SortFightersInit()
+    {
+        fightersList = fightersList.OrderBy(e => e.initiative).ToList();
+        fightersList.Reverse();
+    }
+    public void CharAttack(int ind)
+    {
+        MoveAttackCursor();
+        if (fightersList[ind].charType == Characters.CharType.ENEMY && fightersList[ind].CanAttack)
+        {
+            EnemyAttack();
         }
     }
     public void NextCharAttack() 
     {
         fightersList[currCharAttacking].CanAttack = false;
         currCharAttacking++;
-        fightersList[currCharAttacking].CanAttack = true;
+        if(currCharAttacking < fightersList.Count)
+        {
+            fightersList[currCharAttacking].CanAttack = true;
+            CharAttack(currCharAttacking);
+        }
+        else 
+        {
+            TurnPassed();
+            turnsText.text = "" + turnNumber;
+        }
     }
-    public void FightBegins() 
+    public void MoveAttackCursor()
     {
-        foreach(Character c in chars) 
-        {
-            fightersList.Add(c);
-        }
-        foreach(Enemy e in enemies) 
-        {
-            fightersList.Add(e);
-        }
-        //SORT BY INITIATIVE
-        fightersList = fightersList.OrderBy(e => e.initiative).ToList();
-        fightersList.Reverse();
-        fightersList[currCharAttacking].CanAttack = true;
+        attackerCursor.transform.position = new Vector3(fightersList[currCharAttacking].gameObject.transform.position.x, fightersList[currCharAttacking].gameObject.transform.position.y + 0.7f, fightersList[currCharAttacking].gameObject.transform.position.z);
     }
     public void ChangeTexts() 
     {
@@ -135,62 +157,39 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    public void AttackEnemy()
+    public void AllyAttack()
     {
-        enemySelected.TakeDamageFrom(charSelected);
-        charSelected.hasPlayed = true;
+        enemySelected.TakeDamageFrom(fightersList[currCharAttacking]);
+        fightersList[currCharAttacking].hasPlayed = true;
         NextCharAttack();
-        charSelected.isSelected = false;
+        fightersList[currCharAttacking].isSelected = false;
         charSelected = null;
     }
-    public void EnemiesAttack()
+    public void EnemyAttack() 
     {
-        enemAttacking = true;
-        int[] order = new int[enemies.Count];
-        int tmpInt;
-        for (int i = 0; i < order.Length - 1; i++)
-        {
-            order[i] = enemies[i].teamPosition;
-        }
-        for (int j = 0; j < order.Length - 1; j++)
-        {
-            int rnd = Random.Range(j, order.Length);
-            tmpInt = order[rnd];
-            order[rnd] = order[j];
-            order[j] = tmpInt;
-        }
-        StartCoroutine(EnemyAttack(order));
-        TurnPassed();
+        StartCoroutine(EnemyAttackCor());
     }
-    IEnumerator EnemyAttack(int[] order) 
+    IEnumerator EnemyAttackCor() 
     {   
-        int k = 0;
-        while (k < order.Length)
+        int randAllyAttacked = Random.Range(0, chars.Count);
+        while (chars[randAllyAttacked].isDead) 
         {
-            int randAllyAttacked = Random.Range(0, chars.Count);
-            while (chars[randAllyAttacked].isDead) 
-            {
-                randAllyAttacked = Random.Range(0, chars.Count);
-            }
-            enemies[k].CanAttack = true;
-            AttackAlly(enemies[k], chars[randAllyAttacked]);
-            yield return new WaitForSeconds(2.0f);
-            enemies[k].CanAttack = false;
-            ++k;
+            randAllyAttacked = Random.Range(0, chars.Count);
         }
-        turnsText.text = "" + turnNumber;
+        yield return new WaitForSeconds(1.0f);
+        //ENEMY ATTACK ANIMATION
+        chars[randAllyAttacked].TakeDamageFrom(fightersList[currCharAttacking]);
+        fightersList[currCharAttacking].hasPlayed = true;
+        yield return new WaitForSeconds(2.0f);
+        fightersList[currCharAttacking].CanAttack = false;
+        NextCharAttack();
         yield return null;
-    }
-    public void AttackAlly(Enemy attacker, Character attacked)
-    {
-        attacked.TakeDamageFrom(attacker);
-        attacker.hasPlayed = true;
     }
     public void TurnPassed() 
     {
         nbCharsPlayed = 0;
+        currCharAttacking = 0;
         turnNumber++;
-        enemAttacking = false;
         foreach (Character c in chars)
         {
             if(!c.isDead)
@@ -201,6 +200,8 @@ public class CombatManager : MonoBehaviour
             if (!e.isDead)
                 e.hasPlayed = false;
         }
+        fightersList[currCharAttacking].CanAttack = true;
+        CharAttack(currCharAttacking);
     }
     public void RemoveEnemy(int numPos) 
     {
@@ -208,6 +209,10 @@ public class CombatManager : MonoBehaviour
         {
             if(e.teamPosition == numPos)
             {
+                if(e == enemySelected) 
+                {
+                    enemySelected = null;
+                }
                 enemies.Remove(e);
                 Destroy(e.gameObject);
                 break;

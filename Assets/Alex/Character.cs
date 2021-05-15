@@ -90,6 +90,10 @@ public class Character : Characters
         var endValue = startValue - value;
         float elapsed = 0.0f;
         float ratio = 0.0f;
+        if (health <= 0)
+        {
+            CombatManager.combatManager.fightersList.Remove(this);
+        }
         while (elapsed < duration)
         {
             ratio = elapsed / duration;
@@ -107,7 +111,8 @@ public class Character : Characters
             isDead = true;
             hasPlayed = true;
             CombatManager.combatManager.chars.Remove(this);
-            if(CombatManager.combatManager.chars.Count <= 0) 
+            CombatManager.combatManager.fightersList.Remove(this);
+            if (CombatManager.combatManager.chars.Count <= 0) 
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }

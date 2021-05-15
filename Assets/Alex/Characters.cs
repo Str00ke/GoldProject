@@ -81,23 +81,14 @@ public class Characters : MonoBehaviour, IPointerDownHandler
         else if (CanAttack)
         {
             thisColor.color = AttackColor;
-        }else if (hasPlayed)
+        }else if (hasPlayed && !isSelected)
         {
             thisColor.color = hasPlayedColor;
         }
-        /*
-        if (isSelected && !hasPlayed)
+        else if (hasPlayed && isSelected)
         {
             thisColor.color = selectedColor;
         }
-        else if (!isSelected && !hasPlayed)
-        {
-            thisColor.color = baseColor;
-        }
-        else if (hasPlayed)
-        {
-            thisColor.color = hasPlayedColor;
-        }*/
     }
 
     public virtual void OnPointerDown(PointerEventData eventData) 

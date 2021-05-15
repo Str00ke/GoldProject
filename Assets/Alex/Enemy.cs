@@ -57,10 +57,14 @@ public class Enemy : Characters
     public override IEnumerator TakeDamageCor(float value, float duration)
     {
         var startValue = healthBar.value;
-        Debug.Log(healthBar.value);
         var endValue = startValue - value;
         float elapsed = 0.0f;
         float ratio = 0.0f;
+
+        if (health <= 0)
+        {
+            CombatManager.combatManager.fightersList.Remove(this);
+        }
         while (elapsed < duration)
         {
             ratio = elapsed / duration;
@@ -79,10 +83,10 @@ public class Enemy : Characters
             CombatManager.combatManager.RemoveEnemy(teamPosition);
         }
         //CHECK AFTER ALLY ATTACK IF ALLIES HAVE ALL PLAYED
-        if (CombatManager.combatManager.chars.Count > 0 && CombatManager.combatManager.nbCharsPlayed >= CombatManager.combatManager.chars.Count && !CombatManager.combatManager.enemAttacking)
+        /*if (CombatManager.combatManager.chars.Count > 0 && CombatManager.combatManager.nbCharsPlayed >= CombatManager.combatManager.chars.Count && !CombatManager.combatManager.enemAttacking)
         {
             CombatManager.combatManager.EnemiesAttack();
-        }
+        }*/
     }
 
 }

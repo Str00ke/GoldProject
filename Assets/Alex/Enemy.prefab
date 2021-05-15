@@ -474,20 +474,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charName: 
+  charType: 0
   health: 30
   maxHealth: 0
   damageRange: {x: 6, y: 8}
+  initiative: 0
   dodge: 5
   critChance: 0.1
   critDamage: 2
   armor: 10
   healthBar: {fileID: 0}
+  isDead: 0
   hasPlayed: 0
+  CanAttack: 0
   isSelected: 0
-  isAttacking: 0
   thisColor: {fileID: 0}
   selectedColor: {r: 0.5283019, g: 0.20683517, b: 0.20683517, a: 1}
-  hasPlayedColor: {r: 1, g: 0, b: 0, a: 1}
+  hasPlayedColor: {r: 0.31132078, g: 0, b: 0, a: 1}
+  AttackColor: {r: 1, g: 0, b: 0, a: 1}
   baseColor: {r: 0.18867922, g: 0.10590956, b: 0.10590956, a: 1}
   durationDecreaseHealth: 0
   teamPosition: 0
