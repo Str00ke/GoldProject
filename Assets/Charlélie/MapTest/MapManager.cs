@@ -10,10 +10,15 @@ public class MapManager : MonoBehaviour
     Vector2 startPos;
     Vector2 direction;
     Vector2 currPos;
+    MapRoom[] roomsList;
     // Start is called before the first frame update
     void Start()
     {
-        
+        roomsList = new MapRoom[FindObjectsOfType<MapRoom>().Length];
+        foreach (MapRoom room in roomsList)
+        {
+
+        }
     }
 
     // Update is called once per frame

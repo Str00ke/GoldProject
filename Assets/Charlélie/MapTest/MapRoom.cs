@@ -16,6 +16,10 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public float selectSpeed;
     Vector2 startPos, currPos;
 
+    //Remplacer GameObject par les types une foit ajoutés
+    GameObject[] ennemies;
+    GameObject[] chests;
+    bool isShop;
     void Start()
     {
         rT = roomSelect.GetComponent<RectTransform>();
@@ -69,5 +73,10 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         rT.sizeDelta = new Vector2(0, 0);
         selectTime = 0;
         FindObjectOfType<PlayerPoint>().GoToRoom(this);
+    }
+
+    public void CreateRoom()
+    {
+
     }
 }

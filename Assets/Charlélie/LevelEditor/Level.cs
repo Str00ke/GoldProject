@@ -1,0 +1,91 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+
+public enum RoomType
+{
+    BASE,
+    START,
+    END,
+    SHOP,
+    HEAL
+}
+
+[System.Serializable]
+public class LevelRoom
+{
+    int[,] pos;
+    RoomType roomType;
+    LevelRoom[] linkedRoom = new LevelRoom[4];
+    bool isDiscovered = false;
+    Level level;
+
+    public LevelRoom(int[,] _pos, RoomType _roomType, Level _level)
+    {
+        pos = _pos;
+        roomType = _roomType;
+        level = _level;
+    }
+
+
+    public void LinkRoom(int[,] otherPos)
+    {
+        for (int i = 0; i < 4; ++i)
+        {
+            if (linkedRoom[i] == null)
+            {
+                LevelRoom room = GetRoomAtPos(otherPos);
+                linkedRoom[i] = room;
+                Debug.Log(i + "  " + otherPos.GetLength(0) + " " + otherPos.GetLength(1));
+                /*GameObject lineGO = new GameObject();
+                LineRenderer lr = lineGO.AddComponent<LineRenderer>();
+                //lr.SetColors(Color.green, Color.yellow);
+                lr.startWidth = 0.1f;
+                lr.endWidth = 0.1f;
+                lr.SetPosition(0, transform.position);
+                lr.SetPosition(1, room.gameObject.transform.position);*/
+                return;
+            }
+        }
+    }
+
+    LevelRoom GetRoomAtPos(int[,] pos)
+    {
+        return level.rooms[pos.GetLength(0), pos.GetLength(1)];
+    }
+}
+
+[System.Serializable]
+public class Level
+{
+    int mapW, mapH, roomNbr;
+    public string name;
+    public LevelRoom[,] rooms;
+
+    public Level(int _mapW, int _mapH, int _roomNbr, string _name)
+    {
+        mapW = _mapW;
+        mapH = _mapH;
+        roomNbr = _roomNbr;
+        name = _name;
+        Debug.Log(name);
+    }
+
+    public void SetRoomArray()
+    {
+        rooms = new LevelRoom[mapW,mapH];
+        for (int i = 0; i < mapH; ++i)
+        {
+            for (int k = 0; k < mapW; ++k)
+            {
+                rooms[k, i] = null;
+            }
+        }
+    }
+
+    public void AddRoomToArray(int[,] pos, RoomType roomType)
+    {
+        rooms[pos.GetLength(0), pos.GetLength(1)] = new LevelRoom(pos, roomType, this);
+    }
+}
