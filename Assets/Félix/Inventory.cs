@@ -132,7 +132,7 @@ public class Inventory : MonoBehaviour
         Character[] characters = new Character[3];
         for (int i = 0; i < 3; i++)
         {
-            characters[i] = CharacterManager.characterManager.AskForCharacter(i + 1);
+            characters[i] = CharacterManager.characterManager.AskForCharacter(i);
         }
 
         /* Enable/Disable character slots */
@@ -147,34 +147,34 @@ public class Inventory : MonoBehaviour
                 continue;
 
             GameObject items = slots[i].transform.GetChild(0).gameObject;
-            items.transform.GetChild(0).GetComponent<Image>().sprite = characters[i].head != null ? characters[i].head.itemUiSprite : null;
-            if (characters[i].head != null)
+            items.transform.GetChild(0).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Head) != null ? characters[i].GetItem(NItem.EPartType.Head).itemUiSprite : null;
+            if (characters[i].GetItem(NItem.EPartType.Head) != null)
             {
-                NItem.ItemScriptableObject head = characters[i].head;
+                NItem.ItemScriptableObject head = characters[i].GetItem(NItem.EPartType.Head);
                 items.transform.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
                 items.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => ToggleItemStatsScreen(head));
             }
 
-            items.transform.GetChild(1).GetComponent<Image>().sprite = characters[i].body != null ? characters[i].body.itemUiSprite : null;
-            if (characters[i].body != null)
+            items.transform.GetChild(1).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Body) != null ? characters[i].GetItem(NItem.EPartType.Body).itemUiSprite : null;
+            if (characters[i].GetItem(NItem.EPartType.Body) != null)
             {
-                NItem.ItemScriptableObject body = characters[i].body;
+                NItem.ItemScriptableObject body = characters[i].GetItem(NItem.EPartType.Body);
                 items.transform.GetChild(1).GetComponent<Button>().onClick.RemoveAllListeners();
                 items.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => ToggleItemStatsScreen(body));
             }
 
-            items.transform.GetChild(2).GetComponent<Image>().sprite = characters[i].weapon != null ? characters[i].weapon.itemUiSprite : null;
-            if (characters[i].weapon != null)
+            items.transform.GetChild(2).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Weapon) != null ? characters[i].GetItem(NItem.EPartType.Weapon).itemUiSprite : null;
+            if (characters[i].GetItem(NItem.EPartType.Weapon) != null)
             {
-                NItem.ItemScriptableObject weapon = characters[i].weapon;
+                NItem.ItemScriptableObject weapon = characters[i].GetItem(NItem.EPartType.Weapon);
                 items.transform.GetChild(2).GetComponent<Button>().onClick.RemoveAllListeners();
                 items.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => ToggleItemStatsScreen(weapon));
             }
 
-            items.transform.GetChild(3).GetComponent<Image>().sprite = characters[i].gem != null ? characters[i].gem.itemUiSprite : null;
-            if (characters[i].gem != null)
+            items.transform.GetChild(3).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Gem) != null ? characters[i].GetItem(NItem.EPartType.Gem).itemUiSprite : null;
+            if (characters[i].GetItem(NItem.EPartType.Gem) != null)
             {
-                NItem.ItemScriptableObject gem = characters[i].gem;
+                NItem.ItemScriptableObject gem = characters[i].GetItem(NItem.EPartType.Gem);
                 items.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
                 items.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => ToggleItemStatsScreen(gem));
             }
@@ -236,23 +236,23 @@ public class Inventory : MonoBehaviour
         switch (item.itemPartType.ToString())
         {
             case "Head":
-                lastItem = character.head;
-                character.head = item;
+                lastItem = character.GetItem(NItem.EPartType.Head);
+                character.AddItem(item, NItem.EPartType.Head);
                 break;
             
             case "Body":
-                lastItem = character.body;
-                character.body = item;
+                lastItem = character.GetItem(NItem.EPartType.Body);
+                character.AddItem(item, NItem.EPartType.Body);
                 break;
 
             case "Weapon":
-                lastItem = character.weapon;
-                character.weapon = item;
+                lastItem = character.GetItem(NItem.EPartType.Weapon);
+                character.AddItem(item, NItem.EPartType.Weapon);
                 break;
 
             case "Gem":
-                lastItem = character.gem;
-                character.gem = item;
+                lastItem = character.GetItem(NItem.EPartType.Gem);
+                character.AddItem(item, NItem.EPartType.Gem);
                 break;
 
         default:
