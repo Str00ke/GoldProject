@@ -15,6 +15,8 @@ public class LevelCreatorManager : MonoBehaviour
     bool isTracingLine = false;
     int[,] firstRoomTracedPos;
     Room firstRoom;
+    Room[] roomsList;
+    int index = 0;
     bool levelGotStart, levelGotEnd;
     public Button baseRoom, startRoom, endRoom, saveBtn;
     public GameObject levelNamePanel;
@@ -30,6 +32,7 @@ public class LevelCreatorManager : MonoBehaviour
         saveBtn.gameObject.SetActive(false);
         levelNamePanel.gameObject.SetActive(false);
         levelNameInputField.onEndEdit.AddListener(SetLevelName);
+        roomsList = new Room[roomNbr];
     }
 
     public void Init(int _mapW, int _mapH, int _roomNbr)
@@ -40,7 +43,7 @@ public class LevelCreatorManager : MonoBehaviour
         baseRoom.gameObject.SetActive(true);
         startRoom.gameObject.SetActive(true);
         endRoom.gameObject.SetActive(true);
-        saveBtn.gameObject.SetActive(true);
+        
         SetStartPoint();
         currPoint = startPoint;
         CreateGrid();
@@ -58,6 +61,9 @@ public class LevelCreatorManager : MonoBehaviour
     {
         if (isOnLevelNamePanel)
             return;
+
+        if (levelGotStart && levelGotEnd && !saveBtn.IsActive())
+            saveBtn.gameObject.SetActive(true);
 
         if (roomInHand)
         {
@@ -316,4 +322,6 @@ public class LevelCreatorManager : MonoBehaviour
         Room[] rooms = FindObjectsOfType<Room>();
         SaveSystem.Save(rooms, mapW, mapH, roomNbr, name);
     }
+
+    
 }

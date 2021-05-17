@@ -15,9 +15,9 @@ public enum RoomType
 [System.Serializable]
 public class LevelRoom
 {
-    int[,] pos;
-    RoomType roomType;
-    LevelRoom[] linkedRoom = new LevelRoom[4];
+    public int[,] pos;
+    public RoomType roomType;
+    public LevelRoom[] linkedRoom = new LevelRoom[4];
     bool isDiscovered = false;
     Level level;
 
@@ -59,9 +59,10 @@ public class LevelRoom
 [System.Serializable]
 public class Level
 {
-    int mapW, mapH, roomNbr;
+    public int mapW, mapH, roomNbr;
     public string name;
     public LevelRoom[,] rooms;
+    public LevelRoom startRoom, endRoom;
 
     public Level(int _mapW, int _mapH, int _roomNbr, string _name)
     {
@@ -87,5 +88,9 @@ public class Level
     public void AddRoomToArray(int[,] pos, RoomType roomType)
     {
         rooms[pos.GetLength(0), pos.GetLength(1)] = new LevelRoom(pos, roomType, this);
+        if (roomType == RoomType.START)
+            startRoom = rooms[pos.GetLength(0), pos.GetLength(1)];
+        else if (roomType == RoomType.END)
+            endRoom = rooms[pos.GetLength(0), pos.GetLength(1)];
     }
 }

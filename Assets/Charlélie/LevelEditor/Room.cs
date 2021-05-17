@@ -10,14 +10,22 @@ public class Room : MonoBehaviour
     public Room[] linkedRooms = new Room[4];
     public bool isStart, isEnd;
     public bool isOverHolder = false;
+    public RoomType roomType = new RoomType();
 
 
     private void Start()
     {
         if (isStart)
+        {
             GetComponent<SpriteRenderer>().color = Color.green;
+            roomType = RoomType.START;
+        }            
         else if (isEnd)
+        {
             GetComponent<SpriteRenderer>().color = Color.red;
+            roomType = RoomType.END;
+        }
+            
     }
 
     public void CheckForHolder(Vector2 mousePos)

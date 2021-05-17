@@ -8,54 +8,16 @@ public static class SaveSystem
 {
     static string absPath = Application.dataPath + "/LevelsData";
 
-    /*public static void SaveLevelData(LDData levelData)
+    static Room GetRoomAt(Room[] rooms, LevelRoom levelRoom)
     {
-
-
-        int name = Directory.GetFiles(absPath, "*.data", SearchOption.TopDirectoryOnly).Length;
-        BinaryFormatter formatter = new BinaryFormatter();
-
-        string path = absPath + "/" + name + ".data";
-        FileStream stream = new FileStream(path, FileMode.Create);
-
-        LevelData data = new LevelData(levelData);
-
-        formatter.Serialize(stream, data);
-
-
-        stream.Close();
-
-        Debug.Log("Saved in: " + path);
+        foreach(Room room in rooms)
+        {
+            if (room.pos == levelRoom.pos)
+                return room;
+        }
+        return null;
     }
-
-
-
-    public static LevelData LoadLevelData()
-    {
-
-
-        Random.InitState((int)System.DateTime.Now.Ticks);
-
-        int fCount = Directory.GetFiles(absPath, "*.data", SearchOption.TopDirectoryOnly).Length - 1;
-        int name = Random.Range(0, fCount);
-
-        string path = absPath + "/" + name + ".data";
-        if (File.Exists(path))
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
-
-            LevelData data = formatter.Deserialize(stream) as LevelData;
-            stream.Close();
-
-            return data;
-        }
-        else
-        {
-            Debug.LogError("Error: Save file not found in: " + path);
-            return null;
-        }
-    }*/
+    
 
     public static void Save(Room[] rooms, int mapW, int mapH, int roomNbr, string lvlName)
     {
@@ -64,22 +26,25 @@ public static class SaveSystem
 
         for (int i = 0; i < rooms.Length; ++i)
         {
-            level.AddRoomToArray(rooms[i].pos, RoomType.BASE);
+            level.AddRoomToArray(rooms[i].pos, rooms[i].roomType);
         }
 
-        int index = 0;
+        int index = 0;  
         for (int i = 0; i < level.rooms.GetLength(1); ++i)
         {
             for (int k = 0; k < level.rooms.GetLength(0); ++k)
             {
+                Debug.Log(level.rooms[k, i]);
                 if (level.rooms[k, i] != null)
                 {
+                    Room room = GetRoomAt(rooms, level.rooms[k, i]);
+                    Debug.Log("yee");
                     for (int j = 0; j < 4; ++j)
                     {
-                        if (rooms[index].linkedRooms[j] != null)
-                        {
-                            Debug.Log(k + " " + i + " " + j + " " +rooms[index].linkedRooms[j]);
-                            level.rooms[k, i].LinkRoom(rooms[index].linkedRooms[j].pos);
+                        if (room.linkedRooms[j] != null)
+                        {                           
+                            Debug.Log(k + " " + i + " " + j + " " + room.linkedRooms[j]);
+                            level.rooms[k, i].LinkRoom(room.linkedRooms[j].pos);
                         }                       
                     }
                     index++;
