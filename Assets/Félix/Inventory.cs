@@ -63,7 +63,7 @@ public class Inventory : MonoBehaviour
 
         itemList.Add(nItem);
 
-        buttonNItem.onClick.AddListener(() => ShowItemPanel(nItem) /*ToggleItemStatsScreen(iii)*/ );
+        buttonNItem.onClick.AddListener(() => ShowItemPanel(nItem));
     }
 
     public void DeleteItem(GameObject item)
@@ -95,7 +95,7 @@ public class Inventory : MonoBehaviour
         ItemInInventory iii = item.GetComponent<ItemInInventory>();
 
         // Move panel
-        panelItem.transform.position = item.transform.position + new Vector3(110f, 0f, 0f);
+        panelItem.transform.position = item.transform.position + new Vector3(150f, 0f, 0f);
 
         for (int i = 0; i < 3; i++)
             panelItem.transform.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();

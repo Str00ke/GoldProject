@@ -79,16 +79,12 @@ public class Character : MonoBehaviour
         {
             case NItem.EPartType.Head:
                 return 0;
-                break;
             case NItem.EPartType.Body:
                 return 1;
-                break;
             case NItem.EPartType.Weapon:
                 return 2;
-                break;
             case NItem.EPartType.Gem:
                 return 3;
-                break;
             default:
                 break;
         }
@@ -102,16 +98,12 @@ public class Character : MonoBehaviour
         {
             case NItem.EPartType.Head:
                 return items[0];
-                break;
             case NItem.EPartType.Body:
                 return items[1];
-                break;
             case NItem.EPartType.Weapon:
                 return items[2];
-                break;
             case NItem.EPartType.Gem:
                 return items[3];
-                break;
             default:
                 break;
         }

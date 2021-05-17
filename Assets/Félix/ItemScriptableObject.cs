@@ -21,6 +21,15 @@ namespace NItem
         Gem
     }
 
+    public enum ERarity
+    {
+        Normal,
+        Rare,
+        Epic,
+        Legendary,
+        Ultime
+    }
+
     [CreateAssetMenu(fileName = "Item", menuName = "ScriptableObjects/Item", order = 1)]
     public class ItemScriptableObject : ScriptableObject
     {
