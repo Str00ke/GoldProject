@@ -24,7 +24,7 @@ public class Enemy : Characters
 
         //ISTARGETABLE FOR ABILITIES
         isTargetable = false;
-        healthBarOutline = GameObject.Find("HealthBarOutline");
+        healthBarOutline = GameObject.Find(gameObject.name + "/CanvasSlider/HealthBarOutline");
         healthBarOutline.SetActive(false);
         UpdateMeleeState();
     }
