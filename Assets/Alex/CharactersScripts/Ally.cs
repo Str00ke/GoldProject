@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Character : Characters
+public class Ally : Characters
 {
-
     private void Awake()
     {
         CombatManager.combatManager.chars.Add(this);
@@ -62,8 +60,6 @@ public class Character : Characters
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        if (!hasPlayed && !isDead)
-        {
             if (isSelected)
             {
                 if (CombatManager.combatManager.charSelected == this)
@@ -82,7 +78,6 @@ public class Character : Characters
                 isSelected = true;
                 CombatManager.combatManager.charSelected = this;
             }
-        }
     }
     public override IEnumerator TakeDamageCor(float value, float duration)
     {
@@ -92,7 +87,8 @@ public class Character : Characters
         float ratio = 0.0f;
         if (health <= 0)
         {
-            CombatManager.combatManager.fightersList.Remove(this);
+            isDead = true;
+            isTargetable = false;
         }
         while (elapsed < duration)
         {
@@ -108,16 +104,27 @@ public class Character : Characters
         healthBar.value = endValue;
         if (health <= 0)
         {
-            isDead = true;
             hasPlayed = true;
-            CombatManager.combatManager.chars.Remove(this);
-            CombatManager.combatManager.fightersList.Remove(this);
-            if (CombatManager.combatManager.chars.Count <= 0) 
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
+            isTargetable = false;
+            CombatManager.combatManager.RemoveAlly(this);
             healthBar.gameObject.SetActive(false);
-            //Play death animation
         }
+    }
+
+    public void Ability01()
+    {
+
+    }
+    public void Ability02()
+    {
+
+    }
+    public void Ability03()
+    {
+
+    }
+    public void Ability04()
+    {
+
     }
 }

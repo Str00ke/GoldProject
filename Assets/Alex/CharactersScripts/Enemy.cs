@@ -32,27 +32,24 @@ public class Enemy : Characters
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        if (isSelected)
-        {
-            if (CombatManager.combatManager.enemySelected == this)
+            if (isSelected)
             {
-                isSelected = false;
-                CombatManager.combatManager.enemySelected = null;
+                if (CombatManager.combatManager.enemySelected == this)
+                {
+                    isSelected = false;
+                    CombatManager.combatManager.enemySelected = null;
+                }
             }
-        }
-        else if (!isSelected)
-        {
-            if (CombatManager.combatManager.enemySelected != null)
+            else if (!isSelected)
             {
-                CombatManager.combatManager.enemySelected.isSelected = false;
-                CombatManager.combatManager.enemySelected = null;
+                if (CombatManager.combatManager.enemySelected != null)
+                {
+                    CombatManager.combatManager.enemySelected.isSelected = false;
+                    CombatManager.combatManager.enemySelected = null;
+                }
+                isSelected = true;
+                CombatManager.combatManager.enemySelected = this;
             }
-            isSelected = true;
-            CombatManager.combatManager.enemySelected = this;
-        }
-
-        ChangeColor();
-        //CombatManager.combatManager.ChangeTexts();
     }
     public override IEnumerator TakeDamageCor(float value, float duration)
     {
@@ -63,7 +60,8 @@ public class Enemy : Characters
 
         if (health <= 0)
         {
-            CombatManager.combatManager.fightersList.Remove(this);
+            //CombatManager.combatManager.fightersList.Remove(this);
+            isDead = true;
         }
         while (elapsed < duration)
         {
@@ -79,14 +77,8 @@ public class Enemy : Characters
         healthBar.value = endValue;
         if (health <= 0)
         {
-            isDead = true;
             CombatManager.combatManager.RemoveEnemy(teamPosition);
         }
-        //CHECK AFTER ALLY ATTACK IF ALLIES HAVE ALL PLAYED
-        /*if (CombatManager.combatManager.chars.Count > 0 && CombatManager.combatManager.nbCharsPlayed >= CombatManager.combatManager.chars.Count && !CombatManager.combatManager.enemAttacking)
-        {
-            CombatManager.combatManager.EnemiesAttack();
-        }*/
     }
 
 }

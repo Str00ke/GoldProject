@@ -9,18 +9,12 @@ public class Characters : MonoBehaviour, IPointerDownHandler
 {
     [Header("Labels")]
     public string charName;
-    public enum CharType 
+    public enum CharType
     {
         ENEMY,
         ALLY
     }
     public CharType charType;
-    public enum WeaponType 
-    {
-        MELEE,
-        RANGE
-    }
-    WeaponType weaponType;
     [Header("Stats")]
     public float health;
     public float maxHealth;
@@ -33,7 +27,13 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     public Slider healthBar;
 
 
+    [Header("Abilities")]
+    public Ability[] abilities;
+
+
     [Header("CombatVariables")]
+    public bool isTargetable = true;
+    public bool isMelee;
     public bool isDead;
     public bool hasPlayed;
     public bool CanAttack;
@@ -53,14 +53,9 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     public float durationMove = 1.0f;
 
     [Header("Animation")]
-    public Animator anim;      
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
+    public Animator anim;
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
     }
 
