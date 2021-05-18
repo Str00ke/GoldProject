@@ -11,7 +11,7 @@ public class CharacterManager : MonoBehaviour
 
     [Header("Character Swap Scene")]
     private int indexSwap1 = -1, indexSwap2 = -1;
-    [SerializeField] private GameObject characterSwapGo;
+    public GameObject characterSwapGo;
     [SerializeField] private GameObject buttonSwap;
     [SerializeField] private GameObject[] slots;
 
@@ -71,10 +71,62 @@ public class CharacterManager : MonoBehaviour
         slots[0].SetActive(characters[0] == null ? false : true);
         slots[1].SetActive(characters[1] == null ? false : true);
         slots[2].SetActive(characters[2] == null ? false : true);
+
+        for (int i = 0; i < characters.Length; i++)
+        {
+            if (!slots[i].activeSelf)
+                continue;
+
+            Transform itemSlotTransform = slots[i].transform.GetChild(0).GetChild(0);
+            NItem.ItemScriptableObject item = characters[i].GetItem(NItem.EPartType.Head);
+
+            itemSlotTransform.GetChild(0).GetComponent<Image>().sprite = item != null ? item.itemUiSprite : null;
+            if (item != null)
+            {
+                NItem.ItemScriptableObject nItem = characters[i].GetItem(NItem.EPartType.Head);
+                itemSlotTransform.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
+                itemSlotTransform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(nItem));
+            }
+
+            item = characters[i].GetItem(NItem.EPartType.Body);
+            itemSlotTransform.GetChild(1).GetComponent<Image>().sprite = item != null ? item.itemUiSprite : null;
+            if (item != null)
+            {
+                NItem.ItemScriptableObject nItem = characters[i].GetItem(NItem.EPartType.Body);
+                itemSlotTransform.GetChild(1).GetComponent<Button>().onClick.RemoveAllListeners();
+                itemSlotTransform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(nItem));
+            }
+
+            item = characters[i].GetItem(NItem.EPartType.Weapon);
+            itemSlotTransform.GetChild(2).GetComponent<Image>().sprite = item != null ? item.itemUiSprite : null;
+            if (item != null)
+            {
+                NItem.ItemScriptableObject nItem = characters[i].GetItem(NItem.EPartType.Weapon);
+                itemSlotTransform.GetChild(2).GetComponent<Button>().onClick.RemoveAllListeners();
+                itemSlotTransform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(nItem));
+            }
+
+            item = characters[i].GetItem(NItem.EPartType.Gem);
+            itemSlotTransform.GetChild(3).GetComponent<Image>().sprite = item != null ? item.itemUiSprite : null;
+            if (item != null)
+            {
+                NItem.ItemScriptableObject nItem = characters[i].GetItem(NItem.EPartType.Gem);
+                itemSlotTransform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
+                itemSlotTransform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(nItem));
+            }
+        }
     }
 
     public void CloseCharacterSwapScene()
     {
+        indexSwap1 = -1;
+        indexSwap2 = -1;
+
+        for (int i = 0; i < 3; i++)
+            slots[i].GetComponent<Image>().color = new Vector4(1f, 0f, 0f, 0f);
+
+        buttonSwap.gameObject.SetActive(false);
+
         characterSwapGo.SetActive(false);
     }
 
@@ -129,11 +181,7 @@ public class CharacterManager : MonoBehaviour
         characters[indexSwap1] = characters[indexSwap2];
         characters[indexSwap2] = charRef;
 
-        slots[indexSwap1].GetComponent<Image>().color = new Vector4(1f, 0f, 0f, 0f);
-        slots[indexSwap2].GetComponent<Image>().color = new Vector4(1f, 0f, 0f, 0f);
-
-        indexSwap1 = -1;
-        indexSwap2 = -1;
+        CloseCharacterSwapScene();
     }
 
     #endregion

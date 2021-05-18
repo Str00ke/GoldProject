@@ -26,12 +26,25 @@ public class Inventory : MonoBehaviour
     [Header("Item Stats")]
     [SerializeField] private GameObject itemStatsGo;
 
+    private void Awake()
+    {
+        inventory = this;
+    }
+
     private void Start()
     {
         playerItemSelectionGo.SetActive(false);
         itemStatsGo.SetActive(false);
         panelItem.SetActive(false);
         //inventoryGo.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P) && !CharacterManager.characterManager.characterSwapGo.activeSelf)
+        {
+            CharacterManager.characterManager.OpenCharacterSwapScene();
+        }
     }
 
     #region ItemInventoryPart
