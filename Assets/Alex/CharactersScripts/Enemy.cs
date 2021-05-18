@@ -65,17 +65,14 @@ public class Enemy : Characters
         float elapsed = 0.0f;
         float ratio = 0.0f;
 
-        if (health <= 0)
-        {
-            //CombatManager.combatManager.fightersList.Remove(this);
-            isDead = true;
-        }
         while (elapsed < duration)
         {
             ratio = elapsed / duration;
             healthBar.value = Mathf.Lerp(startValue, endValue, ratio);
+            health = healthBar.value;
             if (healthBar.value <= 0)
             {
+                health = 0;
                 break;
             }
             elapsed += Time.deltaTime;
@@ -84,8 +81,38 @@ public class Enemy : Characters
         healthBar.value = endValue;
         if (health <= 0)
         {
+            health = 0;
             CombatManager.combatManager.RemoveEnemy(teamPosition);
         }
     }
 
+
+    public override void TakeHealing(float value, float duration)
+    {
+        StartCoroutine(TakeHealingCor(value, duration));
+    }
+    public override IEnumerator TakeHealingCor(float value, float duration)
+    {
+        var startValue = healthBar.value;
+        var endValue = startValue + value;
+        if (endValue > maxHealth)
+            endValue = maxHealth;
+        float elapsed = 0.0f;
+        float ratio = 0.0f;
+        while (elapsed < duration)
+        {
+            ratio = elapsed / duration;
+            healthBar.value = Mathf.Lerp(startValue, endValue, ratio);
+            health = healthBar.value;
+            if (healthBar.value >= maxHealth)
+            {
+                health = maxHealth;
+                break;
+            }
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        healthBar.value = endValue;
+        yield return new WaitForSeconds(duration);
+    }
 }

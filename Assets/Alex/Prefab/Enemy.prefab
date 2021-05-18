@@ -488,6 +488,7 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   abilities:
   - {fileID: 11400000, guid: 339b3b47eb400d24e90347ae579ebbf6, type: 2}
+  - {fileID: 11400000, guid: 3aa29f96a43107e48a69b2579056750f, type: 2}
   isTargetable: 1
   isMelee: 0
   isDead: 0

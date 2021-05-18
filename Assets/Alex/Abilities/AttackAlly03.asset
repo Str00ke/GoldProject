@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: AttackAlly03
   m_EditorClassIdentifier: 
   name: ulikujyh
-  multiplicator: 0
+  multiplicator: 60
   icon: {fileID: 21300000, guid: fc65a9309abeab543b26e2e0cb40715a, type: 3}
-  isMelee: 0
-  onAlly: 1
+  unitType: 0
+  weaponAbilityType: 0
+  targetType: 2
   damageType: 0

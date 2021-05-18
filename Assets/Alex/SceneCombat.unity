@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 15229331}
   - component: {fileID: 15229330}
   m_Layer: 5
-  m_Name: AttackButton
+  m_Name: ActionButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -208,7 +208,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 682934545}
         m_TargetAssemblyTypeName: AbilitiesManager, Assembly-CSharp
-        m_MethodName: ActionAbility
+        m_MethodName: AllyActionAbility
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -803,7 +803,7 @@ MonoBehaviour:
   chars: []
   fightersList: []
   attackButton: {fileID: 0}
-  charSelected: {fileID: 0}
+  allySelected: {fileID: 0}
   turnsText: {fileID: 0}
   attackerCursor: {fileID: 0}
   enemies: []
@@ -1065,6 +1065,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilitySelected: {fileID: 0}
+  lastAbilityLaunched: {fileID: 0}
   abilitiesUI: {fileID: 0}
   abilityUI: {fileID: 0}
   abilityNameUI: {fileID: 0}
@@ -1754,7 +1755,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1294272420, guid: 1994534d80af304419248f54d40c1441, type: 3}
       propertyPath: m_WholeNumbers
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1752089008, guid: 1994534d80af304419248f54d40c1441, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2497,7 +2498,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1294272420, guid: 1994534d80af304419248f54d40c1441, type: 3}
       propertyPath: m_WholeNumbers
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1752089008, guid: 1994534d80af304419248f54d40c1441, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2687,7 +2688,7 @@ PrefabInstance:
       objectReference: {fileID: 245606098}
     - target: {fileID: 1294272420, guid: 1994534d80af304419248f54d40c1441, type: 3}
       propertyPath: m_WholeNumbers
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1752089008, guid: 1994534d80af304419248f54d40c1441, type: 3}
       propertyPath: m_AnchorMax.x

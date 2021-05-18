@@ -60,7 +60,7 @@ public class AbilityScript : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
             isSelected = true;
             AbilitiesManager.abilitiesManager.abilitySelected = this;
-            AbilitiesManager.abilitiesManager.SetTargets(AbilitiesManager.abilitiesManager.abilitySelected.ability.isMelee, AbilitiesManager.abilitiesManager.abilitySelected.ability.onAlly);
+            AbilitiesManager.abilitiesManager.SetTargets(AbilitiesManager.abilitiesManager.abilitySelected.ability.targetType);
         }
         
     }

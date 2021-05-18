@@ -7,7 +7,9 @@ public class AbilitiesManager : MonoBehaviour
 {
     public static AbilitiesManager abilitiesManager;
     public AbilityScript abilitySelected;
+    public Ability lastAbilityLaunched;
     public GameObject abilitiesUI;
+    public GameObject actionButton;
     public GameObject abilityUI;
     public Text abilityNameUI;
     public Text abilityDescription;
@@ -29,6 +31,7 @@ public class AbilitiesManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        actionButton = GameObject.Find("ActionButton");
         abilityNameUI = GameObject.Find("AbilityName").GetComponent<Text>();
         abilityDescription = GameObject.Find("AbilityDescription").GetComponent<Text>();
         abilitiesUI = GameObject.Find("AbilitiesUI");
@@ -45,6 +48,7 @@ public class AbilitiesManager : MonoBehaviour
     void Update()
     {
         DisplayAbilities();
+        DisplayActionButton();
     }
     
 
@@ -89,50 +93,109 @@ public class AbilitiesManager : MonoBehaviour
             }
         }
     }
-    public void SetTargets(bool melee, bool ally) 
+    public void SetTargets(Ability.TargetType targetType) 
     {
-        if (!ally && melee)
+        switch (targetType) 
         {
-            foreach(Enemy e in CombatManager.combatManager.enemies) 
-            {
-                if (e.isMelee) 
+            case Ability.TargetType.TEAM:
+                foreach (Ally a in CombatManager.combatManager.chars)
                 {
-                    e.isTargetable = true;
+                    if(!a.isDead)
+                        a.isTargetable = true;
+                    else
+                        a.isTargetable = false;
                 }
-                else 
+                foreach (Enemy e in CombatManager.combatManager.enemies)
                 {
                     e.isTargetable = false;
                 }
-            }
-            foreach (Ally a in CombatManager.combatManager.chars)
-            {
-                a.isTargetable = false;
-            }
-
-        }else if(!ally && !melee)
-        {
-            foreach (Enemy e in CombatManager.combatManager.enemies)
-            {
-                e.isTargetable = true;
-            }
-            foreach (Ally a in CombatManager.combatManager.chars)
-            {
-                a.isTargetable = false;
-            }
-        }else if(ally) 
-        {
-            foreach(Ally a in CombatManager.combatManager.chars) 
-            {
-                a.isTargetable = true;
-            }
-            foreach (Enemy e in CombatManager.combatManager.enemies)
-            {
-                e.isTargetable = false;
-            }
+                break;
+            case Ability.TargetType.RANGE:
+                foreach (Enemy e in CombatManager.combatManager.enemies)
+                {
+                    e.isTargetable = true;
+                }
+                foreach (Ally a in CombatManager.combatManager.chars)
+                {
+                    a.isTargetable = false;
+                }
+                break;
+            case Ability.TargetType.MELEE:
+                foreach (Enemy e in CombatManager.combatManager.enemies)
+                {
+                    if (e.isMelee)
+                    {
+                        e.isTargetable = true;
+                    }
+                    else
+                    {
+                        e.isTargetable = false;
+                    }
+                }
+                foreach (Ally a in CombatManager.combatManager.chars)
+                {
+                    a.isTargetable = false;
+                }
+                break;
         }
     }
-
-    public void ActionAbility() 
+    public void DisplayActionButton() 
     {
+        if (abilitySelected && CombatManager.combatManager.allyPlaying)
+        {
+            if(abilitySelected.ability.targetType == Ability.TargetType.TEAM)
+            {
+                if (CombatManager.combatManager.allySelected && CombatManager.combatManager.allySelected.isTargetable)
+                {
+                    actionButton.SetActive(true);
+                }
+                else
+                {
+                    actionButton.SetActive(false);
+                }
+            }
+            else if(abilitySelected.ability.targetType == Ability.TargetType.RANGE || abilitySelected.ability.targetType == Ability.TargetType.MELEE)
+            {
+                if (CombatManager.combatManager.enemySelected && CombatManager.combatManager.enemySelected.isTargetable)
+                {
+                    actionButton.SetActive(true);
+                }
+                else
+                {
+                    actionButton.SetActive(false);
+                }
+            }
+        }else
+        {
+            actionButton.SetActive(false);
+        }
     }
+    public void AllyActionAbility() 
+    {
+        switch (abilitySelected.ability.targetType)
+        {
+            case Ability.TargetType.TEAM:
+                if (CombatManager.combatManager.allySelected.isTargetable)
+                {
+                    CombatManager.combatManager.allyPlaying.InteractWith(CombatManager.combatManager.allySelected, abilitySelected.ability);
+                }
+            break;
+            case Ability.TargetType.RANGE:
+                if (CombatManager.combatManager.enemySelected.isTargetable)
+                {
+                    CombatManager.combatManager.allyPlaying.InteractWith(CombatManager.combatManager.enemySelected, abilitySelected.ability);
+                }
+                break;
+            case Ability.TargetType.MELEE:
+                if (CombatManager.combatManager.enemySelected.isTargetable)
+                {
+                    CombatManager.combatManager.allyPlaying.InteractWith(CombatManager.combatManager.enemySelected, abilitySelected.ability);
+                }
+                break;
+        }
+        CombatManager.combatManager.NextCharAttack();
+        /*CombatManager.combatManager.fightersList[CombatManager.combatManager.currCharAttacking].isSelected = false;
+        CombatManager.combatManager.allySelected = null;*/
+    }
+
 }
