@@ -12,11 +12,10 @@ public class MapManager : MonoBehaviour
     public MapRoom[,] roomsList;
     MapRoom[] roomArr;
     public GameObject mapRoom;
-    public GameObject map;
+    public GameObject map, mapHolder, mapBtn;
     public MapRoom onRoom;
     PlayerPoint playerPoint;
     public Level level;
-    
 
     
     public void Init()
@@ -24,7 +23,7 @@ public class MapManager : MonoBehaviour
         //roomsList = new MapRoom[FindObjectsOfType<MapRoom>().Length];
         playerPoint = FindObjectOfType<PlayerPoint>();
         roomsList = new MapRoom[level.mapW, level.mapH];
-        roomArr = new MapRoom[level.roomNbr];   
+        roomArr = new MapRoom[level.mapW * level.mapH];   
     }
 
     // Update is called once per frame
@@ -116,6 +115,7 @@ public class MapManager : MonoBehaviour
                 if (level.rooms[k, i] != null)
                 {
                     GameObject room = Instantiate(mapRoom, currPoint, transform.rotation);
+                    //Debug.Log(index);
                     roomArr[index] = room.GetComponent<MapRoom>();
                     room.transform.SetParent(map.transform, false);
                     room.GetComponent<MapRoom>().roomType = level.rooms[k, i].roomType;
@@ -133,6 +133,16 @@ public class MapManager : MonoBehaviour
             currPoint.y -= 50;
         }
        
+    }
+
+    public void ShowMap()
+    {
+        mapHolder.SetActive(!mapHolder.activeSelf);
+    }
+
+    public void UpdateBtn()
+    {
+        mapBtn.SetActive(!mapBtn.activeSelf);
     }
 
     public void InitPlayerPoint()

@@ -241,7 +241,8 @@ public class CombatManager : MonoBehaviour
         chars.Remove(a);
         if (chars.Count <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            EndFight<Ally>(chars);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
     public void RemoveEnemy(int numPos) 
@@ -256,6 +257,10 @@ public class CombatManager : MonoBehaviour
                 }
                 enemies.Remove(e);
                 Destroy(e.gameObject);
+
+                if (enemies.Count <= 0)
+                    EndFight<Enemy>(enemies);
+
                 break;
             }
         }
@@ -279,4 +284,19 @@ public class CombatManager : MonoBehaviour
         }
     }
 
+    void EndFight<T>(List<T> list)
+    {
+        if (typeof(T) == typeof(Enemy))
+            FindObjectOfType<LevelManager>().WinFight();
+        else if (typeof(T) == typeof(Ally))
+            FindObjectOfType<LevelManager>().LoseFight();
+    }
+
+    public void Obliterate()
+    {
+        for (int i = 0; i < enemies.Count; ++i)
+        {
+            RemoveEnemy(i);
+        }
+    }
 }

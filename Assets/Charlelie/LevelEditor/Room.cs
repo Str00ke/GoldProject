@@ -90,7 +90,7 @@ public class Room : MonoBehaviour
             }
         }
 
-        /*for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < 4; ++i)
         {
 
             if (room.linkedRooms[i] == null)
@@ -98,7 +98,7 @@ public class Room : MonoBehaviour
                 room.linkedRooms[i] = this;
                 break;
             }
-        }*/
+        }
 
     }
 
