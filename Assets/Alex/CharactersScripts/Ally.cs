@@ -20,11 +20,22 @@ public class Ally : Characters
         durationDecreaseHealth = 1.5f;
         posInitial = GameObject.Find("Pos00").transform;
         ChangePos();
+
+
     }
 
+    private void Start()
+    {
+        //ISTARGETABLE FOR ABILITIES
+        isTargetable = false;
+        healthBarOutline = GameObject.Find("HealthBarOutline");
+        healthBarOutline.SetActive(false);
+        UpdateMeleeState();
+    }
     // Update is called once per frame
     void Update()
     {
+        IsTargetable();
         ChangeColor();
     }
 

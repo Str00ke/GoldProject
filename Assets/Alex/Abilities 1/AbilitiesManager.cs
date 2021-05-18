@@ -95,17 +95,44 @@ public class AbilitiesManager : MonoBehaviour
         {
             foreach(Enemy e in CombatManager.combatManager.enemies) 
             {
-                
+                if (e.isMelee) 
+                {
+                    e.isTargetable = true;
+                }
+                else 
+                {
+                    e.isTargetable = false;
+                }
             }
-            
+            foreach (Ally a in CombatManager.combatManager.chars)
+            {
+                a.isTargetable = false;
+            }
+
+        }else if(!ally && !melee)
+        {
+            foreach (Enemy e in CombatManager.combatManager.enemies)
+            {
+                e.isTargetable = true;
+            }
+            foreach (Ally a in CombatManager.combatManager.chars)
+            {
+                a.isTargetable = false;
+            }
+        }else if(ally) 
+        {
+            foreach(Ally a in CombatManager.combatManager.chars) 
+            {
+                a.isTargetable = true;
+            }
+            foreach (Enemy e in CombatManager.combatManager.enemies)
+            {
+                e.isTargetable = false;
+            }
         }
     }
 
     public void ActionAbility() 
     {
-        if (abilitySelected.ability.isMelee) 
-        {
-            SetTargets(abilitySelected.ability.isMelee, abilitySelected.ability.onAlly);
-        }
     }
 }

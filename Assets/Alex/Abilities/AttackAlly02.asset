@@ -16,4 +16,5 @@ MonoBehaviour:
   multiplicator: 0
   icon: {fileID: 21300000, guid: 5a1baae19eafd6f49b4bd766517d2f06, type: 3}
   isMelee: 0
+  onAlly: 0
   damageType: 0

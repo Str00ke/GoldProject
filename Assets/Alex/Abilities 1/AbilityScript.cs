@@ -38,6 +38,7 @@ public class AbilityScript : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             thisColor.color = idleColor;
         }
     }
+    
     public void OnPointerDown(PointerEventData eventData)
     {
 
@@ -56,8 +57,10 @@ public class AbilityScript : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 AbilitiesManager.abilitiesManager.abilitySelected.isSelected = false;
                 AbilitiesManager.abilitiesManager.abilitySelected = null;
             }
+
             isSelected = true;
             AbilitiesManager.abilitiesManager.abilitySelected = this;
+            AbilitiesManager.abilitiesManager.SetTargets(AbilitiesManager.abilitiesManager.abilitySelected.ability.isMelee, AbilitiesManager.abilitiesManager.abilitySelected.ability.onAlly);
         }
         
     }

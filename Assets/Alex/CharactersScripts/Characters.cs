@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Characters : MonoBehaviour, IPointerDownHandler
 {
+    public GameObject healthBarOutline;
     [Header("Labels")]
     public string charName;
     public enum CharType
@@ -32,7 +33,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
 
 
     [Header("CombatVariables")]
-    public bool isTargetable = true;
+    public bool isTargetable;
     public bool isMelee;
     public bool isDead;
     public bool hasPlayed;
@@ -52,16 +53,26 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     public float speedMove = 1.0f;
     public float durationMove = 1.0f;
 
+
     [Header("Animation")]
     public Animator anim;
 
-    private void Update()
-    {
-    }
 
     public void ChangePos()
     {
+        UpdateMeleeState();
         StartCoroutine(ChangePosCoroutine(durationMove));
+    }
+    public void UpdateMeleeState()
+    {
+        if (teamPosition >= 1)
+        {
+            isMelee = false;
+        }
+        else
+        {
+            isMelee = true;
+        }
     }
     public void ChangeColor()
     {
@@ -113,7 +124,6 @@ public class Characters : MonoBehaviour, IPointerDownHandler
         float dmg = Mathf.Round(Random.Range(attacker.damageRange.x, attacker.damageRange.y));
         dmg = dmg - armor / 100;
         health -= dmg;
-        Debug.Log(this.charName + "Health" + health + "   dmg" + dmg);
         StartCoroutine(TakeDamageCor(dmg, durationDecreaseHealth));
     }
 
@@ -134,5 +144,13 @@ public class Characters : MonoBehaviour, IPointerDownHandler
             elapsed += Time.deltaTime;
             yield return null;
         }
+    }
+
+    public void IsTargetable()
+    {
+        if(isTargetable)
+            healthBarOutline.SetActive(true);
+        else
+            healthBarOutline.SetActive(false);
     }
 }

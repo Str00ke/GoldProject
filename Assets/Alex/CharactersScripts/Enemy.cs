@@ -21,11 +21,18 @@ public class Enemy : Characters
         durationDecreaseHealth = 1.5f;
         posInitial = GameObject.Find("Pos00Enemy").transform;
         ChangePos();
+
+        //ISTARGETABLE FOR ABILITIES
+        isTargetable = false;
+        healthBarOutline = GameObject.Find("HealthBarOutline");
+        healthBarOutline.SetActive(false);
+        UpdateMeleeState();
     }
 
     // Update is called once per frame
     void Update()
     {
+        IsTargetable();
         ChangeColor();
     }
 
