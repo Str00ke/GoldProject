@@ -9,7 +9,11 @@ public class CharacterManager : MonoBehaviour
 
     public static CharacterManager characterManager;
 
-    [Header("Character Swap Scene")]
+    [Header("Team Scene")]
+    public GameObject teamSceneGo;
+    [SerializeField] private GameObject[] slotsTeam;
+
+    [Header("Team Swap Scene")]
     private int indexSwap1 = -1, indexSwap2 = -1;
     public GameObject characterSwapGo;
     [SerializeField] private GameObject buttonSwap;
@@ -26,6 +30,20 @@ public class CharacterManager : MonoBehaviour
 
         characterManager = this;
         characters = new Character[3];
+    }
+
+    private void Start()
+    {
+        teamSceneGo.SetActive(false);
+        characterSwapGo.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P) && !characterSwapGo.activeSelf)
+        {
+            OpenTeamScene();
+        }
     }
 
     public Character AskForCharacter(int indexChar)
@@ -62,10 +80,99 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    #region TeamScene
+
+    public void OpenTeamScene()
+    {
+        teamSceneGo.SetActive(true);
+
+        slotsTeam[0].SetActive(characters[0] == null ? false : true);
+        slotsTeam[1].SetActive(characters[1] == null ? false : true);
+        slotsTeam[2].SetActive(characters[2] == null ? false : true);
+
+        /* Set characters items */
+        for (int i = 0; i < 3; i++)
+        {
+            if (!slotsTeam[i].activeSelf)
+                continue;
+
+            GameObject items = slotsTeam[i].transform.GetChild(0).gameObject;
+            items.transform.GetChild(0).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Head) != null ? characters[i].GetItem(NItem.EPartType.Head).itemUiSprite : null;
+            if (characters[i].GetItem(NItem.EPartType.Head) != null)
+            {
+                NItem.ItemScriptableObject head = characters[i].GetItem(NItem.EPartType.Head);
+                items.transform.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
+                items.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(head));
+            }
+
+            items.transform.GetChild(1).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Body) != null ? characters[i].GetItem(NItem.EPartType.Body).itemUiSprite : null;
+            if (characters[i].GetItem(NItem.EPartType.Body) != null)
+            {
+                NItem.ItemScriptableObject body = characters[i].GetItem(NItem.EPartType.Body);
+                items.transform.GetChild(1).GetComponent<Button>().onClick.RemoveAllListeners();
+                items.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(body));
+            }
+
+            items.transform.GetChild(2).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Weapon) != null ? characters[i].GetItem(NItem.EPartType.Weapon).itemUiSprite : null;
+            if (characters[i].GetItem(NItem.EPartType.Weapon) != null)
+            {
+                NItem.ItemScriptableObject weapon = characters[i].GetItem(NItem.EPartType.Weapon);
+                items.transform.GetChild(2).GetComponent<Button>().onClick.RemoveAllListeners();
+                items.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(weapon));
+            }
+
+            items.transform.GetChild(3).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Gem) != null ? characters[i].GetItem(NItem.EPartType.Gem).itemUiSprite : null;
+            if (characters[i].GetItem(NItem.EPartType.Gem) != null)
+            {
+                NItem.ItemScriptableObject gem = characters[i].GetItem(NItem.EPartType.Gem);
+                items.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
+                items.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(gem));
+            }
+        }
+
+        /* Set characters stats */
+        for (int i = 0; i < 3; i++)
+        {
+            if (!slotsTeam[i].activeSelf)
+                continue;
+
+            GameObject stats = slotsTeam[i].transform.GetChild(1).gameObject;
+            stats.transform.GetChild(0).GetComponent<Text>().text = "Health: " + characters[i].health;
+            stats.transform.GetChild(1).GetComponent<Text>().text = "Armor: " + characters[i].armor;
+            stats.transform.GetChild(2).GetComponent<Text>().text = "Attack: " + characters[i].attack;
+            stats.transform.GetChild(3).GetComponent<Text>().text = "Dodge: " + characters[i].dodge;
+        }
+    }
+
+    public void CloseTeamScene()
+    {
+        teamSceneGo.SetActive(false);
+    }
+
+    public void SwapCharacterSlotStats(int slot)
+    {
+        Transform items = slotsTeam[slot].transform.GetChild(0);
+
+        if (items.gameObject.activeSelf)
+        {
+            items.gameObject.SetActive(false);
+            slotsTeam[slot].transform.GetChild(1).gameObject.SetActive(true);
+        }
+        else
+        {
+            items.gameObject.SetActive(true);
+            slotsTeam[slot].transform.GetChild(1).gameObject.SetActive(false);
+        }
+    }
+
+    #endregion
+
     #region CharacterSwapScene
 
     public void OpenCharacterSwapScene()
     {
+        CloseTeamScene();
+
         characterSwapGo.SetActive(true);
 
         slots[0].SetActive(characters[0] == null ? false : true);
@@ -128,6 +235,7 @@ public class CharacterManager : MonoBehaviour
         buttonSwap.gameObject.SetActive(false);
 
         characterSwapGo.SetActive(false);
+        OpenTeamScene();
     }
 
     public void ChoseCharacterSwap(int index)

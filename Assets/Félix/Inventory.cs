@@ -36,18 +36,22 @@ public class Inventory : MonoBehaviour
         playerItemSelectionGo.SetActive(false);
         itemStatsGo.SetActive(false);
         panelItem.SetActive(false);
-        //inventoryGo.SetActive(false);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P) && !CharacterManager.characterManager.characterSwapGo.activeSelf)
-        {
-            CharacterManager.characterManager.OpenCharacterSwapScene();
-        }
+        inventoryGo.SetActive(false);
     }
 
     #region ItemInventoryPart
+
+    public void OpenInventory()
+    {
+        CharacterManager.characterManager.CloseTeamScene();
+        inventoryGo.SetActive(true);
+    }
+
+    public void CloseInventory()
+    {
+        inventoryGo.SetActive(false);
+        CharacterManager.characterManager.OpenTeamScene();
+    }
 
     public void AddItem(NItem.ItemScriptableObject item)
     {
