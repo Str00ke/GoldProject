@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Characters : MonoBehaviour, IPointerDownHandler
 {
+    public GameObject healthBarOutline;
     [Header("Labels")]
     public string charName;
     public enum CharType
@@ -32,7 +33,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
 
 
     [Header("CombatVariables")]
-    public bool isTargetable = true;
+    public bool isTargetable;
     public bool isMelee;
     public bool isDead;
     public bool hasPlayed;
@@ -52,16 +53,26 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     public float speedMove = 1.0f;
     public float durationMove = 1.0f;
 
+
     [Header("Animation")]
     public Animator anim;
 
-    private void Update()
-    {
-    }
 
     public void ChangePos()
     {
+        UpdateMeleeState();
         StartCoroutine(ChangePosCoroutine(durationMove));
+    }
+    public void UpdateMeleeState()
+    {
+        if (teamPosition >= 1)
+        {
+            isMelee = false;
+        }
+        else
+        {
+            isMelee = true;
+        }
     }
     public void ChangeColor()
     {
@@ -76,7 +87,10 @@ public class Characters : MonoBehaviour, IPointerDownHandler
         else if (CanAttack)
         {
             thisColor.color = AttackColor;
-        }else if (hasPlayed && !isSelected)
+        } else if(CanAttack && isSelected)
+        {
+            thisColor.color = selectedColor;
+        } else if (hasPlayed && !isSelected)
         {
             thisColor.color = hasPlayedColor;
         }
@@ -92,11 +106,6 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     public virtual void OnPointerUp(PointerEventData eventData)
     {
     }
-    //-------------------------------------------------ASSIGN ABILITIES------------------------------------------
-    public void AssignAbilities() 
-    {
-
-    }
     public void ChangeStats(string name, float maxHP, Vector2 dmgRange, int dodg, float critCh, float critDmg, int armr, int position)
     {
         charName = name;
@@ -108,15 +117,46 @@ public class Characters : MonoBehaviour, IPointerDownHandler
         armor = armr;
         teamPosition = position;
     }
-    public void TakeDamageFrom(Characters attacker)
+    public void InteractWith(Characters receiver, Ability ability)
     {
-        float dmg = Mathf.Round(Random.Range(attacker.damageRange.x, attacker.damageRange.y));
-        dmg = dmg - armor / 100;
-        health -= dmg;
-        Debug.Log(this.charName + "Health" + health + "   dmg" + dmg);
-        StartCoroutine(TakeDamageCor(dmg, durationDecreaseHealth));
+        if (ability.targetType != Ability.TargetType.TEAM)
+        {
+            float dmg = Mathf.Round(Random.Range(damageRange.x, damageRange.y));
+            dmg *= (ability.multiplicator/100);
+            if(Random.Range(0.0f,1.0f) < this.critChance)
+            {
+                dmg += dmg * this.critDamage;
+            }
+            dmg = dmg - armor / 100;
+            health -= dmg;
+            receiver.TakeDamage(dmg, durationDecreaseHealth);
+        }else if (ability.targetType == Ability.TargetType.TEAM) 
+        {
+            float healing = Mathf.Round(Random.Range(damageRange.x, damageRange.y));
+            Debug.Log("Healing " + healing);
+            Debug.Log(ability.multiplicator / 100);
+            healing *= (ability.multiplicator / 100);
+            Debug.Log("Healing " + healing);
+            receiver.TakeHealing(healing, durationDecreaseHealth);
+            /*if (Random.Range(0.0f, 100.0f) < this.critChance)
+            {
+                healing += healing * this.critDamage;
+            }*/
+        }
     }
 
+    public virtual void TakeHealing(float value, float duration) 
+    {
+    }
+    public virtual IEnumerator TakeHealingCor(float value, float duration)
+    {
+        yield return null;
+    }
+
+    public virtual void TakeDamage(float value, float duration) 
+    {
+        StartCoroutine(TakeDamageCor(value, duration));
+    }
     public virtual IEnumerator TakeDamageCor(float value, float duration)
     {
         yield return null;
@@ -134,5 +174,13 @@ public class Characters : MonoBehaviour, IPointerDownHandler
             elapsed += Time.deltaTime;
             yield return null;
         }
+    }
+
+    public void IsTargetable()
+    {
+        if(isTargetable)
+            healthBarOutline.SetActive(true);
+        else
+            healthBarOutline.SetActive(false);
     }
 }

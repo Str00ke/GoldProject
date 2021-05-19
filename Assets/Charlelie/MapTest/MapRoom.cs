@@ -19,7 +19,7 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     MapRoom[] linkedRoom = new MapRoom[4];
     public RoomType roomType = new RoomType();
     public bool isDiscovered = false;
-    bool isFinished = false;
+    public bool isFinished = false;
     
 
     //Remplacer GameObject par les types une foit ajoutés
@@ -98,18 +98,13 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         FindObjectOfType<PlayerPoint>().GoToRoom(this);
     }
 
-    public void CreateRoom()
-    {
-
-    }
-
     public void OnFinishRoom()
     {
         if (isFinished)
             return;
 
         isFinished = true;
-        Debug.Log("Discovering");
+        //Debug.Log("Discovering");
         if (roomType == RoomType.END)
         {
             Debug.Log("Level finished!");
@@ -118,9 +113,14 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             if (linkedRoom[i] != null)
             {
-                linkedRoom[i].gameObject.SetActive(true);
-                linkedRoom[i].isDiscovered = true;
+                if (!linkedRoom[i].isDiscovered)
+                {
+                    linkedRoom[i].gameObject.SetActive(true);
+                    linkedRoom[i].isDiscovered = true;
+                }
+                
                 GameObject go = new GameObject();
+                go.transform.parent = transform;
                 LineRenderer lr = go.AddComponent<LineRenderer>();
                 lr.SetColors(Color.green, Color.yellow);
                 lr.startWidth = 0.3f;
@@ -138,7 +138,6 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             if (linkedRoom[i] == null)
             {
                 linkedRoom[i] = other;
-                //Debug.Log(other.pos.GetLength(0) + " " + other.pos.GetLength(1));
                 return;
             }
         }

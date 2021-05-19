@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class Ally : Characters
 {
+    public bool inDefenceMode = false;
     private void Awake()
     {
         CombatManager.combatManager.chars.Add(this);
@@ -20,11 +21,22 @@ public class Ally : Characters
         durationDecreaseHealth = 1.5f;
         posInitial = GameObject.Find("Pos00").transform;
         ChangePos();
+
+
     }
 
+    private void Start()
+    {
+        //ISTARGETABLE FOR ABILITIES
+        isTargetable = false;
+        healthBarOutline = GameObject.Find("HealthBarOutline");
+        healthBarOutline.SetActive(false);
+        UpdateMeleeState();
+    }
     // Update is called once per frame
     void Update()
     {
+        IsTargetable();
         ChangeColor();
     }
 
@@ -62,21 +74,21 @@ public class Ally : Characters
     {
             if (isSelected)
             {
-                if (CombatManager.combatManager.charSelected == this)
+                if (CombatManager.combatManager.allySelected == this)
                 {
                     isSelected = false;
-                    CombatManager.combatManager.charSelected = null;
+                    CombatManager.combatManager.allySelected = null;
                 }
             }
             else if (!isSelected)
             {
-                if (CombatManager.combatManager.charSelected != null)
+                if (CombatManager.combatManager.allySelected != null)
                 {
-                    CombatManager.combatManager.charSelected.isSelected = false;
-                    CombatManager.combatManager.charSelected = null;
+                    CombatManager.combatManager.allySelected.isSelected = false;
+                    CombatManager.combatManager.allySelected = null;
                 }
                 isSelected = true;
-                CombatManager.combatManager.charSelected = this;
+                CombatManager.combatManager.allySelected = this;
             }
     }
     public override IEnumerator TakeDamageCor(float value, float duration)
@@ -94,8 +106,10 @@ public class Ally : Characters
         {
             ratio = elapsed / duration;
             healthBar.value = Mathf.Lerp(startValue, endValue, ratio);
+            health = healthBar.value;
             if (healthBar.value <= 0)
             {
+                health = 0;
                 break;
             }
             elapsed += Time.deltaTime;
@@ -104,27 +118,39 @@ public class Ally : Characters
         healthBar.value = endValue;
         if (health <= 0)
         {
-            hasPlayed = true;
+            isDead = true;
             isTargetable = false;
+            health = 0;
             CombatManager.combatManager.RemoveAlly(this);
             healthBar.gameObject.SetActive(false);
         }
     }
 
-    public void Ability01()
+    public override void TakeHealing(float value, float duration)
     {
-
+        StartCoroutine(TakeHealingCor(value, duration));
     }
-    public void Ability02()
+    public override IEnumerator TakeHealingCor(float value, float duration)
     {
-
-    }
-    public void Ability03()
-    {
-
-    }
-    public void Ability04()
-    {
-
+        var startValue = healthBar.value;
+        var endValue = startValue + value;
+        Debug.Log("Final health" + endValue);
+        float elapsed = 0.0f;
+        float ratio = 0.0f;
+        while (elapsed < duration)
+        {
+            ratio = elapsed / duration;
+            healthBar.value = Mathf.Lerp(startValue, endValue, ratio);
+            health = healthBar.value;
+            if (healthBar.value >= maxHealth)
+            {
+                health = maxHealth;
+                break;
+            }
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        healthBar.value = endValue;
+        yield return new WaitForSeconds(duration);
     }
 }
