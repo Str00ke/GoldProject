@@ -11,6 +11,10 @@ public class Inventory : MonoBehaviour
     private int nbLines = 0;
     private List<GameObject> itemList = new List<GameObject>();
 
+    private int[,] indexItemTypes = new int[4,5];
+    [SerializeField] private Image[] itemPartButton = new Image[4];
+    [SerializeField] private Image[] itemRarityButton = new Image[5];
+
     public static Inventory inventory;
 
     [SerializeField] private GameObject inventoryGo;
@@ -78,9 +82,29 @@ public class Inventory : MonoBehaviour
         
         Button buttonNItem = nItem.GetComponent<Button>();
 
-        itemList.Add(nItem);
+        itemList.Insert(indexItemTypes[(int)item.itemPartType, (int)item.itemRarity], nItem);
+        nItem.transform.SetSiblingIndex(indexItemTypes[(int)item.itemPartType, (int)item.itemRarity]);
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (i < (int)item.itemPartType)
+                continue;
+
+            for (int x = 0; x < 5; x++)
+            {
+                if (i == (int)item.itemPartType && x < (int)item.itemRarity)
+                    continue;
+
+                indexItemTypes[i, x]++;
+            }
+        }
 
         buttonNItem.onClick.AddListener(() => ShowItemPanel(nItem));
+
+        bool isActivePart = itemPartButton[(int)item.itemPartType].color.b == 0f;
+        bool isActiveRarity = itemPartButton[(int)item.itemRarity].color.b == 0f;
+
+        nItem.SetActive(isActivePart ? isActiveRarity ? true : false : false);
     }
 
     public void DeleteItem(GameObject item)
@@ -125,6 +149,47 @@ public class Inventory : MonoBehaviour
     public void CloseItemPanel()
     {
         panelItem.SetActive(false);
+    }
+
+    public void ButtonSelectionRarity(int rarity)
+    {
+        bool isActive = itemRarityButton[rarity].color.b == 0f;
+        itemRarityButton[rarity].color = isActive ? new Vector4(1f, 1f, 1f, 1f) : new Vector4(1f, 0f, 0f, 1f);
+
+        for (int i = 0; i < 4; i++)
+        {
+            int y = indexItemTypes[i==0 ? 0 : rarity==0 ? i-1 : i, rarity==0 ? i==0 ? 0 : 4 : rarity-1];
+
+            if (y == indexItemTypes[i, rarity])
+            {
+                continue;
+            }
+
+            for (; y < indexItemTypes[i, rarity]; y++)
+            {
+                bool isActivePart = itemPartButton[(int)itemList[y].GetComponent<ItemInInventory>().item.itemPartType].color.b == 0f;
+
+                itemList[y].SetActive(isActivePart ? !isActive ? true : false : false);
+                //itemList[y].SetActive(!isActive);
+            }
+        }
+    }
+
+    public void ButtonSelectionItemPart(int itemPart)
+    {
+        bool isActive = itemPartButton[itemPart].color.b == 0f;
+        itemPartButton[itemPart].color = isActive ? new Vector4(1f, 1f, 1f, 1f) : new Vector4(1f, 0f, 0f, 1f);
+
+        int y = indexItemTypes[itemPart == 0 ? 0 : itemPart - 1, itemPart == 0 ? 0 : 4];
+
+        for (; y < indexItemTypes[itemPart, 4]; y++)
+        {
+            bool isActiveRarity = itemRarityButton[(int)itemList[y].GetComponent<ItemInInventory>().item.itemRarity].color.b == 0f;
+
+            itemList[y].SetActive(isActiveRarity ? !isActive ? true : false : false);
+
+            //itemList[y].SetActive(!isActive);
+        }
     }
 
     #endregion

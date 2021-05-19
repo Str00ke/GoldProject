@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87f1b7c176c2dab46b42dfb6a9ffe6bb, type: 3}
-  m_Name: Item
+  m_Name: Item 2
   m_EditorClassIdentifier: 
-  itemName: Ultime
-  health: 100
-  armor: 100
-  attack: 100
-  dodge: 100
-  criticalChance: 100
-  crititalDamage: 100
+  itemName: La bete
+  health: 1
+  armor: 1
+  attack: 1
+  dodge: 1
+  criticalChance: 1
+  crititalDamage: 1
   itemPartType: 0
-  itemType: 2
-  itemRarity: 0
-  itemUiSprite: {fileID: 21300000, guid: fc65a9309abeab543b26e2e0cb40715a, type: 3}
+  itemType: 0
+  itemRarity: 2
+  itemUiSprite: {fileID: 21300000, guid: f01e1babcce12b240868fbd8e52b83ee, type: 3}

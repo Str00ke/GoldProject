@@ -23,11 +23,11 @@ namespace NItem
 
     public enum ERarity
     {
-        Normal,
-        Rare,
-        Epic,
+        Ultimate,
         Legendary,
-        Ultime
+        Epic,
+        Rare,
+        Normal
     }
 
     [CreateAssetMenu(fileName = "Item", menuName = "ScriptableObjects/Item", order = 1)]
@@ -44,6 +44,7 @@ namespace NItem
         [Space]
         public EPartType itemPartType;
         public EItemType itemType;
+        public ERarity itemRarity;
         [Space]
         public Sprite itemUiSprite;
     }
