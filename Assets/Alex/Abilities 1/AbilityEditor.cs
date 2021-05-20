@@ -8,11 +8,6 @@ using System;
 [CanEditMultipleObjects]
 public class AbilityEditor : Editor
 {
-    //SerializedProperty ability;
-    void OnEnable() 
-    {
-        //ability = serializedObject.FindProperty("ability"); ;
-    }
     public override void OnInspectorGUI()
     {
         var ability = target as Ability;

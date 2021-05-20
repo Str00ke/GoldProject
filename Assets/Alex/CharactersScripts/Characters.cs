@@ -36,7 +36,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     public float health;
     public float maxHealth;
     public Vector2 damageRange;
-    public int initiative;
+    public float initiative;
     [HideInInspector]
     public float dodge;
     public float dodgeValue;
@@ -57,22 +57,6 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     public float armorModif = 0.3f;
     public float dodgeModif = 0.2f;
 
-    [Header("Cristal's Dots")]
-    public float turnsDotIceValue = 2;
-    public float turnsDotIce;
-    public float dmgDotIce = 0;
-
-    public float turnsDotMudValue = 2;
-    public float turnsDotMud;
-    public float dmgDotMud = 0;
-
-    public float turnsDotAshValue = 2;
-    public float turnsDotAsh;
-    public float dmgDotAsh = 0;
-
-    public float turnsDotPsyValue = 2;
-    public float turnsDotPsy;
-    public float dmgDotPsy = 0;
 
 
     [Header("StatusVariables")]
@@ -326,23 +310,19 @@ public class Characters : MonoBehaviour, IPointerDownHandler
         {
             case Ability.ElementType.ASH:
                 dmg *= (ability.multiplicator / 100);
-                dmgDotAsh += dmg;
-                turnsDotAsh = turnsDotAshValue;
+                //ADD DOT
                 break;
             case Ability.ElementType.ICE:
                 dmg *= (ability.multiplicator / 100);
-                dmgDotIce += dmg;
-                turnsDotIce = turnsDotIceValue;
+                //ADD DOT
                 break;
             case Ability.ElementType.MUD:
                 dmg *= (ability.multiplicator / 100);
-                dmgDotMud += dmg;
-                turnsDotMud = turnsDotMudValue;
+                //ADD DOT
                 break;
             case Ability.ElementType.PSY:
                 dmg *= (ability.multiplicator / 100);
-                dmgDotPsy += dmg;
-                turnsDotPsy = turnsDotPsyValue;
+                //ADD DOT
                 break;
         }
     }
@@ -456,7 +436,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
 
     public void TakeDamageDots()
     {
-        if(turnsDotAsh > 0)
+        /*if(turnsDotAsh > 0)
         {
             TakeDamage(dmgDotAsh, durationDecreaseHealth);
             ElementReactions(CurrentElement.ASH);
@@ -480,7 +460,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
             ElementReactions(CurrentElement.PSY);
             turnsDotPsy--;
         }
-        UpdateDisplayDots();
+        UpdateDisplayDots();*/
     }
     public void UpdateDisplayDots()
     {

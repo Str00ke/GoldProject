@@ -13,8 +13,15 @@ MonoBehaviour:
   m_Name: AttackAlly05
   m_EditorClassIdentifier: 
   name: poiuyt
-  multiplicator: 0
+  type: 
+  multiplicator: 50
   icon: {fileID: 21300000, guid: f01e1babcce12b240868fbd8e52b83ee, type: 3}
-  isMelee: 0
-  onAlly: 1
-  damageType: 0
+  bonusmalus: 0
+  objectType: 0
+  weaponAbilityType: 0
+  crType: 1
+  crHealType: 3
+  crAttackType: 0
+  crSpecialType: 0
+  targetType: 0
+  elementType: 4
