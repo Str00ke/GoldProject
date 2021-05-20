@@ -6,10 +6,9 @@ using UnityEngine.UI;
 
 public class Ally : Characters
 {
-    public bool inDefenceMode = false;
     private void Awake()
     {
-        CombatManager.combatManager.chars.Add(this);
+        CombatManager.combatManager.allies.Add(this);
         charType = CharType.ALLY;
         anim = this.GetComponent<Animator>();
         thisColor = this.GetComponent<SpriteRenderer>();
@@ -18,6 +17,8 @@ public class Ally : Characters
         health = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = health;
+        dodge = dodgeValue;
+        armor = armorValue;
         durationDecreaseHealth = 1.5f;
         posInitial = GameObject.Find("Pos00").transform;
         ChangePos();
@@ -93,20 +94,21 @@ public class Ally : Characters
     }
     public override IEnumerator TakeDamageCor(float value, float duration)
     {
-        var startValue = healthBar.value;
-        var endValue = startValue - value;
+        float startValue = healthBar.value;
+        float endValue = startValue - value;
+        endValue = Mathf.Round(endValue);
         float elapsed = 0.0f;
         float ratio = 0.0f;
-        if (health <= 0)
+        /*if (health <= 0)
         {
             isDead = true;
             isTargetable = false;
-        }
+        }*/
         while (elapsed < duration)
         {
             ratio = elapsed / duration;
             healthBar.value = Mathf.Lerp(startValue, endValue, ratio);
-            health = healthBar.value;
+            health = Mathf.Round(healthBar.value);
             if (healthBar.value <= 0)
             {
                 health = 0;
@@ -124,6 +126,7 @@ public class Ally : Characters
             CombatManager.combatManager.RemoveAlly(this);
             healthBar.gameObject.SetActive(false);
         }
+        yield return new WaitForSeconds(durationDecreaseHealth);
     }
 
     public override void TakeHealing(float value, float duration)
@@ -133,8 +136,9 @@ public class Ally : Characters
     public override IEnumerator TakeHealingCor(float value, float duration)
     {
         var startValue = healthBar.value;
+        value *= healReceivedModif;
         var endValue = startValue + value;
-        Debug.Log("Final health" + endValue);
+        endValue = Mathf.Round(endValue);
         float elapsed = 0.0f;
         float ratio = 0.0f;
         while (elapsed < duration)
@@ -151,6 +155,6 @@ public class Ally : Characters
             yield return null;
         }
         healthBar.value = endValue;
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(durationDecreaseHealth);
     }
 }

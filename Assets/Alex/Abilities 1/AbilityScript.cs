@@ -48,6 +48,7 @@ public class AbilityScript : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             {
                 isSelected = false;
                 AbilitiesManager.abilitiesManager.abilitySelected = null;
+                AbilitiesManager.abilitiesManager.ClearTargets();
             }
         }
         else if (!isSelected)
@@ -60,7 +61,7 @@ public class AbilityScript : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
             isSelected = true;
             AbilitiesManager.abilitiesManager.abilitySelected = this;
-            AbilitiesManager.abilitiesManager.SetTargets(AbilitiesManager.abilitiesManager.abilitySelected.ability.targetType);
+            AbilitiesManager.abilitiesManager.SetTargets(AbilitiesManager.abilitiesManager.abilitySelected.ability);
         }
         
     }

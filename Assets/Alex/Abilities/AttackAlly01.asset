@@ -12,10 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40102682e9e99234baf7862f25a929e2, type: 3}
   m_Name: AttackAlly01
   m_EditorClassIdentifier: 
-  name: Adadada
+  name: Bow 01
+  type: 
   multiplicator: 50
-  icon: {fileID: 21300000, guid: 97587b9fc8181774191b0b8147aa3268, type: 3}
-  unitType: 0
-  targetType: 2
-  damageType: 2
-  weaponAbilityType: 3
+  icon: {fileID: 21300000, guid: 2f3eab5d352517a4e8163a33099d3001, type: 3}
+  bonusmalus: 0
+  objectType: 1
+  weaponAbilityType: 2
+  crType: 1
+  crHealType: 2
+  crAttackType: 0
+  crSpecialType: 0
+  targetType: 1
+  elementType: 1

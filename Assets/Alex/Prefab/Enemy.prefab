@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 25
-  m_WholeNumbers: 1
+  m_WholeNumbers: 0
   m_Value: 25
   m_OnValueChanged:
     m_PersistentCalls:
@@ -476,7 +476,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarOutline: {fileID: 0}
   charName: 
+  abilities:
+  - {fileID: 11400000, guid: 339b3b47eb400d24e90347ae579ebbf6, type: 2}
+  - {fileID: 11400000, guid: 3aa29f96a43107e48a69b2579056750f, type: 2}
+  abilitiesCristal:
+  - {fileID: 0}
+  - {fileID: 0}
   charType: 0
+  currentElement: 0
   health: 30
   maxHealth: 20
   damageRange: {x: 6, y: 8}
@@ -485,10 +492,13 @@ MonoBehaviour:
   critChance: 0.1
   critDamage: 2
   armor: 10
+  precision: 1
   healthBar: {fileID: 0}
-  abilities:
-  - {fileID: 11400000, guid: 339b3b47eb400d24e90347ae579ebbf6, type: 2}
-  - {fileID: 11400000, guid: 3aa29f96a43107e48a69b2579056750f, type: 2}
+  healReceivedModif: 1
+  bleeding: 0
+  armorModif: 2
+  inDefenceMode: 0
+  isStunned: 0
   isTargetable: 1
   isMelee: 0
   isDead: 0

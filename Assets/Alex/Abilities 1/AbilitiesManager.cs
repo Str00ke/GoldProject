@@ -17,8 +17,12 @@ public class AbilitiesManager : MonoBehaviour
     public AbilityScript Ability02;
     public AbilityScript Ability03;
     public AbilityScript Ability04;
-    public Ability[] abilitiesAllies;
+    public Ability[] abilitiesWeaponsAllies;
+    public Ability[] abilitiesCristalsAllies;
     public Ability[] abilitiesEnemies;
+
+
+
     private void Awake()
     {
         if (abilitiesManager == null)
@@ -79,71 +83,129 @@ public class AbilitiesManager : MonoBehaviour
         {
             Ability01.GetComponent<SpriteRenderer>().sprite = CombatManager.combatManager.allyPlaying.abilities[0].icon;
             Ability02.GetComponent<SpriteRenderer>().sprite = CombatManager.combatManager.allyPlaying.abilities[1].icon;
-            Ability03.GetComponent<SpriteRenderer>().sprite = CombatManager.combatManager.allyPlaying.abilities[2].icon;
-            Ability04.GetComponent<SpriteRenderer>().sprite = CombatManager.combatManager.allyPlaying.abilities[3].icon;
+            Ability03.GetComponent<SpriteRenderer>().sprite = CombatManager.combatManager.allyPlaying.abilitiesCristal[0].icon;
+            Ability04.GetComponent<SpriteRenderer>().sprite = CombatManager.combatManager.allyPlaying.abilitiesCristal[1].icon;
 
             Ability01.ability = CombatManager.combatManager.allyPlaying.abilities[0];
             Ability02.ability = CombatManager.combatManager.allyPlaying.abilities[1];
-            Ability03.ability = CombatManager.combatManager.allyPlaying.abilities[2];
-            Ability04.ability = CombatManager.combatManager.allyPlaying.abilities[3];
+            Ability03.ability = CombatManager.combatManager.allyPlaying.abilitiesCristal[0];
+            Ability04.ability = CombatManager.combatManager.allyPlaying.abilitiesCristal[1];
             if (abilitySelected)
             {
                 abilityNameUI.text = abilitySelected.ability.name;
-                abilityDescription.text = "Multiplicator" + abilitySelected.ability.multiplicator;
+                abilityDescription.text += "\n" + abilitySelected.ability.type;
+                //abilityDescription.text += "\n" + abilitySelected.ability.objectType.ToString();
+                abilityDescription.text += "\n" + abilitySelected.ability.targetType.ToString();
+                abilityDescription.text = "Multiplicator" + abilitySelected.ability.multiplicator + "\n";
+                if(abilitySelected.ability.objectType == Ability.ObjectType.CRISTAL)
+                {
+                    abilityDescription.text += "\n" + abilitySelected.ability.crType.ToString();
+                }
+                else
+                {
+                    abilityDescription.text += "\n" + abilitySelected.ability.weaponAbilityType.ToString();
+                }
+                abilityDescription.text += "\n" + abilitySelected.ability.elementType.ToString();
             }
         }
     }
-    public void SetTargets(Ability.TargetType targetType) 
+    public void SetTargets(Ability ab) 
     {
-        switch (targetType) 
-        {
-            case Ability.TargetType.TEAM:
-                foreach (Ally a in CombatManager.combatManager.chars)
+            if (ab.objectType == Ability.ObjectType.CRISTAL)
+            {
+                if (ab.crType == Ability.CristalAbilityType.HEAL)
                 {
-                    if(!a.isDead)
-                        a.isTargetable = true;
-                    else
-                        a.isTargetable = false;
-                }
-                foreach (Enemy e in CombatManager.combatManager.enemies)
-                {
-                    e.isTargetable = false;
-                }
-                break;
-            case Ability.TargetType.RANGE:
-                foreach (Enemy e in CombatManager.combatManager.enemies)
-                {
-                    e.isTargetable = true;
-                }
-                foreach (Ally a in CombatManager.combatManager.chars)
-                {
-                    a.isTargetable = false;
-                }
-                break;
-            case Ability.TargetType.MELEE:
-                foreach (Enemy e in CombatManager.combatManager.enemies)
-                {
-                    if (e.isMelee)
+                    foreach (Ally a in CombatManager.combatManager.allies)
                     {
-                        e.isTargetable = true;
+                        if (!a.isDead)
+                            a.isTargetable = true;
+                        else
+                            a.isTargetable = false;
                     }
-                    else
+                    foreach (Enemy e in CombatManager.combatManager.enemies)
                     {
                         e.isTargetable = false;
                     }
                 }
-                foreach (Ally a in CombatManager.combatManager.chars)
+                else if (ab.crType == Ability.CristalAbilityType.ATTACK)
                 {
-                    a.isTargetable = false;
+                    foreach (Enemy e in CombatManager.combatManager.enemies)
+                    {
+                        e.isTargetable = true;
+                    }
+                    foreach (Ally a in CombatManager.combatManager.allies)
+                    {
+                        a.isTargetable = false;
+                    }
                 }
-                break;
+            }
+            else
+            {
+                if (ab.targetType == Ability.TargetType.RANGE)
+                    switch (ab.targetType)
+                    {
+                        case Ability.TargetType.ALLIES:
+                            foreach (Ally a in CombatManager.combatManager.allies)
+                            {
+                                if (!a.isDead)
+                                    a.isTargetable = true;
+                                else
+                                    a.isTargetable = false;
+                            }
+                            foreach (Enemy e in CombatManager.combatManager.enemies)
+                            {
+                                e.isTargetable = false;
+                            }
+                            break;
+                        case Ability.TargetType.RANGE:
+                            foreach (Enemy e in CombatManager.combatManager.enemies)
+                            {
+                                e.isTargetable = true;
+                            }
+                            foreach (Ally a in CombatManager.combatManager.allies)
+                            {
+                                a.isTargetable = false;
+                            }
+                            break;
+                        case Ability.TargetType.MELEE:
+                            foreach (Enemy e in CombatManager.combatManager.enemies)
+                            {
+                                if (e.isMelee)
+                                {
+                                    e.isTargetable = true;
+                                }
+                                else
+                                {
+                                    e.isTargetable = false;
+                                }
+                            }
+                            foreach (Ally a in CombatManager.combatManager.allies)
+                            {
+                                a.isTargetable = false;
+                            }
+                            break;
+                    }
+            }
+    }
+    public void ClearTargets()
+    {
+        if(abilitySelected == null)
+        {
+            foreach (Enemy e in CombatManager.combatManager.enemies)
+            {
+                e.isTargetable = false;
+            }
+            foreach (Ally a in CombatManager.combatManager.allies)
+            {
+                a.isTargetable = false;
+            }
         }
     }
     public void DisplayActionButton() 
     {
         if (abilitySelected && CombatManager.combatManager.allyPlaying)
         {
-            if(abilitySelected.ability.targetType == Ability.TargetType.TEAM)
+            if(abilitySelected.ability.targetType == Ability.TargetType.ALLIES)
             {
                 if (CombatManager.combatManager.allySelected && CombatManager.combatManager.allySelected.isTargetable)
                 {
@@ -170,32 +232,123 @@ public class AbilitiesManager : MonoBehaviour
             actionButton.SetActive(false);
         }
     }
-    public void AllyActionAbility() 
+    public void AllyActionAbility()
     {
-        switch (abilitySelected.ability.targetType)
+        AbilityAction(abilitySelected.ability);
+        CombatManager.combatManager.NextCharAttack();
+        lastAbilityLaunched = abilitySelected.ability;
+        abilitySelected.isSelected = false;
+    }
+    public void AbilityAction(Ability abi)
+    {
+        var cm = CombatManager.combatManager;
+        //-----------------------CHANGE ABILITY IN FUNCTION OF TARGETTYPE---------------------------------
+        switch (abi.objectType)
         {
-            case Ability.TargetType.TEAM:
-                if (CombatManager.combatManager.allySelected.isTargetable)
+            //----------------------------------------------------ABILITIES ON CRISTAL----------------------------------------
+            case Ability.ObjectType.CRISTAL:
+                if(abi.crType == Ability.CristalAbilityType.HEAL)
                 {
-                    CombatManager.combatManager.allyPlaying.InteractWith(CombatManager.combatManager.allySelected, abilitySelected.ability);
+                    if (cm.allySelected.isTargetable)
+                    {
+                        CristalAction(abi);
+                    }
                 }
-            break;
-            case Ability.TargetType.RANGE:
-                if (CombatManager.combatManager.enemySelected.isTargetable)
+                else
                 {
-                    CombatManager.combatManager.allyPlaying.InteractWith(CombatManager.combatManager.enemySelected, abilitySelected.ability);
+                    if (cm.enemySelected.isTargetable)
+                    {
+                        CristalAction(abi);
+                    }
                 }
                 break;
-            case Ability.TargetType.MELEE:
-                if (CombatManager.combatManager.enemySelected.isTargetable)
+            //------------------------------------------------------------ABILITY ON WEAPONS----------------------------------------------------
+            case Ability.ObjectType.WEAPON:
+                switch (abi.targetType)
                 {
-                    CombatManager.combatManager.allyPlaying.InteractWith(CombatManager.combatManager.enemySelected, abilitySelected.ability);
+                    case Ability.TargetType.RANGE:
+
+                        if (cm.enemySelected.isTargetable)
+                        {
+                            if (abi.weaponAbilityType == Ability.WeaponAbilityType.PIERCE)
+                            {
+                                cm.allyPlaying.LaunchAttack(cm.enemySelected, abi);
+                                if (cm.enemies[cm.enemySelected.teamPosition + 1])
+                                    cm.allyPlaying.LaunchAttack(cm.enemies[cm.enemySelected.teamPosition + 1], abi);
+                            }
+                            else if (abi.weaponAbilityType == Ability.WeaponAbilityType.WAVE)
+                            {
+                                foreach (Enemy e in cm.enemies)
+                                {
+                                    cm.allyPlaying.LaunchAttack(e, abi);
+                                }
+                            }
+                            else
+                            {
+                                cm.allyPlaying.LaunchAttack(cm.enemySelected, abi);
+                            }
+                        }
+                        break;
+                    case Ability.TargetType.MELEE:
+                        if (cm.enemySelected.isTargetable)
+                        {
+                            cm.allyPlaying.LaunchAttack(cm.enemySelected, abi);
+                        }
+                        break;
                 }
                 break;
         }
-        CombatManager.combatManager.NextCharAttack();
-        /*CombatManager.combatManager.fightersList[CombatManager.combatManager.currCharAttacking].isSelected = false;
-        CombatManager.combatManager.allySelected = null;*/
     }
-
+    public void CristalAction(Ability a)
+    {
+        var cm = CombatManager.combatManager;
+                switch (a.crType)
+                {
+                    case Ability.CristalAbilityType.HEAL:
+                        switch (a.crHealType)
+                        {
+                            case Ability.CristalHealType.BOOST:
+                                cm.allyPlaying.LaunchBuff(cm.allySelected, a);
+                                break;
+                            case Ability.CristalHealType.BATH:
+                                foreach (Ally al in CombatManager.combatManager.allies)
+                                {
+                                    cm.allyPlaying.LaunchHeal(al, a);
+                                    cm.allyPlaying.LaunchHeal(al, a);
+                                    cm.allyPlaying.LaunchHeal(al, a);
+                                }
+                        break;
+                            case Ability.CristalHealType.DRINK:
+                                cm.allyPlaying.LaunchHeal(cm.allySelected, a);
+                                cm.allyPlaying.LaunchBuff(cm.allySelected, a);
+                                break;
+                        }
+                        break;
+                    case Ability.CristalAbilityType.ATTACK:
+                        switch (a.crAttackType)
+                        {
+                            case Ability.CristalAttackType.NORMAL:
+                                cm.allyPlaying.LaunchAttack(cm.enemySelected, a);
+                                break;
+                            case Ability.CristalAttackType.DOT:
+                        
+                                break;
+                            case Ability.CristalAttackType.MARK:
+                                cm.allyPlaying.LaunchAttack(cm.enemySelected, a);
+                                break;
+                        }
+                        break;
+                    case Ability.CristalAbilityType.OTHERS:
+                        switch (a.crSpecialType)
+                        {
+                            case Ability.CristalSpecialType.DESTRUCTION:
+                                cm.allyPlaying.LaunchDestruction(cm.allySelected, a);
+                                break;
+                            case Ability.CristalSpecialType.COPY:
+                                break;
+                        }
+                        break;
+                
+        }
+    }
 }

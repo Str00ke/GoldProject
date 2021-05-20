@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40102682e9e99234baf7862f25a929e2, type: 3}
+  m_Name: CAHealBoostAsh
+  m_EditorClassIdentifier: 
+  name: 
+  type: 
+  multiplicator: 100
+  icon: {fileID: 21300000, guid: 97587b9fc8181774191b0b8147aa3268, type: 3}
+  bonusmalus: 25
+  objectType: 0
+  weaponAbilityType: 0
+  crType: 1
+  crHealType: 2
+  crAttackType: 0
+  crSpecialType: 0
+  targetType: 0
+  elementType: 3

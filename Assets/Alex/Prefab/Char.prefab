@@ -211,7 +211,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8, y: -50.4}
+  m_AnchoredPosition: {x: 8, y: 26.9}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1479856780
@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 25
-  m_WholeNumbers: 1
+  m_WholeNumbers: 0
   m_Value: 25
   m_OnValueChanged:
     m_PersistentCalls:
@@ -451,12 +451,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8ac2e72010eda1842a986aec8f3e1c46, type: 3}
+  m_Sprite: {fileID: 931563175312495562, guid: 8ac2e72010eda1842a986aec8f3e1c46, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 6, y: 6}
+  m_Size: {x: 1, y: 1.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -476,21 +476,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarOutline: {fileID: 0}
   charName: Ally01
-  charType: 0
-  health: 15
-  maxHealth: 15
-  damageRange: {x: 5, y: 8}
-  initiative: 0
-  dodge: 15
-  critChance: 0.25
-  critDamage: 1
-  armor: 10
-  healthBar: {fileID: 1479856780}
   abilities:
   - {fileID: 11400000, guid: 6fbab3162f95bf449bcfa1a0c164de7b, type: 2}
   - {fileID: 11400000, guid: f8ac5098f638b8d41b97be57ba7eb954, type: 2}
-  - {fileID: 11400000, guid: 0d926289616109240a6359220a4deff6, type: 2}
-  - {fileID: 11400000, guid: eff1320ff1c5d0a40935fd9f4b30a062, type: 2}
+  abilitiesCristal:
+  - {fileID: 11400000, guid: 7b3f72dc691b22347b8d1d3495e42a91, type: 2}
+  - {fileID: 11400000, guid: adec0095f976f7943a4fdebf89b238ce, type: 2}
+  charType: 0
+  currentElement: 0
+  health: 15
+  maxHealth: 15
+  damageRange: {x: 100, y: 100}
+  initiative: 0
+  dodge: 15
+  dodgeValue: 0
+  critChance: 0.25
+  critDamage: 1
+  armor: 10
+  armorValue: 0
+  precision: 1
+  healthBar: {fileID: 1479856780}
+  healReceivedModif: 1
+  bleedingDmg: 0
+  armorModif: 2
+  dodgeModif: 0.2
+  hemorrhage: 0
+  turnsHemoValue: 2
+  turnsHemo: 0
+  armorboost: 0
+  turnsArmorboostValue: 2
+  turnsArmorboost: 0
+  armormalus: 0
+  turnsArmormalusValue: 2
+  turnsArmormalus: 0
+  healbonus: 0
+  turnsHealbonusValue: 2
+  turnsHealbonus: 0
+  stunned: 0
+  turnsStunned: 0
+  precisionmalus: 0
+  turnsPrecisionmalusValue: 2
+  turnsPrecisionmalus: 0
+  dodgeboost: 0
+  turnsDodgeboostValue: 2
+  turnsDodgeboost: 0
+  confusion: 0
+  turnsConfusionValue: 2
+  turnsConfusion: 0
+  inDefenceMode: 0
   isTargetable: 1
   isMelee: 0
   isDead: 0
@@ -526,8 +559,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 10.8, y: 10.8}
-    newSize: {x: 6, y: 6}
+    oldSize: {x: 3.35, y: 5.49}
+    newSize: {x: 1, y: 1.64}
     adaptiveTilingThreshold: 0.5
     drawMode: 1
     adaptiveTiling: 0
@@ -588,7 +621,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.21, y: -50.8}
+  m_AnchoredPosition: {x: 5.21, y: 26.500072}
   m_SizeDelta: {x: 110.43, y: 15.12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7416987625719608020

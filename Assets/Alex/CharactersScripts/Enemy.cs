@@ -16,6 +16,8 @@ public class Enemy : Characters
         healthBar = this.GetComponentInChildren<Slider>();
         health = maxHealth;
         healthBar.maxValue = maxHealth;
+        dodge = dodgeValue;
+        armor = armorValue;
         initiative = Random.Range(1, 14);
         healthBar.value = health;
         durationDecreaseHealth = 1.5f;
@@ -60,8 +62,8 @@ public class Enemy : Characters
     }
     public override IEnumerator TakeDamageCor(float value, float duration)
     {
-        var startValue = healthBar.value;
-        var endValue = startValue - value;
+        float startValue = healthBar.value;
+        float endValue = startValue - value;
         float elapsed = 0.0f;
         float ratio = 0.0f;
 
@@ -79,6 +81,7 @@ public class Enemy : Characters
             yield return null;
         }
         healthBar.value = endValue;
+        yield return new WaitForSeconds(durationDecreaseHealth);
         if (health <= 0)
         {
             health = 0;
@@ -94,6 +97,7 @@ public class Enemy : Characters
     public override IEnumerator TakeHealingCor(float value, float duration)
     {
         var startValue = healthBar.value;
+        value *= healReceivedModif;
         var endValue = startValue + value;
         if (endValue > maxHealth)
             endValue = maxHealth;
@@ -113,6 +117,6 @@ public class Enemy : Characters
             yield return null;
         }
         healthBar.value = endValue;
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(durationDecreaseHealth);
     }
 }
