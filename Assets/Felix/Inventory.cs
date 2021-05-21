@@ -4,9 +4,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-
 public class Inventory : MonoBehaviour
 {
+    private enum EState
+    {
+        Inventory,
+        InventoryItemPartSelection
+    }
+
     [Header("Item Inventory")]
     private int nbLines = 0;
     private List<GameObject> itemList = new List<GameObject>();
@@ -55,6 +60,8 @@ public class Inventory : MonoBehaviour
     {
         inventoryGo.SetActive(false);
         CharacterManager.characterManager.OpenTeamScene();
+
+        ResetButtonSelection();
     }
 
     public void AddItem(NItem.ItemScriptableObject item)
@@ -102,7 +109,7 @@ public class Inventory : MonoBehaviour
         buttonNItem.onClick.AddListener(() => ShowItemPanel(nItem));
 
         bool isActivePart = itemPartButton[(int)item.itemPartType].color.b == 0f;
-        bool isActiveRarity = itemPartButton[(int)item.itemRarity].color.b == 0f;
+        bool isActiveRarity = itemRarityButton[(int)item.itemRarity].color.b == 0f;
 
         nItem.SetActive(isActivePart ? isActiveRarity ? true : false : false);
     }
@@ -189,6 +196,45 @@ public class Inventory : MonoBehaviour
             itemList[y].SetActive(isActiveRarity ? !isActive ? true : false : false);
 
             //itemList[y].SetActive(!isActive);
+        }
+    }
+
+    public void SelectionOneItemPart(int itemPart)
+    {
+
+
+        for (int i = 0; i < itemRarityButton.Length; i++)
+        {
+            itemRarityButton[i].gameObject.SetActive(false);
+        }
+
+        for (int i = 0; i < itemPartButton.Length; i++)
+        {
+            itemPartButton[i].color = new Vector4(1f, 0f, 0f, 1f);
+            itemPartButton[i].gameObject.SetActive(false);
+
+            ButtonSelectionItemPart(i);
+        }
+
+        ButtonSelectionItemPart(itemPart);
+    }
+
+    private void ResetButtonSelection()
+    {
+        for (int i = 0; i < itemRarityButton.Length; i++)
+        {
+            itemRarityButton[i].color = new Vector4(1f, 1f, 1f, 1f);
+            itemRarityButton[i].gameObject.SetActive(true);
+
+            ButtonSelectionRarity(i);
+        }
+
+        for (int i = 0; i < itemPartButton.Length; i++)
+        {
+            itemPartButton[i].color = new Vector4(1f, 1f, 1f, 1f);
+            itemPartButton[i].gameObject.SetActive(true);
+
+            ButtonSelectionItemPart(i);
         }
     }
 
