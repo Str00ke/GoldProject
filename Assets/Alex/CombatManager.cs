@@ -13,7 +13,6 @@ public class CombatManager : MonoBehaviour
     public List<Characters> fightersList;
     //public GameObject attackButton;
     public Ally allySelected = null;
-    public GameObject attackerCursor;
 
     [Header("Enemies")]
     public List<Enemy> enemies;
@@ -38,11 +37,7 @@ public class CombatManager : MonoBehaviour
         else if (combatManager != this)
             Destroy(gameObject);
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        attackerCursor = GameObject.Find("AttackerCursor");
-    }
+
 
     public void CreateRoster()
     {
@@ -76,7 +71,6 @@ public class CombatManager : MonoBehaviour
         {
             allyPlaying = null;
         }
-        MoveAttackCursor();
         fightBegun = true;
         CharAttack(currCharAttacking);
     }
@@ -88,7 +82,6 @@ public class CombatManager : MonoBehaviour
     //---------------ATTACK FOR ENEMY------------------
     public void CharAttack(int ind)
     {
-        MoveAttackCursor();
         if (fightersList[ind].charType == Characters.CharType.ENEMY && fightersList[ind].CanAttack)
         {
             EnemyAttack();
@@ -109,12 +102,12 @@ public class CombatManager : MonoBehaviour
         }
         while (!fightersList[currCharAttacking] || fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead)
         {
-            currCharAttacking++;
             //--------------------STUN STATUS----------------------------
-            if (fightersList[currCharAttacking].stunned) 
+            if (fightersList[currCharAttacking].stunned)
             {
                 fightersList[currCharAttacking].stunned = false;
             }
+            currCharAttacking++;
             //---------------- ---IF EVERY FIGHTERS HAVE PLAYED -> NEXT TURN----------------------------
             if (currCharAttacking >= fightersList.Count)
             {
@@ -134,15 +127,11 @@ public class CombatManager : MonoBehaviour
             {
                 allyPlaying = null;
             }
-            fightersList[currCharAttacking].ReduceStatusTurn();
+            //UPDATE STATUS ON CHARACTER PLAYING
             fightersList[currCharAttacking].TakeDamageDots();
+            StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
             CharAttack(currCharAttacking);
         }
-    }
-    public void MoveAttackCursor()
-    {
-        attackerCursor.transform.position = new Vector3(fightersList[currCharAttacking].gameObject.transform.position.x, fightersList[currCharAttacking].gameObject.transform.position.y + 0.7f, fightersList[currCharAttacking].gameObject.transform.position.z);
-        attackerCursor.transform.SetParent(fightersList[currCharAttacking].gameObject.transform);
     }
     public void EnemyAttack() 
     {
@@ -197,15 +186,18 @@ public class CombatManager : MonoBehaviour
                 }
                 else
                 {
-                    fightersList[currCharAttacking].LaunchAttack(allyMel, abilityUsed);
-                    if (allies[allyMel.teamPosition + 1])
-                        fightersList[currCharAttacking].LaunchAttack(allies[allyMel.teamPosition + 1], abilityUsed);
+                    if (allyMel)
+                    {
+                        fightersList[currCharAttacking].LaunchAttack(allyMel, abilityUsed);
+                        if (allies[allyMel.teamPosition + 1])
+                            fightersList[currCharAttacking].LaunchAttack(allies[allyMel.teamPosition + 1], abilityUsed);
+                    }
                 }
                 break;
             case Ability.WeaponAbilityType.WAVE:
-                foreach (Ally a in allies)
+                for (int i = allies.Count - 1; i >= 0; i--)
                 {
-                    fightersList[currCharAttacking].LaunchAttack(a, abilityUsed);
+                    fightersList[currCharAttacking].LaunchAttack(allies[i], abilityUsed);
                 }
                 break;
         }
@@ -254,30 +246,23 @@ public class CombatManager : MonoBehaviour
         allies.Remove(a);
         if (allies.Count <= 0)
         {
-            EndFight<Ally>(allies);
+            //EndFight(false);
+            //EndFight<Ally>(allies);
         }
     }
     public void RemoveEnemy(int numPos) 
     {
-        foreach (Enemy e in enemies) 
+        for (int i = enemies.Count - 1; i >= 0; i--)
         {
-            if(e.teamPosition == numPos)
+            if (enemies[i].teamPosition == numPos)
             {
-                if(e == enemySelected) 
+                if (enemies[i] == enemySelected)
                 {
                     enemySelected = null;
                 }
-                if(attackerCursor.transform.parent == e.transform) 
-                {
-                    attackerCursor.transform.SetParent(transform);
-                }
-                enemies.Remove(e);
+                Enemy e = enemies[i];
+                enemies.Remove(enemies[i]);
                 Destroy(e.gameObject);
-
-                if (enemies.Count <= 0)
-                    EndFight<Enemy>(enemies);
-
-                break;
             }
         }
         UpdatePosEnemies(numPos);
@@ -298,13 +283,20 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    void EndFight<T>(List<T> list)
+    /*void EndFight(bool win)
+    {
+        if (win)
+            FindObjectOfType<LevelManager>().WinFight();
+        else if (!win)
+            FindObjectOfType<LevelManager>().LoseFight();
+    }*/
+    /*void EndFight<T>(List<T> list)
     {
         if (typeof(T) == typeof(Enemy))
             FindObjectOfType<LevelManager>().WinFight();
         else if (typeof(T) == typeof(Ally))
             FindObjectOfType<LevelManager>().LoseFight();
-    }
+    }*/
 
     public void Obliterate()
     {

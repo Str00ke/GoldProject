@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40102682e9e99234baf7862f25a929e2, type: 3}
   m_Name: CAHealBoostMud
   m_EditorClassIdentifier: 
-  name: 
+  name: Boost Mud
   type: 
   multiplicator: 0
-  icon: {fileID: 0}
-  bonusmalus: 0
+  icon: {fileID: 21300000, guid: 7030b60a445273f43b5d2e4a3d203ba9, type: 3}
+  bonusmalus: 20
+  turnDuration: 2
   objectType: 0
   weaponAbilityType: 0
-  crType: 0
-  crHealType: 0
+  crType: 1
+  crHealType: 1
   crAttackType: 0
   crSpecialType: 0
   targetType: 0
-  elementType: 0
+  elementType: 3

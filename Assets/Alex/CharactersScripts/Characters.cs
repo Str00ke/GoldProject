@@ -52,49 +52,26 @@ public class Characters : MonoBehaviour, IPointerDownHandler
 
 
     [Header("Modificators")]
+    public float speedSlider;
     public float healReceivedModif = 1.0f;
     public float bleedingDmg;
     public float armorModif = 0.3f;
     public float dodgeModif = 0.2f;
 
-
-
     [Header("StatusVariables")]
-    public bool hemorrhage;
-    public int turnsHemoValue = 2;
-    public int turnsHemo;
-
-    public bool armorboost;
-    public int turnsArmorboostValue = 2;
-    public int turnsArmorboost;
-
-    public bool armormalus;
-    public int turnsArmormalusValue = 2;
-    public int turnsArmormalus;
-
-    public bool healbonus;
-    public int turnsHealbonusValue = 2;
-    public int turnsHealbonus;
-
     public bool stunned;
-   // public int turnsStunnedValue = 2;
-    public int turnsStunned;
-
-    public bool precisionmalus;
-    public int turnsPrecisionmalusValue = 2;
-    public int turnsPrecisionmalus;
-
-    public bool dodgeboost;
-    public int turnsDodgeboostValue = 2;
-    public int turnsDodgeboost;
-
     public bool confusion;
     public int turnsConfusionValue = 2;
     public int turnsConfusion;
 
-
+    [Header("DotDamages")]
+    public float dmgDotAsh;
+    public float dmgDotIce;
+    public float dmgDotMud;
+    public float dmgDotPsy;
 
     [Header("CombatVariables")]
+    public GameObject floatingHealth;
     public bool inDefenceMode = false;
     public bool isTargetable;
     public bool isMelee;
@@ -182,86 +159,6 @@ public class Characters : MonoBehaviour, IPointerDownHandler
         armor = armr;
         teamPosition = position;
     }
-    public void StatusConsequences() 
-    {
-        if (hemorrhage)
-        {
-            Debug.Log("Bleeding");
-        }
-        if (healbonus) 
-        {
-            healReceivedModif = 1.5f;
-        }
-        if (armormalus)
-        {
-            armor = Mathf.Round(armorValue - armorValue * armorModif);
-        }
-        if (armorboost)
-        {
-            armor = Mathf.Round(armorValue + armorValue * armorModif);
-        }
-        if (precisionmalus)
-        {
-            precision = 0.5f;
-        }
-        if (dodgeboost)
-        {
-            dodge = Mathf.Round(dodgeValue + dodgeValue * dodgeModif);
-        }
-        if (confusion)
-        {
-            Debug.Log("Confus");
-        }
-    }
-    public void ReduceStatusTurn() 
-    {
-        turnsArmorboost--;
-        turnsArmormalus--;
-        turnsConfusion--;
-        turnsDodgeboost--;
-        turnsHealbonus--;
-        turnsHemo--;
-        turnsPrecisionmalus--;
-        StatusEnd();
-    }
-    public void StatusEnd() 
-    {
-        if(turnsArmorboost <= 0) 
-        {
-            armorboost = false;
-            armor = armorValue;
-        }
-        if (turnsArmormalus <= 0)
-        {
-            armormalus = false;
-            armor = armorValue;
-        }
-        if (turnsConfusion <= 0)
-        {
-            confusion = false;
-        }
-        if (turnsDodgeboost <= 0)
-        {
-            dodge = dodgeValue;
-        }
-        if (turnsHealbonus <= 0)
-        {
-            healReceivedModif = 1.0f;
-        }
-        if (turnsHemo <= 0)
-        {
-            hemorrhage = false;
-        }
-        if (turnsStunned <= 0)
-        {
-            stunned = false;
-        }
-        if (turnsPrecisionmalus <= 0)
-        {
-            precisionmalus = false;
-            precision = 1.0f;
-        }
-    }
     //---------------------------SIMPLE ATTACK FUNCTION----------------------------
     public void LaunchAttack(Characters receiver, Ability ability)
     {
@@ -270,6 +167,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
         //-CRITIC DAMAGE-
         if (Random.Range(0.0f, 1.0f) < this.critChance)
         {
+            Debug.Log("CRITIQUE");
             dmg += dmg * this.critDamage;
         }
         //-ARMOR MODIF ON DAMAGE-
@@ -289,19 +187,76 @@ public class Characters : MonoBehaviour, IPointerDownHandler
         receiver.TakeHealing(healing, durationDecreaseHealth);
     }
     public void LaunchBuff(Characters receiver, Ability ability)
-    {   
+    {
+
+        switch (ability.elementType)
+        {
+            case Ability.ElementType.ASH:
+                if (ability.crHealType == Ability.CristalHealType.BOOST)
+                {
+                    Status s = new Status(receiver, ability.bonusmalus, ability.turnDuration, Status.StatusTypes.DAMAGEBONUS);
+                }
+                else if (ability.crHealType == Ability.CristalHealType.DRINK)
+                {
+                    Status s = new Status(receiver, ability.bonusmalus, ability.turnDuration, Status.StatusTypes.DAMAGEBONUS);
+                }
+                break;
+            case Ability.ElementType.ICE:
+                if (ability.crHealType == Ability.CristalHealType.BOOST)
+                {
+                    Status s = new Status(receiver, ability.bonusmalus, ability.turnDuration, Status.StatusTypes.CRITDAMAGEBONUS);
+                }
+                else if (ability.crHealType == Ability.CristalHealType.DRINK)
+                {
+                    Status s = new Status(receiver, ability.bonusmalus, ability.turnDuration, Status.StatusTypes.CRITRATEBONUS);
+                }
+                break;
+            case Ability.ElementType.MUD:
+                if (ability.crHealType == Ability.CristalHealType.BOOST)
+                {
+                    Status s = new Status(receiver, ability.bonusmalus, ability.turnDuration, Status.StatusTypes.ARMORBONUSFLAT);
+                }
+                else if (ability.crHealType == Ability.CristalHealType.DRINK)
+                {
+                    Status s = new Status(receiver, ability.bonusmalus, ability.turnDuration, Status.StatusTypes.DODGEBONUSFLAT);
+                }
+                break;
+            case Ability.ElementType.PSY:
+                if (ability.crHealType == Ability.CristalHealType.BOOST)
+                {
+                    Status s = new Status(receiver, ability.bonusmalus, ability.turnDuration, Status.StatusTypes.DODGEBONUSFLAT);
+                }else if(ability.crHealType == Ability.CristalHealType.DRINK)
+                {
+                    Status s = new Status(receiver, ability.bonusmalus, ability.turnDuration, Status.StatusTypes.CRITDAMAGEBONUS);
+                }
+                break;
+        }
     }
     public void LaunchDebuff(Characters receiver, Ability ability)
     {
 
     }
-    public void LaunchSpecial(Characters receiver, Ability ability) 
-    {
-
-    }
     public void LaunchDestruction(Characters receiver, Ability ability)
     {
-
+        switch (ability.elementType)
+        {
+            case Ability.ElementType.ASH:
+                Status s0 = new Status(receiver, ability.destruModif, ability.turnDuration, Status.StatusTypes.ARMORMALUS);
+                Status s00 = new Status(receiver, ability.bonusmalus, ability.turnDuration, Status.StatusTypes.DAMAGEMALUS);
+                break;
+            case Ability.ElementType.ICE:
+                Status s1 = new Status(receiver, ability.destruModif, ability.turnDuration, Status.StatusTypes.ARMORMALUS);
+                Status s01 = new Status(receiver, ability.bonusmalus, ability.turnDuration, Status.StatusTypes.DODGEMALUS);
+                break;
+            case Ability.ElementType.MUD:
+                Status s2 = new Status(receiver, ability.destruModif, ability.turnDuration, Status.StatusTypes.ARMORMALUS);
+                Status s02 = new Status(receiver, ability.bonusmalus, ability.turnDuration, Status.StatusTypes.HEALTHDEBUFF);
+                break;
+            case Ability.ElementType.PSY:
+                Status s3 = new Status(receiver, ability.destruModif, ability.turnDuration, Status.StatusTypes.ARMORMALUS);
+                Status s03 = new Status(receiver, ability.bonusmalus, ability.turnDuration, Status.StatusTypes.ARMORMALUS);
+                break;
+        }
     }
     public void PutDot(Characters receiver, Ability ability)
     {
@@ -309,20 +264,20 @@ public class Characters : MonoBehaviour, IPointerDownHandler
         switch (ability.elementType)
         {
             case Ability.ElementType.ASH:
-                dmg *= (ability.multiplicator / 100);
-                //ADD DOT
+                dmg *= (ability.dotMult / 100);
+                Status s0 = new Status(receiver, dmg, ability.turnDuration, Status.StatusTypes.DOTASH);
                 break;
             case Ability.ElementType.ICE:
-                dmg *= (ability.multiplicator / 100);
-                //ADD DOT
+                dmg *= (ability.dotMult / 100);
+                Status s1 = new Status(receiver, dmg, ability.turnDuration, Status.StatusTypes.DOTICE);
                 break;
             case Ability.ElementType.MUD:
-                dmg *= (ability.multiplicator / 100);
-                //ADD DOT
+                dmg *= (ability.dotMult / 100);
+                Status s2 = new Status(receiver, dmg, ability.turnDuration, Status.StatusTypes.DOTMUD);
                 break;
             case Ability.ElementType.PSY:
-                dmg *= (ability.multiplicator / 100);
-                //ADD DOT
+                dmg *= (ability.dotMult / 100);
+                Status s3 = new Status(receiver, dmg, ability.turnDuration, Status.StatusTypes.DOTPSY);
                 break;
         }
     }
@@ -337,7 +292,6 @@ public class Characters : MonoBehaviour, IPointerDownHandler
                 if (ndElement == CurrentElement.ICE)
                 {
                     stunned = true;
-                    //turnsStunned = turnsStunnedValue;
                     currentElement = CurrentElement.BASE;
                 }
                 else if (ndElement == CurrentElement.MUD)
@@ -355,16 +309,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
             case CurrentElement.ICE:
                 if (ndElement == CurrentElement.ASH)
                 {
-                    if (armorboost)
-                    {
-                        armorboost = false;
-                        armor = armorValue;
-                    }
-                    else
-                    {
-                        armormalus = true;
-                    }
-                    turnsArmormalus = turnsArmormalusValue;
+                    Status s = new Status(this, 0.3f, 2, Status.StatusTypes.ARMORMALUS);
                     currentElement = CurrentElement.BASE;
                 }
                 else if (ndElement == CurrentElement.MUD)
@@ -374,24 +319,14 @@ public class Characters : MonoBehaviour, IPointerDownHandler
                 }
                 else if (ndElement == CurrentElement.PSY)
                 {
-                    if (armormalus)
-                    {
-                        armormalus = false;
-                        armor = armorValue;
-                    }
-                    else
-                    {
-                        armorboost = true;
-                    }
-                    turnsArmorboost = turnsArmorboostValue;
+                    Status s = new Status(this, 0.3f, 2, Status.StatusTypes.ARMORBONUSPERC);
                     currentElement = CurrentElement.BASE;
                 }
                 break;
             case CurrentElement.MUD:
                 if (ndElement == CurrentElement.ASH)
                 {
-                    healbonus = true;
-                    turnsHealbonus = turnsHealbonusValue;
+                    Status s = new Status(this, 0.5f, 2, Status.StatusTypes.HEALBONUS);
                     currentElement = CurrentElement.BASE;
                 }
                 else if (ndElement == CurrentElement.ICE)
@@ -401,6 +336,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
                 }
                 else if (ndElement == CurrentElement.PSY)
                 {
+                    Status s = new Status(this, 5.0f, 2, Status.StatusTypes.BLEEDING);
                     currentElement = CurrentElement.BASE;
                 }
                 break;
@@ -412,19 +348,16 @@ public class Characters : MonoBehaviour, IPointerDownHandler
                 }
                 else if (ndElement == CurrentElement.ICE)
                 {
-                    precisionmalus = true;
-                    turnsPrecisionmalus = turnsPrecisionmalusValue;
+                    Status s = new Status(this, 0.5f, 2, Status.StatusTypes.PRECISIONMALUS);
                     currentElement = CurrentElement.BASE;
                 }
                 else if (ndElement == CurrentElement.MUD)
                 {
-                    dodgeboost = true;
-                    turnsDodgeboost = turnsDodgeboostValue;
+                    Status s = new Status(this, 5.0f, 2, Status.StatusTypes.DODGEBONUSFLAT);
                     currentElement = CurrentElement.BASE;
                 }
                 break;
         }
-        StatusConsequences();
     }
     public virtual void TakeHealing(float value, float duration) 
     {
@@ -436,36 +369,55 @@ public class Characters : MonoBehaviour, IPointerDownHandler
 
     public void TakeDamageDots()
     {
-        /*if(turnsDotAsh > 0)
+        if(dmgDotAsh > 0)
         {
-            TakeDamage(dmgDotAsh, durationDecreaseHealth);
+            TakeDamage(dmgDotAsh, 0.3f);
             ElementReactions(CurrentElement.ASH);
-            turnsDotAsh--;
         }
-        if (turnsDotIce > 0)
+        if (dmgDotIce > 0)
         {
-            TakeDamage(dmgDotIce, durationDecreaseHealth);
+            TakeDamage(dmgDotIce, 0.3f);
             ElementReactions(CurrentElement.ICE);
-            turnsDotIce--;
         }
-        if(turnsDotMud > 0)
+        if(dmgDotMud > 0)
         {
-            TakeDamage(dmgDotMud, durationDecreaseHealth);
+            TakeDamage(dmgDotMud, 0.3f);
             ElementReactions(CurrentElement.MUD);
-            turnsDotMud--;
         }
-        if(turnsDotPsy > 0)
+        if(dmgDotPsy > 0)
         {
-            TakeDamage(dmgDotPsy, durationDecreaseHealth);
+            TakeDamage(dmgDotPsy, 0.3f);
             ElementReactions(CurrentElement.PSY);
-            turnsDotPsy--;
         }
-        UpdateDisplayDots();*/
+        if(bleedingDmg > 0)
+        {
+            TakeDamage(bleedingDmg, 0.3f);
+        }
+        UpdateDisplayDots();
     }
     public void UpdateDisplayDots()
     {
 
     }
+
+    public void ShowFloatingHealth(float value, bool red)
+    {
+        GameObject go = Instantiate(floatingHealth, transform.position, Quaternion.identity, transform);
+        if (red)
+        {
+            go.GetComponentInChildren<TextMesh>().color = Color.red;
+        }
+        else
+        {
+            go.GetComponentInChildren<TextMesh>().color = Color.green;
+        }
+        go.GetComponentInChildren<TextMesh>().text = "" + value;
+        go.GetComponentInChildren<FloatingHealthScript>().StartCoroutine(go.GetComponentInChildren<FloatingHealthScript>().AnimateFloatingTextCor(go.GetComponentInChildren<FloatingHealthScript>().destroyDelay));
+    }
+    public virtual void TakeDamage(float value, float duration)
+    {
+    }
+    /*
     public virtual void TakeDamage(float value, float duration) 
     {
         StartCoroutine(TakeDamageCor(value, duration));
@@ -474,6 +426,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     {
         yield return null;
     }
+    */
     IEnumerator ChangePosCoroutine(float duration)
     {
         Vector3 startPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
@@ -488,7 +441,6 @@ public class Characters : MonoBehaviour, IPointerDownHandler
             yield return null;
         }
     }
-
     public void IsTargetable()
     {
         if(isTargetable)

@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40102682e9e99234baf7862f25a929e2, type: 3}
   m_Name: CAHealDrinkPsy
   m_EditorClassIdentifier: 
-  name: 
+  name: Drink Psy
   type: 
-  multiplicator: 0
-  icon: {fileID: 0}
-  bonusmalus: 0
+  multiplicator: 50
+  icon: {fileID: 21300000, guid: e723cb40e51d3a1429e1f548e18cf3e0, type: 3}
+  bonusmalus: 0.5
+  turnDuration: 1
   objectType: 0
   weaponAbilityType: 0
-  crType: 0
-  crHealType: 0
+  crType: 1
+  crHealType: 3
   crAttackType: 0
   crSpecialType: 0
   targetType: 0
-  elementType: 0
+  elementType: 4

@@ -111,81 +111,92 @@ public class AbilitiesManager : MonoBehaviour
     }
     public void SetTargets(Ability ab) 
     {
-            if (ab.objectType == Ability.ObjectType.CRISTAL)
+        if (ab.objectType == Ability.ObjectType.CRISTAL)
+        {
+            if (ab.crType == Ability.CristalAbilityType.HEAL)
             {
-                if (ab.crType == Ability.CristalAbilityType.HEAL)
+                foreach (Ally a in CombatManager.combatManager.allies)
                 {
-                    foreach (Ally a in CombatManager.combatManager.allies)
-                    {
-                        if (!a.isDead)
-                            a.isTargetable = true;
-                        else
-                            a.isTargetable = false;
-                    }
-                    foreach (Enemy e in CombatManager.combatManager.enemies)
-                    {
-                        e.isTargetable = false;
-                    }
-                }
-                else if (ab.crType == Ability.CristalAbilityType.ATTACK)
-                {
-                    foreach (Enemy e in CombatManager.combatManager.enemies)
-                    {
-                        e.isTargetable = true;
-                    }
-                    foreach (Ally a in CombatManager.combatManager.allies)
-                    {
+                    if (!a.isDead)
+                        a.isTargetable = true;
+                    else
                         a.isTargetable = false;
-                    }
+                }
+                foreach (Enemy e in CombatManager.combatManager.enemies)
+                {
+                    e.isTargetable = false;
                 }
             }
-            else
+            else if (ab.crType == Ability.CristalAbilityType.ATTACK)
             {
-                if (ab.targetType == Ability.TargetType.RANGE)
-                    switch (ab.targetType)
-                    {
-                        case Ability.TargetType.ALLIES:
-                            foreach (Ally a in CombatManager.combatManager.allies)
-                            {
-                                if (!a.isDead)
-                                    a.isTargetable = true;
-                                else
-                                    a.isTargetable = false;
-                            }
-                            foreach (Enemy e in CombatManager.combatManager.enemies)
-                            {
-                                e.isTargetable = false;
-                            }
-                            break;
-                        case Ability.TargetType.RANGE:
-                            foreach (Enemy e in CombatManager.combatManager.enemies)
+                foreach (Enemy e in CombatManager.combatManager.enemies)
+                {
+                    e.isTargetable = true;
+                }
+                foreach (Ally a in CombatManager.combatManager.allies)
+                {
+                    a.isTargetable = false;
+                }
+            }
+            else if (ab.crType == Ability.CristalAbilityType.OTHERS)
+            {
+                foreach (Enemy e in CombatManager.combatManager.enemies)
+                {
+                    e.isTargetable = true;
+                }
+                foreach (Ally a in CombatManager.combatManager.allies)
+                {
+                    a.isTargetable = false;
+                }
+            }
+        }
+        else
+        {
+            if (ab.targetType == Ability.TargetType.RANGE)
+                switch (ab.targetType)
+                {
+                    case Ability.TargetType.ALLIES:
+                        foreach (Ally a in CombatManager.combatManager.allies)
+                        {
+                            if (!a.isDead)
+                                a.isTargetable = true;
+                            else
+                                a.isTargetable = false;
+                        }
+                        foreach (Enemy e in CombatManager.combatManager.enemies)
+                        {
+                            e.isTargetable = false;
+                        }
+                        break;
+                    case Ability.TargetType.RANGE:
+                        foreach (Enemy e in CombatManager.combatManager.enemies)
+                        {
+                            e.isTargetable = true;
+                        }
+                        foreach (Ally a in CombatManager.combatManager.allies)
+                        {
+                            a.isTargetable = false;
+                        }
+                        break;
+                    case Ability.TargetType.MELEE:
+                        foreach (Enemy e in CombatManager.combatManager.enemies)
+                        {
+                            if (e.isMelee)
                             {
                                 e.isTargetable = true;
                             }
-                            foreach (Ally a in CombatManager.combatManager.allies)
+                            else
                             {
-                                a.isTargetable = false;
+                                e.isTargetable = false;
                             }
-                            break;
-                        case Ability.TargetType.MELEE:
-                            foreach (Enemy e in CombatManager.combatManager.enemies)
-                            {
-                                if (e.isMelee)
-                                {
-                                    e.isTargetable = true;
-                                }
-                                else
-                                {
-                                    e.isTargetable = false;
-                                }
-                            }
-                            foreach (Ally a in CombatManager.combatManager.allies)
-                            {
-                                a.isTargetable = false;
-                            }
-                            break;
-                    }
-            }
+                        }
+                        foreach (Ally a in CombatManager.combatManager.allies)
+                        {
+                            a.isTargetable = false;
+                        }
+                        break;
+                }
+        }
     }
     public void ClearTargets()
     {
@@ -205,7 +216,7 @@ public class AbilitiesManager : MonoBehaviour
     {
         if (abilitySelected && CombatManager.combatManager.allyPlaying)
         {
-            if(abilitySelected.ability.targetType == Ability.TargetType.ALLIES)
+            if(abilitySelected.ability.targetType == Ability.TargetType.ALLIES || abilitySelected.ability.crType == Ability.CristalAbilityType.HEAL)
             {
                 if (CombatManager.combatManager.allySelected && CombatManager.combatManager.allySelected.isTargetable)
                 {
@@ -216,7 +227,8 @@ public class AbilitiesManager : MonoBehaviour
                     actionButton.SetActive(false);
                 }
             }
-            else if(abilitySelected.ability.targetType == Ability.TargetType.RANGE || abilitySelected.ability.targetType == Ability.TargetType.MELEE)
+            else if(abilitySelected.ability.targetType == Ability.TargetType.RANGE || abilitySelected.ability.targetType == Ability.TargetType.MELEE 
+                || abilitySelected.ability.crType == Ability.CristalAbilityType.ATTACK || abilitySelected.ability.crType == Ability.CristalAbilityType.OTHERS)
             {
                 if (CombatManager.combatManager.enemySelected && CombatManager.combatManager.enemySelected.isTargetable)
                 {
@@ -238,6 +250,7 @@ public class AbilitiesManager : MonoBehaviour
         CombatManager.combatManager.NextCharAttack();
         lastAbilityLaunched = abilitySelected.ability;
         abilitySelected.isSelected = false;
+        abilitySelected = null;
     }
     public void AbilityAction(Ability abi)
     {
@@ -272,15 +285,22 @@ public class AbilitiesManager : MonoBehaviour
                         {
                             if (abi.weaponAbilityType == Ability.WeaponAbilityType.PIERCE)
                             {
-                                cm.allyPlaying.LaunchAttack(cm.enemySelected, abi);
-                                if (cm.enemies[cm.enemySelected.teamPosition + 1])
-                                    cm.allyPlaying.LaunchAttack(cm.enemies[cm.enemySelected.teamPosition + 1], abi);
+                                if(cm.enemies.Count <= 1)
+                                {
+                                    cm.allyPlaying.LaunchAttack(cm.enemySelected, abi);
+                                }
+                                else
+                                {
+                                    Enemy ndEnemy = cm.enemies[cm.enemySelected.teamPosition + 1];
+                                    cm.allyPlaying.LaunchAttack(cm.enemySelected, abi);
+                                    cm.allyPlaying.LaunchAttack(ndEnemy, abi);
+                                }
                             }
                             else if (abi.weaponAbilityType == Ability.WeaponAbilityType.WAVE)
                             {
-                                foreach (Enemy e in cm.enemies)
+                                for (int i = cm.enemies.Count - 1; i >= 0; i--)
                                 {
-                                    cm.allyPlaying.LaunchAttack(e, abi);
+                                    cm.allyPlaying.LaunchAttack(cm.enemies[i], abi);
                                 }
                             }
                             else
@@ -302,53 +322,95 @@ public class AbilitiesManager : MonoBehaviour
     public void CristalAction(Ability a)
     {
         var cm = CombatManager.combatManager;
-                switch (a.crType)
-                {
-                    case Ability.CristalAbilityType.HEAL:
-                        switch (a.crHealType)
-                        {
-                            case Ability.CristalHealType.BOOST:
-                                cm.allyPlaying.LaunchBuff(cm.allySelected, a);
-                                break;
-                            case Ability.CristalHealType.BATH:
-                                foreach (Ally al in CombatManager.combatManager.allies)
-                                {
-                                    cm.allyPlaying.LaunchHeal(al, a);
-                                    cm.allyPlaying.LaunchHeal(al, a);
-                                    cm.allyPlaying.LaunchHeal(al, a);
-                                }
+            switch (a.crType)
+            {
+                case Ability.CristalAbilityType.HEAL:
+                    switch (a.crHealType)
+                    {
+                        case Ability.CristalHealType.BOOST:
+                            cm.allyPlaying.LaunchBuff(cm.allySelected, a);
+                            break;
+                        case Ability.CristalHealType.BATH:
+                            AbilityBath(a);
+                    break;
+                        case Ability.CristalHealType.DRINK:
+                            cm.allyPlaying.LaunchHeal(cm.allySelected, a);
+                            cm.allyPlaying.LaunchBuff(cm.allySelected, a);
+                            break;
+                    }
+                    break;
+                case Ability.CristalAbilityType.ATTACK:
+                    switch (a.crAttackType)
+                    {
+                        case Ability.CristalAttackType.NORMAL:
+                            cm.allyPlaying.LaunchAttack(cm.enemySelected, a);
+                            break;
+                        case Ability.CristalAttackType.DOT:
+                            cm.allyPlaying.LaunchAttack(cm.enemySelected, a);
+                            cm.allyPlaying.PutDot(cm.enemySelected, a);
                         break;
-                            case Ability.CristalHealType.DRINK:
-                                cm.allyPlaying.LaunchHeal(cm.allySelected, a);
-                                cm.allyPlaying.LaunchBuff(cm.allySelected, a);
-                                break;
-                        }
+                        case Ability.CristalAttackType.MARK:
+                            cm.allyPlaying.LaunchAttack(cm.enemySelected, a);
+                            break;
+                    }
+                    break;
+                case Ability.CristalAbilityType.OTHERS:
+                    switch (a.crSpecialType)
+                    {
+                        case Ability.CristalSpecialType.DESTRUCTION:
+                            cm.allyPlaying.LaunchDestruction(cm.enemySelected, a);
+                            cm.allyPlaying.LaunchAttack(cm.enemySelected, a);
                         break;
-                    case Ability.CristalAbilityType.ATTACK:
-                        switch (a.crAttackType)
-                        {
-                            case Ability.CristalAttackType.NORMAL:
-                                cm.allyPlaying.LaunchAttack(cm.enemySelected, a);
-                                break;
-                            case Ability.CristalAttackType.DOT:
-                        
-                                break;
-                            case Ability.CristalAttackType.MARK:
-                                cm.allyPlaying.LaunchAttack(cm.enemySelected, a);
-                                break;
-                        }
-                        break;
-                    case Ability.CristalAbilityType.OTHERS:
-                        switch (a.crSpecialType)
-                        {
-                            case Ability.CristalSpecialType.DESTRUCTION:
-                                cm.allyPlaying.LaunchDestruction(cm.allySelected, a);
-                                break;
-                            case Ability.CristalSpecialType.COPY:
-                                break;
-                        }
-                        break;
+                        case Ability.CristalSpecialType.COPY:
+                            break;
+                    }
+                    break;
                 
+        }
+    }
+    public void AbilityBath(Ability a)
+    {
+        var cm = CombatManager.combatManager;
+        switch (a.elementType)
+        {
+            case Ability.ElementType.ASH:
+                cm.allyPlaying.LaunchHeal(cm.allySelected, a);
+                if (cm.allies.Count > 1)
+                {
+                    int randA = Random.Range(0, cm.allies.Count - 1);
+                    while (randA == cm.allySelected.teamPosition)
+                    {
+                        randA = Random.Range(0, cm.allies.Count - 1);
+                    }
+                    cm.allyPlaying.LaunchHeal(cm.allies[randA], a);
+                }
+                break;
+            case Ability.ElementType.ICE:
+                cm.allyPlaying.LaunchHeal(cm.allySelected, a);
+                break;
+            case Ability.ElementType.MUD:
+
+                foreach (Ally al in CombatManager.combatManager.allies)
+                {
+                    cm.allyPlaying.LaunchHeal(al, a);
+                    cm.allyPlaying.LaunchHeal(al, a);
+                    cm.allyPlaying.LaunchHeal(al, a);
+                }
+                break;
+            case Ability.ElementType.PSY:
+                foreach (Ally al in CombatManager.combatManager.allies)
+                {
+                    cm.allyPlaying.LaunchHeal(al, a);
+                    cm.allyPlaying.LaunchHeal(al, a);
+                    cm.allyPlaying.LaunchHeal(al, a);
+                }
+                foreach (Enemy e in CombatManager.combatManager.enemies)
+                {
+                    cm.allyPlaying.LaunchHeal(e, a);
+                    cm.allyPlaying.LaunchHeal(e, a);
+                    cm.allyPlaying.LaunchHeal(e, a);
+                }
+                break;
         }
     }
 }

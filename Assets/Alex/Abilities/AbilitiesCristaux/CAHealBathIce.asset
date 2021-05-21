@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40102682e9e99234baf7862f25a929e2, type: 3}
   m_Name: CAHealBathIce
   m_EditorClassIdentifier: 
-  name: 
+  name: Bath Ice
   type: 
-  multiplicator: 0
-  icon: {fileID: 0}
+  multiplicator: 100
+  icon: {fileID: 21300000, guid: 0e2a2c4635578bd4f96003907456d7f6, type: 3}
   bonusmalus: 0
   objectType: 0
   weaponAbilityType: 0
-  crType: 0
-  crHealType: 0
+  crType: 1
+  crHealType: 2
   crAttackType: 0
   crSpecialType: 0
   targetType: 0
-  elementType: 0
+  elementType: 2

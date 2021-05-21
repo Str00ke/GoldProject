@@ -12,16 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40102682e9e99234baf7862f25a929e2, type: 3}
   m_Name: CAAttackDotIce
   m_EditorClassIdentifier: 
-  name: 
+  name: Dot Ice
   type: 
-  multiplicator: 0
-  icon: {fileID: 0}
+  multiplicator: 30
+  icon: {fileID: 21300000, guid: f13fcc9a775e06b428047665f862cccd, type: 3}
   bonusmalus: 0
+  destruModif: 0
+  dotMult: 40
+  turnDuration: 2
   objectType: 0
   weaponAbilityType: 0
-  crType: 0
+  crType: 2
   crHealType: 0
-  crAttackType: 0
+  crAttackType: 2
   crSpecialType: 0
   targetType: 0
-  elementType: 0
+  elementType: 2

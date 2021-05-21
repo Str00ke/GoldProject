@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40102682e9e99234baf7862f25a929e2, type: 3}
   m_Name: CAAttackNormalAsh
   m_EditorClassIdentifier: 
-  name: adadaadadadada
+  name: Attack Normal Ash
   type: 
-  multiplicator: 0
-  icon: {fileID: 0}
+  multiplicator: 100
+  icon: {fileID: 21300000, guid: 2f3eab5d352517a4e8163a33099d3001, type: 3}
   bonusmalus: 50000
   objectType: 0
   weaponAbilityType: 0
-  crType: 3
+  crType: 2
   crHealType: 0
-  crAttackType: 0
+  crAttackType: 1
   crSpecialType: 0
   targetType: 0
-  elementType: 4
+  elementType: 1

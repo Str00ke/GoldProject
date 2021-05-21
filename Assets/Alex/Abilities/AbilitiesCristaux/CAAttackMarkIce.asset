@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40102682e9e99234baf7862f25a929e2, type: 3}
   m_Name: CAAttackMarkIce
   m_EditorClassIdentifier: 
-  name: 
+  name: Mark Ice
   type: 
   multiplicator: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 2ee6597760890f74fb1333562d73ca35, type: 3}
   bonusmalus: 0
   objectType: 0
   weaponAbilityType: 0
-  crType: 0
+  crType: 2
   crHealType: 0
-  crAttackType: 0
+  crAttackType: 3
   crSpecialType: 0
   targetType: 0
-  elementType: 0
+  elementType: 2

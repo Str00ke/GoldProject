@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour
             labelAlly.text = cm.allySelected.charName;
             statsAlly.text = "Health  " + cm.allySelected.health + "/" + cm.allySelected.maxHealth + "\nArmor  " + cm.allySelected.armor + "\nInitiative   " + cm.allySelected.initiative
                 + "\nDodge  " + cm.allySelected.dodge + "\nDamage  " + cm.allySelected.damageRange.x + " - " + cm.allySelected.damageRange.y
-                + "\nCritic Chance  " + cm.allySelected.critChance * 100 + "%" + "\nCritic Damage  " + cm.allySelected.critDamage * 100 + "%";
+                + "\nCritic Chance  " + Mathf.Round(cm.allySelected.critChance * 100) + "%" + "\nCritic Damage  " + Mathf.Round(cm.allySelected.critDamage * 100) + "%" + "\nCurrent Element  " + cm.allySelected.currentElement.ToString();
         }
         else
         {
@@ -58,7 +58,7 @@ public class UIManager : MonoBehaviour
             labelEnemy.text = cm.enemySelected.charName;
             statsEnemy.text = "Health  " + cm.enemySelected.health + "/" + cm.enemySelected.maxHealth + "\nArmor  " + cm.enemySelected.armor + "\nInitiative   " + cm.enemySelected.initiative
                 + "\nDodge  " + cm.enemySelected.dodge + "\nDamage  " + cm.enemySelected.damageRange.x + " - " + cm.enemySelected.damageRange.y
-                + "\nCritic Chance  " + cm.enemySelected.critChance * 100 + "%" + "\nCritic Damage  " + cm.enemySelected.critDamage * 100 + "%";
+                + "\nCritic Chance  " + Mathf.Round(cm.enemySelected.critChance * 100) + "%" + "\nCritic Damage  " + Mathf.Round(cm.enemySelected.critDamage * 100) + "%" + "\nCurrent Element  " + cm.enemySelected.currentElement.ToString();
         }
         else
         {

@@ -10,6 +10,9 @@ public class Ability : ScriptableObject
     public float multiplicator;
     public Sprite icon;
     public float bonusmalus;
+    public float destruModif;
+    public float dotMult;
+    public int turnDuration;
 
     public enum ObjectType 
     {

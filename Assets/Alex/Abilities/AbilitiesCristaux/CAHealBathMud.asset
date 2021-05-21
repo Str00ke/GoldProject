@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40102682e9e99234baf7862f25a929e2, type: 3}
   m_Name: CAHealBathMud
   m_EditorClassIdentifier: 
-  name: 
+  name: Bath Mud
   type: 
-  multiplicator: 0
-  icon: {fileID: 0}
+  multiplicator: 50
+  icon: {fileID: 21300000, guid: 194e5b532bb53ca40a88a33882ef981d, type: 3}
   bonusmalus: 0
   objectType: 0
   weaponAbilityType: 0
-  crType: 0
-  crHealType: 0
+  crType: 1
+  crHealType: 2
   crAttackType: 0
   crSpecialType: 0
   targetType: 0
-  elementType: 0
+  elementType: 3

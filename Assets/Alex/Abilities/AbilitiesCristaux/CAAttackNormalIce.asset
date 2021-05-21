@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40102682e9e99234baf7862f25a929e2, type: 3}
   m_Name: CAAttackNormalIce
   m_EditorClassIdentifier: 
-  name: 
+  name: Attack Normal Ice
   type: 
-  multiplicator: 0
-  icon: {fileID: 0}
+  multiplicator: 100
+  icon: {fileID: 21300000, guid: 5a1b3b2d6ef09e343ba9f7229c3d8195, type: 3}
   bonusmalus: 0
   objectType: 0
   weaponAbilityType: 0
-  crType: 0
+  crType: 2
   crHealType: 0
-  crAttackType: 0
+  crAttackType: 1
   crSpecialType: 0
   targetType: 0
-  elementType: 0
+  elementType: 2

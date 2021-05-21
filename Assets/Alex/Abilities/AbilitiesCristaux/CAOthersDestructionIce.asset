@@ -12,16 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40102682e9e99234baf7862f25a929e2, type: 3}
   m_Name: CAOthersDestructionIce
   m_EditorClassIdentifier: 
-  name: 
+  name: Destruction Ice
   type: 
-  multiplicator: 0
-  icon: {fileID: 0}
-  bonusmalus: 0
+  multiplicator: 25
+  icon: {fileID: 21300000, guid: 75114e1d4787b3d4fbb8ea4bdc3e62f9, type: 3}
+  bonusmalus: 10
+  destruModif: 0.6
+  dotMult: 0
+  turnDuration: 2
   objectType: 0
   weaponAbilityType: 0
-  crType: 0
+  crType: 3
   crHealType: 0
   crAttackType: 0
   crSpecialType: 0
   targetType: 0
-  elementType: 0
+  elementType: 2

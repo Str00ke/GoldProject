@@ -6,31 +6,26 @@ using UnityEngine.UI;
 
 public class Ally : Characters
 {
-    private void Awake()
+    private void Start()
     {
         CombatManager.combatManager.allies.Add(this);
+        posInitial = GameObject.Find("Pos00").transform;
         charType = CharType.ALLY;
         anim = this.GetComponent<Animator>();
         thisColor = this.GetComponent<SpriteRenderer>();
         durationMove = 1.0f;
-        healthBar = this.GetComponentInChildren<Slider>();
+        healthBar = GameObject.Find(gameObject.name + "/CanvasChar/healthBar").GetComponent<Slider>();
         health = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = health;
         dodge = dodgeValue;
         armor = armorValue;
-        durationDecreaseHealth = 1.5f;
-        posInitial = GameObject.Find("Pos00").transform;
+        durationDecreaseHealth = 0.3f;
+        CreateChar("Char" + teamPosition);
         ChangePos();
-
-
-    }
-
-    private void Start()
-    {
         //ISTARGETABLE FOR ABILITIES
         isTargetable = false;
-        healthBarOutline = GameObject.Find("HealthBarOutline");
+        healthBarOutline = GameObject.Find(gameObject.name + "/CanvasChar/HealthBarOutline");
         healthBarOutline.SetActive(false);
         UpdateMeleeState();
     }
@@ -59,7 +54,7 @@ public class Ally : Characters
     {
         charName = name;
         maxHealth = Random.Range(15,30);
-        damageRange = new Vector2(Random.Range(5, 8), Random.Range(10, 12));
+        damageRange = new Vector2(Random.Range(100, 100), Random.Range(100, 100));
         dodge = Random.Range(5, 25);
         initiative = Random.Range(1, 14);
         critChance = Random.Range(0.1f, 0.25f);
@@ -92,6 +87,38 @@ public class Ally : Characters
                 CombatManager.combatManager.allySelected = this;
             }
     }
+
+
+    public override void TakeDamage(float value, float duration)
+    {
+        ShowFloatingHealth(Mathf.Round(value), true);
+        float startValue = health;
+        float endValue = startValue - value;
+        endValue = Mathf.Round(endValue);
+        health = endValue;
+        if (health <= 0)
+        {
+            CombatManager.combatManager.RemoveAlly(this);
+        }
+        while (healthBar.value < health)
+        {
+            healthBar.value -= Time.deltaTime;
+            if (healthBar.value <= 0)
+            {
+                health = 0;
+                break;
+            }
+        }
+        healthBar.value = endValue;
+        if (health <= 0)
+        {
+            isDead = true;
+            isTargetable = false;
+            health = 0;
+            healthBar.gameObject.SetActive(false);
+        }
+    }
+    /*
     public override IEnumerator TakeDamageCor(float value, float duration)
     {
         float startValue = healthBar.value;
@@ -99,16 +126,15 @@ public class Ally : Characters
         endValue = Mathf.Round(endValue);
         float elapsed = 0.0f;
         float ratio = 0.0f;
-        /*if (health <= 0)
+        health = endValue;
+        if (health <= 0)
         {
-            isDead = true;
-            isTargetable = false;
-        }*/
-        while (elapsed < duration)
+            CombatManager.combatManager.RemoveAlly(this);
+        }
+            while (elapsed < duration)
         {
             ratio = elapsed / duration;
             healthBar.value = Mathf.Lerp(startValue, endValue, ratio);
-            health = Mathf.Round(healthBar.value);
             if (healthBar.value <= 0)
             {
                 health = 0;
@@ -123,14 +149,14 @@ public class Ally : Characters
             isDead = true;
             isTargetable = false;
             health = 0;
-            CombatManager.combatManager.RemoveAlly(this);
             healthBar.gameObject.SetActive(false);
         }
         yield return new WaitForSeconds(durationDecreaseHealth);
     }
-
+    */
     public override void TakeHealing(float value, float duration)
     {
+        ShowFloatingHealth(Mathf.Round(value), false);
         StartCoroutine(TakeHealingCor(value, duration));
     }
     public override IEnumerator TakeHealingCor(float value, float duration)
@@ -155,6 +181,7 @@ public class Ally : Characters
             yield return null;
         }
         healthBar.value = endValue;
+        health = endValue;
         yield return new WaitForSeconds(durationDecreaseHealth);
     }
 }

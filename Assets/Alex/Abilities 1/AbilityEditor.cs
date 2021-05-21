@@ -36,15 +36,19 @@ public class AbilityEditor : Editor
                         {
                             case Ability.ElementType.ICE:
                                 ability.bonusmalus = EditorGUILayout.FloatField("Bonus crit chance %", ability.bonusmalus);
+                                ability.turnDuration = EditorGUILayout.IntField("Duration (turn)", ability.turnDuration);
                                 break;
                             case Ability.ElementType.ASH:
                                 ability.bonusmalus = EditorGUILayout.FloatField("Damage bonus", ability.bonusmalus);
+                                ability.turnDuration = EditorGUILayout.IntField("Duration (turn)", ability.turnDuration);
                                 break;
                             case Ability.ElementType.MUD:
                                 ability.bonusmalus = EditorGUILayout.FloatField("Dodge bonus %", ability.bonusmalus);
+                                ability.turnDuration = EditorGUILayout.IntField("Duration (turn)", ability.turnDuration);
                                 break;
                             case Ability.ElementType.PSY:
                                 ability.bonusmalus = EditorGUILayout.FloatField("Bonus crit damage %", ability.bonusmalus);
+                                ability.turnDuration = EditorGUILayout.IntField("Duration (turn)", ability.turnDuration);
                                 break;
 
                         }
@@ -54,15 +58,19 @@ public class AbilityEditor : Editor
                         {
                             case Ability.ElementType.ICE:
                                 ability.bonusmalus = EditorGUILayout.FloatField("Bonus crit damage %", ability.bonusmalus);
+                                ability.turnDuration = EditorGUILayout.IntField("Duration (turn)", ability.turnDuration);
                                 break;
                             case Ability.ElementType.ASH:
                                 ability.bonusmalus = EditorGUILayout.FloatField("Damage bonus", ability.bonusmalus);
+                                ability.turnDuration = EditorGUILayout.IntField("Duration (turn)", ability.turnDuration);
                                 break;
                             case Ability.ElementType.MUD:
                                 ability.bonusmalus = EditorGUILayout.FloatField("Armor bonus ", ability.bonusmalus);
+                                ability.turnDuration = EditorGUILayout.IntField("Duration (turn)", ability.turnDuration);
                                 break;
                             case Ability.ElementType.PSY:
                                 ability.bonusmalus = EditorGUILayout.FloatField("Dodge bonus %", ability.bonusmalus);
+                                ability.turnDuration = EditorGUILayout.IntField("Duration (turn)", ability.turnDuration);
                                 break;
                         }
                     }else if(ability.crHealType == Ability.CristalHealType.BATH)
@@ -83,15 +91,43 @@ public class AbilityEditor : Editor
                                 break;
                         }
                     }
-                    break;
+                    break; 
                 case Ability.CristalAbilityType.ATTACK:
                     ability.crAttackType = (Ability.CristalAttackType)EditorGUILayout.EnumPopup("Cristal attack ability ", ability.crAttackType);
+                    if(ability.crAttackType == Ability.CristalAttackType.DOT)
+                    {
+                        ability.dotMult = EditorGUILayout.FloatField("Dot damage mod", ability.dotMult);
+                        ability.turnDuration = EditorGUILayout.IntField("Duration (turn)", ability.turnDuration);
+                    }
                     break;
                 case Ability.CristalAbilityType.OTHERS:
                     ability.crSpecialType = (Ability.CristalSpecialType)EditorGUILayout.EnumPopup("Cristal special ability ", ability.crSpecialType);
                     if(ability.crSpecialType == Ability.CristalSpecialType.DESTRUCTION)
                     {
-                        ability.bonusmalus = EditorGUILayout.FloatField("Bonus / Malus", ability.bonusmalus);
+
+                        switch (ability.elementType)
+                        {
+                            case Ability.ElementType.ICE:
+                                ability.bonusmalus = EditorGUILayout.FloatField("Malus dodge flat", ability.bonusmalus);
+                                ability.destruModif = EditorGUILayout.FloatField("Armor destruction", ability.destruModif);
+                                ability.turnDuration = EditorGUILayout.IntField("Duration (turn)", ability.turnDuration);
+                                break;
+                            case Ability.ElementType.ASH:
+                                ability.bonusmalus = EditorGUILayout.FloatField("Damage Malus", ability.bonusmalus);
+                                ability.destruModif = EditorGUILayout.FloatField("Armor destruction", ability.destruModif);
+                                ability.turnDuration = EditorGUILayout.IntField("Duration (turn)", ability.turnDuration);
+                                break;
+                            case Ability.ElementType.MUD:
+                                ability.bonusmalus = EditorGUILayout.FloatField("Health malus ", ability.bonusmalus);
+                                ability.destruModif = EditorGUILayout.FloatField("Armor destruction", ability.destruModif);
+                                ability.turnDuration = EditorGUILayout.IntField("Duration (turn)", ability.turnDuration);
+                                break;
+                            case Ability.ElementType.PSY:
+                                ability.bonusmalus = EditorGUILayout.FloatField("Armor malus", ability.bonusmalus);
+                                ability.destruModif = EditorGUILayout.FloatField("Armor destruction", ability.destruModif);
+                                ability.turnDuration = EditorGUILayout.IntField("Duration (turn)", ability.turnDuration);
+                                break;
+                        }
                     }
                     break;
             }

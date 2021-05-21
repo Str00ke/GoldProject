@@ -4,13 +4,34 @@ using UnityEngine;
 
 public class StatusManager : MonoBehaviour
 {
-    List<Status> StatusList;
+    public List<Status> StatusList = new List<Status>();
     public static StatusManager statusManager;
-    public void UpdateStatus()
+
+
+    private void Awake()
     {
-        foreach(Status s in StatusList)
+        if (statusManager == null)
         {
-            s.turns--;
+            statusManager = this;
+        }
+        else if (statusManager != this)
+            Destroy(gameObject);
+    }
+    public void UpdateStatus(Characters c)
+    {
+        for(int i = StatusList.Count - 1; i >=0; i--)
+        {
+            if (c == StatusList[i].statusTarget)
+            {
+                c.TakeDamageDots();
+                StatusList[i].turnsActive--;
+            }
+            if (StatusList[i].turnsActive < 0)
+            {
+                Debug.Log("Status fini");
+                StatusList[i].RevertStatus();
+                StatusList.RemoveAt(i);
+            }
         }
     }
 }
