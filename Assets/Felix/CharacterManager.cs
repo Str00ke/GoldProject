@@ -12,6 +12,7 @@ public class CharacterManager : MonoBehaviour
     [Header("Team Scene")]
     public GameObject teamSceneGo;
     [SerializeField] private GameObject[] slotsTeam;
+    [SerializeField] private GameObject itemPanel;
 
     [Header("Team Swap Scene")]
     private int indexSwap1 = -1, indexSwap2 = -1;
@@ -97,36 +98,44 @@ public class CharacterManager : MonoBehaviour
                 continue;
 
             GameObject items = slotsTeam[i].transform.GetChild(0).gameObject;
+
+            for (int z = 0; z < 4; z++)
+            {
+                items.transform.GetChild(z).GetComponent<Button>().onClick.RemoveAllListeners();
+            }
+
+            
             items.transform.GetChild(0).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Head) != null ? characters[i].GetItem(NItem.EPartType.Head).itemUiSprite : null;
             if (characters[i].GetItem(NItem.EPartType.Head) != null)
             {
+                int x = i;
                 NItem.ItemScriptableObject head = characters[i].GetItem(NItem.EPartType.Head);
-                //items.transform.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
-                //items.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(head));
+                
+                items.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => ShowItemPanel(x, 0, head));
             }
 
             items.transform.GetChild(1).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Body) != null ? characters[i].GetItem(NItem.EPartType.Body).itemUiSprite : null;
             if (characters[i].GetItem(NItem.EPartType.Body) != null)
             {
+                int x = i;
                 NItem.ItemScriptableObject body = characters[i].GetItem(NItem.EPartType.Body);
-                //items.transform.GetChild(1).GetComponent<Button>().onClick.RemoveAllListeners();
-                //items.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(body));
+                items.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => ShowItemPanel(x, 1, body));
             }
 
             items.transform.GetChild(2).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Weapon) != null ? characters[i].GetItem(NItem.EPartType.Weapon).itemUiSprite : null;
             if (characters[i].GetItem(NItem.EPartType.Weapon) != null)
             {
+                int x = i;
                 NItem.ItemScriptableObject weapon = characters[i].GetItem(NItem.EPartType.Weapon);
-                //items.transform.GetChild(2).GetComponent<Button>().onClick.RemoveAllListeners();
-                //items.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(weapon));
+                items.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => ShowItemPanel(x, 2, weapon));
             }
 
             items.transform.GetChild(3).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Gem) != null ? characters[i].GetItem(NItem.EPartType.Gem).itemUiSprite : null;
             if (characters[i].GetItem(NItem.EPartType.Gem) != null)
             {
+                int x = i;
                 NItem.ItemScriptableObject gem = characters[i].GetItem(NItem.EPartType.Gem);
-                //items.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
-                //items.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(gem));
+                items.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => ShowItemPanel(x, 3, gem));
             }
         }
 
@@ -144,9 +153,51 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    private void ShowItemPanel(int indexSlot, int indexPartItem, NItem.ItemScriptableObject item)
+    {
+        itemPanel.SetActive(true);
+
+        Vector3 itemPos = slotsTeam[indexSlot].transform.GetChild(0).GetChild(indexPartItem).position;
+
+        itemPanel.transform.position = itemPos + new Vector3(150f, 0f, 0f);
+
+        for (int i = 0; i < 4; i++)
+            itemPanel.transform.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
+
+        Inventory inv = Inventory.inventory;
+
+        itemPanel.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => inv.OpenInventory());
+        itemPanel.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => inv.SelectionCharacterOneItemPart(indexSlot));
+        itemPanel.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => inv.SelectionOneItemPart(indexPartItem));
+
+        itemPanel.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => inv.ToggleItemStatsScreen(item));
+        itemPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => RemoveCharacterItem(indexSlot, item));
+
+        itemPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => CloseItemPanel());
+    }
+
+    private void CloseItemPanel()
+    {
+        itemPanel.SetActive(false);
+    }
+
     public void CloseTeamScene()
     {
         teamSceneGo.SetActive(false);
+        CloseItemPanel();
+    }
+
+    private void RemoveCharacterItem(int characterIndex, NItem.ItemScriptableObject item)
+    {
+        CloseItemPanel();
+
+        Character character = AskForCharacter(characterIndex);
+
+        Inventory.inventory.AddItem(item);
+
+        character.RemoveItem(item.itemPartType);
+
+        OpenTeamScene();
     }
 
     public void SwapCharacterSlotStats(int slot)
