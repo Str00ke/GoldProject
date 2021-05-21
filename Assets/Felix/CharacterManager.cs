@@ -101,32 +101,32 @@ public class CharacterManager : MonoBehaviour
             if (characters[i].GetItem(NItem.EPartType.Head) != null)
             {
                 NItem.ItemScriptableObject head = characters[i].GetItem(NItem.EPartType.Head);
-                items.transform.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
-                items.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(head));
+                //items.transform.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
+                //items.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(head));
             }
 
             items.transform.GetChild(1).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Body) != null ? characters[i].GetItem(NItem.EPartType.Body).itemUiSprite : null;
             if (characters[i].GetItem(NItem.EPartType.Body) != null)
             {
                 NItem.ItemScriptableObject body = characters[i].GetItem(NItem.EPartType.Body);
-                items.transform.GetChild(1).GetComponent<Button>().onClick.RemoveAllListeners();
-                items.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(body));
+                //items.transform.GetChild(1).GetComponent<Button>().onClick.RemoveAllListeners();
+                //items.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(body));
             }
 
             items.transform.GetChild(2).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Weapon) != null ? characters[i].GetItem(NItem.EPartType.Weapon).itemUiSprite : null;
             if (characters[i].GetItem(NItem.EPartType.Weapon) != null)
             {
                 NItem.ItemScriptableObject weapon = characters[i].GetItem(NItem.EPartType.Weapon);
-                items.transform.GetChild(2).GetComponent<Button>().onClick.RemoveAllListeners();
-                items.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(weapon));
+                //items.transform.GetChild(2).GetComponent<Button>().onClick.RemoveAllListeners();
+                //items.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(weapon));
             }
 
             items.transform.GetChild(3).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Gem) != null ? characters[i].GetItem(NItem.EPartType.Gem).itemUiSprite : null;
             if (characters[i].GetItem(NItem.EPartType.Gem) != null)
             {
                 NItem.ItemScriptableObject gem = characters[i].GetItem(NItem.EPartType.Gem);
-                items.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
-                items.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(gem));
+                //items.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
+                //items.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.ToggleItemStatsScreen(gem));
             }
         }
 

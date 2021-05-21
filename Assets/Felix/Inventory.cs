@@ -15,6 +15,9 @@ public class Inventory : MonoBehaviour
     [Header("Item Inventory")]
     private int nbLines = 0;
     private List<GameObject> itemList = new List<GameObject>();
+    private EState state;
+    private GameObject itemPanelTarget;
+    private Character characterItemChoosed;
 
     private int[,] indexItemTypes = new int[4,5];
     [SerializeField] private Image[] itemPartButton = new Image[4];
@@ -52,6 +55,8 @@ public class Inventory : MonoBehaviour
 
     public void OpenInventory()
     {
+        state = EState.Inventory;
+
         CharacterManager.characterManager.CloseTeamScene();
         inventoryGo.SetActive(true);
     }
@@ -116,7 +121,23 @@ public class Inventory : MonoBehaviour
 
     public void DeleteItem(GameObject item)
     {
-        panelItem.SetActive(false);
+        CloseItemPanel();
+
+        NItem.ItemScriptableObject itemScriptable = item.GetComponent<ItemInInventory>().item;
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (i < (int)itemScriptable.itemPartType)
+                continue;
+
+            for (int x = 0; x < 5; x++)
+            {
+                if (i == (int)itemScriptable.itemPartType && x < (int)itemScriptable.itemRarity)
+                    continue;
+
+                indexItemTypes[i, x]--;
+            }
+        }
 
         if (itemList.Count % 5 == 0)
         {
@@ -140,22 +161,52 @@ public class Inventory : MonoBehaviour
     {
         panelItem.SetActive(true);
 
+        itemPanelTarget = item;
+
+        panelItem.transform.GetChild(2).gameObject.SetActive(state == EState.Inventory);
+
         ItemInInventory iii = item.GetComponent<ItemInInventory>();
 
         // Move panel
-        panelItem.transform.position = item.transform.position + new Vector3(150f, 0f, 0f);
+        int index = 0;
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            if (itemList[i].activeSelf)
+                index++;
+
+            if (itemList[i] == item)
+                break;
+        }
+
+        float direction = index % 5 == 0 ? -1f : 1f;
+        
+        panelItem.transform.position = item.transform.position + new Vector3(direction * 150f, 0f, 0f);
 
         for (int i = 0; i < 3; i++)
             panelItem.transform.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
 
-        panelItem.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => ToggleItemChoosingScreen(item));
+        if (state == EState.Inventory)
+            panelItem.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => ToggleItemChoosingScreen(item));
+        else
+            panelItem.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => SetChoosedItem(characterItemChoosed, iii.item, item));
+
         panelItem.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => ToggleItemStatsScreen(iii));
         panelItem.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => DeleteItem(item));
+    }
+
+    public void RefreshPositionItemPanel()
+    {
+        if (!panelItem.activeSelf)
+            return;
+
+        panelItem.transform.position = itemPanelTarget.transform.position + new Vector3(150f, 0f, 0f);
     }
 
     public void CloseItemPanel()
     {
         panelItem.SetActive(false);
+
+        itemPanelTarget = null;
     }
 
     public void ButtonSelectionRarity(int rarity)
@@ -201,11 +252,15 @@ public class Inventory : MonoBehaviour
 
     public void SelectionOneItemPart(int itemPart)
     {
-
+        if (characterItemChoosed == null)
+            return;
 
         for (int i = 0; i < itemRarityButton.Length; i++)
         {
+            itemRarityButton[i].color = new Vector4(1f, 1f, 1f, 1f);
             itemRarityButton[i].gameObject.SetActive(false);
+
+            ButtonSelectionRarity(i);
         }
 
         for (int i = 0; i < itemPartButton.Length; i++)
@@ -217,6 +272,13 @@ public class Inventory : MonoBehaviour
         }
 
         ButtonSelectionItemPart(itemPart);
+
+        state = EState.InventoryItemPartSelection;
+    }
+
+    public void SelectionCharacterOneItemPart(int slotIndex)
+    {
+        characterItemChoosed = CharacterManager.characterManager.AskForCharacter(0);
     }
 
     private void ResetButtonSelection()
@@ -393,7 +455,10 @@ public class Inventory : MonoBehaviour
         // character refresh stats
         DeleteItem(itemGo);
 
-        CloseItemChoosingScreen();
+        if (state == EState.Inventory)
+            CloseItemChoosingScreen();
+        else
+            CloseInventory();
     }
 
     #endregion
@@ -411,12 +476,25 @@ public class Inventory : MonoBehaviour
 
         itemStatsGo.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = item.item.itemName;
         panel.transform.GetChild(0).GetComponent<Text>().text = "Health: " + item.item.health;
+        panel.transform.GetChild(0).gameObject.SetActive(item.item.health == 0 ? false : true);
+
         panel.transform.GetChild(1).GetComponent<Text>().text = "Armor: " + item.item.armor;
+        panel.transform.GetChild(1).gameObject.SetActive(item.item.armor == 0 ? false : true);
+
         panel.transform.GetChild(2).GetComponent<Text>().text = "Attack: " + item.item.attack;
+        panel.transform.GetChild(2).gameObject.SetActive(item.item.attack == 0 ? false : true);
+
         panel.transform.GetChild(3).GetComponent<Text>().text = "Dodge: " + item.item.dodge;
+        panel.transform.GetChild(3).gameObject.SetActive(item.item.dodge == 0 ? false : true);
+
         panel.transform.GetChild(4).GetComponent<Text>().text = "Crit%: " + item.item.criticalChance;
+        panel.transform.GetChild(4).gameObject.SetActive(item.item.criticalChance == 0 ? false : true);
+
         panel.transform.GetChild(5).GetComponent<Text>().text = "CritDmg: " + item.item.crititalDamage;
+        panel.transform.GetChild(5).gameObject.SetActive(item.item.crititalDamage == 0 ? false : true);
+
         panel.transform.GetChild(6).GetComponent<Text>().text = "Element: " + item.item.itemType.ToString();
+        panel.transform.GetChild(6).gameObject.SetActive(item.item.itemType == NItem.EItemType.None ? false : true);
     }
 
     public void ToggleItemStatsScreen(NItem.ItemScriptableObject item)
@@ -429,12 +507,25 @@ public class Inventory : MonoBehaviour
 
         itemStatsGo.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = item.itemName;
         panel.transform.GetChild(0).GetComponent<Text>().text = "Health: " + item.health;
+        panel.transform.GetChild(0).gameObject.SetActive(item.health == 0 ? false : true);
+
         panel.transform.GetChild(1).GetComponent<Text>().text = "Armor: " + item.armor;
+        panel.transform.GetChild(1).gameObject.SetActive(item.armor == 0 ? false : true);
+
         panel.transform.GetChild(2).GetComponent<Text>().text = "Attack: " + item.attack;
+        panel.transform.GetChild(2).gameObject.SetActive(item.attack == 0 ? false : true);
+
         panel.transform.GetChild(3).GetComponent<Text>().text = "Dodge: " + item.dodge;
+        panel.transform.GetChild(3).gameObject.SetActive(item.dodge == 0 ? false : true);
+
         panel.transform.GetChild(4).GetComponent<Text>().text = "Crit%: " + item.criticalChance;
+        panel.transform.GetChild(4).gameObject.SetActive(item.criticalChance == 0 ? false : true);
+
         panel.transform.GetChild(5).GetComponent<Text>().text = "CritDmg: " + item.crititalDamage;
+        panel.transform.GetChild(5).gameObject.SetActive(item.crititalDamage == 0 ? false : true);
+
         panel.transform.GetChild(6).GetComponent<Text>().text = "Element: " + item.itemType.ToString();
+        panel.transform.GetChild(6).gameObject.SetActive(item.itemType == NItem.EItemType.None ? false : true);
     }
 
     public void CloseItemStatsScreen()

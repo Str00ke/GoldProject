@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Ultime
   health: 100
-  armor: 100
-  attack: 100
-  dodge: 100
-  criticalChance: 100
+  armor: 0
+  attack: 0
+  dodge: 0
+  criticalChance: 0
   crititalDamage: 100
-  itemPartType: 0
+  itemPartType: 1
   itemType: 2
   itemRarity: 0
   itemUiSprite: {fileID: 21300000, guid: fc65a9309abeab543b26e2e0cb40715a, type: 3}
