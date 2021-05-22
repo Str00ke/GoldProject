@@ -11,7 +11,8 @@ public class Enemy : Characters
         CombatManager.combatManager.enemies.Add(this);
         charType = CharType.ENEMY; 
         anim = this.GetComponent<Animator>();
-        thisColor = this.GetComponent<SpriteRenderer>();
+        thisColorBody = this.GetComponent<SpriteRenderer>();
+        thisColorHead = this.GetComponent<SpriteRenderer>();
         durationMove = 1.0f;
         healthBar = GameObject.Find(gameObject.name + "/CanvasSlider/healthBar").GetComponent<Slider>();
         health = maxHealth;

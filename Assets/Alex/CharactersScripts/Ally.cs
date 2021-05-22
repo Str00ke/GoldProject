@@ -6,13 +6,24 @@ using UnityEngine.UI;
 
 public class Ally : Characters
 {
+    public enum CristalElement
+    {
+        ASH,
+        ICE,
+        MUD,
+        PSY
+    }
+    public CristalElement cristalElement;
+    public SpriteRenderer head;
+    public SpriteRenderer body;
     private void Start()
     {
         CombatManager.combatManager.allies.Add(this);
         posInitial = GameObject.Find("Pos00").transform;
         charType = CharType.ALLY;
         anim = this.GetComponent<Animator>();
-        thisColor = this.GetComponent<SpriteRenderer>();
+        thisColorBody = body;
+        thisColorHead = head;
         durationMove = 1.0f;
         healthBar = GameObject.Find(gameObject.name + "/CanvasChar/healthBar").GetComponent<Slider>();
         health = maxHealth;
@@ -54,7 +65,7 @@ public class Ally : Characters
     {
         charName = name;
         maxHealth = Random.Range(15,30);
-        damageRange = new Vector2(Random.Range(100, 100), Random.Range(100, 100));
+        damageRange = new Vector2(Random.Range(5, 8), Random.Range(9, 13));
         dodge = Random.Range(5, 25);
         initiative = Random.Range(1, 14);
         critChance = Random.Range(0.1f, 0.25f);
@@ -112,10 +123,7 @@ public class Ally : Characters
         healthBar.value = endValue;
         if (health <= 0)
         {
-            isDead = true;
-            isTargetable = false;
-            health = 0;
-            healthBar.gameObject.SetActive(false);
+            Death();
         }
     }
     /*
@@ -183,5 +191,14 @@ public class Ally : Characters
         healthBar.value = endValue;
         health = endValue;
         yield return new WaitForSeconds(durationDecreaseHealth);
+    }
+    public void Death()
+    {
+        isDead = true;
+        isTargetable = false;
+        health = 0;
+        healthBar.gameObject.SetActive(false);
+        body.sprite = head.sprite;
+        head.sprite = null;
     }
 }

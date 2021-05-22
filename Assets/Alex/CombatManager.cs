@@ -159,7 +159,8 @@ public class CombatManager : MonoBehaviour
             }
         }
         yield return new WaitForSeconds(1.0f);
-        EnemyAbilityAttack(allies[allyAttacked], inMelee, inDefence);
+        if(allies.Count > 0)
+            EnemyAbilityAttack(allies[allyAttacked], inMelee, inDefence);
         yield return new WaitForSeconds(attackDuration);
         NextCharAttack();
         yield return null;

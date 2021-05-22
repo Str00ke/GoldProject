@@ -41,85 +41,88 @@ public class Status
     }
     public void ApplyStatus()
     {
-        switch (statusType)
+        if (statusTarget)
         {
-            case StatusTypes.ARMORBONUSPERC:
-                diffModif = statusTarget.armor * bonusmalus;
-                statusTarget.armor += diffModif;
-                break;
-            case StatusTypes.ARMORBONUSFLAT:
-                diffModif = bonusmalus;
-                statusTarget.armor += diffModif;
-                break;
-            case StatusTypes.ARMORMALUS:
-                diffModif = statusTarget.armor * bonusmalus;
-                statusTarget.armor -= diffModif;
-                break;
-            case StatusTypes.BLEEDING:
-                diffModif = bonusmalus;
-                statusTarget.bleedingDmg += diffModif;
-                break;
-            case StatusTypes.HEALBONUS:
-                diffModif = bonusmalus;
-                statusTarget.healReceivedModif += diffModif;
-                break;
-            case StatusTypes.PRECISIONMALUS:
-                if(statusTarget.precision < 1.0f)
-                {
-                    statusTarget.precision = diffModif;
-                }
-                else
-                {
+            switch (statusType)
+            {
+                case StatusTypes.ARMORBONUSPERC:
+                    diffModif = statusTarget.armor * bonusmalus;
+                    statusTarget.armor += diffModif;
+                    break;
+                case StatusTypes.ARMORBONUSFLAT:
                     diffModif = bonusmalus;
-                    statusTarget.precision -= diffModif;
-                }
-                break;
-            case StatusTypes.DODGEBONUSFLAT:
-                diffModif = bonusmalus;
-                statusTarget.dodge += diffModif;
-                break;
-            case StatusTypes.DODGEMALUS:
-                diffModif = bonusmalus;
-                statusTarget.dodge -= diffModif;
-                break;
-            case StatusTypes.CRITDAMAGEBONUS:
-                diffModif = bonusmalus;
-                statusTarget.critDamage += diffModif;
-                break;
-            case StatusTypes.CRITRATEBONUS:
-                diffModif = bonusmalus;
-                statusTarget.critChance += diffModif;
-                break;
-            case StatusTypes.DAMAGEBONUS:
-                diffModif = bonusmalus;
-                statusTarget.damageRange.x += diffModif;
-                statusTarget.damageRange.y += diffModif;
-                break;
-            case StatusTypes.DAMAGEMALUS:
-                diffModif = bonusmalus;
-                statusTarget.damageRange.x -= diffModif;
-                statusTarget.damageRange.y -= diffModif;
-                break;
-            case StatusTypes.HEALTHDEBUFF:
-                diffModif = bonusmalus;
-                statusTarget.maxHealth -= diffModif;
-                break;
-            case StatusTypes.DOTASH:
-                diffModif = bonusmalus;
-                statusTarget.dmgDotAsh += diffModif;
-                break;
-            case StatusTypes.DOTICE:
-                diffModif = bonusmalus;
-                statusTarget.dmgDotIce += diffModif;
-                break;
-            case StatusTypes.DOTMUD:
-                diffModif = bonusmalus;
-                statusTarget.dmgDotMud += diffModif;
-                break;
-            case StatusTypes.DOTPSY:
-                diffModif = bonusmalus;
-                statusTarget.dmgDotPsy += diffModif;
-                break;
+                    statusTarget.armor += diffModif;
+                    break;
+                case StatusTypes.ARMORMALUS:
+                    diffModif = statusTarget.armor * bonusmalus;
+                    statusTarget.armor -= diffModif;
+                    break;
+                case StatusTypes.BLEEDING:
+                    diffModif = bonusmalus;
+                    statusTarget.bleedingDmg += diffModif;
+                    break;
+                case StatusTypes.HEALBONUS:
+                    diffModif = bonusmalus;
+                    statusTarget.healReceivedModif += diffModif;
+                    break;
+                case StatusTypes.PRECISIONMALUS:
+                    if (statusTarget.precision < 1.0f)
+                    {
+                        statusTarget.precision = diffModif;
+                    }
+                    else
+                    {
+                        diffModif = bonusmalus;
+                        statusTarget.precision -= diffModif;
+                    }
+                    break;
+                case StatusTypes.DODGEBONUSFLAT:
+                    diffModif = bonusmalus;
+                    statusTarget.dodge += diffModif;
+                    break;
+                case StatusTypes.DODGEMALUS:
+                    diffModif = bonusmalus;
+                    statusTarget.dodge -= diffModif;
+                    break;
+                case StatusTypes.CRITDAMAGEBONUS:
+                    diffModif = bonusmalus;
+                    statusTarget.critDamage += diffModif;
+                    break;
+                case StatusTypes.CRITRATEBONUS:
+                    diffModif = bonusmalus;
+                    statusTarget.critChance += diffModif;
+                    break;
+                case StatusTypes.DAMAGEBONUS:
+                    diffModif = bonusmalus;
+                    statusTarget.damageRange.x += diffModif;
+                    statusTarget.damageRange.y += diffModif;
+                    break;
+                case StatusTypes.DAMAGEMALUS:
+                    diffModif = bonusmalus;
+                    statusTarget.damageRange.x -= diffModif;
+                    statusTarget.damageRange.y -= diffModif;
+                    break;
+                case StatusTypes.HEALTHDEBUFF:
+                    diffModif = bonusmalus;
+                    statusTarget.maxHealth -= diffModif;
+                    break;
+                case StatusTypes.DOTASH:
+                    diffModif = bonusmalus;
+                    statusTarget.dmgDotAsh += diffModif;
+                    break;
+                case StatusTypes.DOTICE:
+                    diffModif = bonusmalus;
+                    statusTarget.dmgDotIce += diffModif;
+                    break;
+                case StatusTypes.DOTMUD:
+                    diffModif = bonusmalus;
+                    statusTarget.dmgDotMud += diffModif;
+                    break;
+                case StatusTypes.DOTPSY:
+                    diffModif = bonusmalus;
+                    statusTarget.dmgDotPsy += diffModif;
+                    break;
+            }
         }
     }
     public void RevertStatus()

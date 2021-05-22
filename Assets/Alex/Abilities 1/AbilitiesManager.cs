@@ -17,8 +17,11 @@ public class AbilitiesManager : MonoBehaviour
     public AbilityScript Ability02;
     public AbilityScript Ability03;
     public AbilityScript Ability04;
-    public Ability[] abilitiesWeaponsAllies;
-    public Ability[] abilitiesCristalsAllies;
+    //public Ability[] abilitiesWeaponsAllies;
+    public Ability[] cristalsAsh;
+    public Ability[] cristalsIce;
+    public Ability[] cristalsMud;
+    public Ability[] cristalsPsy;
     public Ability[] abilitiesEnemies;
 
 
@@ -35,6 +38,7 @@ public class AbilitiesManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //cristalsAsh = Assets / Alex / Abilities / CristalsAbilities / Ash / CAAttackDotAsh.asset
         actionButton = GameObject.Find("ActionButton");
         abilityNameUI = GameObject.Find("AbilityName").GetComponent<Text>();
         abilityDescription = GameObject.Find("AbilityDescription").GetComponent<Text>();
@@ -410,6 +414,21 @@ public class AbilitiesManager : MonoBehaviour
                     cm.allyPlaying.LaunchHeal(e, a);
                     cm.allyPlaying.LaunchHeal(e, a);
                 }
+                break;
+        }
+    }
+    public void ChangeAbilities()
+    {
+        var cm = CombatManager.combatManager;
+        switch (cm.allyPlaying.cristalElement)
+        {
+            case Ally.CristalElement.ASH:
+                break;
+            case Ally.CristalElement.ICE:
+                break;
+            case Ally.CristalElement.MUD:
+                break;
+            case Ally.CristalElement.PSY:
                 break;
         }
     }

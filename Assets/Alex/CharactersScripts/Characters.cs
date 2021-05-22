@@ -80,7 +80,8 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     public bool CanAttack;
     public bool isSelected;
     [HideInInspector]
-    public SpriteRenderer thisColor;
+    public SpriteRenderer thisColorHead;
+    public SpriteRenderer thisColorBody;
     public Color selectedColor;
     public Color hasPlayedColor;
     public Color AttackColor;
@@ -120,25 +121,31 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     {
         if (isSelected && !CanAttack && !hasPlayed)
         {
-            thisColor.color = selectedColor;
+            thisColorBody.color = selectedColor;
+            thisColorHead.color = selectedColor;
         }
         else if (!isSelected && !CanAttack && !hasPlayed)
         {
-            thisColor.color = baseColor;
+            thisColorBody.color = baseColor;
+            thisColorHead.color = baseColor;
         }
         else if (CanAttack)
         {
-            thisColor.color = AttackColor;
+            thisColorBody.color = AttackColor;
+            thisColorHead.color = AttackColor;
         } else if(CanAttack && isSelected)
         {
-            thisColor.color = selectedColor;
+            thisColorBody.color = selectedColor;
+            thisColorHead.color = selectedColor;
         } else if (hasPlayed && !isSelected)
         {
-            thisColor.color = hasPlayedColor;
+            thisColorBody.color = hasPlayedColor;
+            thisColorHead.color = hasPlayedColor;
         }
         else if (hasPlayed && isSelected)
         {
-            thisColor.color = selectedColor;
+            thisColorBody.color = selectedColor;
+            thisColorHead.color = selectedColor;
         }
     }
 
