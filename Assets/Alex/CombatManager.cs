@@ -128,7 +128,6 @@ public class CombatManager : MonoBehaviour
                 allyPlaying = null;
             }
             //UPDATE STATUS ON CHARACTER PLAYING
-            fightersList[currCharAttacking].TakeDamageDots();
             StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
             CharAttack(currCharAttacking);
         }
@@ -247,6 +246,7 @@ public class CombatManager : MonoBehaviour
         allies.Remove(a);
         if (allies.Count <= 0)
         {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             //EndFight(false);
             //EndFight<Ally>(allies);
         }

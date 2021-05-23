@@ -23,11 +23,16 @@ public class StatusManager : MonoBehaviour
         {
             if (c == StatusList[i].statusTarget)
             {
-                c.TakeDamageDots();
                 StatusList[i].turnsActive--;
+                if (StatusList[i].statusType == Status.StatusTypes.DOT)
+                    c.TakeDamageDots(StatusList[i].statusElement, StatusList[i].dmg);
             }
-            if (StatusList[i].turnsActive < 0)
+            if (StatusList[i].turnsActive <= 0)
             {
+                if(c == StatusList[i].statusTarget && StatusList[i].statusType == Status.StatusTypes.MARK)
+                {
+                    c.TakeDamageMark(StatusList[i].statusElement, StatusList[i].dmg);
+                }
                 Debug.Log("Status fini");
                 StatusList[i].RevertStatus();
                 StatusList.RemoveAt(i);

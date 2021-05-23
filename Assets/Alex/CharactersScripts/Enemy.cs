@@ -61,21 +61,25 @@ public class Enemy : Characters
                 CombatManager.combatManager.enemySelected = this;
             }
     }
-    public override void TakeDamage(float value, float duration)
+    /*public override void TakeDamage(float value, float duration)
     {
         ShowFloatingHealth(Mathf.Round(value), true);
+        float elapsed = 0;
+        float ratio = 0.0f;
         float startValue = health;
         float endValue = startValue - value;
         endValue = Mathf.Round(endValue);
         health = endValue;
-        while (healthBar.value < health)
+        while (elapsed < duration)
         {
-            healthBar.value -= Time.deltaTime / 1000;
+            ratio = elapsed / duration;
+            healthBar.value = Mathf.Lerp(healthBar.value, endValue, ratio);
             if (healthBar.value <= 0)
             {
                 health = 0;
                 break;
             }
+            elapsed += Time.deltaTime;
         }
         healthBar.value = endValue;
         if (health <= 0)
@@ -83,17 +87,17 @@ public class Enemy : Characters
             health = 0;
             CombatManager.combatManager.RemoveEnemy(teamPosition);
         }
-    }
-    /*
+    }*/
+    
     public override IEnumerator TakeDamageCor(float value, float duration)
     {
+        ShowFloatingHealth(Mathf.Round(value), true);
         float startValue = health;
         float endValue = startValue - value;
         endValue = Mathf.Round(endValue);
         float elapsed = 0.0f;
         float ratio = 0.0f;
         health = endValue;
-        Debug.Log(endValue);
         while (elapsed < duration)
         {
             ratio = elapsed / duration;
@@ -115,7 +119,7 @@ public class Enemy : Characters
         }
     }
 
-    */
+    
     public override void TakeHealing(float value, float duration)
     {
         ShowFloatingHealth(Mathf.Round(value), false);

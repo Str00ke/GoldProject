@@ -1,3 +1,5 @@
+
+#if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -98,6 +100,10 @@ public class AbilityEditor : Editor
                     {
                         ability.dotMult = EditorGUILayout.FloatField("Dot damage mod", ability.dotMult);
                         ability.turnDuration = EditorGUILayout.IntField("Duration (turn)", ability.turnDuration);
+                    }else if (ability.crAttackType == Ability.CristalAttackType.MARK)
+                    {
+                        ability.markMult = EditorGUILayout.FloatField("Mark damage mod", ability.markMult);
+                        ability.turnDuration = EditorGUILayout.IntField("Turns before explosion", ability.turnDuration);
                     }
                     break;
                 case Ability.CristalAbilityType.OTHERS:
@@ -140,3 +146,5 @@ public class AbilityEditor : Editor
 
     }
 }
+
+#endif

@@ -60,6 +60,7 @@ public class Ally : Characters
         critDamage = critDmg;
         armor = armr;
         teamPosition = position;
+
     }
     public void CreateChar(string name) 
     {
@@ -75,6 +76,39 @@ public class Ally : Characters
         healthBar.maxValue = maxHealth;
         healthBar.value = health;
         offsetPos *= -1;
+
+
+        switch (itemElement)
+        {
+            case ItemElement.ASH:
+                while (abilitiesCristal[0] == abilitiesCristal[1])
+                {
+                    abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsAsh[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsAsh.Length)];
+                    abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsAsh[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsAsh.Length)];
+                }
+                break;
+            case ItemElement.ICE:
+                while (abilitiesCristal[0] == abilitiesCristal[1])
+                {
+                    abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsIce[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsIce.Length)];
+                    abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsIce[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsIce.Length)];
+                }
+                break;
+            case ItemElement.MUD:
+                while (abilitiesCristal[0] == abilitiesCristal[1])
+                {
+                    abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsMud[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsMud.Length)];
+                    abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsMud[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsMud.Length)];
+                }
+                break;
+            case ItemElement.PSY:
+                while (abilitiesCristal[0] == abilitiesCristal[1])
+                {
+                    abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsPsy[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsPsy.Length)];
+                    abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsPsy[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsPsy.Length)];
+                }
+                break;
+        }
     }
 
     public override void OnPointerDown(PointerEventData eventData)
@@ -100,7 +134,7 @@ public class Ally : Characters
     }
 
 
-    public override void TakeDamage(float value, float duration)
+    /*public override void TakeDamage(float value, float duration)
     {
         ShowFloatingHealth(Mathf.Round(value), true);
         float startValue = health;
@@ -125,10 +159,11 @@ public class Ally : Characters
         {
             Death();
         }
-    }
-    /*
+    }*/
+    
     public override IEnumerator TakeDamageCor(float value, float duration)
     {
+        ShowFloatingHealth(Mathf.Round(value), true);
         float startValue = healthBar.value;
         float endValue = startValue - value;
         endValue = Mathf.Round(endValue);
@@ -161,7 +196,7 @@ public class Ally : Characters
         }
         yield return new WaitForSeconds(durationDecreaseHealth);
     }
-    */
+    
     public override void TakeHealing(float value, float duration)
     {
         ShowFloatingHealth(Mathf.Round(value), false);
@@ -194,6 +229,7 @@ public class Ally : Characters
     }
     public void Death()
     {
+        isMelee = false;
         isDead = true;
         isTargetable = false;
         health = 0;

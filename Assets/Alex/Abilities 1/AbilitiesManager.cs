@@ -354,7 +354,7 @@ public class AbilitiesManager : MonoBehaviour
                             cm.allyPlaying.PutDot(cm.enemySelected, a);
                         break;
                         case Ability.CristalAttackType.MARK:
-                            cm.allyPlaying.LaunchAttack(cm.enemySelected, a);
+                            cm.allyPlaying.PutMark(cm.enemySelected, a);
                             break;
                     }
                     break;
@@ -369,8 +369,8 @@ public class AbilitiesManager : MonoBehaviour
                             break;
                     }
                     break;
-                
         }
+        ChangeAbilities();
     }
     public void AbilityBath(Ability a)
     {
@@ -382,7 +382,7 @@ public class AbilitiesManager : MonoBehaviour
                 if (cm.allies.Count > 1)
                 {
                     int randA = Random.Range(0, cm.allies.Count - 1);
-                    while (randA == cm.allySelected.teamPosition)
+                    while (cm.allies[randA] == cm.allySelected)
                     {
                         randA = Random.Range(0, cm.allies.Count - 1);
                     }
@@ -397,21 +397,15 @@ public class AbilitiesManager : MonoBehaviour
                 foreach (Ally al in CombatManager.combatManager.allies)
                 {
                     cm.allyPlaying.LaunchHeal(al, a);
-                    cm.allyPlaying.LaunchHeal(al, a);
-                    cm.allyPlaying.LaunchHeal(al, a);
                 }
                 break;
             case Ability.ElementType.PSY:
                 foreach (Ally al in CombatManager.combatManager.allies)
                 {
                     cm.allyPlaying.LaunchHeal(al, a);
-                    cm.allyPlaying.LaunchHeal(al, a);
-                    cm.allyPlaying.LaunchHeal(al, a);
                 }
                 foreach (Enemy e in CombatManager.combatManager.enemies)
                 {
-                    cm.allyPlaying.LaunchHeal(e, a);
-                    cm.allyPlaying.LaunchHeal(e, a);
                     cm.allyPlaying.LaunchHeal(e, a);
                 }
                 break;
@@ -420,15 +414,59 @@ public class AbilitiesManager : MonoBehaviour
     public void ChangeAbilities()
     {
         var cm = CombatManager.combatManager;
-        switch (cm.allyPlaying.cristalElement)
+        switch (cm.allyPlaying.itemElement)
         {
-            case Ally.CristalElement.ASH:
+            case Ally.ItemElement.ASH:
+                for(int i = 0; i < cm.allyPlaying.abilitiesCristal.Length; i++)
+                {
+                    if(abilitySelected.ability == cm.allyPlaying.abilitiesCristal[i])
+                    {
+                        cm.allyPlaying.abilitiesCristal[i] = AbilitiesManager.abilitiesManager.cristalsAsh[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsAsh.Length)];
+                        while (cm.allyPlaying.abilitiesCristal[0] == cm.allyPlaying.abilitiesCristal[1])
+                        {
+                            cm.allyPlaying.abilitiesCristal[i] = AbilitiesManager.abilitiesManager.cristalsAsh[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsAsh.Length)];
+                        }
+                    }
+                }
                 break;
-            case Ally.CristalElement.ICE:
+            case Ally.ItemElement.ICE:
+                for (int i = 0; i < cm.allyPlaying.abilitiesCristal.Length; i++)
+                {
+                    if (abilitySelected.ability == cm.allyPlaying.abilitiesCristal[i])
+                    {
+                        cm.allyPlaying.abilitiesCristal[i] = AbilitiesManager.abilitiesManager.cristalsIce[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsIce.Length)];
+                        while (cm.allyPlaying.abilitiesCristal[0] == cm.allyPlaying.abilitiesCristal[1])
+                        {
+                            cm.allyPlaying.abilitiesCristal[i] = AbilitiesManager.abilitiesManager.cristalsIce[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsIce.Length)];
+                        }
+                    }
+                }
                 break;
-            case Ally.CristalElement.MUD:
+            case Ally.ItemElement.MUD:
+                for (int i = 0; i < cm.allyPlaying.abilitiesCristal.Length; i++)
+                {
+                    if (abilitySelected.ability == cm.allyPlaying.abilitiesCristal[i])
+                    {
+                        cm.allyPlaying.abilitiesCristal[i] = AbilitiesManager.abilitiesManager.cristalsMud[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsMud.Length)];
+                        while (cm.allyPlaying.abilitiesCristal[0] == cm.allyPlaying.abilitiesCristal[1])
+                        {
+                            cm.allyPlaying.abilitiesCristal[i] = AbilitiesManager.abilitiesManager.cristalsMud[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsMud.Length)];
+                        }
+                    }
+                }
                 break;
-            case Ally.CristalElement.PSY:
+            case Ally.ItemElement.PSY:
+                for (int i = 0; i < cm.allyPlaying.abilitiesCristal.Length; i++)
+                {
+                    if (abilitySelected.ability == cm.allyPlaying.abilitiesCristal[i])
+                    {
+                        cm.allyPlaying.abilitiesCristal[i] = AbilitiesManager.abilitiesManager.cristalsPsy[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsPsy.Length)];
+                        while (cm.allyPlaying.abilitiesCristal[0] == cm.allyPlaying.abilitiesCristal[1])
+                        {
+                            cm.allyPlaying.abilitiesCristal[i] = AbilitiesManager.abilitiesManager.cristalsPsy[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsPsy.Length)];
+                        }
+                    }
+                }
                 break;
         }
     }

@@ -1033,8 +1033,10 @@ MonoBehaviour:
   Ability02: {fileID: 0}
   Ability03: {fileID: 0}
   Ability04: {fileID: 0}
-  abilitiesWeaponsAllies: []
-  abilitiesCristalsAllies: []
+  cristalsAsh: []
+  cristalsIce: []
+  cristalsMud: []
+  cristalsPsy: []
   abilitiesEnemies:
   - {fileID: 11400000, guid: 339b3b47eb400d24e90347ae579ebbf6, type: 2}
 --- !u!1 &7422386929604747897
@@ -1901,9 +1903,9 @@ Transform:
   - {fileID: 6456051380413543279}
   - {fileID: 6456051379978729521}
   - {fileID: 6456051378919623014}
+  - {fileID: 3481661369913466180}
   - {fileID: 6041021863791312205}
   - {fileID: 6325598155269023486}
-  - {fileID: 3481661369913466180}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2023,7 +2025,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 2a8712af4462a0e468b6274a0f15a7c0, type: 2}
     - target: {fileID: 2169942591526643261, guid: 97f6233b9f4a8ef438b6a9fd9df387ab, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 2169942591526643261, guid: 97f6233b9f4a8ef438b6a9fd9df387ab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2113,7 +2115,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 4072a099ba476514b895cb14c16d1af5, type: 2}
     - target: {fileID: 2169942591526643261, guid: 97f6233b9f4a8ef438b6a9fd9df387ab, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2169942591526643261, guid: 97f6233b9f4a8ef438b6a9fd9df387ab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2199,7 +2201,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 9173e1a39f4b102438e3fd29cce44c85, type: 2}
     - target: {fileID: 2169942591526643261, guid: 97f6233b9f4a8ef438b6a9fd9df387ab, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 2169942591526643261, guid: 97f6233b9f4a8ef438b6a9fd9df387ab, type: 3}
       propertyPath: m_LocalPosition.x

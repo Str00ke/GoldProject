@@ -12,6 +12,7 @@ public class Ability : ScriptableObject
     public float bonusmalus;
     public float destruModif;
     public float dotMult;
+    public float markMult;
     public int turnDuration;
 
     public enum ObjectType 

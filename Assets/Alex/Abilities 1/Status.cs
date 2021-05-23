@@ -8,6 +8,17 @@ public class Status
     public int turnsActive;
     public float bonusmalus;
     public float diffModif;
+    public float dmg;
+    public Ability abi;
+    public enum StatusElement
+    {
+        BASE,
+        ASH,
+        ICE,
+        MUD,
+        PSY
+    }
+    public StatusElement statusElement;
     public enum StatusTypes
     {
         ARMORBONUSPERC,
@@ -23,14 +34,35 @@ public class Status
         DAMAGEBONUS,
         DAMAGEMALUS,
         HEALTHDEBUFF,
-        DOTASH,
-        DOTICE,
-        DOTMUD,
-        DOTPSY
+        DOT,
+        MARK
     }
     public StatusTypes statusType;
 
-    public Status(Characters target, float bm,  int turns, StatusTypes statusT)
+    public Status(Characters target, float bm, Ability a, StatusTypes statusT, float damage)
+    {
+        bonusmalus = bm;
+        statusTarget = target;
+        turnsActive = a.turnDuration;
+        statusType = statusT;
+        dmg = damage;
+        abi = a;
+        statusElement = (StatusElement)System.Enum.Parse(typeof(StatusElement), a.elementType.ToString());
+        StatusManager.statusManager.StatusList.Add(this);
+        ApplyStatus();
+    }
+    public Status(Characters target, float bm, Ability a, StatusTypes statusT)
+    {
+        bonusmalus = bm;
+        statusTarget = target;
+        turnsActive = a.turnDuration;
+        statusType = statusT;
+        abi = a;
+        statusElement = (StatusElement)System.Enum.Parse(typeof(StatusElement), a.elementType.ToString());
+        StatusManager.statusManager.StatusList.Add(this);
+        ApplyStatus();
+    }
+    public Status(Characters target, float bm, int turns, StatusTypes statusT)
     {
         bonusmalus = bm;
         statusTarget = target;
@@ -59,6 +91,7 @@ public class Status
                     break;
                 case StatusTypes.BLEEDING:
                     diffModif = bonusmalus;
+                    statusElement = StatusElement.BASE;
                     statusTarget.bleedingDmg += diffModif;
                     break;
                 case StatusTypes.HEALBONUS:
@@ -106,22 +139,26 @@ public class Status
                     diffModif = bonusmalus;
                     statusTarget.maxHealth -= diffModif;
                     break;
-                case StatusTypes.DOTASH:
+               /* case StatusTypes.DOT:
                     diffModif = bonusmalus;
                     statusTarget.dmgDotAsh += diffModif;
-                    break;
-                case StatusTypes.DOTICE:
-                    diffModif = bonusmalus;
-                    statusTarget.dmgDotIce += diffModif;
-                    break;
-                case StatusTypes.DOTMUD:
-                    diffModif = bonusmalus;
-                    statusTarget.dmgDotMud += diffModif;
-                    break;
-                case StatusTypes.DOTPSY:
-                    diffModif = bonusmalus;
-                    statusTarget.dmgDotPsy += diffModif;
-                    break;
+                    break;*/
+                    /*case StatusTypes.DOTASH:
+                        diffModif = bonusmalus;
+                        statusTarget.dmgDotAsh += diffModif;
+                        break;
+                    case StatusTypes.DOTICE:
+                        diffModif = bonusmalus;
+                        statusTarget.dmgDotIce += diffModif;
+                        break;
+                    case StatusTypes.DOTMUD:
+                        diffModif = bonusmalus;
+                        statusTarget.dmgDotMud += diffModif;
+                        break;
+                    case StatusTypes.DOTPSY:
+                        diffModif = bonusmalus;
+                        statusTarget.dmgDotPsy += diffModif;
+                        break;*/
             }
         }
     }
@@ -170,18 +207,21 @@ public class Status
             case StatusTypes.HEALTHDEBUFF:
                 statusTarget.maxHealth += diffModif;
                 break;
-            case StatusTypes.DOTASH:
-                statusTarget.dmgDotAsh -= diffModif;
-                break;
-            case StatusTypes.DOTICE:
-                statusTarget.dmgDotIce -= diffModif;
-                break;
-            case StatusTypes.DOTMUD:
-                statusTarget.dmgDotMud -= diffModif;
-                break;
-            case StatusTypes.DOTPSY:
-                statusTarget.dmgDotPsy -= diffModif;
-                break;
+            /*case StatusTypes.DOT:
+                statusTarget.maxHealth += diffModif;
+                break;*/
+                /*case StatusTypes.DOTASH:
+                    statusTarget.dmgDotAsh -= diffModif;
+                    break;
+                case StatusTypes.DOTICE:
+                    statusTarget.dmgDotIce -= diffModif;
+                    break;
+                case StatusTypes.DOTMUD:
+                    statusTarget.dmgDotMud -= diffModif;
+                    break;
+                case StatusTypes.DOTPSY:
+                    statusTarget.dmgDotPsy -= diffModif;
+                    break;*/
         }
     }
 }

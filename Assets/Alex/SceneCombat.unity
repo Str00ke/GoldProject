@@ -4939,6 +4939,7 @@ GameObject:
   - component: {fileID: 245606098}
   - component: {fileID: 245606097}
   - component: {fileID: 245606100}
+  - component: {fileID: 245606101}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5027,6 +5028,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxRayIntersections: 0
+--- !u!114 &245606101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245606096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cffbf9be64118345bcac558b7b4cf64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTransform: {x: 0, y: 0, z: 0}
 --- !u!1001 &7422386928964356752
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5042,6 +5056,38 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3481661369913466181, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: itemElement
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3481661369913466181, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: currentElement
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3481661369913466181, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: abilitiesCristal.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b3f72dc691b22347b8d1d3495e42a91, type: 2}
+    - target: {fileID: 3481661369913466181, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: abilitiesCristal.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b3f72dc691b22347b8d1d3495e42a91, type: 2}
+    - target: {fileID: 4045760346578421585, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7489422
+      objectReference: {fileID: 0}
+    - target: {fileID: 4045760346578421585, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.78501195
+      objectReference: {fileID: 0}
+    - target: {fileID: 4045760346578421585, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0353
+      objectReference: {fileID: 0}
+    - target: {fileID: 4045760346578421585, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0078
+      objectReference: {fileID: 0}
     - target: {fileID: 5319918066081512310, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -5058,29 +5104,81 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6041021863791312204, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: critChance
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041021863791312204, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: itemElement
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041021863791312204, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: currentElement
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041021863791312204, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: abilitiesCristal.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b3f72dc691b22347b8d1d3495e42a91, type: 2}
+    - target: {fileID: 6041021863791312204, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: abilitiesCristal.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b3f72dc691b22347b8d1d3495e42a91, type: 2}
+    - target: {fileID: 6325598155269023487, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: itemElement
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6325598155269023487, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: currentElement
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6325598155269023487, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: abilitiesCristal.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b3f72dc691b22347b8d1d3495e42a91, type: 2}
+    - target: {fileID: 6325598155269023487, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: abilitiesCristal.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b3f72dc691b22347b8d1d3495e42a91, type: 2}
+    - target: {fileID: 6456051378919623013, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: critDamage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6456051378919623013, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
       propertyPath: damageRange.x
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6456051378919623013, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
       propertyPath: damageRange.y
-      value: 15
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6456051379978729522, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: critDamage
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6456051379978729522, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
       propertyPath: damageRange.x
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6456051379978729522, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
       propertyPath: damageRange.y
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 6456051380413543276, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
-      propertyPath: damageRange.x
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6456051380413543276, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: critChance
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6456051380413543276, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: critDamage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6456051380413543276, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: damageRange.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6456051380413543276, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
       propertyPath: damageRange.y
-      value: 15
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7422386929098087900, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
       propertyPath: m_AnchorMax.x
@@ -5090,6 +5188,134 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsAsh.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsIce.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsMud.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsPsy.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsAsh.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b3f72dc691b22347b8d1d3495e42a91, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsAsh.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1de95040a0b022c49a6db7e3be8ae153, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsAsh.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 32670cc46940fde4c8506d636361c547, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsAsh.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: adec0095f976f7943a4fdebf89b238ce, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsAsh.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: de86571fac0a2684ba0ead188b521c08, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsAsh.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0925172baae0dce44bb1ffec294f912b, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsAsh.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 9173e1a39f4b102438e3fd29cce44c85, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsIce.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: ae60553805df0bc44bc82055da54b9af, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsIce.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 04b0d2fe455d583438a3966c199ed6e0, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsIce.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: f369535e69f9f0247abce9888ba2d270, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsIce.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: cad7bfeb3963a9449aa613a995dd2a06, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsIce.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4072a099ba476514b895cb14c16d1af5, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsIce.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2a8712af4462a0e468b6274a0f15a7c0, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsIce.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 54f41cd8ef8ba1040a59d3c1ac301ddc, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsMud.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: b139c8d8fc27e9942a3b0c45644f960f, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsMud.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 312b56ebbf458db4685d82d9101ed23d, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsMud.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4008eeb95c3194a459280fedeaa96caa, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsMud.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: ecf24508548dd26448fe79bdc8a8e695, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsMud.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 826d27f22aa3de0488d866b2a58a8541, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsMud.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: cadba902e0ba80d449573b921abbc244, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsMud.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 219a4d2b90d81674d8a0144085abdbbc, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsPsy.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: aad1888355e56fc41bbc920c85a6e484, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsPsy.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 419996ad6320e4e49bebaa93bb6dba50, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsPsy.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 70aa64742063a3f43bad205fe33009b3, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsPsy.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: ccafe6aee5b46d54cba3e18fd43136da, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsPsy.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 260516c4328c4a8499ecb092c0b5350e, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsPsy.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1062873510b68694d83edf2e6278ad2e, type: 2}
+    - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: cristalsPsy.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4f3ba56b1fc8e50488199a12ac6b66ae, type: 2}
     - target: {fileID: 7422386929394620034, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
