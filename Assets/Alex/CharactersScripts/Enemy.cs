@@ -11,14 +11,17 @@ public class Enemy : Characters
         CombatManager.combatManager.enemies.Add(this);
         charType = CharType.ENEMY; 
         anim = this.GetComponent<Animator>();
-        thisColor = this.GetComponent<SpriteRenderer>();
+        thisColorBody = this.GetComponent<SpriteRenderer>();
+        thisColorHead = this.GetComponent<SpriteRenderer>();
         durationMove = 1.0f;
-        healthBar = this.GetComponentInChildren<Slider>();
+        healthBar = GameObject.Find(gameObject.name + "/CanvasSlider/healthBar").GetComponent<Slider>();
         health = maxHealth;
         healthBar.maxValue = maxHealth;
+        dodge = dodgeValue;
+        armor = armorValue;
         initiative = Random.Range(1, 14);
         healthBar.value = health;
-        durationDecreaseHealth = 1.5f;
+        durationDecreaseHealth = 0.3f;
         posInitial = GameObject.Find("Pos00Enemy").transform;
         ChangePos();
 
@@ -58,18 +61,47 @@ public class Enemy : Characters
                 CombatManager.combatManager.enemySelected = this;
             }
     }
+    /*public override void TakeDamage(float value, float duration)
+    {
+        ShowFloatingHealth(Mathf.Round(value), true);
+        float elapsed = 0;
+        float ratio = 0.0f;
+        float startValue = health;
+        float endValue = startValue - value;
+        endValue = Mathf.Round(endValue);
+        health = endValue;
+        while (elapsed < duration)
+        {
+            ratio = elapsed / duration;
+            healthBar.value = Mathf.Lerp(healthBar.value, endValue, ratio);
+            if (healthBar.value <= 0)
+            {
+                health = 0;
+                break;
+            }
+            elapsed += Time.deltaTime;
+        }
+        healthBar.value = endValue;
+        if (health <= 0)
+        {
+            health = 0;
+            CombatManager.combatManager.RemoveEnemy(teamPosition);
+        }
+    }*/
+    
     public override IEnumerator TakeDamageCor(float value, float duration)
     {
-        var startValue = healthBar.value;
-        var endValue = startValue - value;
+        ShowFloatingHealth(Mathf.Round(value), true);
+        float startValue = health;
+        float endValue = startValue - value;
+        endValue = Mathf.Round(endValue);
         float elapsed = 0.0f;
         float ratio = 0.0f;
-
+        health = endValue;
         while (elapsed < duration)
         {
             ratio = elapsed / duration;
             healthBar.value = Mathf.Lerp(startValue, endValue, ratio);
-            health = healthBar.value;
             if (healthBar.value <= 0)
             {
                 health = 0;
@@ -79,6 +111,7 @@ public class Enemy : Characters
             yield return null;
         }
         healthBar.value = endValue;
+        yield return new WaitForSeconds(durationDecreaseHealth);
         if (health <= 0)
         {
             health = 0;
@@ -86,14 +119,16 @@ public class Enemy : Characters
         }
     }
 
-
+    
     public override void TakeHealing(float value, float duration)
     {
+        ShowFloatingHealth(Mathf.Round(value), false);
         StartCoroutine(TakeHealingCor(value, duration));
     }
     public override IEnumerator TakeHealingCor(float value, float duration)
     {
         var startValue = healthBar.value;
+        value *= healReceivedModif;
         var endValue = startValue + value;
         if (endValue > maxHealth)
             endValue = maxHealth;
@@ -113,6 +148,6 @@ public class Enemy : Characters
             yield return null;
         }
         healthBar.value = endValue;
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(durationDecreaseHealth);
     }
 }

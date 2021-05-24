@@ -13,9 +13,18 @@ MonoBehaviour:
   m_Name: AttackEnemy01
   m_EditorClassIdentifier: 
   name: AttackEnemy01
+  type: 
   multiplicator: 100
   icon: {fileID: 0}
-  unitType: 1
-  weaponAbilityType: 0
+  bonusmalus: 0
+  destruModif: 0
+  dotMult: 0
+  turnDuration: 0
+  objectType: 1
+  weaponAbilityType: 3
+  crType: 0
+  crHealType: 0
+  crAttackType: 0
+  crSpecialType: 0
   targetType: 0
-  damageType: 0
+  elementType: 0
