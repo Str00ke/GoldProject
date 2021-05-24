@@ -7,7 +7,7 @@ public class LevelManager : MonoBehaviour
 {
     Level level;
     string levelName;
-    public GameObject combatPrefab;
+    public GameObject combatPrefab, shop, obliterate;
     GameObject combatRef;
     // Start is called before the first frame update
     void Start()
@@ -21,6 +21,10 @@ public class LevelManager : MonoBehaviour
         //mapManager.InitPlayerPoint();
         mapManager.MapLinkRooms();
         mapManager.RandomizeShop();
+        mapManager.StartToEnd(FindObjectOfType<PlayerPoint>().startRoom);
+
+        shop.SetActive(false);
+        obliterate.SetActive(false);
     }
 
 
@@ -44,6 +48,7 @@ public class LevelManager : MonoBehaviour
         FindObjectOfType<MapManager>().ShowMap();
         FindObjectOfType<MapManager>().UpdateBtn();
         FindObjectOfType<MapManager>().OnFinishRoom();
+        obliterate.SetActive(false);
     }
 
     public void LoseFight()
@@ -51,17 +56,59 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Game Over!");
     }
 
-    public void CreateFight()
+    public void StartRoom()
+    {
+        MapRoom room = FindObjectOfType<PlayerPoint>().onRoom;
+        Debug.Log(room.roomType);
+        switch (room.roomType)
+        {
+            case RoomType.BASE:
+                CreateFight();
+                break;
+
+            case RoomType.SHOP:
+                SpawnShop();
+                break;
+
+            case RoomType.END:
+                Debug.Log("BOSS");
+                room.OnFinishRoom();
+                break;
+
+            case RoomType.START:
+                Debug.Log("START");
+                room.OnFinishRoom();
+                break;
+
+        }
+    }
+
+    void CreateFight()
     {
         if (!FindObjectOfType<PlayerPoint>().onRoom.isFinished)
         {
             combatRef = Instantiate(combatPrefab, Vector2.zero, transform.rotation);
             FindObjectOfType<MapManager>().ShowMap();
             FindObjectOfType<MapManager>().UpdateBtn();
+            obliterate.SetActive(true);
         }
-        
     }
 
+    void SpawnShop()
+    {
+        shop.SetActive(true);
+    }
+
+    public void LeaveShop()
+    {
+        FindObjectOfType<PlayerPoint>().onRoom.OnFinishRoom();
+        shop.SetActive(false);
+    }
+
+    void SpawnBoss()
+    {
+        
+    }
     
 
     public void Obliterate()

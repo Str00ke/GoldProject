@@ -16,8 +16,9 @@ public class MapManager : MonoBehaviour
     public MapRoom onRoom;
     PlayerPoint playerPoint;
     public Level level;
-
-    
+    List<MapRoom> testArr = new List<MapRoom>();
+    int rDistFromStart = 0;
+    int rTestDone = 0;
     public void Init()
     {
         //roomsList = new MapRoom[FindObjectsOfType<MapRoom>().Length];
@@ -183,6 +184,35 @@ public class MapManager : MonoBehaviour
         FindObjectOfType<PlayerPoint>().onRoom.OnFinishRoom();
     }
 
+
+    public void StartToEnd(MapRoom room)
+    {
+        rTestDone++;
+        rDistFromStart++;
+        room.distFromStart = rDistFromStart;
+        Debug.Log(rTestDone);
+        testArr.Add(room);
+        bool result = false;
+        for (int i = 0; i < 4; ++i)
+        {
+            if (room.linkedRoom[i] != null && !testArr.Contains(room.linkedRoom[i]))
+            {
+                if (room.linkedRoom[i].roomType == RoomType.END)
+                {
+                    Debug.Log("ARRIVED!!!");
+                    result = true;
+                }
+                StartToEnd(room.linkedRoom[i]);
+            }
+        }
+        rTestDone--;
+
+        if (rTestDone <= 1)
+        {
+            Debug.Log(result);
+        }
+    }
+
     public void RandomizeShop()
     {
 
@@ -210,14 +240,5 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    /*bool CheckIfNothingNear(Room room)
-    {
-        for (int i = 0; i < 2; ++i)
-        {
-            for (int k = 0; k < 4; ++k)
-            {
 
-            }
-        }
-    }*/
 }

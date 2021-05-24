@@ -16,10 +16,11 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [Range(0.01f, 0.9f)]
     public float selectSpeed;
     Vector2 startPos, currPos;
-    MapRoom[] linkedRoom = new MapRoom[4];
+    public MapRoom[] linkedRoom = new MapRoom[4];
     public RoomType roomType = new RoomType();
     public bool isDiscovered = false;
     public bool isFinished = false;
+    public int distFromStart = 0;
     
 
     //Remplacer GameObject par les types une foit ajoutés
@@ -146,5 +147,6 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void SetToShop()
     {
         GetComponent<Image>().color = Color.blue;
+        roomType = RoomType.SHOP;
     }
 }
