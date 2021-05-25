@@ -40,6 +40,13 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
+        Inventory[] inv = FindObjectsOfType<Inventory>();
+
+        if (inv.Length > 1)
+            Destroy(gameObject);
+
+        DontDestroyOnLoad(gameObject);
+
         inventory = this;
     }
 
