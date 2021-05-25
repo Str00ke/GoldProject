@@ -2,6 +2,13 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+    public enum ECharacterType
+    {
+        Char0,
+        Char1,
+        Char2
+    }
+
     private CharacterScriptableObject charSO;
 
     public string charName;
@@ -14,25 +21,19 @@ public class Character : MonoBehaviour
     public float crititalDamage;
     public float initiative;
 
+    public ECharacterType characterType;
+    public Sprite charHead;
+    public Sprite[] itemSprites;
+
     private NItem.ItemScriptableObject[] items;
 
     private void Awake()
     {
         items = new NItem.ItemScriptableObject[4];
+        itemSprites = new Sprite[3];
     }
 
-    public Character()
-    {
-
-    }
-
-    public Character(CharacterScriptableObject characterScriptableObject)
-    {
-        charSO = characterScriptableObject;
-        SetCharacterScriptableObject(characterScriptableObject);
-    }
-
-    private void SetCharacterScriptableObject(CharacterScriptableObject characterScriptableObject)
+    public void SetCharacterScriptableObject(CharacterScriptableObject characterScriptableObject)
     {
         charName = characterScriptableObject.charName;
         health = characterScriptableObject.health;
@@ -43,6 +44,9 @@ public class Character : MonoBehaviour
         criticalChance = characterScriptableObject.criticalChance;
         crititalDamage = characterScriptableObject.crititalDamage;
         initiative = characterScriptableObject.initiative;
+
+        characterType = characterScriptableObject.characterType;
+        charHead = characterScriptableObject.characterHead;
     }
 
     public void AddItem(NItem.ItemScriptableObject item, NItem.EPartType itemPart)
@@ -55,6 +59,19 @@ public class Character : MonoBehaviour
         SetStats(item.health, item.armor, item.attack, item.dodge, item.criticalChance, item.crititalDamage);
 
         items[itemIndex] = item;
+
+        if (item.itemPartType == NItem.EPartType.Gem)
+        {
+            itemSprites[0] = item.itemSprites[(int)characterType];
+        }
+        else if (item.itemPartType == NItem.EPartType.Head)
+        {
+            itemSprites[1] = item.itemSprites[(int)characterType];
+        }
+        else if (item.itemPartType == NItem.EPartType.Body)
+        {
+            itemSprites[2] = item.itemSprites[(int)characterType];
+        }
     }
 
     public void RemoveItem(NItem.EPartType itemPart)
@@ -64,6 +81,19 @@ public class Character : MonoBehaviour
         SetStats(-items[itemIndex].health, -items[itemIndex].armor, -items[itemIndex].attack, -items[itemIndex].dodge, -items[itemIndex].criticalChance, -items[itemIndex].crititalDamage);
 
         items[itemIndex] = null;
+
+        if (itemPart == NItem.EPartType.Gem)
+        {
+            itemSprites[0] = null;
+        }
+        else if (itemPart == NItem.EPartType.Head)
+        {
+            itemSprites[1] = null;
+        }
+        else if (itemPart == NItem.EPartType.Body)
+        {
+            itemSprites[2] = null;
+        }
     }
 
     private void SetStats(int _health, int _armor, int _attack, float _dodge, float _criticalChance, float _criticalDamage)
