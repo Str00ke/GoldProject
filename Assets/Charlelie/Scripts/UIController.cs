@@ -10,7 +10,7 @@ public class UIController : MonoBehaviour {
 
     private void Start()
     {
-        errorText.text = "";
+        //errorText.text = "";
     }
 
     public void OnButtonPostToLeaderboard()

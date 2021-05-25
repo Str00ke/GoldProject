@@ -14,7 +14,7 @@ public class PlayGamesController : MonoBehaviour {
 
     private void Start()
     {
-        AuthenticateUser();
+        //AuthenticateUser();
     }
     
     void AuthenticateUser()

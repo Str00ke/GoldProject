@@ -38,6 +38,10 @@ public class CombatManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private void Start()
+    {
+        StartCoroutine(StartCombat());
+    }
 
     public void CreateRoster()
     {
@@ -48,6 +52,12 @@ public class CombatManager : MonoBehaviour
             temp.GetComponent<Ally>().CreateChar("Character0" + i);
             temp.GetComponent<Ally>().ChangePos();
         }
+    }
+
+    IEnumerator StartCombat()
+    {
+        yield return new WaitForSeconds(1.5f);
+        FightBegins();
     }
 
     public void FightBegins()
@@ -246,7 +256,7 @@ public class CombatManager : MonoBehaviour
         allies.Remove(a);
         if (allies.Count <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            FindObjectOfType<LevelManager>().losePanel.SetActive(true);
             //EndFight(false);
             //EndFight<Ally>(allies);
         }
@@ -264,6 +274,8 @@ public class CombatManager : MonoBehaviour
                 Enemy e = enemies[i];
                 enemies.Remove(enemies[i]);
                 Destroy(e.gameObject);
+                if (enemies.Count <= 0)
+                    EndFight<Enemy>();
             }
         }
         UpdatePosEnemies(numPos);
@@ -291,13 +303,13 @@ public class CombatManager : MonoBehaviour
         else if (!win)
             FindObjectOfType<LevelManager>().LoseFight();
     }*/
-    /*void EndFight<T>(List<T> list)
+    void EndFight<T>()
     {
         if (typeof(T) == typeof(Enemy))
             FindObjectOfType<LevelManager>().WinFight();
         else if (typeof(T) == typeof(Ally))
             FindObjectOfType<LevelManager>().LoseFight();
-    }*/
+    }
 
     public void Obliterate()
     {

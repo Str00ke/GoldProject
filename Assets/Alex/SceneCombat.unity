@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &188324859
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -5187,6 +5187,10 @@ PrefabInstance:
     - target: {fileID: 7422386929098087900, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7422386929248991353, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7422386929374104449, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
       propertyPath: cristalsAsh.Array.size

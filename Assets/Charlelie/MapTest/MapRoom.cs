@@ -40,7 +40,8 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (roomType == RoomType.START)
         {
             GetComponent<Image>().color = Color.green;
-            FindObjectOfType<PlayerPoint>().startRoom = this;
+            if (FindObjectOfType<PlayerPoint>())
+                FindObjectOfType<PlayerPoint>().startRoom = this;
             isDiscovered = true;
         }
         else if (roomType == RoomType.END)
@@ -67,6 +68,7 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             if (selectTime >= roomWidth)
             {
                 GoToRoom();
+                FindObjectOfType<LevelManager>().StartRoom();
             }
         }
 
@@ -121,9 +123,12 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 }
                 
                 GameObject go = new GameObject();
-                go.transform.parent = transform;
+                go.transform.parent = this.transform; //TODO: Move line with touch
                 LineRenderer lr = go.AddComponent<LineRenderer>();
-                lr.SetColors(Color.green, Color.yellow);
+                Material mat = new Material(Shader.Find("Unlit/Texture"));
+                lr.material = mat;
+                lr.startColor = Color.gray;
+                lr.endColor = Color.gray;
                 lr.startWidth = 0.3f;
                 lr.endWidth = 0.3f;
                 lr.SetPosition(0, transform.position);

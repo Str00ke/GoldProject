@@ -574,6 +574,7 @@ MonoBehaviour:
   - {fileID: 0}
   charType: 0
   currentElement: 0
+  itemElement: 0
   health: 30
   maxHealth: 20
   damageRange: {x: 6, y: 8}
@@ -607,7 +608,8 @@ MonoBehaviour:
   hasPlayed: 0
   CanAttack: 0
   isSelected: 0
-  thisColor: {fileID: 0}
+  thisColorHead: {fileID: 0}
+  thisColorBody: {fileID: 0}
   selectedColor: {r: 0.5283019, g: 0.20683517, b: 0.20683517, a: 1}
   hasPlayedColor: {r: 0.41509432, g: 0.41509432, b: 0.41509432, a: 1}
   AttackColor: {r: 1, g: 0, b: 0, a: 1}
@@ -632,7 +634,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.03223467, y: 0.016117334}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -643,7 +645,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.7406664, y: 2.5472589}
   m_EdgeRadius: 0
 --- !u!95 &7992164014681702039
 Animator:

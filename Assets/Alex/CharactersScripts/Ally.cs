@@ -113,6 +113,7 @@ public class Ally : Characters
 
     public override void OnPointerDown(PointerEventData eventData)
     {
+        Debug.Log("Selected");
             if (isSelected)
             {
                 if (CombatManager.combatManager.allySelected == this)

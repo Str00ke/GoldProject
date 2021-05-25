@@ -7,7 +7,7 @@ public class LevelManager : MonoBehaviour
 {
     Level level;
     string levelName;
-    public GameObject combatPrefab, shop, obliterate;
+    public GameObject combatPrefab, shop, obliterate, levelFinishedTxt, losePanel;
     GameObject combatRef;
     // Start is called before the first frame update
     void Start()
@@ -17,12 +17,14 @@ public class LevelManager : MonoBehaviour
         LoadLevel();
         mapManager.level = level;
         mapManager.Init();        
-        mapManager.GenerateMap();       
+        mapManager.GenerateMap();
         //mapManager.InitPlayerPoint();
+        FindObjectOfType<PlayerPoint>().Init();
         mapManager.MapLinkRooms();
         mapManager.RandomizeShop();
-        mapManager.StartToEnd(FindObjectOfType<PlayerPoint>().startRoom);
-
+        if (FindObjectOfType<PlayerPoint>())
+            mapManager.StartToEnd(FindObjectOfType<PlayerPoint>().startRoom);
+        StartRoom();
         shop.SetActive(false);
         obliterate.SetActive(false);
     }
@@ -73,6 +75,7 @@ public class LevelManager : MonoBehaviour
             case RoomType.END:
                 Debug.Log("BOSS");
                 room.OnFinishRoom();
+                levelFinishedTxt.SetActive(true);
                 break;
 
             case RoomType.START:
@@ -87,6 +90,12 @@ public class LevelManager : MonoBehaviour
     {
         if (!FindObjectOfType<PlayerPoint>().onRoom.isFinished)
         {
+            float rand = Random.Range(0, 10);
+            if (rand < 3)
+            {
+                FindObjectOfType<PlayerPoint>().onRoom.OnFinishRoom();
+                return;
+            }
             combatRef = Instantiate(combatPrefab, Vector2.zero, transform.rotation);
             FindObjectOfType<MapManager>().ShowMap();
             FindObjectOfType<MapManager>().UpdateBtn();
@@ -97,10 +106,12 @@ public class LevelManager : MonoBehaviour
     void SpawnShop()
     {
         shop.SetActive(true);
+        FindObjectOfType<MapManager>().ShowMap();
     }
 
     public void LeaveShop()
     {
+        FindObjectOfType<MapManager>().ShowMap();
         FindObjectOfType<PlayerPoint>().onRoom.OnFinishRoom();
         shop.SetActive(false);
     }
@@ -116,4 +127,9 @@ public class LevelManager : MonoBehaviour
         FindObjectOfType<CombatManager>().Obliterate();
     }
 
+
+    public void Retry()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+    }
 }
