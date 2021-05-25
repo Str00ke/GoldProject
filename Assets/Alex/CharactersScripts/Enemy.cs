@@ -22,7 +22,6 @@ public class Enemy : Characters
         initiative = Random.Range(1, 14);
         healthBar.value = health;
         durationDecreaseHealth = 0.3f;
-        posInitial = GameObject.Find("Pos00Enemy").transform;
         ChangePos();
 
         //ISTARGETABLE FOR ABILITIES

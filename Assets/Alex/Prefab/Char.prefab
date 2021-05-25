@@ -565,14 +565,14 @@ MonoBehaviour:
   charType: 0
   currentElement: 0
   itemElement: 0
-  health: 15
-  maxHealth: 15
+  health: 0
+  maxHealth: 0
   damageRange: {x: 100, y: 100}
   initiative: 0
   dodge: 15
   dodgeValue: 0
-  critChance: 0.25
-  critDamage: 1
+  critChance: 0
+  critDamage: 0
   armor: 10
   armorValue: 0
   precision: 1
@@ -586,7 +586,7 @@ MonoBehaviour:
   confusion: 0
   turnsConfusionValue: 2
   turnsConfusion: 0
-  floatingHealth: {fileID: 0}
+  floatingHealth: {fileID: 7353727168799922327, guid: 99e16042dd5363342b6ca20ec39f58b5, type: 3}
   inDefenceMode: 0
   isTargetable: 1
   isMelee: 0
@@ -602,7 +602,7 @@ MonoBehaviour:
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   durationDecreaseHealth: 0
   teamPosition: 0
-  posInitial: {fileID: 0}
+  posInitial: {x: -3.62, y: -0.5}
   offsetPos: 1.5
   speedMove: 1
   durationMove: 1
@@ -1128,7 +1128,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 002fd6b723517c3439ec3ba79c50695d, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -1136,7 +1136,7 @@ SpriteRenderer:
   m_Size: {x: 3, y: 3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &6160245199246093968
@@ -1246,7 +1246,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 856c9d2c9d0d6fa4e82c384394571c1a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d35b52503502a36488ccae783e3e8d4b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0

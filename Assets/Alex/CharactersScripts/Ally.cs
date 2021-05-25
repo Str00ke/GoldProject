@@ -11,7 +11,6 @@ public class Ally : Characters
     private void Start()
     {
         CombatManager.combatManager.allies.Add(this);
-        posInitial = GameObject.Find("Pos00").transform;
         charType = CharType.ALLY;
         anim = this.GetComponent<Animator>();
         thisColorBody = body;
@@ -24,7 +23,7 @@ public class Ally : Characters
         dodge = dodgeValue;
         armor = armorValue;
         durationDecreaseHealth = 0.3f;
-        CreateChar("Char" + teamPosition);
+        //CreateChar("Char" + teamPosition);
         ChangePos();
         //ISTARGETABLE FOR ABILITIES
         isTargetable = false;
@@ -111,30 +110,34 @@ public class Ally : Characters
         switch (itemElement)
         {
             case ItemElement.ASH:
+                abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsAsh[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsAsh.Length)];
+                abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsAsh[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsAsh.Length)];
                 while (abilitiesCristal[0] == abilitiesCristal[1])
                 {
-                    abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsAsh[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsAsh.Length)];
                     abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsAsh[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsAsh.Length)];
                 }
                 break;
             case ItemElement.ICE:
+                abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsIce[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsIce.Length)];
+                abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsIce[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsIce.Length)];
                 while (abilitiesCristal[0] == abilitiesCristal[1])
                 {
-                    abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsIce[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsIce.Length)];
                     abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsIce[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsIce.Length)];
                 }
                 break;
             case ItemElement.MUD:
+                abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsMud[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsMud.Length)];
+                abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsMud[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsMud.Length)];
                 while (abilitiesCristal[0] == abilitiesCristal[1])
                 {
-                    abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsMud[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsMud.Length)];
                     abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsMud[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsMud.Length)];
                 }
                 break;
             case ItemElement.PSY:
+                abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsPsy[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsPsy.Length)];
+                abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsPsy[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsPsy.Length)];
                 while (abilitiesCristal[0] == abilitiesCristal[1])
                 {
-                    abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsPsy[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsPsy.Length)];
                     abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsPsy[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsPsy.Length)];
                 }
                 break;

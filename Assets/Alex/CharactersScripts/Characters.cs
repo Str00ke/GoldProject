@@ -93,7 +93,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
 
     [Header("Position")]
     public int teamPosition;
-    public Transform posInitial;
+    public Vector2 posInitial;
     public float offsetPos = 1.0f;
     public float speedMove = 1.0f;
     public float durationMove = 1.0f;
@@ -414,7 +414,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     IEnumerator ChangePosCoroutine(float duration)
     {
         Vector3 startPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-        Vector3 endPos = new Vector3(posInitial.position.x + offsetPos * teamPosition, posInitial.position.y, posInitial.position.z);
+        Vector3 endPos = new Vector3(posInitial.x + offsetPos * teamPosition, posInitial.y);
         float elapsed = 0.0f;
         float ratio = 0.0f;
         while (elapsed < duration)
