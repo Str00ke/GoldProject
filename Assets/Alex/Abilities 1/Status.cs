@@ -13,8 +13,8 @@ public class Status
     public enum StatusElement
     {
         BASE,
-        ASH,
         ICE,
+        ASH,
         MUD,
         PSY
     }

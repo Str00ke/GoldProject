@@ -5048,6 +5048,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1895954967279468792, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7e91aa1d672d39d4ba94f01bd973738e, type: 3}
     - target: {fileID: 3336173209739444428, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -5062,7 +5066,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3481661369913466181, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
       propertyPath: currentElement
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3481661369913466181, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
       propertyPath: abilitiesCristal.Array.data[0]
@@ -5124,6 +5128,10 @@ PrefabInstance:
       propertyPath: abilitiesCristal.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: 7b3f72dc691b22347b8d1d3495e42a91, type: 2}
+    - target: {fileID: 6309918405740369943, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 856c9d2c9d0d6fa4e82c384394571c1a, type: 3}
     - target: {fileID: 6325598155269023487, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
       propertyPath: itemElement
       value: 3
@@ -5180,6 +5188,14 @@ PrefabInstance:
       propertyPath: damageRange.y
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 7422386928485271778, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: charPrefab
+      value: 
+      objectReference: {fileID: 2169942591526643203, guid: 97f6233b9f4a8ef438b6a9fd9df387ab, type: 3}
+    - target: {fileID: 7422386928485271778, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: enemyPrefab
+      value: 
+      objectReference: {fileID: 4510668456567727187, guid: 1994534d80af304419248f54d40c1441, type: 3}
     - target: {fileID: 7422386929098087900, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

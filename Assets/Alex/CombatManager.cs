@@ -7,7 +7,8 @@ using System.Linq;
 public class CombatManager : MonoBehaviour
 {
     [Header("Objects")]
-    public GameObject CharPrefab;
+    public GameObject charPrefab;
+    public GameObject enemyPrefab;
     public static CombatManager combatManager = null;
     public List<Ally> allies;
     public List<Characters> fightersList;
@@ -18,12 +19,11 @@ public class CombatManager : MonoBehaviour
     public List<Enemy> enemies;
     public Enemy enemySelected = null;
     public float delay = 0.0f;
-    public float attackDuration = 1.0f;
+    public float attackDuration = 2.0f;
 
     [Header("FightVariable")]
     public Ally allyPlaying;
     public int turnNumber = 0;
-    bool fightBegun;
     public int nbCharsPlayed = 0;
     public int currCharAttacking = 0;
     public int rosterSize;
@@ -45,17 +45,26 @@ public class CombatManager : MonoBehaviour
 
     public void CreateRoster()
     {
-        for (int i = 0; i < rosterSize; ++i)
+        //GET CHARACTERS
+        for (int i = 0; i < 3; ++i)
         {
-            GameObject temp = Instantiate(CharPrefab);
-            temp.GetComponent<Ally>().teamPosition = i;
-            temp.GetComponent<Ally>().CreateChar("Character0" + i);
+            Character c = CharacterManager.characterManager.AskForCharacter(i);
+            if (!c)
+            {
+                continue;
+            }
+            GameObject temp = Instantiate(charPrefab);
+            temp.GetComponent<Ally>().CreateChar(c,i);
             temp.GetComponent<Ally>().ChangePos();
         }
     }
-
+    public void CreateEnemies()
+    {
+        GameObject temp = Instantiate(enemyPrefab);
+    }
     IEnumerator StartCombat()
     {
+        CreateRoster();
         yield return new WaitForSeconds(1.5f);
         FightBegins();
     }
@@ -81,7 +90,6 @@ public class CombatManager : MonoBehaviour
         {
             allyPlaying = null;
         }
-        fightBegun = true;
         CharAttack(currCharAttacking);
     }
     public void SortFightersInit()
@@ -167,7 +175,7 @@ public class CombatManager : MonoBehaviour
                 inDefence = a;
             }
         }
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(attackDuration);
         if(allies.Count > 0)
             EnemyAbilityAttack(allies[allyAttacked], inMelee, inDefence);
         yield return new WaitForSeconds(attackDuration);
@@ -196,11 +204,19 @@ public class CombatManager : MonoBehaviour
                 }
                 else
                 {
-                    if (allyMel)
+                    if (!allyMel)
                     {
-                        fightersList[currCharAttacking].LaunchAttack(allyMel, abilityUsed);
-                        if (allies[allyMel.teamPosition + 1])
-                            fightersList[currCharAttacking].LaunchAttack(allies[allyMel.teamPosition + 1], abilityUsed);
+                        allies[0].isMelee = true;
+                        allyMel = allies[0];
+                    }
+                    int nextPos = allyMel.teamPosition + 1;
+                    fightersList[currCharAttacking].LaunchAttack(allyMel, abilityUsed);
+                    for (int i = allies.Count - 1; i >= 0; i--)
+                    {
+                        if(allies[i].teamPosition == nextPos)
+                        {
+                            fightersList[currCharAttacking].LaunchAttack(allies[nextPos], abilityUsed);
+                        }
                     }
                 }
                 break;
