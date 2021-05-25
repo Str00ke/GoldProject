@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Google Play game services IDs. Save this file as res/values/games-ids.xml in your project.-->
+<resources>
+  <!--app_id-->
+  <string name="app_id" translatable="false">321074237759</string>
+  <!--package_name-->
+  <string name="package_name" translatable="false">com.iimjv24T2.DarkUTest</string>
+  <!--achievement AchievementTest-->
+  <string name="achievement_achievementtest" translatable="false">CgkIv6KQjKwJEAIQAA</string>
+</resources>

@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: AttackEnemy02
   m_EditorClassIdentifier: 
   name: EnemyAbilityPierce
+  type: 
   multiplicator: 60
   icon: {fileID: 0}
-  unitType: 1
+  bonusmalus: 0
+  objectType: 1
   weaponAbilityType: 2
+  crType: 0
+  crHealType: 0
+  crAttackType: 0
+  crSpecialType: 0
   targetType: 0
-  damageType: 0
+  elementType: 3

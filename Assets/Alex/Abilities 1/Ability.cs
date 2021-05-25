@@ -6,38 +6,79 @@ using UnityEngine;
 public class Ability : ScriptableObject
 {
     public new string name;
+    public string type;
     public float multiplicator;
     public Sprite icon;
-    public enum UnitType 
-    {
-        ALLY,
-        ENEMY
-    }
-    public UnitType unitType;
+    public float bonusmalus;
+    public float destruModif;
+    public float dotMult;
+    public float markMult;
+    public int turnDuration;
 
+    public enum ObjectType 
+    {
+        CRISTAL,
+        WEAPON
+    }
+    public ObjectType objectType;
     public enum WeaponAbilityType
     {
+        NONE,
         BASE,
         WAVE,
         PIERCE,
         DEFENSE
     }
     public WeaponAbilityType weaponAbilityType;
-    public enum TargetType 
+
+
+    public enum CristalAbilityType
+    {
+        NONE,
+        HEAL,
+        ATTACK,
+        OTHERS
+    }
+    public CristalAbilityType crType;
+
+    public enum CristalHealType 
+    {
+        NONE,
+        BOOST,
+        BATH,
+        DRINK
+    }
+    public CristalHealType crHealType;
+    public enum CristalAttackType
+    {
+        NONE,
+        NORMAL,
+        DOT,
+        MARK
+    }
+    public CristalAttackType crAttackType;
+    public enum CristalSpecialType
+    {
+        DESTRUCTION,
+        COPY
+    }
+    public CristalSpecialType crSpecialType;
+    
+    public enum TargetType
     {
         MELEE,
         RANGE,
-        TEAM
+        ALLIES
     }
     public TargetType targetType;
-    public enum DamageType 
+    public enum ElementType
     {
         BASE,
-        MUD,
         ASH,
         ICE,
-        EROSION
+        MUD,
+        PSY
     }
-    public DamageType damageType;
+    public ElementType elementType;
     
 }

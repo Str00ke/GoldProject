@@ -103,7 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisColor: {fileID: 0}
   ability: {fileID: 0}
-  selectedColor: {r: 0.0044326875, g: 0.7169812, b: 0, a: 1}
+  selectedColor: {r: 0.56294775, g: 0.5943396, b: 0, a: 1}
   idleColor: {r: 1, g: 1, b: 1, a: 1}
   isSelected: 0
   displayUIHoldTouchDurationMax: 0

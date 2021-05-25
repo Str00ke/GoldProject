@@ -21,8 +21,8 @@ public class PlayerPoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!onRoom)
-            GoToRoom(startRoom);
+        /*if (!onRoom)
+            GoToRoom(startRoom);*/
     }
 
     public void GoToRoom(MapRoom room)
