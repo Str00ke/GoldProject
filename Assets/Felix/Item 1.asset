@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87f1b7c176c2dab46b42dfb6a9ffe6bb, type: 3}
-  m_Name: Item
+  m_Name: Item 1
   m_EditorClassIdentifier: 
-  itemName: "La b\xEAte noire"
-  health: 10
-  armor: 2
-  attack: 5
+  itemName: bbbbbb
+  health: 100
+  armor: 0
+  attack: 251
   dodge: 0
   criticalChance: 0
   crititalDamage: 0
-  itemType: 4
-  itemUiSprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  itemPartType: 1
+  itemType: 0
+  itemRarity: 0
+  itemUiSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
