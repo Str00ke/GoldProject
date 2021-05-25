@@ -201,13 +201,15 @@ public class Ally : Characters
     {
         ShowFloatingHealth(Mathf.Round(value), false);
         StartCoroutine(TakeHealingCor(value, duration));
-    }
+    }   
     public override IEnumerator TakeHealingCor(float value, float duration)
     {
         var startValue = healthBar.value;
         value *= healReceivedModif;
         var endValue = startValue + value;
         endValue = Mathf.Round(endValue);
+        if (endValue >= maxHealth)
+            endValue = maxHealth;
         float elapsed = 0.0f;
         float ratio = 0.0f;
         while (elapsed < duration)
