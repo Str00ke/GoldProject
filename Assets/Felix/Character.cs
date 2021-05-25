@@ -4,6 +4,7 @@ public class Character : MonoBehaviour
 {
     private CharacterScriptableObject charSO;
 
+    public string charName;
     public int health;
     public int maxHealth;
     public int armor;
@@ -11,6 +12,7 @@ public class Character : MonoBehaviour
     public float dodge;
     public float criticalChance;
     public float crititalDamage;
+    public float initiative;
 
     private NItem.ItemScriptableObject[] items;
 
@@ -32,6 +34,7 @@ public class Character : MonoBehaviour
 
     private void SetCharacterScriptableObject(CharacterScriptableObject characterScriptableObject)
     {
+        charName = characterScriptableObject.charName;
         health = characterScriptableObject.health;
         maxHealth = characterScriptableObject.health;
         armor = characterScriptableObject.armor;
@@ -39,6 +42,7 @@ public class Character : MonoBehaviour
         dodge = characterScriptableObject.dodge;
         criticalChance = characterScriptableObject.criticalChance;
         crititalDamage = characterScriptableObject.crititalDamage;
+        initiative = characterScriptableObject.initiative;
     }
 
     public void AddItem(NItem.ItemScriptableObject item, NItem.EPartType itemPart)

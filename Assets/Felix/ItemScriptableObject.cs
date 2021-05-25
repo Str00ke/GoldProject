@@ -10,7 +10,7 @@ namespace NItem
         Ice,
         Ash,
         Mud,
-        Erosion
+        Psy
     }
 
     public enum EPartType

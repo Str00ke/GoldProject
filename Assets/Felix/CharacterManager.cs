@@ -104,7 +104,6 @@ public class CharacterManager : MonoBehaviour
                 items.transform.GetChild(z).GetComponent<Button>().onClick.RemoveAllListeners();
             }
 
-            
             items.transform.GetChild(0).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Head) != null ? characters[i].GetItem(NItem.EPartType.Head).itemUiSprite : null;
             if (characters[i].GetItem(NItem.EPartType.Head) != null)
             {
