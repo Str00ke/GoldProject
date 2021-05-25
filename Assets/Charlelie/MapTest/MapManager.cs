@@ -16,8 +16,9 @@ public class MapManager : MonoBehaviour
     public MapRoom onRoom;
     PlayerPoint playerPoint;
     public Level level;
-
-    
+    List<MapRoom> testArr = new List<MapRoom>();
+    int rDistFromStart = 0;
+    int rTestDone = 0;
     public void Init()
     {
         //roomsList = new MapRoom[FindObjectsOfType<MapRoom>().Length];
@@ -29,7 +30,7 @@ public class MapManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //Debug.Log(Input.touchCount);
         if (Input.touchCount == 1)
         {
             Touch touch = Input.GetTouch(0);
@@ -47,7 +48,7 @@ public class MapManager : MonoBehaviour
                 case TouchPhase.Moved:
                     // Determine direction by comparing the current touch position with the initial one
                     Vector2 vec = (touch.position + touch.deltaPosition) - touch.position;
-                    map.transform.position = Vector2.MoveTowards(map.transform.position, vec + (Vector2)map.transform.position, (vec.magnitude * Time.deltaTime) * 10);
+                    mapHolder.transform.position = Vector2.MoveTowards(mapHolder.transform.position, vec + (Vector2)mapHolder.transform.position, (vec.magnitude * Time.deltaTime) * 1);
                     currPos = vec;
                     break;
 
@@ -66,25 +67,26 @@ public class MapManager : MonoBehaviour
             if (tmpMouseZoom == 0)
             {
                 tmpMouseZoom = vec.magnitude;
-            } else if (map.transform.localScale.x > 0.2f)
+            } else if (mapHolder.transform.localScale.x > 5f)
             {
-                if (vec.magnitude < tmpMouseZoom - 1 && map.transform.localScale.x - 0.08f > 0.2f)
+                if (vec.magnitude < tmpMouseZoom - 1 && mapHolder.transform.localScale.x - 1.5f > 5f)
                 {
-                    map.transform.localScale = new Vector3(map.transform.localScale.x - 0.08f, map.transform.localScale.y - 0.08f, 1);
+                    mapHolder.transform.localScale = new Vector3(mapHolder.transform.localScale.x - 1.5f, mapHolder.transform.localScale.y - 1.5f, 1);
                     tmpMouseZoom = vec.magnitude;
                 }                   
-                else if (vec.magnitude > tmpMouseZoom + 1 && map.transform.localScale.x + 0.08f < 3.5f)
+                else if (vec.magnitude > tmpMouseZoom + 1 && mapHolder.transform.localScale.x + 1.5f < 70f)
                 {
-                    map.transform.localScale = new Vector3(map.transform.localScale.x + 0.08f, map.transform.localScale.y + 0.08f, 1);
+                    mapHolder.transform.localScale = new Vector3(mapHolder.transform.localScale.x + 1.5f, mapHolder.transform.localScale.y + 1.5f, 1);
                     tmpMouseZoom = vec.magnitude;
                 }
                     
-            } 
-        } else
-        {
-            tmpMouseZoom = 0;
-        }
-    }
+            }
+            else
+            {
+                tmpMouseZoom = 0;
+            }
+        }   
+    }   
 
 
     public void GenerateMap()
@@ -183,6 +185,35 @@ public class MapManager : MonoBehaviour
         FindObjectOfType<PlayerPoint>().onRoom.OnFinishRoom();
     }
 
+
+    public void StartToEnd(MapRoom room)
+    {
+        rTestDone++;
+        rDistFromStart++;
+        room.distFromStart = rDistFromStart;
+        Debug.Log(rTestDone);
+        testArr.Add(room);
+        bool result = false;
+        for (int i = 0; i < 4; ++i)
+        {
+            if (room.linkedRoom[i] != null && !testArr.Contains(room.linkedRoom[i]))
+            {
+                if (room.linkedRoom[i].roomType == RoomType.END)
+                {
+                    Debug.Log("ARRIVED!!!");
+                    result = true;
+                }
+                StartToEnd(room.linkedRoom[i]);
+            }
+        }
+        rTestDone--;
+
+        if (rTestDone <= 1)
+        {
+            Debug.Log(result);
+        }
+    }
+
     public void RandomizeShop()
     {
 
@@ -210,14 +241,5 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    /*bool CheckIfNothingNear(Room room)
-    {
-        for (int i = 0; i < 2; ++i)
-        {
-            for (int k = 0; k < 4; ++k)
-            {
 
-            }
-        }
-    }*/
 }

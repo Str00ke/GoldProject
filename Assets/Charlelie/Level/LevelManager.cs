@@ -7,7 +7,7 @@ public class LevelManager : MonoBehaviour
 {
     Level level;
     string levelName;
-    public GameObject combatPrefab;
+    public GameObject combatPrefab, shop, obliterate, levelFinishedTxt, losePanel;
     GameObject combatRef;
     // Start is called before the first frame update
     void Start()
@@ -17,10 +17,16 @@ public class LevelManager : MonoBehaviour
         LoadLevel();
         mapManager.level = level;
         mapManager.Init();        
-        mapManager.GenerateMap();       
+        mapManager.GenerateMap();
         //mapManager.InitPlayerPoint();
+        FindObjectOfType<PlayerPoint>().Init();
         mapManager.MapLinkRooms();
         mapManager.RandomizeShop();
+        if (FindObjectOfType<PlayerPoint>())
+            mapManager.StartToEnd(FindObjectOfType<PlayerPoint>().startRoom);
+        StartRoom();
+        shop.SetActive(false);
+        obliterate.SetActive(false);
     }
 
 
@@ -44,6 +50,7 @@ public class LevelManager : MonoBehaviour
         FindObjectOfType<MapManager>().ShowMap();
         FindObjectOfType<MapManager>().UpdateBtn();
         FindObjectOfType<MapManager>().OnFinishRoom();
+        obliterate.SetActive(false);
     }
 
     public void LoseFight()
@@ -51,17 +58,68 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Game Over!");
     }
 
-    public void CreateFight()
+    public void StartRoom()
+    {
+        MapRoom room = FindObjectOfType<PlayerPoint>().onRoom;
+        Debug.Log(room.roomType);
+        switch (room.roomType)
+        {
+            case RoomType.BASE:
+                CreateFight();
+                break;
+
+            case RoomType.SHOP:
+                SpawnShop();
+                break;
+
+            case RoomType.END:
+                Debug.Log("BOSS");
+                room.OnFinishRoom();
+                levelFinishedTxt.SetActive(true);
+                break;
+
+            case RoomType.START:
+                Debug.Log("START");
+                room.OnFinishRoom();
+                break;
+
+        }
+    }
+
+    void CreateFight()
     {
         if (!FindObjectOfType<PlayerPoint>().onRoom.isFinished)
         {
+            float rand = Random.Range(0, 10);
+            if (rand < 3)
+            {
+                FindObjectOfType<PlayerPoint>().onRoom.OnFinishRoom();
+                return;
+            }
             combatRef = Instantiate(combatPrefab, Vector2.zero, transform.rotation);
             FindObjectOfType<MapManager>().ShowMap();
             FindObjectOfType<MapManager>().UpdateBtn();
+            obliterate.SetActive(true);
         }
-        
     }
 
+    void SpawnShop()
+    {
+        shop.SetActive(true);
+        FindObjectOfType<MapManager>().ShowMap();
+    }
+
+    public void LeaveShop()
+    {
+        FindObjectOfType<MapManager>().ShowMap();
+        FindObjectOfType<PlayerPoint>().onRoom.OnFinishRoom();
+        shop.SetActive(false);
+    }
+
+    void SpawnBoss()
+    {
+        
+    }
     
 
     public void Obliterate()
@@ -69,4 +127,9 @@ public class LevelManager : MonoBehaviour
         FindObjectOfType<CombatManager>().Obliterate();
     }
 
+
+    public void Retry()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+    }
 }

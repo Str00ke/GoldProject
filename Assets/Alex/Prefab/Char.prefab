@@ -562,6 +562,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: adec0095f976f7943a4fdebf89b238ce, type: 2}
   charType: 0
   currentElement: 0
+  itemElement: 0
   health: 15
   maxHealth: 15
   damageRange: {x: 100, y: 100}
@@ -595,7 +596,8 @@ MonoBehaviour:
   hasPlayed: 0
   CanAttack: 0
   isSelected: 0
-  thisColor: {fileID: 0}
+  thisColorHead: {fileID: 0}
+  thisColorBody: {fileID: 0}
   selectedColor: {r: 0.29654682, g: 0.5283019, b: 0.38611743, a: 1}
   hasPlayedColor: {r: 0.4056604, g: 0.4056604, b: 0.4056604, a: 1}
   AttackColor: {r: 0, g: 1, b: 0, a: 1}
@@ -607,6 +609,7 @@ MonoBehaviour:
   speedMove: 1
   durationMove: 1
   anim: {fileID: -3420722700975039485}
+  cristalElement: 0
   head: {fileID: 3748049479024999297}
   body: {fileID: 8781212782479631214}
 --- !u!61 &2169942591526643263
@@ -622,7 +625,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.04674071, y: -0.1665945}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -633,7 +636,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.0934814, y: 1.7950993}
   m_EdgeRadius: 0
 --- !u!95 &-3420722700975039485
 Animator:
