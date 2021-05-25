@@ -25,18 +25,18 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     public enum CurrentElement
     {
         BASE,
-        MUD,
-        ASH,
         ICE,
+        ASH,
+        MUD,
         PSY
     }
     public CurrentElement currentElement;
     public enum ItemElement
     {
         BASE,
-        MUD,
-        ASH,
         ICE,
+        ASH,
+        MUD,
         PSY
     }
     public ItemElement itemElement;
@@ -72,12 +72,6 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     public int turnsConfusionValue = 2;
     public int turnsConfusion;
 
-    [Header("DotDamages")]
-    public float dmgDotAsh;
-    public float dmgDotIce;
-    public float dmgDotMud;
-    public float dmgDotPsy;
-
     [Header("CombatVariables")]
     public GameObject floatingHealth;
     public bool inDefenceMode = false;
@@ -99,7 +93,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
 
     [Header("Position")]
     public int teamPosition;
-    public Transform posInitial;
+    public Vector2 posInitial;
     public float offsetPos = 1.0f;
     public float speedMove = 1.0f;
     public float durationMove = 1.0f;
@@ -279,25 +273,6 @@ public class Characters : MonoBehaviour, IPointerDownHandler
         dmg *= (ability.dotMult / 100);
         Status s = new Status(receiver, dmg, ability, Status.StatusTypes.DOT, dmg);
         Debug.Log("Caster " + gameObject.name + "Receiver : " + s.statusTarget.gameObject.name + "Dot damage " + s.dmg + " Dot element " + s.statusElement.ToString());
-        /*switch (ability.elementType)
-        {
-            case Ability.ElementType.ASH:
-                dmg *= (ability.dotMult / 100);
-                Status s0 = new Status(receiver, dmg, ability, Status.StatusTypes.DOT);
-                break;
-            case Ability.ElementType.ICE:
-                dmg *= (ability.dotMult / 100);
-                Status s1 = new Status(receiver, dmg, ability, Status.StatusTypes.DOT);
-                break;
-            case Ability.ElementType.MUD:
-                dmg *= (ability.dotMult / 100);
-                Status s2 = new Status(receiver, dmg, ability, Status.StatusTypes.DOT);
-                break;
-            case Ability.ElementType.PSY:
-                dmg *= (ability.dotMult / 100);
-                Status s3 = new Status(receiver, dmg, ability, Status.StatusTypes.DOT);
-                break;
-        }*/
     }
     public void PutMark(Characters receiver, Ability ability)
     {
@@ -396,33 +371,9 @@ public class Characters : MonoBehaviour, IPointerDownHandler
 
     public void TakeDamageDots(Status.StatusElement stElem, float dmg)
     {
-        /*if(dmgDotAsh > 0)
-        {
-            TakeDamage(dmgDotAsh, 1.0f);
-            ElementReactions(CurrentElement.ASH);
-        }
-        if (dmgDotIce > 0)
-        {
-            TakeDamage(dmgDotIce, 1.0f);
-            ElementReactions(CurrentElement.ICE);
-        }
-        if(dmgDotMud > 0)
-        {
-            TakeDamage(dmgDotMud,1.0f);
-            ElementReactions(CurrentElement.MUD);
-        }
-        if(dmgDotPsy > 0)
-        {
-            TakeDamage(dmgDotPsy,1.0f);
-            ElementReactions(CurrentElement.PSY);
-        }
-        if(bleedingDmg > 0)
-        {
-            TakeDamage(bleedingDmg, 0.3f);
-        }*/
         TakeDamage(dmg, durationDecreaseHealth);
         Debug.Log("Receiver : " +  gameObject.name + "Dot damage " + dmg + " Dot element " + stElem.ToString());
-        ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), stElem.ToString()));
+        ElementReactions((CurrentElement)stElem);
         UpdateDisplayDots();
     }
     public void TakeDamageMark(Status.StatusElement stElem, float dmg)
@@ -450,9 +401,6 @@ public class Characters : MonoBehaviour, IPointerDownHandler
         go.GetComponentInChildren<TextMesh>().text = "" + value;
         go.GetComponentInChildren<FloatingHealthScript>().StartCoroutine(go.GetComponentInChildren<FloatingHealthScript>().AnimateFloatingTextCor(go.GetComponentInChildren<FloatingHealthScript>().destroyDelay));
     }
-    /*public virtual void TakeDamage(float value, float duration)
-    {
-    }*/
     
     public virtual void TakeDamage(float value, float duration) 
     {
@@ -466,7 +414,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     IEnumerator ChangePosCoroutine(float duration)
     {
         Vector3 startPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-        Vector3 endPos = new Vector3(posInitial.position.x + offsetPos * teamPosition, posInitial.position.y, posInitial.position.z);
+        Vector3 endPos = new Vector3(posInitial.x + offsetPos * teamPosition, posInitial.y);
         float elapsed = 0.0f;
         float ratio = 0.0f;
         while (elapsed < duration)

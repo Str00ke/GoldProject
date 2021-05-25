@@ -596,11 +596,7 @@ MonoBehaviour:
   confusion: 0
   turnsConfusionValue: 2
   turnsConfusion: 0
-  dmgDotAsh: 0
-  dmgDotIce: 0
-  dmgDotMud: 0
-  dmgDotPsy: 0
-  floatingHealth: {fileID: 0}
+  floatingHealth: {fileID: 7353727168799922327, guid: 99e16042dd5363342b6ca20ec39f58b5, type: 3}
   inDefenceMode: 0
   isTargetable: 1
   isMelee: 0
@@ -616,7 +612,7 @@ MonoBehaviour:
   baseColor: {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 1}
   durationDecreaseHealth: 0
   teamPosition: 0
-  posInitial: {fileID: 0}
+  posInitial: {x: 3.61, y: -0.5}
   offsetPos: 1.5
   speedMove: 1
   durationMove: 1

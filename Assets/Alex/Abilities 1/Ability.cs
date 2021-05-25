@@ -74,8 +74,8 @@ public class Ability : ScriptableObject
     public enum ElementType
     {
         BASE,
-        ASH,
         ICE,
+        ASH,
         MUD,
         PSY
     }

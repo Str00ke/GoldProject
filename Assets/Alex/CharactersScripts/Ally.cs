@@ -6,20 +6,11 @@ using UnityEngine.UI;
 
 public class Ally : Characters
 {
-    public enum CristalElement
-    {
-        ASH,
-        ICE,
-        MUD,
-        PSY
-    }
-    public CristalElement cristalElement;
     public SpriteRenderer head;
     public SpriteRenderer body;
     private void Start()
     {
         CombatManager.combatManager.allies.Add(this);
-        posInitial = GameObject.Find("Pos00").transform;
         charType = CharType.ALLY;
         anim = this.GetComponent<Animator>();
         thisColorBody = body;
@@ -32,7 +23,7 @@ public class Ally : Characters
         dodge = dodgeValue;
         armor = armorValue;
         durationDecreaseHealth = 0.3f;
-        CreateChar("Char" + teamPosition);
+        //CreateChar("Char" + teamPosition);
         ChangePos();
         //ISTARGETABLE FOR ABILITIES
         isTargetable = false;
@@ -47,21 +38,6 @@ public class Ally : Characters
         ChangeColor();
     }
 
-    public void CreateChar(string name, float maxHP, Vector2 dmgRange, int dodg, float critCh, float critDmg, int armr, int position)
-    {
-        charName = name;
-        maxHealth = maxHP;
-        health = maxHealth;
-        healthBar.maxValue = maxHealth;
-        healthBar.value = health;
-        damageRange = dmgRange;
-        dodge = dodg;
-        critChance = critCh;
-        critDamage = critDmg;
-        armor = armr;
-        teamPosition = position;
-
-    }
     public void CreateChar(string name) 
     {
         charName = name;
@@ -110,7 +86,63 @@ public class Ally : Characters
                 break;
         }
     }
+    public void CreateChar(Character cs, int teamPos)
+    {
+        // charName = cs.charName;
+        charName = "Char0" + teamPos;
+        teamPosition = teamPos;
+        maxHealth = cs.maxHealth;
+        damageRange = new Vector2(cs.attack - cs.attack*0.1f, cs.attack + cs.attack * 0.1f);
+        dodge = cs.dodge;
+        //initiative = cs.initiative;
+        initiative = Random.Range(1, 14);
+        critChance = cs.criticalChance;
+        critDamage = cs.crititalDamage;
+        armor = cs.armor;
+        health = maxHealth;
+        healthBar.maxValue = maxHealth;
+        healthBar.value = health;
+        offsetPos *= -1;
 
+        itemElement = (ItemElement)cs.GetItem(NItem.EPartType.Gem).itemType;
+
+
+        switch (itemElement)
+        {
+            case ItemElement.ASH:
+                abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsAsh[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsAsh.Length)];
+                abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsAsh[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsAsh.Length)];
+                while (abilitiesCristal[0] == abilitiesCristal[1])
+                {
+                    abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsAsh[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsAsh.Length)];
+                }
+                break;
+            case ItemElement.ICE:
+                abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsIce[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsIce.Length)];
+                abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsIce[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsIce.Length)];
+                while (abilitiesCristal[0] == abilitiesCristal[1])
+                {
+                    abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsIce[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsIce.Length)];
+                }
+                break;
+            case ItemElement.MUD:
+                abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsMud[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsMud.Length)];
+                abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsMud[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsMud.Length)];
+                while (abilitiesCristal[0] == abilitiesCristal[1])
+                {
+                    abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsMud[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsMud.Length)];
+                }
+                break;
+            case ItemElement.PSY:
+                abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsPsy[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsPsy.Length)];
+                abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsPsy[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsPsy.Length)];
+                while (abilitiesCristal[0] == abilitiesCristal[1])
+                {
+                    abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsPsy[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsPsy.Length)];
+                }
+                break;
+        }
+    }
     public override void OnPointerDown(PointerEventData eventData)
     {
         Debug.Log("Selected");
@@ -239,5 +271,17 @@ public class Ally : Characters
         healthBar.gameObject.SetActive(false);
         body.sprite = head.sprite;
         head.sprite = null;
+        Character c = CharacterManager.characterManager.AskForCharacter(teamPosition);
+        c.RemoveItem((NItem.EPartType)3);
+        c.RemoveItem((NItem.EPartType)Random.Range(0,3));
+        for(int i = 0; i < 3; i++)
+        {
+            NItem.ItemScriptableObject item = c.GetItem((NItem.EPartType)i);
+            if (item)
+            {
+                Inventory.inventory.AddItem(item);
+                c.RemoveItem((NItem.EPartType)i);
+            }
+        }
     }
 }

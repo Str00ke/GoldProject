@@ -295,9 +295,15 @@ public class AbilitiesManager : MonoBehaviour
                                 }
                                 else
                                 {
-                                    Enemy ndEnemy = cm.enemies[cm.enemySelected.teamPosition + 1];
                                     cm.allyPlaying.LaunchAttack(cm.enemySelected, abi);
-                                    cm.allyPlaying.LaunchAttack(ndEnemy, abi);
+                                    for (int i = cm.enemies.Count - 1; i >= 0; i--)
+                                    {
+                                        if(cm.enemies[i].teamPosition == cm.enemySelected.teamPosition + 1)
+                                        {
+                                            Enemy ndEnemy = cm.enemies[i];
+                                            cm.allyPlaying.LaunchAttack(ndEnemy, abi);
+                                        }
+                                    }
                                 }
                             }
                             else if (abi.weaponAbilityType == Ability.WeaponAbilityType.WAVE)
