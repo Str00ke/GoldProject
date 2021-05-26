@@ -11,4 +11,7 @@ public class CharacterScriptableObject : ScriptableObject
     public float dodge;
     public float criticalChance;
     public float crititalDamage;
+    [Space]
+    public Character.ECharacterType characterType;
+    public Sprite characterHead;
 }

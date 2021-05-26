@@ -47,5 +47,6 @@ namespace NItem
         public ERarity itemRarity;
         [Space]
         public Sprite itemUiSprite;
+        public Sprite[] itemSprites;
     }
 }

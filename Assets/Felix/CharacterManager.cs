@@ -81,6 +81,31 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    public void SummonCharacter(CharacterScriptableObject cso)
+    {
+        GameObject nGameObject = new GameObject("Character");
+        nGameObject.transform.parent = gameObject.transform;
+        Character nChar = nGameObject.AddComponent<Character>();
+        nChar.SetCharacterScriptableObject(cso);
+
+        bool isSet = false;
+
+        for (int i = 0; i < characters.Length; i++)
+        {
+            if (characters[i] == null)
+            {
+                characters[i] = nChar;
+                isSet = true;
+                break;
+            }
+        }
+
+        if (!isSet)
+        {
+            Destroy(nGameObject);
+        }
+    }
+
     #region TeamScene
 
     public void OpenTeamScene()
@@ -91,12 +116,69 @@ public class CharacterManager : MonoBehaviour
         slotsTeam[1].SetActive(characters[1] == null ? false : true);
         slotsTeam[2].SetActive(characters[2] == null ? false : true);
 
-        /* Set characters items */
+        
         for (int i = 0; i < 3; i++)
         {
             if (!slotsTeam[i].activeSelf)
                 continue;
 
+            /* Set characters sprites */
+            GameObject spritesGo = slotsTeam[i].transform.GetChild(2).gameObject;
+            Character character = AskForCharacter(i);
+            Image img = spritesGo.transform.GetChild(2).GetComponent<Image>();
+            if (character.charHead != null)
+            {
+                img.sprite = character.charHead;
+                img.color = new Vector4(1f, 1f, 1f, 1f);
+            }
+            else
+            {
+                img.color = new Vector4(1f, 1f, 1f, 0f);
+            }
+
+            img = spritesGo.transform.GetChild(0).GetComponent<Image>();
+            if (character.itemSprites[0] != null)
+            {
+                img.sprite = character.itemSprites[0];
+                img.color = new Vector4(1f, 1f, 1f, 1f);
+            }
+            else
+            {
+                img.color = new Vector4(1f, 1f, 1f, 0f);
+            }
+
+            img = spritesGo.transform.GetChild(3).GetComponent<Image>();
+            if (character.itemSprites[1] != null)
+            {
+                img.sprite = character.itemSprites[1];
+                img.color = new Vector4(1f, 1f, 1f, 1f);
+            }
+            else
+            {
+                img.color = new Vector4(1f, 1f, 1f, 0f);
+            }
+
+            img = spritesGo.transform.GetChild(1).GetComponent<Image>();
+            if (character.itemSprites[2] != null)
+            {
+                img.sprite = character.itemSprites[2];
+                img.color = new Vector4(1f, 1f, 1f, 1f);
+            }
+            else
+            {
+                img.color = new Vector4(1f, 1f, 1f, 0f);
+            }
+
+
+            /* Set characters stats */
+            GameObject stats = slotsTeam[i].transform.GetChild(1).gameObject;
+            stats.transform.GetChild(0).GetComponent<Text>().text = "Health: " + characters[i].health;
+            stats.transform.GetChild(1).GetComponent<Text>().text = "Armor: " + characters[i].armor;
+            stats.transform.GetChild(2).GetComponent<Text>().text = "Attack: " + characters[i].attack;
+            stats.transform.GetChild(3).GetComponent<Text>().text = "Dodge: " + characters[i].dodge;
+
+
+            /* Set characters items */
             GameObject items = slotsTeam[i].transform.GetChild(0).gameObject;
 
             for (int z = 0; z < 4; z++)
@@ -137,19 +219,6 @@ public class CharacterManager : MonoBehaviour
                 items.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => ShowItemPanel(x, 3, gem));
             }
         }
-
-        /* Set characters stats */
-        for (int i = 0; i < 3; i++)
-        {
-            if (!slotsTeam[i].activeSelf)
-                continue;
-
-            GameObject stats = slotsTeam[i].transform.GetChild(1).gameObject;
-            stats.transform.GetChild(0).GetComponent<Text>().text = "Health: " + characters[i].health;
-            stats.transform.GetChild(1).GetComponent<Text>().text = "Armor: " + characters[i].armor;
-            stats.transform.GetChild(2).GetComponent<Text>().text = "Attack: " + characters[i].attack;
-            stats.transform.GetChild(3).GetComponent<Text>().text = "Dodge: " + characters[i].dodge;
-        }
     }
 
     private void ShowItemPanel(int indexSlot, int indexPartItem, NItem.ItemScriptableObject item)
@@ -171,6 +240,7 @@ public class CharacterManager : MonoBehaviour
 
         itemPanel.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => inv.ToggleItemStatsScreen(item));
         itemPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => RemoveCharacterItem(indexSlot, item));
+        itemPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => OpenTeamScene());
 
         itemPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => CloseItemPanel());
     }
@@ -234,9 +304,56 @@ public class CharacterManager : MonoBehaviour
             if (!slots[i].activeSelf)
                 continue;
 
+            /* Set characters sprites */
+            GameObject spritesGo = slots[i].transform.GetChild(0).GetChild(1).gameObject;
+            Character character = AskForCharacter(i);
+            Image img = spritesGo.transform.GetChild(2).GetComponent<Image>();
+            if (character.charHead != null)
+            {
+                img.sprite = character.charHead;
+                img.color = new Vector4(1f, 1f, 1f, 1f);
+            }
+            else
+            {
+                img.color = new Vector4(1f, 1f, 1f, 0f);
+            }
+
+            img = spritesGo.transform.GetChild(0).GetComponent<Image>();
+            if (character.itemSprites[0] != null)
+            {
+                img.sprite = character.itemSprites[0];
+                img.color = new Vector4(1f, 1f, 1f, 1f);
+            }
+            else
+            {
+                img.color = new Vector4(1f, 1f, 1f, 0f);
+            }
+
+            img = spritesGo.transform.GetChild(3).GetComponent<Image>();
+            if (character.itemSprites[1] != null)
+            {
+                img.sprite = character.itemSprites[1];
+                img.color = new Vector4(1f, 1f, 1f, 1f);
+            }
+            else
+            {
+                img.color = new Vector4(1f, 1f, 1f, 0f);
+            }
+
+            img = spritesGo.transform.GetChild(1).GetComponent<Image>();
+            if (character.itemSprites[2] != null)
+            {
+                img.sprite = character.itemSprites[2];
+                img.color = new Vector4(1f, 1f, 1f, 1f);
+            }
+            else
+            {
+                img.color = new Vector4(1f, 1f, 1f, 0f);
+            }
+
+
             Transform itemSlotTransform = slots[i].transform.GetChild(0).GetChild(0);
             NItem.ItemScriptableObject item = characters[i].GetItem(NItem.EPartType.Head);
-
             itemSlotTransform.GetChild(0).GetComponent<Image>().sprite = item != null ? item.itemUiSprite : null;
             if (item != null)
             {
