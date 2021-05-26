@@ -20851,7 +20851,7 @@ MonoBehaviour:
         m_MethodName: AddItem
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: d7eb753c1e1942449bdbe6621f5d850e, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: 31f4bdac5aa08104d94844d45c581dd4, type: 2}
           m_ObjectArgumentAssemblyTypeName: NItem.ItemScriptableObject, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
