@@ -582,6 +582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f8e4896c16d5a4aa3b3b09a301dfdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onPointerHold: 0
   healthBarOutline: {fileID: 0}
   canvasChar: {fileID: 0}
   debuffsInitialPos: {x: -0.43, y: -1.38}
@@ -621,6 +622,18 @@ MonoBehaviour:
   confusion: 0
   turnsConfusionValue: 2
   turnsConfusion: 0
+  holdCharacValue: 0.3
+  holdCharac: 0
+  armorBonus: 0
+  precisionMalus: 0
+  healBonus: 0
+  dodgeBonus: 0
+  critDamageBonus: 0
+  critChanceBonus: 0
+  damageBonus: 0
+  healthDebuff: 0
+  dotDamage: 0
+  markDamage: 0
   floatingHealth: {fileID: 7353727168799922327, guid: 99e16042dd5363342b6ca20ec39f58b5, type: 3}
   inDefenceMode: 0
   isTargetable: 1

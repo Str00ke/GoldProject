@@ -12,7 +12,7 @@ public class StatusManager : MonoBehaviour
     public Sprite debuffStatusSprite;
     public Sprite dotStatusSprite;
     public Sprite markStatusSprite;
-    public float statusOffset = 16f;
+    public float statusOffset = 0.13f;
     public int statusId;
 
     private void Awake()

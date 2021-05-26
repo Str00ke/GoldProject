@@ -32,6 +32,7 @@ public class Enemy : Characters
         healthBarOutline = GameObject.Find(gameObject.name + "/CanvasSlider/HealthBarOutline");
         healthBarOutline.SetActive(false);
         UpdateMeleeState();
+        UpdateStateIcon();
     }
 
     // Update is called once per frame
@@ -39,20 +40,18 @@ public class Enemy : Characters
     {
         IsTargetable();
         ChangeColor();
-    }
-
-
-    public override void OnPointerDown(PointerEventData eventData)
-    {
-            if (isSelected)
-            {
-                if (CombatManager.combatManager.enemySelected == this)
-                {
-                    isSelected = false;
-                    CombatManager.combatManager.enemySelected = null;
-                }
-            }
-            else if (!isSelected)
+        InteractiveHoldToSelect();
+        if (onPointerHold)
+        {
+            holdCharac += Time.deltaTime;
+        }
+        else
+        {
+            holdCharac = 0;
+        }
+        if (holdCharac > holdCharacValue)
+        {
+            if (!isSelected)
             {
                 if (CombatManager.combatManager.enemySelected != null)
                 {
@@ -62,6 +61,22 @@ public class Enemy : Characters
                 isSelected = true;
                 CombatManager.combatManager.enemySelected = this;
             }
+            UIManager.uiManager.enemyStatsUI.SetActive(true);
+        }
+
+    }
+
+    
+
+    public override void OnPointerDown(PointerEventData eventData)
+    {
+        onPointerHold = true;
+    }
+    public override void OnPointerUp(PointerEventData eventData)
+    {
+        Debug.Log("UP");
+        UIManager.uiManager.ResetEnemyDisplayUI();
+        onPointerHold = false;
     }
     /*public override void TakeDamage(float value, float duration)
     {
@@ -90,7 +105,7 @@ public class Enemy : Characters
             CombatManager.combatManager.RemoveEnemy(teamPosition);
         }
     }*/
-    
+
     public override IEnumerator TakeDamageCor(float value, float duration)
     {
         ShowFloatingHealth(Mathf.Round(value), true);

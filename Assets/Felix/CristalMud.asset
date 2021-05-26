@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Cristal Mud
   health: 25
   armor: 25
-  attack: 0
+  attack: 20
   dodge: 0
   criticalChance: 0
   crititalDamage: 0

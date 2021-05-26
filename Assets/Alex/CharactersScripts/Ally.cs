@@ -34,12 +34,37 @@ public class Ally : Characters
         healthBarOutline = GameObject.Find(gameObject.name + "/CanvasChar/HealthBarOutline");
         healthBarOutline.SetActive(false);
         UpdateMeleeState();
+        UpdateStateIcon();
     }
     // Update is called once per frame
     void Update()
     {
         IsTargetable();
         ChangeColor();
+
+        InteractiveHoldToSelect();
+        if (onPointerHold)
+        {
+            holdCharac += Time.deltaTime;
+        }
+        else
+        {
+            holdCharac = 0;
+        }
+        if (holdCharac > holdCharacValue)
+        {
+            if (!isSelected)
+            {
+                if (CombatManager.combatManager.allySelected != null)
+                {
+                    CombatManager.combatManager.allySelected.isSelected = false;
+                    CombatManager.combatManager.allySelected = null;
+                }
+                isSelected = true;
+                CombatManager.combatManager.allySelected = this;
+            }
+            UIManager.uiManager.allyStatsUI.SetActive(true);
+        }
     }
 
     public void CreateChar(string name) 
@@ -90,6 +115,17 @@ public class Ally : Characters
                 break;
         }
     }
+    public override void OnPointerDown(PointerEventData eventData)
+    {
+        onPointerHold = true;
+    }
+    public override void OnPointerUp(PointerEventData eventData)
+    {
+        Debug.Log("UP");
+        UIManager.uiManager.ResetAllyDisplayUI();
+        onPointerHold = false;
+    }
+
     public void CreateChar(Character cs, int teamPos)
     {
         // charName = cs.charName;
@@ -101,7 +137,7 @@ public class Ally : Characters
         bodyArmor.sprite = cs.itemSprites[2];
         teamPosition = teamPos;
         maxHealth = cs.maxHealth;
-        damageRange = new Vector2(cs.attack - cs.attack*0.1f, cs.attack + cs.attack * 0.1f);
+        damageRange = new Vector2(cs.attack - cs.attack * 0.1f, cs.attack + cs.attack * 0.1f);
         dodge = cs.dodge;
         //initiative = cs.initiative;
         initiative = Random.Range(1, 14);
@@ -151,30 +187,6 @@ public class Ally : Characters
                 break;
         }
     }
-    public override void OnPointerDown(PointerEventData eventData)
-    {
-        Debug.Log("Selected");
-            if (isSelected)
-            {
-                if (CombatManager.combatManager.allySelected == this)
-                {
-                    isSelected = false;
-                    CombatManager.combatManager.allySelected = null;
-                }
-            }
-            else if (!isSelected)
-            {
-                if (CombatManager.combatManager.allySelected != null)
-                {
-                    CombatManager.combatManager.allySelected.isSelected = false;
-                    CombatManager.combatManager.allySelected = null;
-                }
-                isSelected = true;
-                CombatManager.combatManager.allySelected = this;
-            }
-    }
-
-
     /*public override void TakeDamage(float value, float duration)
     {
         ShowFloatingHealth(Mathf.Round(value), true);
@@ -201,7 +213,7 @@ public class Ally : Characters
             Death();
         }
     }*/
-    
+
     public override IEnumerator TakeDamageCor(float value, float duration)
     {
         ShowFloatingHealth(Mathf.Round(value), true);

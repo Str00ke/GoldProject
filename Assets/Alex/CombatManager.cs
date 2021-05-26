@@ -202,14 +202,12 @@ public class CombatManager : MonoBehaviour
                     if (allyDef)
                     {
                         fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
-                        if (allies[allyDef.teamPosition + 1])
-                            fightersList[currCharAttacking].LaunchAttack(allies[allyDef.teamPosition + 1], abilityUsed);
                     }
                     else
                     {
                         allies[0].isMelee = true;
                         fightersList[currCharAttacking].LaunchAttack(allies[0], abilityUsed);
-                        if (allies[1] && allies[1].teamPosition == allies[0].teamPosition + 1)
+                        if (allies.Count > 1 && allies[1].teamPosition == allies[0].teamPosition + 1)
                         {
                             fightersList[currCharAttacking].LaunchAttack(allies[1], abilityUsed);
                         }

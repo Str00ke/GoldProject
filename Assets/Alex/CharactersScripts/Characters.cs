@@ -6,8 +6,9 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class Characters : MonoBehaviour, IPointerDownHandler
+public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
+    public bool onPointerHold;
     public GameObject healthBarOutline;
     public GameObject canvasChar;
     public Vector2 debuffsInitialPos = new Vector2(-40, -10.5f);
@@ -69,12 +70,30 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     public float dodgeModif = 0.2f;
 
     [Header("StatusVariables")]
+    public List<Status> statusList = new List<Status>();
     public List<GameObject> prefabsIconStatusBuffs;
     public List<GameObject> prefabsIconStatusDebuffs;
     public bool stunned;
     public bool confusion;
     public int turnsConfusionValue = 2;
     public int turnsConfusion;
+    public float holdCharacValue;
+    public float holdCharac;
+
+    [Header("Status Attributes")]
+    public float armorBonus = 0;
+    public float precisionMalus = 0;
+    public float healBonus = 0;
+    public float dodgeBonus = 0;
+    public float critDamageBonus = 0;
+    public float critChanceBonus = 0;
+    public float damageBonus = 0;
+    public float healthDebuff = 0;
+    public int dotDamage = 0;
+    public int markDamage = 0;
+
+
+
 
     [Header("CombatVariables")]
     public GameObject floatingHealth;
@@ -121,6 +140,16 @@ public class Characters : MonoBehaviour, IPointerDownHandler
         else
         {
             isMelee = true;
+        }
+    }
+    public void InteractiveHoldToSelect()
+    {
+        if(holdCharac < holdCharacValue && onPointerHold)
+        {
+            transform.localScale = new Vector3(transform.localScale.x - Time.deltaTime/5, transform.localScale.y - Time.deltaTime/5, transform.localScale.z - Time.deltaTime/5);
+        }else if(holdCharac > holdCharacValue || onPointerHold)
+        {
+            transform.localScale = new Vector3(1,1,1);
         }
     }
     public void ChangeColor()

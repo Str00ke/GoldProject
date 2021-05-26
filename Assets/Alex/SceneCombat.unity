@@ -5168,6 +5168,18 @@ PrefabInstance:
       propertyPath: initiative
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 6456051378919623013, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: charName
+      value: Snake
+      objectReference: {fileID: 0}
+    - target: {fileID: 6456051379978729522, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: charName
+      value: Snake
+      objectReference: {fileID: 0}
+    - target: {fileID: 6456051380413543276, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
+      propertyPath: charName
+      value: Snake
+      objectReference: {fileID: 0}
     - target: {fileID: 7422386929098087900, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

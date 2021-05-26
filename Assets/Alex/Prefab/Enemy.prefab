@@ -502,6 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 736c9dec7812872498fd90f1412c93ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onPointerHold: 0
   healthBarOutline: {fileID: 0}
   canvasChar: {fileID: 0}
   debuffsInitialPos: {x: -0.38, y: -1.55}
@@ -541,6 +542,18 @@ MonoBehaviour:
   confusion: 0
   turnsConfusionValue: 2
   turnsConfusion: 0
+  holdCharacValue: 0.2
+  holdCharac: 0
+  armorBonus: 0
+  precisionMalus: 0
+  healBonus: 0
+  dodgeBonus: 0
+  critDamageBonus: 0
+  critChanceBonus: 0
+  damageBonus: 0
+  healthDebuff: 0
+  dotDamage: 0
+  markDamage: 0
   floatingHealth: {fileID: 7353727168799922327, guid: 99e16042dd5363342b6ca20ec39f58b5, type: 3}
   inDefenceMode: 0
   isTargetable: 1
@@ -575,7 +588,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.03223467, y: 0.016117334}
+  m_Offset: {x: -0.06883377, y: 0.016117334}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -586,7 +599,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.7406664, y: 2.5472589}
+  m_Size: {x: 1.3791853, y: 2.5472589}
   m_EdgeRadius: 0
 --- !u!95 &7992164014681702039
 Animator:

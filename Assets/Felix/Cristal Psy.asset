@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Cristal Psy
   health: 0
   armor: 0
-  attack: 0
+  attack: 35
   dodge: 0
   criticalChance: 0.5
   crititalDamage: 0.5
