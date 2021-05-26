@@ -139,11 +139,13 @@ public class Characters : MonoBehaviour, IPointerDownHandler
         {
             thisColorBody.color = AttackColor;
             thisColorHead.color = AttackColor;
-        } else if(CanAttack && isSelected)
+        }
+        else if (CanAttack && isSelected)
         {
             thisColorBody.color = selectedColor;
             thisColorHead.color = selectedColor;
-        } else if (hasPlayed && !isSelected)
+        }
+        else if (hasPlayed && !isSelected)
         {
             thisColorBody.color = hasPlayedColor;
             thisColorHead.color = hasPlayedColor;
@@ -175,7 +177,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
                 break;
         }
     }
-    public virtual void OnPointerDown(PointerEventData eventData) 
+    public virtual void OnPointerDown(PointerEventData eventData)
     {
     }
     public virtual void OnPointerUp(PointerEventData eventData)
@@ -255,7 +257,8 @@ public class Characters : MonoBehaviour, IPointerDownHandler
                 if (ability.crHealType == Ability.CristalHealType.BOOST)
                 {
                     Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.DODGEBONUSFLAT);
-                }else if(ability.crHealType == Ability.CristalHealType.DRINK)
+                }
+                else if (ability.crHealType == Ability.CristalHealType.DRINK)
                 {
                     Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.CRITDAMAGEBONUS);
                 }
@@ -379,7 +382,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
         }
         UpdateStateIcon();
     }
-    public virtual void TakeHealing(float value, float duration) 
+    public virtual void TakeHealing(float value, float duration)
     {
     }
     public virtual IEnumerator TakeHealingCor(float value, float duration)
@@ -390,7 +393,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     public void TakeDamageDots(Status.StatusElement stElem, float dmg)
     {
         TakeDamage(dmg, durationDecreaseHealth);
-        Debug.Log("Receiver : " +  gameObject.name + "Dot damage " + dmg + " Dot element " + stElem.ToString());
+        Debug.Log("Receiver : " + gameObject.name + "Dot damage " + dmg + " Dot element " + stElem.ToString());
         ElementReactions((CurrentElement)stElem);
         UpdateDisplayDots();
     }
@@ -419,8 +422,8 @@ public class Characters : MonoBehaviour, IPointerDownHandler
         go.GetComponentInChildren<TextMesh>().text = "" + value;
         go.GetComponentInChildren<FloatingHealthScript>().StartCoroutine(go.GetComponentInChildren<FloatingHealthScript>().AnimateFloatingTextCor(go.GetComponentInChildren<FloatingHealthScript>().destroyDelay));
     }
-    
-    public virtual void TakeDamage(float value, float duration) 
+
+    public virtual void TakeDamage(float value, float duration)
     {
         StartCoroutine(TakeDamageCor(value, duration));
     }
@@ -428,7 +431,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     {
         yield return null;
     }
-    
+
     IEnumerator ChangePosCoroutine(float duration)
     {
         Vector3 startPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
@@ -445,9 +448,17 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     }
     public void IsTargetable()
     {
-        if(isTargetable)
+        if (isTargetable)
             healthBarOutline.SetActive(true);
         else
             healthBarOutline.SetActive(false);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawCube(transform.position + (Vector3)buffsInitialPos, new Vector3(0.1f, 0.1f, 0.1f));
+        Gizmos.DrawCube(transform.position + (Vector3)debuffsInitialPos, new Vector3(0.1f, 0.1f, 0.1f));
+
     }
 }

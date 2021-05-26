@@ -8,10 +8,10 @@ public class Ally : Characters
 {
     public SpriteRenderer head;
     public SpriteRenderer body;
+    public SpriteRenderer bodyArmor;
+    public SpriteRenderer helmet;
     private void Start()
     {
-        debuffsInitialPos = new Vector2(-40, -10.5f);
-        buffsInitialPos = new Vector2(40, -10.5f);
         stateIcons = UIManager.uiManager.stateIcons;
         CombatManager.combatManager.allies.Add(this);
         charType = CharType.ALLY;
@@ -94,6 +94,11 @@ public class Ally : Characters
     {
         // charName = cs.charName;
         charName = "Char0" + teamPos;
+        //Sprites
+        head.sprite = cs.charHead;
+        body.sprite = cs.itemSprites[0];
+        helmet.sprite = cs.itemSprites[1];
+        bodyArmor.sprite = cs.itemSprites[2];
         teamPosition = teamPos;
         maxHealth = cs.maxHealth;
         damageRange = new Vector2(cs.attack - cs.attack*0.1f, cs.attack + cs.attack * 0.1f);

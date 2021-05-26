@@ -186,42 +186,42 @@ public class CombatManager : MonoBehaviour
     //---------------Referenced in EnemyAttack()-------------
     public void EnemyAbilityAttack(Ally allyAtt, Ally allyDef)
     {
-        //ENEMY ATTACK ANIMATION
-        Ability abilityUsed = fightersList[currCharAttacking].abilities[Random.Range(0, fightersList[currCharAttacking].abilities.Length)];
-        switch (abilityUsed.weaponAbilityType)
+        if (allies.Count > 0)
         {
-            case Ability.WeaponAbilityType.BASE:
-                if (allyDef)
-                    fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
-                else
-                    fightersList[currCharAttacking].LaunchAttack(allyAtt, abilityUsed);
-                break;
-            case Ability.WeaponAbilityType.PIERCE:
-                if (allyDef)
-                {
-                    fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
-                    if(allies[allyDef.teamPosition+1])
-                        fightersList[currCharAttacking].LaunchAttack(allies[allyDef.teamPosition + 1], abilityUsed);
-                }
-                else
-                {
-                    if (allies.Count > 0)
+            //ENEMY ATTACK ANIMATION
+            Ability abilityUsed = fightersList[currCharAttacking].abilities[Random.Range(0, fightersList[currCharAttacking].abilities.Length)];
+            switch (abilityUsed.weaponAbilityType)
+            {
+                case Ability.WeaponAbilityType.BASE:
+                    if (allyDef)
+                        fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
+                    else
+                        fightersList[currCharAttacking].LaunchAttack(allyAtt, abilityUsed);
+                    break;
+                case Ability.WeaponAbilityType.PIERCE:
+                    if (allyDef)
+                    {
+                        fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
+                        if (allies[allyDef.teamPosition + 1])
+                            fightersList[currCharAttacking].LaunchAttack(allies[allyDef.teamPosition + 1], abilityUsed);
+                    }
+                    else
                     {
                         allies[0].isMelee = true;
+                        fightersList[currCharAttacking].LaunchAttack(allies[0], abilityUsed);
+                        if (allies[1] && allies[1].teamPosition == allies[0].teamPosition + 1)
+                        {
+                            fightersList[currCharAttacking].LaunchAttack(allies[1], abilityUsed);
+                        }
                     }
-                    fightersList[currCharAttacking].LaunchAttack(allies[0], abilityUsed);
-                    if (allies[1] && allies[1].teamPosition == allies[0].teamPosition + 1)
+                    break;
+                case Ability.WeaponAbilityType.WAVE:
+                    for (int i = allies.Count - 1; i >= 0; i--)
                     {
-                        fightersList[currCharAttacking].LaunchAttack(allies[1], abilityUsed);
+                        fightersList[currCharAttacking].LaunchAttack(allies[i], abilityUsed);
                     }
-                }
-                break;
-            case Ability.WeaponAbilityType.WAVE:
-                for (int i = allies.Count - 1; i >= 0; i--)
-                {
-                    fightersList[currCharAttacking].LaunchAttack(allies[i], abilityUsed);
-                }
-                break;
+                    break;
+            }
         }
     }
     public void TurnPassed()

@@ -8,8 +8,6 @@ public class Enemy : Characters
 {
     void Start()
     {
-        debuffsInitialPos = new Vector2(-70, -158);
-        buffsInitialPos = new Vector2(70, -158);
         stateIcons = UIManager.uiManager.stateIcons;
         stateIcons = UIManager.uiManager.stateIcons;
         CombatManager.combatManager.enemies.Add(this);

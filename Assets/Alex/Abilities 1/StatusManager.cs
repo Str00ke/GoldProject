@@ -51,17 +51,21 @@ public class StatusManager : MonoBehaviour
     {
         GameObject temp = Instantiate(prefabIconStatus);
         temp.name = "Status" + status.statusId;
+        temp.transform.localPosition = new Vector3(1, 1, 1);
         temp.transform.SetParent(c.canvasChar.transform);
+        // temp.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         temp.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-        if(status.statusType == Status.StatusTypes.DOT || status.statusType == Status.StatusTypes.BLEEDING)
+        if (status.statusType == Status.StatusTypes.DOT || status.statusType == Status.StatusTypes.BLEEDING)
         {
-            temp.GetComponent<RectTransform>().anchoredPosition = new Vector2(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.Count), c.debuffsInitialPos.y);
+            //temp.GetComponent<RectTransform>().anchoredPosition = new Vector2(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.Count), c.debuffsInitialPos.y);
+            temp.transform.position = c.transform.position + new Vector3(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.Count), c.debuffsInitialPos.y);
             c.prefabsIconStatusDebuffs.Add(temp);
             temp.GetComponent<Image>().sprite = dotStatusSprite;
         }
         else if(status.statusType == Status.StatusTypes.MARK)
         {
-            temp.GetComponent<RectTransform>().anchoredPosition = new Vector2(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.Count), c.debuffsInitialPos.y);
+            //temp.GetComponent<RectTransform>().anchoredPosition = new Vector2(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.Count), c.debuffsInitialPos.y);
+            temp.transform.position = c.transform.position + new Vector3(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.Count), c.debuffsInitialPos.y);
             c.prefabsIconStatusDebuffs.Add(temp);
             temp.GetComponent<Image>().sprite = markStatusSprite;
         }
@@ -69,13 +73,15 @@ public class StatusManager : MonoBehaviour
         {
             if (status.buffOrDebuff == Status.BuffOrDebuff.BUFF)
             {
-                temp.GetComponent<RectTransform>().anchoredPosition = new Vector2(c.buffsInitialPos.x - (statusOffset * c.prefabsIconStatusBuffs.Count), c.buffsInitialPos.y);
+                //temp.GetComponent<RectTransform>().anchoredPosition = new Vector2(c.buffsInitialPos.x - (statusOffset * c.prefabsIconStatusBuffs.Count), c.buffsInitialPos.y);
+                temp.transform.position = c.transform.position + new Vector3(c.buffsInitialPos.x - (statusOffset * c.prefabsIconStatusBuffs.Count), c.buffsInitialPos.y);
                 c.prefabsIconStatusBuffs.Add(temp);
                 temp.GetComponent<Image>().sprite = buffStatusSprite;
             }
             else
             {
-                temp.GetComponent<RectTransform>().anchoredPosition = new Vector2(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.Count), c.debuffsInitialPos.y);
+                //temp.GetComponent<RectTransform>().anchoredPosition = new Vector2(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.Count), c.debuffsInitialPos.y);
+                temp.transform.position = c.transform.position + new Vector3(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.Count), c.debuffsInitialPos.y);
                 c.prefabsIconStatusDebuffs.Add(temp);
                 temp.GetComponent<Image>().sprite = debuffStatusSprite;
             }
@@ -96,7 +102,8 @@ public class StatusManager : MonoBehaviour
             }
             for (int i = c.prefabsIconStatusBuffs.Count - 1; i >= 0; i--)
             {
-                c.prefabsIconStatusBuffs[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(c.buffsInitialPos.x + (statusOffset * i), c.buffsInitialPos.y);
+                // c.prefabsIconStatusBuffs[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(c.buffsInitialPos.x + (statusOffset * i), c.buffsInitialPos.y);
+                c.prefabsIconStatusBuffs[i].transform.position = c.transform.position + new Vector3(c.buffsInitialPos.x + (statusOffset * i), c.buffsInitialPos.y);
             }
         }
         if (status.buffOrDebuff == Status.BuffOrDebuff.DEBUFF)
@@ -112,7 +119,8 @@ public class StatusManager : MonoBehaviour
             }
             foreach (GameObject g in c.prefabsIconStatusDebuffs)
             {
-                g.GetComponent<RectTransform>().anchoredPosition = new Vector2(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.IndexOf(g)), c.debuffsInitialPos.y);
+                // g.GetComponent<RectTransform>().anchoredPosition = new Vector2(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.IndexOf(g)), c.debuffsInitialPos.y);
+                g.transform.position = c.transform.position + new Vector3(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.IndexOf(g)), c.debuffsInitialPos.y);
             }
         }
     }
