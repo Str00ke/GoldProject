@@ -10,6 +10,9 @@ public class Ally : Characters
     public SpriteRenderer body;
     private void Start()
     {
+        debuffsInitialPos = new Vector2(-40, -10.5f);
+        buffsInitialPos = new Vector2(40, -10.5f);
+        stateIcons = UIManager.uiManager.stateIcons;
         CombatManager.combatManager.allies.Add(this);
         charType = CharType.ALLY;
         anim = this.GetComponent<Animator>();
@@ -17,6 +20,7 @@ public class Ally : Characters
         thisColorHead = head;
         durationMove = 1.0f;
         healthBar = GameObject.Find(gameObject.name + "/CanvasChar/healthBar").GetComponent<Slider>();
+        canvasChar = GameObject.Find(gameObject.name + "/CanvasChar");
         health = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = health;
@@ -105,7 +109,6 @@ public class Ally : Characters
         offsetPos *= -1;
 
         itemElement = (ItemElement)cs.GetItem(NItem.EPartType.Gem).itemType;
-
 
         switch (itemElement)
         {

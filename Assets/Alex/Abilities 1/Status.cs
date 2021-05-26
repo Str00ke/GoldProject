@@ -10,6 +10,7 @@ public class Status
     public float diffModif;
     public float dmg;
     public Ability abi;
+    public int statusId;
     public enum StatusElement
     {
         BASE,
@@ -19,12 +20,17 @@ public class Status
         PSY
     }
     public StatusElement statusElement;
+    public enum BuffOrDebuff
+    {
+        BUFF,
+        DEBUFF
+    }
+    public BuffOrDebuff buffOrDebuff;
     public enum StatusTypes
     {
         ARMORBONUSPERC,
         ARMORBONUSFLAT,
         ARMORMALUS,
-        BLEEDING,
         HEALBONUS,
         PRECISIONMALUS,
         DODGEBONUSFLAT,
@@ -34,11 +40,13 @@ public class Status
         DAMAGEBONUS,
         DAMAGEMALUS,
         HEALTHDEBUFF,
+        BLEEDING,
         DOT,
         MARK
     }
     public StatusTypes statusType;
 
+    // ------------------------------------MARK & DOT------------------------------------------------------------------
     public Status(Characters target, float bm, Ability a, StatusTypes statusT, float damage)
     {
         bonusmalus = bm;
@@ -51,6 +59,7 @@ public class Status
         StatusManager.statusManager.StatusList.Add(this);
         ApplyStatus();
     }
+    // ------------------------------------DEBUFFS & BUFFS FROM CRISTALS----------------------------------------------
     public Status(Characters target, float bm, Ability a, StatusTypes statusT)
     {
         bonusmalus = bm;
@@ -62,6 +71,7 @@ public class Status
         StatusManager.statusManager.StatusList.Add(this);
         ApplyStatus();
     }
+    // ------------------------------------DEBUFFS & BUFFS FROM ELEMENT REACTIONS----------------------------------------
     public Status(Characters target, float bm, int turns, StatusTypes statusT)
     {
         bonusmalus = bm;
@@ -80,23 +90,28 @@ public class Status
                 case StatusTypes.ARMORBONUSPERC:
                     diffModif = statusTarget.armor * bonusmalus;
                     statusTarget.armor += diffModif;
+                    buffOrDebuff = BuffOrDebuff.BUFF;
                     break;
                 case StatusTypes.ARMORBONUSFLAT:
                     diffModif = bonusmalus;
                     statusTarget.armor += diffModif;
+                    buffOrDebuff = BuffOrDebuff.BUFF;
                     break;
                 case StatusTypes.ARMORMALUS:
                     diffModif = statusTarget.armor * bonusmalus;
                     statusTarget.armor -= diffModif;
+                    buffOrDebuff = BuffOrDebuff.DEBUFF;
                     break;
                 case StatusTypes.BLEEDING:
                     diffModif = bonusmalus;
                     statusElement = StatusElement.BASE;
                     statusTarget.bleedingDmg += diffModif;
+                    buffOrDebuff = BuffOrDebuff.DEBUFF;
                     break;
                 case StatusTypes.HEALBONUS:
                     diffModif = bonusmalus;
                     statusTarget.healReceivedModif += diffModif;
+                    buffOrDebuff = BuffOrDebuff.BUFF;
                     break;
                 case StatusTypes.PRECISIONMALUS:
                     if (statusTarget.precision < 1.0f)
@@ -108,58 +123,55 @@ public class Status
                         diffModif = bonusmalus;
                         statusTarget.precision -= diffModif;
                     }
+                    buffOrDebuff = BuffOrDebuff.DEBUFF;
                     break;
                 case StatusTypes.DODGEBONUSFLAT:
                     diffModif = bonusmalus;
                     statusTarget.dodge += diffModif;
+                    buffOrDebuff = BuffOrDebuff.BUFF;
                     break;
                 case StatusTypes.DODGEMALUS:
                     diffModif = bonusmalus;
                     statusTarget.dodge -= diffModif;
+                    buffOrDebuff = BuffOrDebuff.DEBUFF;
                     break;
                 case StatusTypes.CRITDAMAGEBONUS:
                     diffModif = bonusmalus;
                     statusTarget.critDamage += diffModif;
+                    buffOrDebuff = BuffOrDebuff.BUFF;
                     break;
                 case StatusTypes.CRITRATEBONUS:
                     diffModif = bonusmalus;
                     statusTarget.critChance += diffModif;
+                    buffOrDebuff = BuffOrDebuff.BUFF;
                     break;
                 case StatusTypes.DAMAGEBONUS:
                     diffModif = bonusmalus;
                     statusTarget.damageRange.x += diffModif;
                     statusTarget.damageRange.y += diffModif;
+                    buffOrDebuff = BuffOrDebuff.BUFF;
                     break;
                 case StatusTypes.DAMAGEMALUS:
                     diffModif = bonusmalus;
                     statusTarget.damageRange.x -= diffModif;
                     statusTarget.damageRange.y -= diffModif;
+                    buffOrDebuff = BuffOrDebuff.DEBUFF;
                     break;
                 case StatusTypes.HEALTHDEBUFF:
                     diffModif = bonusmalus;
                     statusTarget.maxHealth -= diffModif;
+                    buffOrDebuff = BuffOrDebuff.DEBUFF;
                     break;
-               /* case StatusTypes.DOT:
-                    diffModif = bonusmalus;
-                    statusTarget.dmgDotAsh += diffModif;
-                    break;*/
-                    /*case StatusTypes.DOTASH:
-                        diffModif = bonusmalus;
-                        statusTarget.dmgDotAsh += diffModif;
-                        break;
-                    case StatusTypes.DOTICE:
-                        diffModif = bonusmalus;
-                        statusTarget.dmgDotIce += diffModif;
-                        break;
-                    case StatusTypes.DOTMUD:
-                        diffModif = bonusmalus;
-                        statusTarget.dmgDotMud += diffModif;
-                        break;
-                    case StatusTypes.DOTPSY:
-                        diffModif = bonusmalus;
-                        statusTarget.dmgDotPsy += diffModif;
-                        break;*/
+                case StatusTypes.DOT:
+                    buffOrDebuff = BuffOrDebuff.DEBUFF;
+                    break;
+                case StatusTypes.MARK:
+                    buffOrDebuff = BuffOrDebuff.DEBUFF;
+                    break;
             }
+            statusId = StatusManager.statusManager.statusId;
+            StatusManager.statusManager.statusId++;
+            StatusManager.statusManager.AddDisplayStatus(statusTarget, this);
         }
     }
     public void RevertStatus()
@@ -207,21 +219,7 @@ public class Status
             case StatusTypes.HEALTHDEBUFF:
                 statusTarget.maxHealth += diffModif;
                 break;
-            /*case StatusTypes.DOT:
-                statusTarget.maxHealth += diffModif;
-                break;*/
-                /*case StatusTypes.DOTASH:
-                    statusTarget.dmgDotAsh -= diffModif;
-                    break;
-                case StatusTypes.DOTICE:
-                    statusTarget.dmgDotIce -= diffModif;
-                    break;
-                case StatusTypes.DOTMUD:
-                    statusTarget.dmgDotMud -= diffModif;
-                    break;
-                case StatusTypes.DOTPSY:
-                    statusTarget.dmgDotPsy -= diffModif;
-                    break;*/
         }
+        StatusManager.statusManager.DeleteDisplayStatus(statusTarget, this);
     }
 }

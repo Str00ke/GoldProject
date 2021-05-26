@@ -8,6 +8,10 @@ public class Enemy : Characters
 {
     void Start()
     {
+        debuffsInitialPos = new Vector2(-70, -158);
+        buffsInitialPos = new Vector2(70, -158);
+        stateIcons = UIManager.uiManager.stateIcons;
+        stateIcons = UIManager.uiManager.stateIcons;
         CombatManager.combatManager.enemies.Add(this);
         charType = CharType.ENEMY; 
         anim = this.GetComponent<Animator>();
@@ -15,6 +19,7 @@ public class Enemy : Characters
         thisColorHead = this.GetComponent<SpriteRenderer>();
         durationMove = 1.0f;
         healthBar = GameObject.Find(gameObject.name + "/CanvasSlider/healthBar").GetComponent<Slider>();
+        canvasChar = GameObject.Find(gameObject.name + "/CanvasSlider");
         health = maxHealth;
         healthBar.maxValue = maxHealth;
         dodge = dodgeValue;

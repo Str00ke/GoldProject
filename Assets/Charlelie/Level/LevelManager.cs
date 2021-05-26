@@ -124,7 +124,7 @@ public class LevelManager : MonoBehaviour
 
     public void Obliterate()
     {
-        FindObjectOfType<CombatManager>().Obliterate();
+        CombatManager.combatManager.Obliterate();
     }
 
 

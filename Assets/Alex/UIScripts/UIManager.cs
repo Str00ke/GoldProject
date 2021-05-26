@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public Text labelEnemy;
     public Text statsEnemy;
     public Text turnsText;
+    public Sprite[] stateIcons;
 
     private void Awake()
     {
