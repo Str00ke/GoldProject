@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Cape
   m_EditorClassIdentifier: 
   itemName: Cape
-  health: 0
+  health: 100
   armor: 0
-  attack: 0
+  attack: 100
   dodge: 0
   criticalChance: 0
   crititalDamage: 0

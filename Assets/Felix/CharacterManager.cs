@@ -187,7 +187,7 @@ public class CharacterManager : MonoBehaviour
             }
 
             items.transform.GetChild(0).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Head) != null ? characters[i].GetItem(NItem.EPartType.Head).itemUiSprite : null;
-            if (characters[i].GetItem(NItem.EPartType.Head) != null)
+            //if (characters[i].GetItem(NItem.EPartType.Head) != null)
             {
                 int x = i;
                 NItem.ItemScriptableObject head = characters[i].GetItem(NItem.EPartType.Head);
@@ -196,7 +196,7 @@ public class CharacterManager : MonoBehaviour
             }
 
             items.transform.GetChild(1).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Body) != null ? characters[i].GetItem(NItem.EPartType.Body).itemUiSprite : null;
-            if (characters[i].GetItem(NItem.EPartType.Body) != null)
+            //if (characters[i].GetItem(NItem.EPartType.Body) != null)
             {
                 int x = i;
                 NItem.ItemScriptableObject body = characters[i].GetItem(NItem.EPartType.Body);
@@ -204,7 +204,7 @@ public class CharacterManager : MonoBehaviour
             }
 
             items.transform.GetChild(2).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Weapon) != null ? characters[i].GetItem(NItem.EPartType.Weapon).itemUiSprite : null;
-            if (characters[i].GetItem(NItem.EPartType.Weapon) != null)
+            //if (characters[i].GetItem(NItem.EPartType.Weapon) != null)
             {
                 int x = i;
                 NItem.ItemScriptableObject weapon = characters[i].GetItem(NItem.EPartType.Weapon);
@@ -212,7 +212,7 @@ public class CharacterManager : MonoBehaviour
             }
 
             items.transform.GetChild(3).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Gem) != null ? characters[i].GetItem(NItem.EPartType.Gem).itemUiSprite : null;
-            if (characters[i].GetItem(NItem.EPartType.Gem) != null)
+            //if (characters[i].GetItem(NItem.EPartType.Gem) != null)
             {
                 int x = i;
                 NItem.ItemScriptableObject gem = characters[i].GetItem(NItem.EPartType.Gem);
@@ -225,22 +225,33 @@ public class CharacterManager : MonoBehaviour
     {
         itemPanel.SetActive(true);
 
+        Inventory inv = Inventory.inventory;
+
         Vector3 itemPos = slotsTeam[indexSlot].transform.GetChild(0).GetChild(indexPartItem).position;
 
-        itemPanel.transform.position = itemPos + new Vector3(150f, 0f, 0f);
+        itemPanel.transform.position = itemPos + new Vector3(175f * inv.mainCanvas.localScale.x, 0f, 0f);
 
         for (int i = 0; i < 4; i++)
+        {
+            itemPanel.transform.GetChild(i).gameObject.SetActive(true);
             itemPanel.transform.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
-
-        Inventory inv = Inventory.inventory;
+        }
 
         itemPanel.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => inv.OpenInventory());
         itemPanel.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => inv.SelectionCharacterOneItemPart(indexSlot));
         itemPanel.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => inv.SelectionOneItemPart(indexPartItem));
 
-        itemPanel.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => inv.ToggleItemStatsScreen(item));
-        itemPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => RemoveCharacterItem(indexSlot, item));
-        itemPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => OpenTeamScene());
+        if (item != null)
+        {
+            itemPanel.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => inv.ToggleItemStatsScreen(item));
+            itemPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => RemoveCharacterItem(indexSlot, item));
+            itemPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => OpenTeamScene());
+        }
+        else
+        {
+            itemPanel.transform.GetChild(1).gameObject.SetActive(false);
+            itemPanel.transform.GetChild(2).gameObject.SetActive(false);
+        }
 
         itemPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => CloseItemPanel());
     }
