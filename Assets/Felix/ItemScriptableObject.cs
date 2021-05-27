@@ -21,6 +21,14 @@ namespace NItem
         Gem
     }
 
+    public enum EWeaponType
+    {
+        None,
+        Sword,
+        Bow,
+        Staff
+    }
+
     public enum ERarity
     {
         Ultimate,
@@ -45,6 +53,7 @@ namespace NItem
         public EPartType itemPartType;
         public EItemType itemType;
         public ERarity itemRarity;
+        public EWeaponType itemWeaponType;
         [Space]
         public Sprite itemUiSprite;
         public Sprite[] itemSprites;
