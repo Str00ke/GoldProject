@@ -21,14 +21,18 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public bool isDiscovered = false;
     public bool isFinished = false;
     public int distFromStart = 0;
-    
+    public Text textNbr;
+    public int roomNbr;
 
     //Remplacer GameObject par les types une foit ajoutés
     GameObject[] ennemies;
     GameObject[] chests;
     bool isShop;
 
-
+    public void SetNbr()
+    {
+        textNbr.text = roomNbr.ToString();
+    }
 
     public void Init()
     {

@@ -37,14 +37,6 @@ public class LevelRoom
             {
                 LevelRoom room = GetRoomAtPos(otherPos);
                 linkedRoom[i] = room;
-                Debug.Log(i + "  " + otherPos.GetLength(0) + " " + otherPos.GetLength(1));
-                /*GameObject lineGO = new GameObject();
-                LineRenderer lr = lineGO.AddComponent<LineRenderer>();
-                //lr.SetColors(Color.green, Color.yellow);
-                lr.startWidth = 0.1f;
-                lr.endWidth = 0.1f;
-                lr.SetPosition(0, transform.position);
-                lr.SetPosition(1, room.gameObject.transform.position);*/
                 return;
             }
         }

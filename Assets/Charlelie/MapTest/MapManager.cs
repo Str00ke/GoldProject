@@ -17,8 +17,27 @@ public class MapManager : MonoBehaviour
     PlayerPoint playerPoint;
     public Level level;
     List<MapRoom> testArr = new List<MapRoom>();
+    int testMax = 0;
     int rDistFromStart = 0;
     int rTestDone = 0;
+
+
+    static MapManager _mapManager;
+
+
+    void Awake()
+    {
+        if (_mapManager != null && _mapManager != this)
+            Destroy(gameObject);
+
+        _mapManager = this;
+    }
+
+    public static MapManager GetInstance()
+    {
+        return _mapManager;
+    }
+
     public void Init()
     {
         //roomsList = new MapRoom[FindObjectsOfType<MapRoom>().Length];
@@ -186,12 +205,18 @@ public class MapManager : MonoBehaviour
     }
 
 
-    public void StartToEnd(MapRoom room)
+    public void StartToEnd(MapRoom room, int index)
     {
+        Debug.Log("Index: " + index);
+        room.roomNbr = index;
+        Debug.Log("Room nbr: " + room.roomNbr);
+        room.SetNbr();
+        
         rTestDone++;
         rDistFromStart++;
+        //index++;
         room.distFromStart = rDistFromStart;
-        Debug.Log(rTestDone);
+        //Debug.Log(rTestDone);
         testArr.Add(room);
         bool result = false;
         for (int i = 0; i < 4; ++i)
@@ -201,9 +226,17 @@ public class MapManager : MonoBehaviour
                 if (room.linkedRoom[i].roomType == RoomType.END)
                 {
                     Debug.Log("ARRIVED!!!");
+                    Debug.Log("Arrival at: " + index + 1);
+                    room.linkedRoom[i].roomNbr = index + 1;
+                    testMax = room.roomNbr;
+                    StartToEnd(room.linkedRoom[i], index + 1);
                     result = true;
                 }
-                StartToEnd(room.linkedRoom[i]);
+                Debug.Log("++= " + (room.roomNbr + 1));
+                if (testMax == 0)
+                    StartToEnd(room.linkedRoom[i], (room.roomNbr + 1));
+                else if (index + 1 > testMax && room.linkedRoom[i].roomType != RoomType.END)
+                    StartToEnd(room.linkedRoom[i], index);
             }
         }
         rTestDone--;
@@ -224,19 +257,16 @@ public class MapManager : MonoBehaviour
             if (room.roomType != RoomType.START && room.roomType != RoomType.END)
             {
                 Debug.Log("..");
-                float rand = Random.Range(0, 10);
+                /*float rand = Random.Range(0, roomArr.Length);
                 if (rand > 5)
                 {
-                    /*if (CheckIfNothingNear(room))
-                    {
-
-                    }*/
                     Debug.Log("...");
                     room.SetToShop();
                     Debug.Log("ShopSet " + room.pos.GetLength(0) + " " + room.pos.GetLength(1));
                     return;
-                }
-
+                }*/
+                room.SetToShop();
+                return;
             }
         }
     }
