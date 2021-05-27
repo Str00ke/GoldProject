@@ -123,8 +123,32 @@ public class EnnemyManager : MonoBehaviour
             case LevelType.EASY:
                 dD = _enemyManager.easyDungeon;
                 break;
+
+            case LevelType.MEDIUM:
+                dD = _enemyManager.moyenDungeon;
+                break;
+
+            case LevelType.HARD:
+                dD = _enemyManager.hardDungeon;
+                break;
         }
-        DungeonPart dP = dD.part1;
+        EPart eDP = RoomDiffMult(mapRoom.distFromStart);
+        DungeonPart dP = new DungeonPart();
+        switch (eDP)
+        {
+            case EPart.PART1:
+                dP = dD.part1;
+                break;
+
+            case EPart.PART2:
+                dP = dD.part2;
+                break;
+
+            case EPart.PART3:
+                dP = dD.part3;
+                break;
+        }
+
         enemy.maxHealth *= dP.maxHealthMultiplicator;
         enemy.damageRange *= dP.damageRangeMultiplicator;
         enemy.dodge *= dP.dodgeMultiplicator;
