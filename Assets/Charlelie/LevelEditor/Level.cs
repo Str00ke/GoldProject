@@ -12,6 +12,13 @@ public enum RoomType
     HEAL
 }
 
+public enum LevelType
+{
+    EASY,
+    MEDIUM,
+    HARD
+}
+
 [System.Serializable]
 public class LevelRoom
 {
@@ -20,6 +27,7 @@ public class LevelRoom
     public LevelRoom[] linkedRoom = new LevelRoom[4];
     bool isDiscovered = false;
     Level level;
+    
 
     public LevelRoom(int[,] _pos, RoomType _roomType, Level _level)
     {
@@ -55,14 +63,14 @@ public class Level
     public string name;
     public LevelRoom[,] rooms;
     public LevelRoom startRoom, endRoom;
-
-    public Level(int _mapW, int _mapH, int _roomNbr, string _name)
+    public LevelType levelType;
+    public Level(int _mapW, int _mapH, int _roomNbr, string _name, LevelType _levelType)
     {
         mapW = _mapW;
         mapH = _mapH;
         roomNbr = _roomNbr;
         name = _name;
-        Debug.Log(name);
+        levelType = _levelType;
     }
 
     public void SetRoomArray()

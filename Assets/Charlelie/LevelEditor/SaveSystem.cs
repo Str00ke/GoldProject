@@ -23,7 +23,7 @@ public static class SaveSystem
 
     public static void Save(Room[] rooms, int mapW, int mapH, int roomNbr, string lvlName)
     {
-        Level level = new Level(mapW, mapH, roomNbr, lvlName);
+        Level level = new Level(mapW, mapH, roomNbr, lvlName, LevelType.EASY);
         level.SetRoomArray();
 
         for (int i = 0; i < rooms.Length; ++i)
