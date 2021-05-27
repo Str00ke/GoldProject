@@ -35,6 +35,14 @@ public class Enemy : Characters
         UpdateStateIcon();
     }
 
+    public void CreateEnnemy()
+    {
+        Ennemy ennemy = EnnemyManager._enemyManager.SetEnemyPool(LevelManager.GetInstance().level, PlayerPoint._playerPoint.onRoom);
+        maxHealth = ennemy.maxHealth;
+
+        EnnemyManager._enemyManager.MultiplicateByValues(this);
+    }
+
     // Update is called once per frame
     void Update()
     {

@@ -61,11 +61,17 @@ public class CombatManager : MonoBehaviour
     }
     public void CreateEnemies()
     {
-        GameObject temp = Instantiate(enemyPrefab);
+        for (int i = 0; i < 3; ++i)
+        {
+            GameObject go = Instantiate(enemyPrefab);
+            go.GetComponent<Enemy>().CreateEnnemy();
+        }
     }
     IEnumerator StartCombat()
     {
-        CreateRoster();
+        CreateEnemies();
+        //CreateRoster();
+        
         yield return new WaitForSeconds(1.5f);
         FightBegins();
     }
