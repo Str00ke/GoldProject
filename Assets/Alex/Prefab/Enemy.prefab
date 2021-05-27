@@ -771,7 +771,7 @@ MonoBehaviour:
   markDamage: 0
   floatingHealth: {fileID: 7353727168799922327, guid: 99e16042dd5363342b6ca20ec39f58b5, type: 3}
   inDefenceMode: 0
-  isTargetable: 1
+  isTargetable: 0
   isMelee: 0
   isDead: 0
   hasPlayed: 0
@@ -790,6 +790,8 @@ MonoBehaviour:
   speedMove: 1
   durationMove: 1
   anim: {fileID: 0}
+  enemyType: 0
+  enemyElement: 0
 --- !u!61 &4510668456567727199
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -12,12 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470ec357602151341a5515c24ca19ad1, type: 3}
   m_Name: Ennemy2
   m_EditorClassIdentifier: 
-  enemyName: 
+  enemyName: Poison Snake
+  maxHealth: 200
   enemyType: 0
-  damageRange: {x: 0, y: 0}
-  dodge: 0
-  critChance: 0
-  critDamage: 0
-  initiative: 0
-  armor: 0
+  damageRange: {x: 15, y: 20}
+  dodge: 0.3
+  critChance: 0.3
+  critDamage: 1.5
+  initiative: 15
+  armor: 20
   element: 0
+  enemyAbilities:
+  - {fileID: 11400000, guid: 339b3b47eb400d24e90347ae579ebbf6, type: 2}
+  - {fileID: 11400000, guid: 3aa29f96a43107e48a69b2579056750f, type: 2}
+  enemySpecialsAbilities: []

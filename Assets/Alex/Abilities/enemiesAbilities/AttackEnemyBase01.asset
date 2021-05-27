@@ -10,18 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40102682e9e99234baf7862f25a929e2, type: 3}
-  m_Name: AttackEnemy03
+  m_Name: AttackEnemyBase01
   m_EditorClassIdentifier: 
-  name: 
+  name: AttackEnemy01
   type: 
-  multiplicator: 40
+  multiplicator: 100
   icon: {fileID: 0}
   bonusmalus: 0
+  destruModif: 0
+  dotMult: 0
+  markMult: 0
+  turnDuration: 0
   objectType: 1
-  weaponAbilityType: 2
+  weaponAbilityType: 3
   crType: 0
   crHealType: 0
   crAttackType: 0
   crSpecialType: 0
   targetType: 0
-  elementType: 4
+  elementType: 0

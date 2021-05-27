@@ -677,7 +677,7 @@ MonoBehaviour:
   markDamage: 0
   floatingHealth: {fileID: 7353727168799922327, guid: 99e16042dd5363342b6ca20ec39f58b5, type: 3}
   inDefenceMode: 0
-  isTargetable: 1
+  isTargetable: 0
   isMelee: 0
   isDead: 0
   hasPlayed: 0
@@ -700,6 +700,8 @@ MonoBehaviour:
   body: {fileID: 8781212782479631214}
   bodyArmor: {fileID: 2420134106888775266}
   helmet: {fileID: 5337923811147838028}
+  weapon: {fileID: 0}
+  holdAllyCombo: 0
 --- !u!61 &2169942591526643263
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -24,13 +24,7 @@ public class Ally : Characters
         durationMove = 1.0f;
         healthBar = GameObject.Find(gameObject.name + "/CanvasChar/healthBar").GetComponent<Slider>();
         canvasChar = GameObject.Find(gameObject.name + "/CanvasChar");
-        health = maxHealth;
-        healthBar.maxValue = maxHealth;
-        healthBar.value = health;
-        dodge = dodgeValue;
-        armor = armorValue;
         durationDecreaseHealth = 1.0f;
-        ChangePos();
         //ISTARGETABLE FOR ABILITIES
         isTargetable = false;
         healthBarOutline = GameObject.Find(gameObject.name + "/CanvasChar/HealthBarOutline");

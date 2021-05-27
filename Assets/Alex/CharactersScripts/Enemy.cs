@@ -6,7 +6,9 @@ using UnityEngine.EventSystems;
 
 public class Enemy : Characters
 {
-    void Start()
+    public EEnemyType enemyType;
+    public EElement enemyElement;
+    void Awake()
     {
         stateIcons = UIManager.uiManager.stateIcons;
         stateIcons = UIManager.uiManager.stateIcons;
@@ -18,14 +20,7 @@ public class Enemy : Characters
         durationMove = 1.0f;
         healthBar = GameObject.Find(gameObject.name + "/CanvasSlider/healthBar").GetComponent<Slider>();
         canvasChar = GameObject.Find(gameObject.name + "/CanvasSlider");
-        health = maxHealth;
-        healthBar.maxValue = maxHealth;
-        dodge = dodgeValue;
-        armor = armorValue;
-        initiative = Random.Range(1, 14);
-        healthBar.value = health;
         durationDecreaseHealth = 1.0f;
-        ChangePos();
 
         //ISTARGETABLE FOR ABILITIES
         isTargetable = false;
@@ -35,15 +30,6 @@ public class Enemy : Characters
         UpdateStateIcon();
     }
 
-    public void CreateEnnemy()
-    {
-        Level level = LevelManager.GetInstance().level;
-        MapRoom mapRoom = PlayerPoint._playerPoint.onRoom;
-        Ennemy ennemy = EnnemyManager._enemyManager.SetEnemyPool(level, mapRoom);
-        maxHealth = ennemy.maxHealth;
-
-        EnnemyManager._enemyManager.MultiplicateByValues(this, level, mapRoom);
-    }
 
     // Update is called once per frame
     void Update()
@@ -76,11 +62,27 @@ public class Enemy : Characters
 
     }
 
-    /*public void CreateEnemy(Ennemy e, int teamPos)
+    public void CreateEnemy(Ennemy e, int teamPos, Level level, MapRoom mapRoom)
     {
+        teamPosition = teamPos;
+        charName = e.enemyName;
+        maxHealth = e.maxHealth;
+        enemyType = e.enemyType;
+        damageRange = e.damageRange;
+        dodge = e.dodge * 100;
+        critChance = e.critChance;
+        critDamage = e.critDamage;
+        initiative = e.initiative;
+        armor = e.armor;
+        enemyElement = e.element;
+        abilities = e.enemyAbilities;
+        abilitiesCristal = e.enemySpecialsAbilities;
+        EnnemyManager._enemyManager.MultiplicateByValues(this, level, mapRoom);
 
-    }*/
-
+        health = maxHealth;
+        healthBar.maxValue = maxHealth;
+        healthBar.value = health;
+    }
     public override void OnPointerDown(PointerEventData eventData)
     {
         onPointerHold = true;

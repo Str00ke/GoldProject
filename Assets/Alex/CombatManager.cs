@@ -62,10 +62,18 @@ public class CombatManager : MonoBehaviour
     }
     public void CreateEnemies()
     {
+        Level level = LevelManager.GetInstance().level;
+        MapRoom mapRoom = PlayerPoint._playerPoint.onRoom;
         for (int i = 0; i < 3; ++i)
         {
+            Ennemy e = EnnemyManager._enemyManager.SetEnemyPool(level, mapRoom);
+            if (!e)
+            {
+                continue;
+            }
             GameObject go = Instantiate(enemyPrefab);
-            go.GetComponent<Enemy>().CreateEnnemy();
+            go.GetComponent<Enemy>().CreateEnemy(e,i, level, mapRoom);
+            go.GetComponent<Enemy>().ChangePos();
         }
     }
     IEnumerator StartCombat()

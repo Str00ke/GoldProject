@@ -13,7 +13,6 @@ public enum EElement
 
 public enum EEnemyType
 {
-    BASE,
     SNAKE,
     GIRAFFE
 }
@@ -32,9 +31,11 @@ public class Ennemy : ScriptableObject
     public float dodge;
     [Range(0, 1)]
     public float critChance;
-    [Range(0, 1)]
     public float critDamage;
     public float initiative;
     public float armor;
     public EElement element;
+    [Header("Abilities")]
+    public Ability[] enemyAbilities;
+    public Ability[] enemySpecialsAbilities;
 }

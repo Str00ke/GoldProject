@@ -45,22 +45,90 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   easyDungeon:
     part1:
-      ennemiesPool: []
+      ennemiesPool:
+      - {fileID: 11400000, guid: d4e5cf981a1fa8b45a25dc2d38ba3542, type: 2}
+      - {fileID: 11400000, guid: 705e0ca7867bea94787b701d83e53e7f, type: 2}
+      maxHealthMultiplicator: 1
+      damageRangeMultiplicator: 1
+      dodgeMultiplicator: 1
+      critChanceMultiplicator: 1
+      critDamageMultiplicator: 1
+      initiativeMultiplicator: 1
+      armorMultiplicator: 1
     part2:
       ennemiesPool: []
+      maxHealthMultiplicator: 0
+      damageRangeMultiplicator: 0
+      dodgeMultiplicator: 0
+      critChanceMultiplicator: 0
+      critDamageMultiplicator: 0
+      initiativeMultiplicator: 0
+      armorMultiplicator: 0
     part3:
       ennemiesPool: []
+      maxHealthMultiplicator: 0
+      damageRangeMultiplicator: 0
+      dodgeMultiplicator: 0
+      critChanceMultiplicator: 0
+      critDamageMultiplicator: 0
+      initiativeMultiplicator: 0
+      armorMultiplicator: 0
+    background: {fileID: 0}
   moyenDungeon:
     part1:
       ennemiesPool: []
+      maxHealthMultiplicator: 0
+      damageRangeMultiplicator: 0
+      dodgeMultiplicator: 0
+      critChanceMultiplicator: 0
+      critDamageMultiplicator: 0
+      initiativeMultiplicator: 0
+      armorMultiplicator: 0
     part2:
       ennemiesPool: []
+      maxHealthMultiplicator: 0
+      damageRangeMultiplicator: 0
+      dodgeMultiplicator: 0
+      critChanceMultiplicator: 0
+      critDamageMultiplicator: 0
+      initiativeMultiplicator: 0
+      armorMultiplicator: 0
     part3:
       ennemiesPool: []
+      maxHealthMultiplicator: 0
+      damageRangeMultiplicator: 0
+      dodgeMultiplicator: 0
+      critChanceMultiplicator: 0
+      critDamageMultiplicator: 0
+      initiativeMultiplicator: 0
+      armorMultiplicator: 0
+    background: {fileID: 0}
   hardDungeon:
     part1:
       ennemiesPool: []
+      maxHealthMultiplicator: 0
+      damageRangeMultiplicator: 0
+      dodgeMultiplicator: 0
+      critChanceMultiplicator: 0
+      critDamageMultiplicator: 0
+      initiativeMultiplicator: 0
+      armorMultiplicator: 0
     part2:
       ennemiesPool: []
+      maxHealthMultiplicator: 0
+      damageRangeMultiplicator: 0
+      dodgeMultiplicator: 0
+      critChanceMultiplicator: 0
+      critDamageMultiplicator: 0
+      initiativeMultiplicator: 0
+      armorMultiplicator: 0
     part3:
       ennemiesPool: []
+      maxHealthMultiplicator: 0
+      damageRangeMultiplicator: 0
+      dodgeMultiplicator: 0
+      critChanceMultiplicator: 0
+      critDamageMultiplicator: 0
+      initiativeMultiplicator: 0
+      armorMultiplicator: 0
+    background: {fileID: 0}
