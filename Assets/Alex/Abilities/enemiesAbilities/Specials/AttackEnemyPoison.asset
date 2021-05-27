@@ -18,14 +18,14 @@ MonoBehaviour:
   icon: {fileID: 0}
   bonusmalus: 0
   destruModif: 0
-  dotMult: 0
+  dotMult: 40
   markMult: 0
-  turnDuration: 0
-  objectType: 1
+  turnDuration: 3
+  objectType: 0
   weaponAbilityType: 2
-  crType: 0
+  crType: 2
   crHealType: 0
-  crAttackType: 0
+  crAttackType: 2
   crSpecialType: 0
   targetType: 0
-  elementType: 4
+  elementType: 2

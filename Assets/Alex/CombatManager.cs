@@ -207,37 +207,65 @@ public class CombatManager : MonoBehaviour
     {
         if (allies.Count > 0)
         {
+            Ability abilityUsed = null;
             //ENEMY ATTACK ANIMATION
-            Ability abilityUsed = fightersList[currCharAttacking].abilities[Random.Range(0, fightersList[currCharAttacking].abilities.Length)];
-            switch (abilityUsed.weaponAbilityType)
+            if (fightersList[currCharAttacking].abilitiesCristal.Length > 0)
             {
-                case Ability.WeaponAbilityType.BASE:
-                    if (allyDef)
-                        fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
-                    else
-                        fightersList[currCharAttacking].LaunchAttack(allyAtt, abilityUsed);
-                    break;
-                case Ability.WeaponAbilityType.PIERCE:
-                    if (allyDef)
-                    {
-                        fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
-                    }
-                    else
-                    {
-                        allies[0].isMelee = true;
-                        fightersList[currCharAttacking].LaunchAttack(allies[0], abilityUsed);
-                        if (allies.Count > 1 && allies[1].teamPosition == allies[0].teamPosition + 1)
+                int rand = Random.Range(0, 100);
+                if(rand < 20)
+                {
+                    abilityUsed = fightersList[currCharAttacking].abilities[Random.Range(0, fightersList[currCharAttacking].abilitiesCristal.Length)];
+                }
+                else
+                {
+                    abilityUsed = fightersList[currCharAttacking].abilities[Random.Range(0, fightersList[currCharAttacking].abilities.Length)];
+                }
+            }
+            else
+            {
+                abilityUsed = fightersList[currCharAttacking].abilities[Random.Range(0, fightersList[currCharAttacking].abilities.Length)];
+            }
+            if(abilityUsed.objectType == Ability.ObjectType.WEAPON)
+            {
+                switch (abilityUsed.weaponAbilityType)
+                {
+                    case Ability.WeaponAbilityType.BASE:
+                        if (allyDef)
+                            fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
+                        else
+                            fightersList[currCharAttacking].LaunchAttack(allyAtt, abilityUsed);
+                        break;
+                    case Ability.WeaponAbilityType.PIERCE:
+                        if (allyDef)
                         {
-                            fightersList[currCharAttacking].LaunchAttack(allies[1], abilityUsed);
+                            fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
                         }
-                    }
-                    break;
-                case Ability.WeaponAbilityType.WAVE:
-                    for (int i = allies.Count - 1; i >= 0; i--)
-                    {
-                        fightersList[currCharAttacking].LaunchAttack(allies[i], abilityUsed);
-                    }
-                    break;
+                        else
+                        {
+                            allies[0].isMelee = true;
+                            fightersList[currCharAttacking].LaunchAttack(allies[0], abilityUsed);
+                            if (allies.Count > 1 && allies[1].teamPosition == allies[0].teamPosition + 1)
+                            {
+                                fightersList[currCharAttacking].LaunchAttack(allies[1], abilityUsed);
+                            }
+                        }
+                        break;
+                    case Ability.WeaponAbilityType.WAVE:
+                        for (int i = allies.Count - 1; i >= 0; i--)
+                        {
+                            fightersList[currCharAttacking].LaunchAttack(allies[i], abilityUsed);
+                        }
+                        break;
+                }
+            }else if (abilityUsed.objectType == Ability.ObjectType.CRISTAL)
+            {
+                if(abilityUsed.crType == Ability.CristalAbilityType.ATTACK)
+                {
+
+                }else if(abilityUsed.crType == Ability.CristalAbilityType.HEAL)
+                {
+
+                }
             }
         }
     }
