@@ -24,7 +24,7 @@ public class Enemy : Characters
         armor = armorValue;
         initiative = Random.Range(1, 14);
         healthBar.value = health;
-        durationDecreaseHealth = 0.3f;
+        durationDecreaseHealth = 1.0f;
         ChangePos();
 
         //ISTARGETABLE FOR ABILITIES
@@ -112,6 +112,19 @@ public class Enemy : Characters
         float startValue = health;
         float endValue = startValue - value;
         endValue = Mathf.Round(endValue);
+        healthBar.value = endValue;
+        health = endValue;
+        yield return new WaitForSeconds(duration);
+        GetComponentInChildren<DamagedBarScript>().UpdateDamagedBar(endValue, duration, false);
+        yield return new WaitForSeconds(duration);
+        if (health <= 0)
+        {
+            health = 0;
+            CombatManager.combatManager.RemoveEnemy(teamPosition);
+        }
+        /*float startValue = health;
+        float endValue = startValue - value;
+        endValue = Mathf.Round(endValue);
         float elapsed = 0.0f;
         float ratio = 0.0f;
         health = endValue;
@@ -129,11 +142,12 @@ public class Enemy : Characters
         }
         healthBar.value = endValue;
         yield return new WaitForSeconds(durationDecreaseHealth);
+        GetComponentInChildren<DamagedBarScript>().UpdateDamagedBar(value, duration, false);
         if (health <= 0)
         {
             health = 0;
             CombatManager.combatManager.RemoveEnemy(teamPosition);
-        }
+        }*/
     }
 
     
@@ -145,8 +159,9 @@ public class Enemy : Characters
     public override IEnumerator TakeHealingCor(float value, float duration)
     {
         var startValue = healthBar.value;
-        value *= healReceivedModif;
         var endValue = startValue + value;
+        GetComponentInChildren<DamagedBarScript>().UpdateDamagedBar(endValue, duration, true);
+        value *= healReceivedModif;
         if (endValue > maxHealth)
             endValue = maxHealth;
         float elapsed = 0.0f;

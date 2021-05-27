@@ -106,9 +106,13 @@ public class CombatManager : MonoBehaviour
             EnemyAttack();
         }
     }
-    public void NextCharAttack() 
+    public void NextCharAttack()
     {
-        //Remove preceding fighter 
+        StartCoroutine(NextCharAttackCor());
+    }
+   IEnumerator NextCharAttackCor() 
+    {
+        yield return new WaitForSeconds(3.0f);
             fightersList[currCharAttacking].CanAttack = false;
             fightersList[currCharAttacking].hasPlayed = true;
             currCharAttacking++;
@@ -117,7 +121,7 @@ public class CombatManager : MonoBehaviour
         {
             TurnPassed();
             UIManager.uiManager.turnsText.text = "" + turnNumber;
-            return;
+            yield return null;
         }
         while (!fightersList[currCharAttacking] || fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead)
         {
@@ -132,7 +136,7 @@ public class CombatManager : MonoBehaviour
             {
                 TurnPassed();
                 UIManager.uiManager.turnsText.text = "" + turnNumber;
-                return;
+                yield return null;
             }
         }
         if (currCharAttacking < fightersList.Count)
