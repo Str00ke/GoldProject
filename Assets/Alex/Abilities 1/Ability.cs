@@ -18,7 +18,8 @@ public class Ability : ScriptableObject
     public enum ObjectType 
     {
         CRISTAL,
-        WEAPON
+        WEAPON,
+        COMBO
     }
     public ObjectType objectType;
     public enum WeaponAbilityType

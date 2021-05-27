@@ -66,7 +66,10 @@ public class Enemy : Characters
 
     }
 
-    
+    /*public void CreateEnemy(Ennemy e, int teamPos)
+    {
+
+    }*/
 
     public override void OnPointerDown(PointerEventData eventData)
     {
