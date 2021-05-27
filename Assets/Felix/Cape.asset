@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Cape
   health: 100
   armor: 0
-  attack: 100
+  attack: 50
   dodge: 0
   criticalChance: 0
   crititalDamage: 0

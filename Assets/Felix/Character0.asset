@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Character0
   m_EditorClassIdentifier: 
   charName: Char0
-  health: 0
-  armor: 0
-  attack: 0
-  initiative: 0
-  dodge: 0
-  criticalChance: 0
-  crititalDamage: 0
+  health: 100
+  armor: 10
+  attack: 10
+  initiative: 10
+  dodge: 0.1
+  criticalChance: 0.1
+  crititalDamage: 0.5
   characterType: 0
   characterHead: {fileID: 21300000, guid: 7e91aa1d672d39d4ba94f01bd973738e, type: 3}
