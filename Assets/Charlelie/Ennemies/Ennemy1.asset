@@ -21,7 +21,7 @@ MonoBehaviour:
   critDamage: 1
   initiative: 8
   armor: 20
-  element: 0
+  element: 2
   enemyAbilities:
   - {fileID: 11400000, guid: 339b3b47eb400d24e90347ae579ebbf6, type: 2}
   - {fileID: 11400000, guid: 3aa29f96a43107e48a69b2579056750f, type: 2}

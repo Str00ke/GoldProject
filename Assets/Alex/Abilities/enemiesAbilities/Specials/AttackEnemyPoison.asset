@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40102682e9e99234baf7862f25a929e2, type: 3}
   m_Name: AttackEnemyPoison
   m_EditorClassIdentifier: 
-  name: 
+  name: Enemy Poison
   type: 
   multiplicator: 40
   icon: {fileID: 0}

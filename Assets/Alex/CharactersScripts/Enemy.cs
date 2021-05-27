@@ -78,7 +78,7 @@ public class Enemy : Characters
         abilities = e.enemyAbilities;
         abilitiesCristal = e.enemySpecialsAbilities;
         EnnemyManager._enemyManager.MultiplicateByValues(this, level, mapRoom);
-
+        itemElement = (ItemElement)System.Enum.Parse(typeof(ItemElement), e.element.ToString());
         health = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = health;

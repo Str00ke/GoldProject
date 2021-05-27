@@ -28,4 +28,4 @@ MonoBehaviour:
   crAttackType: 3
   crSpecialType: 0
   targetType: 0
-  elementType: 1
+  elementType: 2

@@ -320,14 +320,14 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         float dmg = Mathf.Round(Random.Range(damageRange.x, damageRange.y));
         dmg *= (ability.dotMult / 100);
-        Status s = new Status(receiver, dmg, ability, Status.StatusTypes.DOT, dmg);
+        Status s = new Status(receiver, this, dmg, ability, Status.StatusTypes.DOT, dmg);
         Debug.Log("Caster " + gameObject.name + "Receiver : " + s.statusTarget.gameObject.name + "Dot damage " + s.dmg + " Dot element " + s.statusElement.ToString());
     }
     public void PutMark(Characters receiver, Ability ability)
     {
         float dmg = Mathf.Round(Random.Range(damageRange.x, damageRange.y));
         dmg *= (ability.markMult / 100);
-        Status s = new Status(receiver, dmg, ability, Status.StatusTypes.MARK, dmg);
+        Status s = new Status(receiver, this, dmg, ability, Status.StatusTypes.MARK, dmg);
         Debug.Log("Caster " + gameObject.name + "Receiver : " + s.statusTarget.gameObject.name + "Mark damage " + s.dmg + " Mark element " + s.statusElement.ToString());
     }
     public void ElementReactions(CurrentElement ndElement)

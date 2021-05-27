@@ -207,7 +207,7 @@ public class CombatManager : MonoBehaviour
     {
         if (allies.Count > 0)
         {
-            Ability abilityUsed = null;
+            Ability abilityUsed;
             //ENEMY ATTACK ANIMATION
             if (fightersList[currCharAttacking].abilitiesCristal.Length > 0)
             {
@@ -261,10 +261,37 @@ public class CombatManager : MonoBehaviour
             {
                 if(abilityUsed.crType == Ability.CristalAbilityType.ATTACK)
                 {
-
-                }else if(abilityUsed.crType == Ability.CristalAbilityType.HEAL)
+                    if(abilityUsed.crAttackType == Ability.CristalAttackType.DOT)
+                    {
+                        if (allyDef)
+                        {
+                            fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
+                            fightersList[currCharAttacking].PutDot(allyDef, abilityUsed);
+                        }
+                        else
+                        {
+                            fightersList[currCharAttacking].LaunchAttack(allyAtt, abilityUsed);
+                            fightersList[currCharAttacking].PutDot(allyAtt, abilityUsed);
+                        }
+                    }
+                    else if(abilityUsed.crAttackType == Ability.CristalAttackType.NORMAL)
+                    {
+                        if (allyDef)
+                        {
+                            fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
+                            allyDef.stunned = true;
+                            allyDef.inDefenceMode = false;
+                        }
+                        else
+                        {
+                            fightersList[currCharAttacking].LaunchAttack(allyAtt, abilityUsed);
+                            allyAtt.stunned = true;
+                        }
+                    }
+                }
+                else if(abilityUsed.crType == Ability.CristalAbilityType.HEAL)
                 {
-
+                    fightersList[currCharAttacking].LaunchHeal(enemies[Random.Range(0, enemies.Count)], abilityUsed);
                 }
             }
         }

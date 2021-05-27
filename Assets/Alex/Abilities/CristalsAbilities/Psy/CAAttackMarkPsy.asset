@@ -17,6 +17,10 @@ MonoBehaviour:
   multiplicator: 0
   icon: {fileID: 21300000, guid: a49e145b357eab44cb4177e4e0884f30, type: 3}
   bonusmalus: 0
+  destruModif: 0
+  dotMult: 0
+  markMult: 140
+  turnDuration: 1
   objectType: 0
   weaponAbilityType: 0
   crType: 2

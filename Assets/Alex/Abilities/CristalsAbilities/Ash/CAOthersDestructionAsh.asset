@@ -19,6 +19,7 @@ MonoBehaviour:
   bonusmalus: 15
   destruModif: 0.6
   dotMult: 0
+  markMult: 0
   turnDuration: 2
   objectType: 0
   weaponAbilityType: 0
@@ -27,4 +28,4 @@ MonoBehaviour:
   crAttackType: 0
   crSpecialType: 0
   targetType: 0
-  elementType: 1
+  elementType: 2

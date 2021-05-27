@@ -47,7 +47,7 @@ public class Status
     public StatusTypes statusType;
 
     // ------------------------------------MARK & DOT------------------------------------------------------------------
-    public Status(Characters target, float bm, Ability a, StatusTypes statusT, float damage)
+    public Status(Characters target, Characters caster, float bm, Ability a, StatusTypes statusT, float damage)
     {
         bonusmalus = bm;
         statusTarget = target;
@@ -55,7 +55,10 @@ public class Status
         statusType = statusT;
         dmg = damage;
         abi = a;
-        statusElement = (StatusElement)System.Enum.Parse(typeof(StatusElement), a.elementType.ToString());
+        if(a.elementType != Ability.ElementType.BASE)
+            statusElement = (StatusElement)System.Enum.Parse(typeof(StatusElement), a.elementType.ToString());
+        else
+            statusElement = (StatusElement)System.Enum.Parse(typeof(StatusElement), caster.itemElement.ToString());
         StatusManager.statusManager.StatusList.Add(this);
         ApplyStatus();
     }
