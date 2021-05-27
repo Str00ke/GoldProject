@@ -54,6 +54,7 @@ public class CombatManager : MonoBehaviour
                 continue;
             }
             GameObject temp = Instantiate(charPrefab);
+            temp.name = "Char" + i;
             temp.GetComponent<Ally>().CreateChar(c,i);
             temp.GetComponent<Ally>().ChangePos();
         }
@@ -105,9 +106,13 @@ public class CombatManager : MonoBehaviour
             EnemyAttack();
         }
     }
-    public void NextCharAttack() 
+    public void NextCharAttack()
     {
-        //Remove preceding fighter 
+        StartCoroutine(NextCharAttackCor());
+    }
+   IEnumerator NextCharAttackCor() 
+    {
+        yield return new WaitForSeconds(3.0f);
             fightersList[currCharAttacking].CanAttack = false;
             fightersList[currCharAttacking].hasPlayed = true;
             currCharAttacking++;
@@ -116,7 +121,7 @@ public class CombatManager : MonoBehaviour
         {
             TurnPassed();
             UIManager.uiManager.turnsText.text = "" + turnNumber;
-            return;
+            yield return null;
         }
         while (!fightersList[currCharAttacking] || fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead)
         {
@@ -131,7 +136,7 @@ public class CombatManager : MonoBehaviour
             {
                 TurnPassed();
                 UIManager.uiManager.turnsText.text = "" + turnNumber;
-                return;
+                yield return null;
             }
         }
         if (currCharAttacking < fightersList.Count)
@@ -177,55 +182,48 @@ public class CombatManager : MonoBehaviour
         }
         yield return new WaitForSeconds(attackDuration);
         if(allies.Count > 0)
-            EnemyAbilityAttack(allies[allyAttacked], inMelee, inDefence);
+            EnemyAbilityAttack(allies[allyAttacked], inDefence);
         yield return new WaitForSeconds(attackDuration);
         NextCharAttack();
         yield return null;
     }
     //---------------Referenced in EnemyAttack()-------------
-    public void EnemyAbilityAttack(Ally allyAtt, Ally allyMel, Ally allyDef)
+    public void EnemyAbilityAttack(Ally allyAtt, Ally allyDef)
     {
-        //ENEMY ATTACK ANIMATION
-        Ability abilityUsed = fightersList[currCharAttacking].abilities[Random.Range(0, fightersList[currCharAttacking].abilities.Length)];
-        switch (abilityUsed.weaponAbilityType)
+        if (allies.Count > 0)
         {
-            case Ability.WeaponAbilityType.BASE:
-                if (allyDef)
-                    fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
-                else
-                    fightersList[currCharAttacking].LaunchAttack(allyAtt, abilityUsed);
-                break;
-            case Ability.WeaponAbilityType.PIERCE:
-                if (allyDef)
-                {
-                    fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
-                    if(allies[allyDef.teamPosition+1])
-                        fightersList[currCharAttacking].LaunchAttack(allies[allyDef.teamPosition + 1], abilityUsed);
-                }
-                else
-                {
-                    if (!allyMel)
+            //ENEMY ATTACK ANIMATION
+            Ability abilityUsed = fightersList[currCharAttacking].abilities[Random.Range(0, fightersList[currCharAttacking].abilities.Length)];
+            switch (abilityUsed.weaponAbilityType)
+            {
+                case Ability.WeaponAbilityType.BASE:
+                    if (allyDef)
+                        fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
+                    else
+                        fightersList[currCharAttacking].LaunchAttack(allyAtt, abilityUsed);
+                    break;
+                case Ability.WeaponAbilityType.PIERCE:
+                    if (allyDef)
+                    {
+                        fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
+                    }
+                    else
                     {
                         allies[0].isMelee = true;
-                        allyMel = allies[0];
-                    }
-                    int nextPos = allyMel.teamPosition + 1;
-                    fightersList[currCharAttacking].LaunchAttack(allyMel, abilityUsed);
-                    for (int i = allies.Count - 1; i >= 0; i--)
-                    {
-                        if(allies[i].teamPosition == nextPos)
+                        fightersList[currCharAttacking].LaunchAttack(allies[0], abilityUsed);
+                        if (allies.Count > 1 && allies[1].teamPosition == allies[0].teamPosition + 1)
                         {
-                            fightersList[currCharAttacking].LaunchAttack(allies[nextPos], abilityUsed);
+                            fightersList[currCharAttacking].LaunchAttack(allies[1], abilityUsed);
                         }
                     }
-                }
-                break;
-            case Ability.WeaponAbilityType.WAVE:
-                for (int i = allies.Count - 1; i >= 0; i--)
-                {
-                    fightersList[currCharAttacking].LaunchAttack(allies[i], abilityUsed);
-                }
-                break;
+                    break;
+                case Ability.WeaponAbilityType.WAVE:
+                    for (int i = allies.Count - 1; i >= 0; i--)
+                    {
+                        fightersList[currCharAttacking].LaunchAttack(allies[i], abilityUsed);
+                    }
+                    break;
+            }
         }
     }
     public void TurnPassed()

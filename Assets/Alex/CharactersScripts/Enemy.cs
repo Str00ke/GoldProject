@@ -8,6 +8,8 @@ public class Enemy : Characters
 {
     void Start()
     {
+        stateIcons = UIManager.uiManager.stateIcons;
+        stateIcons = UIManager.uiManager.stateIcons;
         CombatManager.combatManager.enemies.Add(this);
         charType = CharType.ENEMY; 
         anim = this.GetComponent<Animator>();
@@ -15,13 +17,14 @@ public class Enemy : Characters
         thisColorHead = this.GetComponent<SpriteRenderer>();
         durationMove = 1.0f;
         healthBar = GameObject.Find(gameObject.name + "/CanvasSlider/healthBar").GetComponent<Slider>();
+        canvasChar = GameObject.Find(gameObject.name + "/CanvasSlider");
         health = maxHealth;
         healthBar.maxValue = maxHealth;
         dodge = dodgeValue;
         armor = armorValue;
         initiative = Random.Range(1, 14);
         healthBar.value = health;
-        durationDecreaseHealth = 0.3f;
+        durationDecreaseHealth = 1.0f;
         ChangePos();
 
         //ISTARGETABLE FOR ABILITIES
@@ -29,6 +32,7 @@ public class Enemy : Characters
         healthBarOutline = GameObject.Find(gameObject.name + "/CanvasSlider/HealthBarOutline");
         healthBarOutline.SetActive(false);
         UpdateMeleeState();
+        UpdateStateIcon();
     }
 
     // Update is called once per frame
@@ -36,20 +40,18 @@ public class Enemy : Characters
     {
         IsTargetable();
         ChangeColor();
-    }
-
-
-    public override void OnPointerDown(PointerEventData eventData)
-    {
-            if (isSelected)
-            {
-                if (CombatManager.combatManager.enemySelected == this)
-                {
-                    isSelected = false;
-                    CombatManager.combatManager.enemySelected = null;
-                }
-            }
-            else if (!isSelected)
+        InteractiveHoldToSelect();
+        if (onPointerHold)
+        {
+            holdCharac += Time.deltaTime;
+        }
+        else
+        {
+            holdCharac = 0;
+        }
+        if (holdCharac > holdCharacValue)
+        {
+            if (!isSelected)
             {
                 if (CombatManager.combatManager.enemySelected != null)
                 {
@@ -59,6 +61,22 @@ public class Enemy : Characters
                 isSelected = true;
                 CombatManager.combatManager.enemySelected = this;
             }
+            UIManager.uiManager.enemyStatsUI.SetActive(true);
+        }
+
+    }
+
+    
+
+    public override void OnPointerDown(PointerEventData eventData)
+    {
+        onPointerHold = true;
+    }
+    public override void OnPointerUp(PointerEventData eventData)
+    {
+        Debug.Log("UP");
+        UIManager.uiManager.ResetEnemyDisplayUI();
+        onPointerHold = false;
     }
     /*public override void TakeDamage(float value, float duration)
     {
@@ -87,11 +105,24 @@ public class Enemy : Characters
             CombatManager.combatManager.RemoveEnemy(teamPosition);
         }
     }*/
-    
+
     public override IEnumerator TakeDamageCor(float value, float duration)
     {
         ShowFloatingHealth(Mathf.Round(value), true);
         float startValue = health;
+        float endValue = startValue - value;
+        endValue = Mathf.Round(endValue);
+        healthBar.value = endValue;
+        health = endValue;
+        yield return new WaitForSeconds(duration);
+        GetComponentInChildren<DamagedBarScript>().UpdateDamagedBar(endValue, duration, false);
+        yield return new WaitForSeconds(duration);
+        if (health <= 0)
+        {
+            health = 0;
+            CombatManager.combatManager.RemoveEnemy(teamPosition);
+        }
+        /*float startValue = health;
         float endValue = startValue - value;
         endValue = Mathf.Round(endValue);
         float elapsed = 0.0f;
@@ -111,11 +142,12 @@ public class Enemy : Characters
         }
         healthBar.value = endValue;
         yield return new WaitForSeconds(durationDecreaseHealth);
+        GetComponentInChildren<DamagedBarScript>().UpdateDamagedBar(value, duration, false);
         if (health <= 0)
         {
             health = 0;
             CombatManager.combatManager.RemoveEnemy(teamPosition);
-        }
+        }*/
     }
 
     
@@ -127,8 +159,9 @@ public class Enemy : Characters
     public override IEnumerator TakeHealingCor(float value, float duration)
     {
         var startValue = healthBar.value;
-        value *= healReceivedModif;
         var endValue = startValue + value;
+        GetComponentInChildren<DamagedBarScript>().UpdateDamagedBar(endValue, duration, true);
+        value *= healReceivedModif;
         if (endValue > maxHealth)
             endValue = maxHealth;
         float elapsed = 0.0f;

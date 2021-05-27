@@ -8,8 +8,12 @@ public class Ally : Characters
 {
     public SpriteRenderer head;
     public SpriteRenderer body;
+    public SpriteRenderer bodyArmor;
+    public SpriteRenderer helmet;
+    public SpriteRenderer weapon;
     private void Start()
     {
+        stateIcons = UIManager.uiManager.stateIcons;
         CombatManager.combatManager.allies.Add(this);
         charType = CharType.ALLY;
         anim = this.GetComponent<Animator>();
@@ -17,32 +21,57 @@ public class Ally : Characters
         thisColorHead = head;
         durationMove = 1.0f;
         healthBar = GameObject.Find(gameObject.name + "/CanvasChar/healthBar").GetComponent<Slider>();
+        canvasChar = GameObject.Find(gameObject.name + "/CanvasChar");
         health = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = health;
         dodge = dodgeValue;
         armor = armorValue;
-        durationDecreaseHealth = 0.3f;
-        //CreateChar("Char" + teamPosition);
+        durationDecreaseHealth = 1.0f;
         ChangePos();
         //ISTARGETABLE FOR ABILITIES
         isTargetable = false;
         healthBarOutline = GameObject.Find(gameObject.name + "/CanvasChar/HealthBarOutline");
         healthBarOutline.SetActive(false);
         UpdateMeleeState();
+        UpdateStateIcon();
     }
     // Update is called once per frame
     void Update()
     {
         IsTargetable();
         ChangeColor();
+
+        InteractiveHoldToSelect();
+        if (onPointerHold)
+        {
+            holdCharac += Time.deltaTime;
+        }
+        else
+        {
+            holdCharac = 0;
+        }
+        if (holdCharac > holdCharacValue)
+        {
+            if (!isSelected)
+            {
+                if (CombatManager.combatManager.allySelected != null)
+                {
+                    CombatManager.combatManager.allySelected.isSelected = false;
+                    CombatManager.combatManager.allySelected = null;
+                }
+                isSelected = true;
+                CombatManager.combatManager.allySelected = this;
+            }
+            UIManager.uiManager.allyStatsUI.SetActive(true);
+        }
     }
 
     public void CreateChar(string name) 
     {
         charName = name;
-        maxHealth = Random.Range(15,30);
-        damageRange = new Vector2(Random.Range(5, 8), Random.Range(9, 13));
+        maxHealth = Random.Range(50,80);
+        damageRange = new Vector2(Random.Range(10, 12), Random.Range(15, 18));
         dodge = Random.Range(5, 25);
         initiative = Random.Range(1, 14);
         critChance = Random.Range(0.1f, 0.25f);
@@ -86,13 +115,30 @@ public class Ally : Characters
                 break;
         }
     }
+    public override void OnPointerDown(PointerEventData eventData)
+    {
+        onPointerHold = true;
+    }
+    public override void OnPointerUp(PointerEventData eventData)
+    {
+        Debug.Log("UP");
+        UIManager.uiManager.ResetAllyDisplayUI();
+        onPointerHold = false;
+    }
+
     public void CreateChar(Character cs, int teamPos)
     {
         // charName = cs.charName;
         charName = "Char0" + teamPos;
+        //Sprites
+        head.sprite = cs.charHead;
+        body.sprite = cs.itemSprites[0];
+        helmet.sprite = cs.itemSprites[1];
+        bodyArmor.sprite = cs.itemSprites[2];
+        //weapon.sprite = cs.itemSprites[3];
         teamPosition = teamPos;
         maxHealth = cs.maxHealth;
-        damageRange = new Vector2(cs.attack - cs.attack*0.1f, cs.attack + cs.attack * 0.1f);
+        damageRange = new Vector2(cs.attack - cs.attack * 0.1f, cs.attack + cs.attack * 0.1f);
         dodge = cs.dodge;
         //initiative = cs.initiative;
         initiative = Random.Range(1, 14);
@@ -105,7 +151,6 @@ public class Ally : Characters
         offsetPos *= -1;
 
         itemElement = (ItemElement)cs.GetItem(NItem.EPartType.Gem).itemType;
-
 
         switch (itemElement)
         {
@@ -143,61 +188,31 @@ public class Ally : Characters
                 break;
         }
     }
-    public override void OnPointerDown(PointerEventData eventData)
-    {
-        Debug.Log("Selected");
-            if (isSelected)
-            {
-                if (CombatManager.combatManager.allySelected == this)
-                {
-                    isSelected = false;
-                    CombatManager.combatManager.allySelected = null;
-                }
-            }
-            else if (!isSelected)
-            {
-                if (CombatManager.combatManager.allySelected != null)
-                {
-                    CombatManager.combatManager.allySelected.isSelected = false;
-                    CombatManager.combatManager.allySelected = null;
-                }
-                isSelected = true;
-                CombatManager.combatManager.allySelected = this;
-            }
-    }
 
-
-    /*public override void TakeDamage(float value, float duration)
+    public override IEnumerator TakeDamageCor(float value, float duration)
     {
         ShowFloatingHealth(Mathf.Round(value), true);
-        float startValue = health;
+        float startValue = healthBar.value;
         float endValue = startValue - value;
         endValue = Mathf.Round(endValue);
+        healthBar.value = endValue;
         health = endValue;
         if (health <= 0)
         {
             CombatManager.combatManager.RemoveAlly(this);
         }
-        while (healthBar.value < health)
-        {
-            healthBar.value -= Time.deltaTime;
-            if (healthBar.value <= 0)
-            {
-                health = 0;
-                break;
-            }
-        }
-        healthBar.value = endValue;
+        yield return new WaitForSeconds(duration);
+        GetComponentInChildren<DamagedBarScript>().UpdateDamagedBar(endValue, duration, false);
+        yield return new WaitForSeconds(duration);
         if (health <= 0)
         {
-            Death();
+            isDead = true;
+            isTargetable = false;
+            health = 0;
+            healthBar.gameObject.SetActive(false);
         }
-    }*/
-    
-    public override IEnumerator TakeDamageCor(float value, float duration)
-    {
-        ShowFloatingHealth(Mathf.Round(value), true);
-        float startValue = healthBar.value;
+        yield return null;
+        /*float startValue = healthBar.value;
         float endValue = startValue - value;
         endValue = Mathf.Round(endValue);
         float elapsed = 0.0f;
@@ -227,7 +242,7 @@ public class Ally : Characters
             health = 0;
             healthBar.gameObject.SetActive(false);
         }
-        yield return new WaitForSeconds(durationDecreaseHealth);
+        yield return new WaitForSeconds(duration * 2);*/
     }
     
     public override void TakeHealing(float value, float duration)
@@ -240,6 +255,8 @@ public class Ally : Characters
         var startValue = healthBar.value;
         value *= healReceivedModif;
         var endValue = startValue + value;
+        GetComponentInChildren<DamagedBarScript>().UpdateDamagedBar(endValue, duration, true);
+        yield return new WaitForSeconds(duration);
         endValue = Mathf.Round(endValue);
         if (endValue >= maxHealth)
             endValue = maxHealth;

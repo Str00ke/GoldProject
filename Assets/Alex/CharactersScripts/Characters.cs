@@ -6,12 +6,17 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class Characters : MonoBehaviour, IPointerDownHandler
+public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    [HideInInspector]
+    public bool onPointerHold;
     public GameObject healthBarOutline;
+    public GameObject canvasChar;
+    public Vector2 debuffsInitialPos = new Vector2(-40, -10.5f);
+    public Vector2 buffsInitialPos = new Vector2(40, -10.5f);
     [Header("Labels")]
     public string charName;
+    public Image stateIcon;
+    public Sprite[] stateIcons;
     [Header("Abilities")]
     public Ability[] abilities = new Ability[2];
     public Ability[] abilitiesCristal = new Ability[2];
@@ -55,9 +60,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     public float armorValue;
     [Range(0.0f, 1.0f)]
     public float precision = 1;
-    [HideInInspector]
     public Slider healthBar;
-
 
     [Header("Modificators")]
     public float speedSlider;
@@ -67,10 +70,30 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     public float dodgeModif = 0.2f;
 
     [Header("StatusVariables")]
+    public List<Status> statusList = new List<Status>();
+    public List<GameObject> prefabsIconStatusBuffs;
+    public List<GameObject> prefabsIconStatusDebuffs;
     public bool stunned;
     public bool confusion;
     public int turnsConfusionValue = 2;
     public int turnsConfusion;
+    public float holdCharacValue;
+    public float holdCharac;
+
+    [Header("Status Attributes")]
+    public float armorBonus = 0;
+    public float precisionMalus = 0;
+    public float healBonus = 0;
+    public float dodgeBonus = 0;
+    public float critDamageBonus = 0;
+    public float critChanceBonus = 0;
+    public float damageBonus = 0;
+    public float healthDebuff = 0;
+    public int dotDamage = 0;
+    public int markDamage = 0;
+
+
+
 
     [Header("CombatVariables")]
     public GameObject floatingHealth;
@@ -119,6 +142,16 @@ public class Characters : MonoBehaviour, IPointerDownHandler
             isMelee = true;
         }
     }
+    public void InteractiveHoldToSelect()
+    {
+        if(holdCharac < holdCharacValue && onPointerHold)
+        {
+            transform.localScale = new Vector3(transform.localScale.x - Time.deltaTime/5, transform.localScale.y - Time.deltaTime/5, transform.localScale.z - Time.deltaTime/5);
+        }else if(holdCharac > holdCharacValue || onPointerHold)
+        {
+            transform.localScale = new Vector3(1,1,1);
+        }
+    }
     public void ChangeColor()
     {
         if (isSelected && !CanAttack && !hasPlayed)
@@ -135,11 +168,13 @@ public class Characters : MonoBehaviour, IPointerDownHandler
         {
             thisColorBody.color = AttackColor;
             thisColorHead.color = AttackColor;
-        } else if(CanAttack && isSelected)
+        }
+        else if (CanAttack && isSelected)
         {
             thisColorBody.color = selectedColor;
             thisColorHead.color = selectedColor;
-        } else if (hasPlayed && !isSelected)
+        }
+        else if (hasPlayed && !isSelected)
         {
             thisColorBody.color = hasPlayedColor;
             thisColorHead.color = hasPlayedColor;
@@ -150,8 +185,28 @@ public class Characters : MonoBehaviour, IPointerDownHandler
             thisColorHead.color = selectedColor;
         }
     }
-
-    public virtual void OnPointerDown(PointerEventData eventData) 
+    public void UpdateStateIcon()
+    {
+        switch (currentElement)
+        {
+            case CurrentElement.BASE:
+                stateIcon.sprite = UIManager.uiManager.stateIcons[4]; ;
+                break;
+            case CurrentElement.ICE:
+                stateIcon.sprite = UIManager.uiManager.stateIcons[0];
+                break;
+            case CurrentElement.ASH:
+                stateIcon.sprite = UIManager.uiManager.stateIcons[1];
+                break;
+            case CurrentElement.MUD:
+                stateIcon.sprite = UIManager.uiManager.stateIcons[2];
+                break;
+            case CurrentElement.PSY:
+                stateIcon.sprite = UIManager.uiManager.stateIcons[3];
+                break;
+        }
+    }
+    public virtual void OnPointerDown(PointerEventData eventData)
     {
     }
     public virtual void OnPointerUp(PointerEventData eventData)
@@ -201,20 +256,13 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     }
     public void LaunchBuff(Characters receiver, Ability ability)
     {
-
         switch (ability.elementType)
         {
             case Ability.ElementType.ASH:
-                if (ability.crHealType == Ability.CristalHealType.BOOST)
-                {
-                    Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.DAMAGEBONUS);
-                }
-                else if (ability.crHealType == Ability.CristalHealType.DRINK)
-                {
-                    Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.DAMAGEBONUS);
-                }
+                Status s0 = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.DAMAGEBONUS);
                 break;
             case Ability.ElementType.ICE:
+
                 if (ability.crHealType == Ability.CristalHealType.BOOST)
                 {
                     Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.CRITDAMAGEBONUS);
@@ -238,7 +286,8 @@ public class Characters : MonoBehaviour, IPointerDownHandler
                 if (ability.crHealType == Ability.CristalHealType.BOOST)
                 {
                     Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.DODGEBONUSFLAT);
-                }else if(ability.crHealType == Ability.CristalHealType.DRINK)
+                }
+                else if (ability.crHealType == Ability.CristalHealType.DRINK)
                 {
                     Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.CRITDAMAGEBONUS);
                 }
@@ -360,8 +409,9 @@ public class Characters : MonoBehaviour, IPointerDownHandler
                 }
                 break;
         }
+        UpdateStateIcon();
     }
-    public virtual void TakeHealing(float value, float duration) 
+    public virtual void TakeHealing(float value, float duration)
     {
     }
     public virtual IEnumerator TakeHealingCor(float value, float duration)
@@ -372,7 +422,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     public void TakeDamageDots(Status.StatusElement stElem, float dmg)
     {
         TakeDamage(dmg, durationDecreaseHealth);
-        Debug.Log("Receiver : " +  gameObject.name + "Dot damage " + dmg + " Dot element " + stElem.ToString());
+        Debug.Log("Receiver : " + gameObject.name + "Dot damage " + dmg + " Dot element " + stElem.ToString());
         ElementReactions((CurrentElement)stElem);
         UpdateDisplayDots();
     }
@@ -401,8 +451,8 @@ public class Characters : MonoBehaviour, IPointerDownHandler
         go.GetComponentInChildren<TextMesh>().text = "" + value;
         go.GetComponentInChildren<FloatingHealthScript>().StartCoroutine(go.GetComponentInChildren<FloatingHealthScript>().AnimateFloatingTextCor(go.GetComponentInChildren<FloatingHealthScript>().destroyDelay));
     }
-    
-    public virtual void TakeDamage(float value, float duration) 
+
+    public virtual void TakeDamage(float value, float duration)
     {
         StartCoroutine(TakeDamageCor(value, duration));
     }
@@ -410,7 +460,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     {
         yield return null;
     }
-    
+
     IEnumerator ChangePosCoroutine(float duration)
     {
         Vector3 startPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
@@ -427,9 +477,17 @@ public class Characters : MonoBehaviour, IPointerDownHandler
     }
     public void IsTargetable()
     {
-        if(isTargetable)
+        if (isTargetable)
             healthBarOutline.SetActive(true);
         else
             healthBarOutline.SetActive(false);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawCube(transform.position + (Vector3)buffsInitialPos, new Vector3(0.1f, 0.1f, 0.1f));
+        Gizmos.DrawCube(transform.position + (Vector3)debuffsInitialPos, new Vector3(0.1f, 0.1f, 0.1f));
+
     }
 }

@@ -10,16 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87f1b7c176c2dab46b42dfb6a9ffe6bb, type: 3}
-  m_Name: Item 2
+  m_Name: Capuche
   m_EditorClassIdentifier: 
-  itemName: La bete
-  health: 1
-  armor: 1
-  attack: 1
-  dodge: 1
-  criticalChance: 1
-  crititalDamage: 1
+  itemName: Capuche
+  health: 100
+  armor: 0
+  attack: 0
+  dodge: 0.1
+  criticalChance: 0
+  crititalDamage: 0
   itemPartType: 0
   itemType: 0
-  itemRarity: 2
-  itemUiSprite: {fileID: 21300000, guid: f01e1babcce12b240868fbd8e52b83ee, type: 3}
+  itemRarity: 4
+  itemUiSprite: {fileID: 21300000, guid: 97587b9fc8181774191b0b8147aa3268, type: 3}
+  itemSprites:
+  - {fileID: 21300000, guid: fdc79314f80340046a660ff214765884, type: 3}
+  - {fileID: 21300000, guid: da5f355990ea35648961ee9f5a512c07, type: 3}
+  - {fileID: 0}

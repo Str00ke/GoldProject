@@ -12,6 +12,8 @@ public class Inventory : MonoBehaviour
         InventoryItemPartSelection
     }
 
+    public RectTransform mainCanvas;
+
     [Header("Item Inventory")]
     private int nbLines = 0;
     private List<GameObject> itemList = new List<GameObject>();
@@ -88,16 +90,7 @@ public class Inventory : MonoBehaviour
         ItemInInventory iii = nItem.AddComponent<ItemInInventory>();
         iii.item = item;
 
-        Vector4 nColorItem = new Vector4();
-        for (int i = 0; i < 3; i++)
-        {
-            nColorItem[i] = Random.Range(0f, 1f);
-        }
-
-        nColorItem.w = 1f;
-        Color col = nColorItem;
-
-        nItem.GetComponent<Image>().color = col;
+        nItem.GetComponent<Image>().sprite = item.itemUiSprite;
         
         Button buttonNItem = nItem.GetComponent<Button>();
 
@@ -187,7 +180,7 @@ public class Inventory : MonoBehaviour
 
         float direction = index % 5 == 0 ? -1f : 1f;
         
-        panelItem.transform.position = item.transform.position + new Vector3(direction * 150f, 0f, 0f);
+        panelItem.transform.position = item.transform.position + new Vector3(direction * (200f * mainCanvas.localScale.x), 0f, 0f);
 
         for (int i = 0; i < 3; i++)
             panelItem.transform.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
@@ -235,7 +228,6 @@ public class Inventory : MonoBehaviour
                 bool isActivePart = itemPartButton[(int)itemList[y].GetComponent<ItemInInventory>().item.itemPartType].color.b == 0f;
 
                 itemList[y].SetActive(isActivePart ? !isActive ? true : false : false);
-                //itemList[y].SetActive(!isActive);
             }
         }
     }
@@ -252,8 +244,6 @@ public class Inventory : MonoBehaviour
             bool isActiveRarity = itemRarityButton[(int)itemList[y].GetComponent<ItemInInventory>().item.itemRarity].color.b == 0f;
 
             itemList[y].SetActive(isActiveRarity ? !isActive ? true : false : false);
-
-            //itemList[y].SetActive(!isActive);
         }
     }
 
@@ -285,7 +275,7 @@ public class Inventory : MonoBehaviour
 
     public void SelectionCharacterOneItemPart(int slotIndex)
     {
-        characterItemChoosed = CharacterManager.characterManager.AskForCharacter(0);
+        characterItemChoosed = CharacterManager.characterManager.AskForCharacter(slotIndex);
     }
 
     private void ResetButtonSelection()
@@ -337,12 +327,69 @@ public class Inventory : MonoBehaviour
         slots[1].SetActive(characters[1] == null ? false : true);
         slots[2].SetActive(characters[2] == null ? false : true);
 
-        /* Set characters items */
+        
         for (int i = 0; i < 3; i++)
         {
             if (!slots[i].activeSelf)
                 continue;
 
+            /* Set characters sprites */
+            GameObject spritesGo = slots[i].transform.GetChild(3).gameObject;
+            Character character = CharacterManager.characterManager.AskForCharacter(i);
+            Image img = spritesGo.transform.GetChild(2).GetComponent<Image>();
+            if (character.charHead != null)
+            {
+                img.sprite = character.charHead;
+                img.color = new Vector4(1f, 1f, 1f, 1f);
+            }
+            else
+            {
+                img.color = new Vector4(1f, 1f, 1f, 0f);
+            }
+
+            img = spritesGo.transform.GetChild(0).GetComponent<Image>();
+            if (character.itemSprites[0] != null)
+            {
+                img.sprite = character.itemSprites[0];
+                img.color = new Vector4(1f, 1f, 1f, 1f);
+            }
+            else
+            {
+                img.color = new Vector4(1f, 1f, 1f, 0f);
+            }
+
+            img = spritesGo.transform.GetChild(3).GetComponent<Image>();
+            if (character.itemSprites[1] != null)
+            {
+                img.sprite = character.itemSprites[1];
+                img.color = new Vector4(1f, 1f, 1f, 1f);
+            }
+            else
+            {
+                img.color = new Vector4(1f, 1f, 1f, 0f);
+            }
+
+            img = spritesGo.transform.GetChild(1).GetComponent<Image>();
+            if (character.itemSprites[2] != null)
+            {
+                img.sprite = character.itemSprites[2];
+                img.color = new Vector4(1f, 1f, 1f, 1f);
+            }
+            else
+            {
+                img.color = new Vector4(1f, 1f, 1f, 0f);
+            }
+
+
+            /* Set characters stats */
+            GameObject stats = slots[i].transform.GetChild(1).gameObject;
+            stats.transform.GetChild(0).GetComponent<Text>().text = "Health: " + characters[i].health;
+            stats.transform.GetChild(1).GetComponent<Text>().text = "Armor: " + characters[i].armor;
+            stats.transform.GetChild(2).GetComponent<Text>().text = "Attack: " + characters[i].attack;
+            stats.transform.GetChild(3).GetComponent<Text>().text = "Dodge: " + characters[i].dodge;
+
+
+            /* Set characters items */
             GameObject items = slots[i].transform.GetChild(0).gameObject;
             items.transform.GetChild(0).GetComponent<Image>().sprite = characters[i].GetItem(NItem.EPartType.Head) != null ? characters[i].GetItem(NItem.EPartType.Head).itemUiSprite : null;
             if (characters[i].GetItem(NItem.EPartType.Head) != null)
@@ -375,27 +422,9 @@ public class Inventory : MonoBehaviour
                 items.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
                 items.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => ToggleItemStatsScreen(gem));
             }
-        }
 
-        /* Set characters stats */
-        for (int i = 0; i < 3; i++)
-        {
-            if (!slots[i].activeSelf)
-                continue;
 
-            GameObject stats = slots[i].transform.GetChild(1).gameObject;
-            stats.transform.GetChild(0).GetComponent<Text>().text = "Health: " + characters[i].health;
-            stats.transform.GetChild(1).GetComponent<Text>().text = "Armor: " + characters[i].armor;
-            stats.transform.GetChild(2).GetComponent<Text>().text = "Attack: " + characters[i].attack;
-            stats.transform.GetChild(3).GetComponent<Text>().text = "Dodge: " + characters[i].dodge;
-        }
-
-        /* Set the Set buttons */
-        for (int i = 0; i < 3; i++)
-        {
-            if (!slots[i].activeSelf)
-                continue;
-
+            /* Set the Set buttons */
             Character slotCharacter = characters[i];
 
             Button setButton = slots[i].transform.GetChild(2).GetComponent<Button>();
