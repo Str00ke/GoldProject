@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
-    Level level;
+    public Level level;
     string levelName;
     public GameObject combatPrefab, shop, obliterate, levelFinishedTxt, losePanel;
     GameObject combatRef;
@@ -82,7 +82,6 @@ public class LevelManager : MonoBehaviour
     public void StartRoom()
     {
         MapRoom room = FindObjectOfType<PlayerPoint>().onRoom;
-        Debug.Log(room.roomType);
         switch (room.roomType)
         {
             case RoomType.BASE:

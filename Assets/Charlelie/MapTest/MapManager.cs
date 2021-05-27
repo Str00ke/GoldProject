@@ -265,7 +265,7 @@ public class MapManager : MonoBehaviour
                     Debug.Log("ShopSet " + room.pos.GetLength(0) + " " + room.pos.GetLength(1));
                     return;
                 }*/
-                room.SetToShop();
+                //room.SetToShop();
                 return;
             }
         }
