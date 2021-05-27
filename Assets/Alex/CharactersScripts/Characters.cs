@@ -147,7 +147,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if(holdCharac < holdCharacValue && onPointerHold)
         {
             transform.localScale = new Vector3(transform.localScale.x - Time.deltaTime/5, transform.localScale.y - Time.deltaTime/5, transform.localScale.z - Time.deltaTime/5);
-        }else if(holdCharac > holdCharacValue || onPointerHold)
+        }else if(holdCharac > holdCharacValue || !onPointerHold)
         {
             transform.localScale = new Vector3(1,1,1);
         }

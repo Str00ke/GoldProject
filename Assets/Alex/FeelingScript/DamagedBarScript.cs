@@ -59,19 +59,5 @@ public class DamagedBarScript : MonoBehaviour
         float endValue = value;
         damagedBar.value = endValue;
         yield return null;
-        /*float startValue = damagedBar.value;
-        
-        endValue = Mathf.Round(endValue);
-        float elapsed = 0.0f;
-        float ratio = 0.0f;
-        while (elapsed < duration)
-        {
-            ratio = elapsed / duration;
-            damagedBar.value = Mathf.Lerp(startValue, endValue, ratio);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        damagedBar.value = endValue;
-        yield return new WaitForSeconds(duration);*/
     }
 }

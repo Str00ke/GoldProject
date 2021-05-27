@@ -11,8 +11,10 @@ public class Ally : Characters
     public SpriteRenderer bodyArmor;
     public SpriteRenderer helmet;
     public SpriteRenderer weapon;
+    public float holdAllyCombo;
     private void Start()
     {
+        holdAllyCombo = holdCharacValue*2;
         stateIcons = UIManager.uiManager.stateIcons;
         CombatManager.combatManager.allies.Add(this);
         charType = CharType.ALLY;
@@ -51,7 +53,7 @@ public class Ally : Characters
         {
             holdCharac = 0;
         }
-        if (holdCharac > holdCharacValue)
+        if (holdCharac > holdCharacValue && holdCharac < holdAllyCombo)
         {
             if (!isSelected)
             {
@@ -64,6 +66,10 @@ public class Ally : Characters
                 CombatManager.combatManager.allySelected = this;
             }
             UIManager.uiManager.allyStatsUI.SetActive(true);
+        }
+        if(!hasPlayed && holdCharac > holdAllyCombo && CombatManager.combatManager.allyPlaying != this)
+        {
+            CombatManager.combatManager.allyCombo = this;
         }
     }
 

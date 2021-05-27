@@ -23,6 +23,7 @@ public class CombatManager : MonoBehaviour
 
     [Header("FightVariable")]
     public Ally allyPlaying;
+    public Ally allyCombo = null;
     public int turnNumber = 0;
     public int nbCharsPlayed = 0;
     public int currCharAttacking = 0;

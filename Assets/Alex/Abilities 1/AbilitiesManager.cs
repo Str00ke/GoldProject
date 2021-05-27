@@ -9,6 +9,7 @@ public class AbilitiesManager : MonoBehaviour
     public AbilityScript abilitySelected;
     public Ability lastAbilityLaunched;
     public GameObject abilitiesUI;
+    public GameObject comboAbilitiesUI;
     public GameObject actionButton;
     public GameObject abilityUI;
     public Text abilityNameUI;
@@ -44,12 +45,14 @@ public class AbilitiesManager : MonoBehaviour
         abilityDescription = GameObject.Find("AbilityDescription").GetComponent<Text>();
         abilitiesUI = GameObject.Find("AbilitiesUI");
         abilityUI = GameObject.Find("AbilityUI");
+        comboAbilitiesUI = GameObject.Find("AbilitiesCombo");
         Ability01 = GameObject.Find("Ability01").GetComponent<AbilityScript>();
         Ability02 = GameObject.Find("Ability02").GetComponent<AbilityScript>();
         Ability03 = GameObject.Find("Ability03").GetComponent<AbilityScript>();
         Ability04 = GameObject.Find("Ability04").GetComponent<AbilityScript>();
         abilitiesUI.SetActive(false);
         abilityUI.SetActive(false);
+        comboAbilitiesUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -65,10 +68,16 @@ public class AbilitiesManager : MonoBehaviour
         if (CombatManager.combatManager.allyPlaying) 
         {
             abilitiesUI.SetActive(true);
+            comboAbilitiesUI.SetActive(false);
             ChangeUIAbilities();
+        }else if(CombatManager.combatManager.allyPlaying && CombatManager.combatManager.allyCombo)
+        {
+            abilitiesUI.SetActive(false);
+            comboAbilitiesUI.SetActive(true);
         }
         else
         {
+            comboAbilitiesUI.SetActive(false);
             abilitiesUI.SetActive(false);
         }
 
