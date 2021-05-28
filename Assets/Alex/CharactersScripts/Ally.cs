@@ -138,7 +138,7 @@ public class Ally : Characters
         helmet.sprite = cs.itemSprites[1];
         bodyArmor.sprite = cs.itemSprites[2];
         weaponSpriteBase = cs.itemSprites[3];
-        if(cs.GetItem(NItem.EPartType.Weapon).itemWeaponType == NItem.EWeaponType.Bow)
+        if(weaponSpriteBase != null && cs.GetItem(NItem.EPartType.Weapon).itemWeaponType == NItem.EWeaponType.Bow)
         {
             weaponSpriteAnim = cs.itemSprites[4];
         }
