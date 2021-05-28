@@ -62,7 +62,7 @@ public class Character : MonoBehaviour
 
         if (item.itemPartType == NItem.EPartType.Gem)
         {
-            itemSprites[0] = item.itemSprites[(int)characterType];
+            itemSprites[0] = item.itemSprites[0];
         }
         else if (item.itemPartType == NItem.EPartType.Head)
         {
@@ -71,6 +71,13 @@ public class Character : MonoBehaviour
         else if (item.itemPartType == NItem.EPartType.Body)
         {
             itemSprites[2] = item.itemSprites[(int)characterType];
+        }
+        else if (item.itemPartType == NItem.EPartType.Weapon)
+        {
+            for (int i = 0; i < item.itemSprites.Length; i++)
+            {
+                itemSprites[i + 3] = item.itemSprites[i];
+            }
         }
     }
 
@@ -93,6 +100,11 @@ public class Character : MonoBehaviour
         else if (itemPart == NItem.EPartType.Body)
         {
             itemSprites[2] = null;
+        }
+        else if (itemPart == NItem.EPartType.Weapon)
+        {
+            itemSprites[3] = null;
+            itemSprites[4] = null;
         }
     }
 

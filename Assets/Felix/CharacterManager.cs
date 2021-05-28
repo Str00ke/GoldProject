@@ -9,6 +9,10 @@ public class CharacterManager : MonoBehaviour
 
     public static CharacterManager characterManager;
 
+    [Header("Summon")]
+    public CharacterScriptableObject[] charactersScriptable;
+    public NItem.ItemScriptableObject[] gemsScriptable;
+
     [Header("Team Scene")]
     public GameObject teamSceneGo;
     [SerializeField] private GameObject[] slotsTeam;
@@ -62,6 +66,8 @@ public class CharacterManager : MonoBehaviour
         GameObject nGameObject = new GameObject("Character");
         nGameObject.transform.parent = gameObject.transform;
         Character nChar = nGameObject.AddComponent<Character>();
+        nChar.SetCharacterScriptableObject(charactersScriptable[Random.Range(0, charactersScriptable.Length)]);
+        nChar.AddItem(gemsScriptable[Random.Range(0, gemsScriptable.Length)], NItem.EPartType.Gem);
 
         bool isSet = false;
 
@@ -125,7 +131,7 @@ public class CharacterManager : MonoBehaviour
             /* Set characters sprites */
             GameObject spritesGo = slotsTeam[i].transform.GetChild(2).gameObject;
             Character character = AskForCharacter(i);
-            Image img = spritesGo.transform.GetChild(2).GetComponent<Image>();
+            Image img = spritesGo.transform.GetChild(3).GetComponent<Image>();
             if (character.charHead != null)
             {
                 img.sprite = character.charHead;
@@ -136,7 +142,7 @@ public class CharacterManager : MonoBehaviour
                 img.color = new Vector4(1f, 1f, 1f, 0f);
             }
 
-            img = spritesGo.transform.GetChild(0).GetComponent<Image>();
+            img = spritesGo.transform.GetChild(1).GetComponent<Image>();
             if (character.itemSprites[0] != null)
             {
                 img.sprite = character.itemSprites[0];
@@ -147,7 +153,7 @@ public class CharacterManager : MonoBehaviour
                 img.color = new Vector4(1f, 1f, 1f, 0f);
             }
 
-            img = spritesGo.transform.GetChild(3).GetComponent<Image>();
+            img = spritesGo.transform.GetChild(4).GetComponent<Image>();
             if (character.itemSprites[1] != null)
             {
                 img.sprite = character.itemSprites[1];
@@ -158,10 +164,21 @@ public class CharacterManager : MonoBehaviour
                 img.color = new Vector4(1f, 1f, 1f, 0f);
             }
 
-            img = spritesGo.transform.GetChild(1).GetComponent<Image>();
+            img = spritesGo.transform.GetChild(2).GetComponent<Image>();
             if (character.itemSprites[2] != null)
             {
                 img.sprite = character.itemSprites[2];
+                img.color = new Vector4(1f, 1f, 1f, 1f);
+            }
+            else
+            {
+                img.color = new Vector4(1f, 1f, 1f, 0f);
+            }
+
+            img = spritesGo.transform.GetChild(0).GetComponent<Image>();
+            if (character.itemSprites[3] != null)
+            {
+                img.sprite = character.itemSprites[3];
                 img.color = new Vector4(1f, 1f, 1f, 1f);
             }
             else
@@ -244,8 +261,16 @@ public class CharacterManager : MonoBehaviour
         if (item != null)
         {
             itemPanel.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => inv.ToggleItemStatsScreen(item));
-            itemPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => RemoveCharacterItem(indexSlot, item));
-            itemPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => OpenTeamScene());
+
+            if (item.itemPartType != NItem.EPartType.Gem)
+            {
+                itemPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => RemoveCharacterItem(indexSlot, item));
+                itemPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => OpenTeamScene());
+            }
+            else
+            {
+                itemPanel.transform.GetChild(2).gameObject.SetActive(false);
+            }
         }
         else
         {
