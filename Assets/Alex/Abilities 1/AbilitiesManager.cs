@@ -65,12 +65,12 @@ public class AbilitiesManager : MonoBehaviour
 
     public void DisplayAbilities() 
     {
-        if (CombatManager.combatManager.allyPlaying) 
+        if (CombatManager.combatManager.allyPlaying && !CombatManager.combatManager.allyPlaying.hasPlayed) 
         {
             abilitiesUI.SetActive(true);
             comboAbilitiesUI.SetActive(false);
             ChangeUIAbilities();
-        }else if(CombatManager.combatManager.allyPlaying && CombatManager.combatManager.allyCombo)
+        }else if(CombatManager.combatManager.allyPlaying && CombatManager.combatManager.allyCombo && !CombatManager.combatManager.allyPlaying.hasPlayed)
         {
             abilitiesUI.SetActive(false);
             comboAbilitiesUI.SetActive(true);
@@ -227,7 +227,7 @@ public class AbilitiesManager : MonoBehaviour
     }
     public void DisplayActionButton() 
     {
-        if (abilitySelected && CombatManager.combatManager.allyPlaying)
+        if (abilitySelected && CombatManager.combatManager.allyPlaying && !CombatManager.combatManager.allyPlaying.hasPlayed)
         {
             if(abilitySelected.ability.targetType == Ability.TargetType.ALLIES || abilitySelected.ability.crType == Ability.CristalAbilityType.HEAL)
             {

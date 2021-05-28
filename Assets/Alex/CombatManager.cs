@@ -29,6 +29,8 @@ public class CombatManager : MonoBehaviour
     public int currCharAttacking = 0;
     public int rosterSize;
 
+    Coroutine nextCharCor;
+
     private void Awake()
     {
         if (combatManager == null)
@@ -123,51 +125,50 @@ public class CombatManager : MonoBehaviour
     }
     public void NextCharAttack()
     {
-        StartCoroutine(NextCharAttackCor());
+        nextCharCor = StartCoroutine(NextCharAttackCor());
     }
    IEnumerator NextCharAttackCor()
     {
         fightersList[currCharAttacking].CanAttack = false;
         fightersList[currCharAttacking].hasPlayed = true;
         yield return new WaitForSeconds(3.0f);
-            currCharAttacking++;
+        currCharAttacking++;
 
         if (currCharAttacking >= fightersList.Count)
         {
             TurnPassed();
-            UIManager.uiManager.turnsText.text = "" + turnNumber;
-            yield return null;
         }
-        while (!fightersList[currCharAttacking] || fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead)
+        else
         {
-            //--------------------STUN STATUS----------------------------
-            if (fightersList[currCharAttacking].stunned)
+            while (!fightersList[currCharAttacking] || fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead)
             {
-                fightersList[currCharAttacking].stunned = false;
+                //--------------------STUN STATUS----------------------------
+                if (fightersList[currCharAttacking].stunned)
+                {
+                    fightersList[currCharAttacking].stunned = false;
+                }
+                currCharAttacking++;
+                //---------------- ---IF EVERY FIGHTERS HAVE PLAYED -> NEXT TURN----------------------------
+                if (currCharAttacking >= fightersList.Count)
+                {
+                    TurnPassed();
+                }
             }
-            currCharAttacking++;
-            //---------------- ---IF EVERY FIGHTERS HAVE PLAYED -> NEXT TURN----------------------------
-            if (currCharAttacking >= fightersList.Count)
+            if (currCharAttacking < fightersList.Count)
             {
-                TurnPassed();
-                UIManager.uiManager.turnsText.text = "" + turnNumber;
-                yield return null;
+                fightersList[currCharAttacking].CanAttack = true;
+                if (fightersList[currCharAttacking].charType == Characters.CharType.ALLY)
+                {
+                    allyPlaying = (Ally)fightersList[currCharAttacking];
+                }
+                else
+                {
+                    allyPlaying = null;
+                }
+                //UPDATE STATUS ON CHARACTER PLAYING
+                StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
+                CharAttack(currCharAttacking);
             }
-        }
-        if (currCharAttacking < fightersList.Count)
-        {
-            fightersList[currCharAttacking].CanAttack = true;
-            if(fightersList[currCharAttacking].charType == Characters.CharType.ALLY) 
-            {
-                allyPlaying = (Ally)fightersList[currCharAttacking];
-            }
-            else
-            {
-                allyPlaying = null;
-            }
-            //UPDATE STATUS ON CHARACTER PLAYING
-            StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
-            CharAttack(currCharAttacking);
         }
     }
     public void EnemyAttack() 
@@ -176,7 +177,6 @@ public class CombatManager : MonoBehaviour
     }
     IEnumerator EnemyAttackCor() 
     {
-        Ally inMelee = null;
         Ally inDefence = null;
         int allyAttacked = Random.Range(0, allies.Count);
         while (allies[allyAttacked].isDead) 
@@ -185,20 +185,14 @@ public class CombatManager : MonoBehaviour
         }
         foreach (Ally a in allies)
         {
-            if (a.isMelee) 
-            {
-                inMelee = a;
-            }
             if (a.inDefenceMode)
             {
                 allyAttacked = a.teamPosition;
                 inDefence = a;
             }
         }
-        yield return new WaitForSeconds(attackDuration);
         if(allies.Count > 0)
             EnemyAbilityAttack(allies[allyAttacked], inDefence);
-        yield return new WaitForSeconds(attackDuration);
         NextCharAttack();
         yield return null;
     }
@@ -298,9 +292,12 @@ public class CombatManager : MonoBehaviour
     }
     public void TurnPassed()
     {
+        StopCoroutine(nextCharCor);
+        nextCharCor = null;
         currCharAttacking = 0;
         nbCharsPlayed = 0;
         turnNumber++;
+        UIManager.uiManager.turnsText.text = "" + turnNumber;
         foreach (Ally c in allies)
         {
             if(!c.isDead)
@@ -312,7 +309,7 @@ public class CombatManager : MonoBehaviour
                 e.hasPlayed = false;
         }
 
-        while (fightersList[currCharAttacking].isDead || !fightersList[currCharAttacking])
+        /*while (fightersList[currCharAttacking].isDead || !fightersList[currCharAttacking])
         {
             currCharAttacking++;
             if (currCharAttacking >= fightersList.Count)
@@ -321,7 +318,7 @@ public class CombatManager : MonoBehaviour
                 UIManager.uiManager.turnsText.text = "" + turnNumber;
                 return;
             }
-        }
+        }*/
 
         fightersList[currCharAttacking].CanAttack = true;
         if (fightersList[currCharAttacking].charType == Characters.CharType.ALLY)
