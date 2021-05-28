@@ -309,16 +309,16 @@ public class CombatManager : MonoBehaviour
                 e.hasPlayed = false;
         }
 
-        /*while (fightersList[currCharAttacking].isDead || !fightersList[currCharAttacking])
+        while (fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead || !fightersList[currCharAttacking])
         {
+            fightersList[currCharAttacking].stunned = false;
             currCharAttacking++;
             if (currCharAttacking >= fightersList.Count)
             {
                 TurnPassed();
-                UIManager.uiManager.turnsText.text = "" + turnNumber;
                 return;
             }
-        }*/
+        }
 
         fightersList[currCharAttacking].CanAttack = true;
         if (fightersList[currCharAttacking].charType == Characters.CharType.ALLY)
