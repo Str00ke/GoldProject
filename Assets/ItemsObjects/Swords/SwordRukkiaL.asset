@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f1b7c176c2dab46b42dfb6a9ffe6bb, type: 3}
   m_Name: SwordRukkiaL
   m_EditorClassIdentifier: 
-  itemName: Rukkia
+  itemName: Demon Sword
   health: 64
   armor: 0
   attack: 12
@@ -23,5 +23,6 @@ MonoBehaviour:
   itemType: 0
   itemRarity: 1
   itemWeaponType: 1
-  itemUiSprite: {fileID: 21300000, guid: b8fa5ca94a6ef60458effead1418e208, type: 3}
-  itemSprites: []
+  itemUiSprite: {fileID: 21300000, guid: 9e2445750049eff48a5b191f4ce66a23, type: 3}
+  itemSprites:
+  - {fileID: 21300000, guid: 9e2445750049eff48a5b191f4ce66a23, type: 3}

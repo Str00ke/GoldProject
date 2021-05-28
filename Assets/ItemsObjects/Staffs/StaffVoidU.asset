@@ -21,7 +21,8 @@ MonoBehaviour:
   crititalDamage: 0.45
   itemPartType: 2
   itemType: 0
-  itemRarity: 4
+  itemRarity: 0
   itemWeaponType: 3
-  itemUiSprite: {fileID: 21300000, guid: 0651a76bb2eb4f1468c16d23ebfb5f9d, type: 3}
-  itemSprites: []
+  itemUiSprite: {fileID: 21300000, guid: 60054f0b18122d447b0a81af5499f55f, type: 3}
+  itemSprites:
+  - {fileID: 21300000, guid: 60054f0b18122d447b0a81af5499f55f, type: 3}

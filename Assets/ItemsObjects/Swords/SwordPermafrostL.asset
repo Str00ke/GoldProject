@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f1b7c176c2dab46b42dfb6a9ffe6bb, type: 3}
   m_Name: SwordPermafrostL
   m_EditorClassIdentifier: 
-  itemName: Permafrost
+  itemName: Frost Sword
   health: 0
   armor: 0
   attack: 69
@@ -23,5 +23,6 @@ MonoBehaviour:
   itemType: 0
   itemRarity: 1
   itemWeaponType: 1
-  itemUiSprite: {fileID: 21300000, guid: b140d97044c7fa640abacd61e972bc25, type: 3}
-  itemSprites: []
+  itemUiSprite: {fileID: 21300000, guid: f38c1ecfd3700794b89b37f174bee191, type: 3}
+  itemSprites:
+  - {fileID: 21300000, guid: f38c1ecfd3700794b89b37f174bee191, type: 3}
