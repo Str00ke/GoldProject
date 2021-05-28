@@ -79,7 +79,7 @@ public class CombatManager : MonoBehaviour
     IEnumerator StartCombat()
     {
         CreateEnemies();
-        //CreateRoster();
+        CreateRoster();
         
         yield return new WaitForSeconds(1.5f);
         FightBegins();
