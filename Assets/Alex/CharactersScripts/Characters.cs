@@ -228,6 +228,10 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         float dmg = Mathf.Round(Random.Range(damageRange.x, damageRange.y));
         dmg *= (ability.multiplicator / 100);
+        if(Random.Range(0,100) < dodge)
+        {
+            ShowFloatingHealth("Dodge", true);
+        }
         //-CRITIC DAMAGE-
         if (Random.Range(0.0f, 1.0f) < this.critChance)
         {
@@ -239,7 +243,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             FindObjectOfType<CameraScript>().CamShake(0.2f, 0.05f);
         }
         //-ARMOR MODIF ON DAMAGE-
-        dmg -= armor / 100;
+        dmg -= armor;
         //-ELEMENTAL REACTIONS-
         receiver.TakeDamage(dmg, durationDecreaseHealth);
         receiver.ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), ability.elementType.ToString()));
@@ -437,7 +441,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     }
 
-    public void ShowFloatingHealth(float value, bool red)
+    public void ShowFloatingHealth(string value, bool red)
     {
         GameObject go = Instantiate(floatingHealth, transform.position, Quaternion.identity, transform);
         if (red)
