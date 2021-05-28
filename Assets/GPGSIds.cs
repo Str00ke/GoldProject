@@ -24,8 +24,12 @@
 
 public static class GPGSIds
 {
-        public const string achievement_achievementtest = "CgkIv6KQjKwJEAIQAA"; // <GPGSID>
         public const string leaderboard_testleaderboard = "CgkIv6KQjKwJEAIQAw"; // <GPGSID>
+        public const string achievement_what_is_that = "CgkIv6KQjKwJEAIQBA"; // <GPGSID>
+        public const string achievement_immortel = "CgkIv6KQjKwJEAIQBw"; // <GPGSID>
+        public const string achievement_invicible = "CgkIv6KQjKwJEAIQBg"; // <GPGSID>
+        public const string achievement_like_rambo = "CgkIv6KQjKwJEAIQCA"; // <GPGSID>
+        public const string achievement_team_fruit = "CgkIv6KQjKwJEAIQBQ"; // <GPGSID>
 
 }
 

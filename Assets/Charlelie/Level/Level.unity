@@ -2026,6 +2026,75 @@ MonoBehaviour:
   levelFinishedTxt: {fileID: 311479}
   losePanel: {fileID: 1079899343}
   testTxt: {fileID: 660231484}
+--- !u!1001 &1053488439
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.22389162
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.026977744
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 84.56976
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part1.ennemiesPool.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part1.ennemiesPool.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: d4e5cf981a1fa8b45a25dc2d38ba3542, type: 2}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part1.ennemiesPool.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 705e0ca7867bea94787b701d83e53e7f, type: 2}
+    - target: {fileID: 6246008579936257100, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_Name
+      value: EnnemyManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
 --- !u!1 &1074731392
 GameObject:
   m_ObjectHideFlags: 0

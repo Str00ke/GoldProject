@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour {
 
-    public InputField scoreInputField;
-    public Text errorText;
+    //public InputField scoreInputField;
+    //public Text errorText;
 
     private void Start()
     {
@@ -15,7 +15,7 @@ public class UIController : MonoBehaviour {
 
     public void OnButtonPostToLeaderboard()
     {
-        Debug.Log("Posting score to leaderboard");
+        /*Debug.Log("Posting score to leaderboard");
         errorText.text = "";
 
         //If there is no value in the score input field
@@ -36,7 +36,7 @@ public class UIController : MonoBehaviour {
             {
                 errorText.text = "Error: Could not post score to leaderboard. Please enter a valid score value.";
             }
-        }
+        }*/
     }
 
     public void OnButtonShowLeaderboard()

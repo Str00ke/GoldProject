@@ -131,7 +131,7 @@ namespace GooglePlayGames.Editor
                     GPGSProjectSettings.Instance.Get(GPGSUtil.APPIDKEY),
                     nearbySvcId);
             }
-            
+
             return false;
         }
 
