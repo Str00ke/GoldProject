@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f1b7c176c2dab46b42dfb6a9ffe6bb, type: 3}
   m_Name: BowFaramineL
   m_EditorClassIdentifier: 
-  itemName: Gashadokuro
+  itemName: Swamp Bow
   health: 0
   armor: 0
   attack: 64
@@ -23,5 +23,7 @@ MonoBehaviour:
   itemType: 0
   itemRarity: 1
   itemWeaponType: 2
-  itemUiSprite: {fileID: 21300000, guid: 18c96c851051c334ebb355bce14e175f, type: 3}
-  itemSprites: []
+  itemUiSprite: {fileID: 21300000, guid: 4d0d2390909623145893270480b6770d, type: 3}
+  itemSprites:
+  - {fileID: 21300000, guid: 4d0d2390909623145893270480b6770d, type: 3}
+  - {fileID: 21300000, guid: 8104cdb719bfa7243a867540b0a1675f, type: 3}

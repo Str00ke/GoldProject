@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f1b7c176c2dab46b42dfb6a9ffe6bb, type: 3}
   m_Name: BowFaramineU
   m_EditorClassIdentifier: 
-  itemName: Gashadokuro
+  itemName: Faramine
   health: 0
   armor: 0
   attack: 115
@@ -23,5 +23,7 @@ MonoBehaviour:
   itemType: 0
   itemRarity: 0
   itemWeaponType: 2
-  itemUiSprite: {fileID: 21300000, guid: 18c96c851051c334ebb355bce14e175f, type: 3}
-  itemSprites: []
+  itemUiSprite: {fileID: 21300000, guid: 71e69c1912064564ab4f3d9d69c0bf80, type: 3}
+  itemSprites:
+  - {fileID: 21300000, guid: 71e69c1912064564ab4f3d9d69c0bf80, type: 3}
+  - {fileID: 21300000, guid: 41af3c2541bea7c42a38f21a201fc92b, type: 3}

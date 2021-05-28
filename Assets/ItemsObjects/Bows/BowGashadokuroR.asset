@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f1b7c176c2dab46b42dfb6a9ffe6bb, type: 3}
   m_Name: BowGashadokuroR
   m_EditorClassIdentifier: 
-  itemName: Gashadokuro
+  itemName: Bone Bow
   health: 0
   armor: 0
   attack: 21
@@ -23,5 +23,7 @@ MonoBehaviour:
   itemType: 0
   itemRarity: 3
   itemWeaponType: 2
-  itemUiSprite: {fileID: 21300000, guid: 27269306fd253e445920a8ddb370c578, type: 3}
-  itemSprites: []
+  itemUiSprite: {fileID: 21300000, guid: a8b5c6a6e826e624eb282930aeaa0419, type: 3}
+  itemSprites:
+  - {fileID: 21300000, guid: a8b5c6a6e826e624eb282930aeaa0419, type: 3}
+  - {fileID: 21300000, guid: 1bb063a3c474304499f89d99915d4498, type: 3}

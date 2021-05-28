@@ -23,5 +23,7 @@ MonoBehaviour:
   itemType: 0
   itemRarity: 1
   itemWeaponType: 2
-  itemUiSprite: {fileID: 21300000, guid: 42b79e338e7f0234aad49045fd59142f, type: 3}
-  itemSprites: []
+  itemUiSprite: {fileID: 21300000, guid: 246f0c2ed91a4894ca2e112c77571356, type: 3}
+  itemSprites:
+  - {fileID: 21300000, guid: 246f0c2ed91a4894ca2e112c77571356, type: 3}
+  - {fileID: 21300000, guid: 527f4ee117bcada439e81b84b048dda2, type: 3}

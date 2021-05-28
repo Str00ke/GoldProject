@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f1b7c176c2dab46b42dfb6a9ffe6bb, type: 3}
   m_Name: ClawrevenN
   m_EditorClassIdentifier: 
-  itemName: Clawreven
+  itemName: Owl Sword
   health: 10
   armor: 0
   attack: 11
@@ -23,5 +23,6 @@ MonoBehaviour:
   itemType: 0
   itemRarity: 4
   itemWeaponType: 1
-  itemUiSprite: {fileID: 21300000, guid: 049d075a7d0eb4e4fb6044c562c48a4f, type: 3}
-  itemSprites: []
+  itemUiSprite: {fileID: 21300000, guid: 0ce9c0d0678faab4a901e322a65cbe7d, type: 3}
+  itemSprites:
+  - {fileID: 21300000, guid: 0ce9c0d0678faab4a901e322a65cbe7d, type: 3}

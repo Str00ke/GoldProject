@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f1b7c176c2dab46b42dfb6a9ffe6bb, type: 3}
   m_Name: TsadqielL
   m_EditorClassIdentifier: 
-  itemName: T'sadqiel
+  itemName: Divine Sword
   health: 0
   armor: 0
   attack: 64
@@ -23,5 +23,6 @@ MonoBehaviour:
   itemType: 0
   itemRarity: 1
   itemWeaponType: 1
-  itemUiSprite: {fileID: 21300000, guid: b7f9672691546124bab6d55fc79ba20d, type: 3}
-  itemSprites: []
+  itemUiSprite: {fileID: 21300000, guid: 08192b04c5513c440adb0184f6cc8771, type: 3}
+  itemSprites:
+  - {fileID: 21300000, guid: 08192b04c5513c440adb0184f6cc8771, type: 3}
