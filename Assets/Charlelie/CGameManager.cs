@@ -26,4 +26,9 @@ public class CGameManager : MonoBehaviour
     {
         return levelName;
     }
+
+    public void LoadScene(string sceneName)
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+    }
 }

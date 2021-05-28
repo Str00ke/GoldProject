@@ -49,6 +49,7 @@ public class PlayGamesController : MonoBehaviour {
                 Debug.Log("Logged in to Google Play Games Services");
                 mainText.text = "Loged to Google Play Games Services";
                 mainText.color = Color.green;
+                AchievementsManager.Logged();
                 //SceneManager.LoadScene("LeaderboardUI");
             }
             else

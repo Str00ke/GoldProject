@@ -29,6 +29,7 @@ public static class GPGSIds
         public const string achievement_immortel = "CgkIv6KQjKwJEAIQBw"; // <GPGSID>
         public const string achievement_invicible = "CgkIv6KQjKwJEAIQBg"; // <GPGSID>
         public const string achievement_like_rambo = "CgkIv6KQjKwJEAIQCA"; // <GPGSID>
+        public const string achievement_logged = "CgkIv6KQjKwJEAIQCQ"; // <GPGSID>
         public const string achievement_team_fruit = "CgkIv6KQjKwJEAIQBQ"; // <GPGSID>
 
 }

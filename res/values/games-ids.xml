@@ -15,6 +15,8 @@
   <string name="achievement_immortel" translatable="false">CgkIv6KQjKwJEAIQBw</string>
   <!--achievement Like Rambo-->
   <string name="achievement_like_rambo" translatable="false">CgkIv6KQjKwJEAIQCA</string>
+  <!--achievement Logged!-->
+  <string name="achievement_logged" translatable="false">CgkIv6KQjKwJEAIQCQ</string>
   <!--leaderboard TestLeaderboard-->
   <string name="leaderboard_testleaderboard" translatable="false">CgkIv6KQjKwJEAIQAw</string>
 </resources>
