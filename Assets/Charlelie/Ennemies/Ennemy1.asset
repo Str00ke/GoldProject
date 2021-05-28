@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470ec357602151341a5515c24ca19ad1, type: 3}
   m_Name: Ennemy1
   m_EditorClassIdentifier: 
-  enemyName: 
-  enemyType: 0
+  enemyName: un
+  maxHealth: 0
+  enemyType: 2
   damageRange: {x: 0, y: 0}
   dodge: 0
   critChance: 0

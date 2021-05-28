@@ -873,6 +873,7 @@ MonoBehaviour:
     endRoom:
       roomType: 0
       linkedRoom: []
+    levelType: 0
 --- !u!4 &467240651
 Transform:
   m_ObjectHideFlags: 0
@@ -1063,7 +1064,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &536162893
 MonoBehaviour:
@@ -1950,12 +1951,93 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 429e3d04fa28c0f49bfabee2a53ca455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level:
+    mapW: 0
+    mapH: 0
+    roomNbr: 0
+    name: 
+    startRoom:
+      roomType: 0
+      linkedRoom: []
+    endRoom:
+      roomType: 0
+      linkedRoom: []
+    levelType: 0
   combatPrefab: {fileID: 7422386930513736957, guid: a56c3ecc584a4fc41bfcd5435414461d, type: 3}
   shop: {fileID: 1438111437}
   obliterate: {fileID: 1575359740}
   levelFinishedTxt: {fileID: 311479}
   losePanel: {fileID: 1079899343}
   testTxt: {fileID: 660231484}
+--- !u!1001 &1053488439
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.22389162
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.026977744
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 84.56976
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part1.ennemiesPool.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part1.ennemiesPool.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: d4e5cf981a1fa8b45a25dc2d38ba3542, type: 2}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part1.ennemiesPool.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 705e0ca7867bea94787b701d83e53e7f, type: 2}
+    - target: {fileID: 6246008579936257100, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: m_Name
+      value: EnnemyManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
 --- !u!1 &1074731392
 GameObject:
   m_ObjectHideFlags: 0
@@ -2669,7 +2751,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1975580471 stripped
 RectTransform:
