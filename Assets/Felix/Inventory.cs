@@ -13,6 +13,7 @@ public class Inventory : MonoBehaviour
     }
 
     public RectTransform mainCanvas;
+    public int golds = 0;
 
     [Header("Item Inventory")]
     private int nbLines = 0;
