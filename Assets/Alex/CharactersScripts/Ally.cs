@@ -135,7 +135,7 @@ public class Ally : Characters
         body.sprite = cs.itemSprites[0];
         helmet.sprite = cs.itemSprites[1];
         bodyArmor.sprite = cs.itemSprites[2];
-        //weapon.sprite = cs.itemSprites[3];
+        weapon.sprite = cs.itemSprites[3];
         teamPosition = teamPos;
         maxHealth = cs.maxHealth;
         damageRange = new Vector2(cs.attack - cs.attack * 0.1f, cs.attack + cs.attack * 0.1f);

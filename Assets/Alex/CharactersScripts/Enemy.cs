@@ -18,14 +18,10 @@ public class Enemy : Characters
         thisColorBody = this.GetComponent<SpriteRenderer>();
         thisColorHead = this.GetComponent<SpriteRenderer>();
         durationMove = 1.0f;
-        healthBar = GameObject.Find(gameObject.name + "/CanvasSlider/healthBar").GetComponent<Slider>();
-        canvasChar = GameObject.Find(gameObject.name + "/CanvasSlider");
         durationDecreaseHealth = 1.0f;
 
         //ISTARGETABLE FOR ABILITIES
         isTargetable = false;
-        healthBarOutline = GameObject.Find(gameObject.name + "/CanvasSlider/HealthBarOutline");
-        healthBarOutline.SetActive(false);
         UpdateMeleeState();
         UpdateStateIcon();
     }
@@ -66,6 +62,11 @@ public class Enemy : Characters
     {
         teamPosition = teamPos;
         charName = e.enemyName;
+        gameObject.name = charName + teamPos;
+        healthBar = GameObject.Find(gameObject.name + "/CanvasSlider/healthBar").GetComponent<Slider>();
+        canvasChar = GameObject.Find(gameObject.name + "/CanvasSlider");
+        healthBarOutline = GameObject.Find(gameObject.name + "/CanvasSlider/HealthBarOutline");
+        healthBarOutline.SetActive(false);
         maxHealth = e.maxHealth;
         enemyType = e.enemyType;
         damageRange = e.damageRange;

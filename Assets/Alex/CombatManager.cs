@@ -125,11 +125,11 @@ public class CombatManager : MonoBehaviour
     {
         StartCoroutine(NextCharAttackCor());
     }
-   IEnumerator NextCharAttackCor() 
+   IEnumerator NextCharAttackCor()
     {
+        fightersList[currCharAttacking].CanAttack = false;
+        fightersList[currCharAttacking].hasPlayed = true;
         yield return new WaitForSeconds(3.0f);
-            fightersList[currCharAttacking].CanAttack = false;
-            fightersList[currCharAttacking].hasPlayed = true;
             currCharAttacking++;
 
         if (currCharAttacking >= fightersList.Count)
