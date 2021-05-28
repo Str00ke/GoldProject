@@ -5,6 +5,16 @@
   <string name="app_id" translatable="false">321074237759</string>
   <!--package_name-->
   <string name="package_name" translatable="false">com.iimjv24T2.DarkUTest</string>
-  <!--achievement AchievementTest-->
-  <string name="achievement_achievementtest" translatable="false">CgkIv6KQjKwJEAIQAA</string>
+  <!--achievement What is that-->
+  <string name="achievement_what_is_that" translatable="false">CgkIv6KQjKwJEAIQBA</string>
+  <!--achievement Team Fruit-->
+  <string name="achievement_team_fruit" translatable="false">CgkIv6KQjKwJEAIQBQ</string>
+  <!--achievement Invicible-->
+  <string name="achievement_invicible" translatable="false">CgkIv6KQjKwJEAIQBg</string>
+  <!--achievement Immortel-->
+  <string name="achievement_immortel" translatable="false">CgkIv6KQjKwJEAIQBw</string>
+  <!--achievement Like Rambo-->
+  <string name="achievement_like_rambo" translatable="false">CgkIv6KQjKwJEAIQCA</string>
+  <!--leaderboard TestLeaderboard-->
+  <string name="leaderboard_testleaderboard" translatable="false">CgkIv6KQjKwJEAIQAw</string>
 </resources>

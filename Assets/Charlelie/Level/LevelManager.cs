@@ -36,16 +36,24 @@ public class LevelManager : MonoBehaviour
         mapManager = MapManager.GetInstance();
         LoadLevel();
         mapManager.level = level;
-        mapManager.Init();        
+        testTxt.text = "Start Map Init";
+        mapManager.Init();
+        testTxt.text = "Start Map Generation";
         mapManager.GenerateMap();
         //mapManager.InitPlayerPoint();
+        testTxt.text = "Start Init PlayerPoint";
         FindObjectOfType<PlayerPoint>().Init();
+        testTxt.text = "Start Link Rooms";
         mapManager.MapLinkRooms();
+        testTxt.text = "Start Randomize Shop";
         mapManager.RandomizeShop();     //Something wrong here
-        if (FindObjectOfType<PlayerPoint>())
-            mapManager.StartToEnd(FindObjectOfType<PlayerPoint>().startRoom, 0);
+        testTxt.text = "Start Check StartToEnd";
+        mapManager.StartToEnd(PlayerPoint._playerPoint.startRoom, 0);
+        testTxt.text = "Start StartRoom()";
         StartRoom();
+        testTxt.text = "Disable Shop";
         shop.SetActive(false);
+        testTxt.text = "Disable Obliterate";
         obliterate.SetActive(false);
     }
 
@@ -59,7 +67,7 @@ public class LevelManager : MonoBehaviour
     void LoadLevel()
     {
         level = SaveSystem.Load(levelName);
-        testTxt.text = level.endRoom.pos.GetLength(0).ToString() + ", " + level.endRoom.pos.GetLength(1).ToString();
+        //testTxt.text = level.endRoom.pos.GetLength(0).ToString() + ", " + level.endRoom.pos.GetLength(1).ToString();
     }
 
     public void WinFight()
@@ -81,7 +89,8 @@ public class LevelManager : MonoBehaviour
 
     public void StartRoom()
     {
-        MapRoom room = FindObjectOfType<PlayerPoint>().onRoom;
+        MapRoom room = PlayerPoint._playerPoint.onRoom;
+        testTxt.text = (room.pos.GetLength(0) + "  " + room.pos.GetLength(1)).ToString();
         switch (room.roomType)
         {
             case RoomType.BASE:
@@ -93,17 +102,17 @@ public class LevelManager : MonoBehaviour
                 break;
 
             case RoomType.END:
-                Debug.Log("BOSS");
                 room.OnFinishRoom();
                 levelFinishedTxt.SetActive(true);
                 break;
 
             case RoomType.START:
-                Debug.Log("START");
                 room.OnFinishRoom();
                 break;
 
         }
+
+        testTxt.text = "Function done";
     }
 
     void CreateFight()
