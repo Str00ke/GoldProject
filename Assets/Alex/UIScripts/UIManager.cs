@@ -73,17 +73,17 @@ public class UIManager : MonoBehaviour
             statsEnemy.text = "Health  " + e.health + "/" + e.maxHealth + "    ";
             statsEnemy.text += e.healthDebuff < 0 ? "<color=red>" + e.healthDebuff + "</color> " :  "<color=green>" + e.healthDebuff + "</color> ";
             statsEnemy.text += e.dotDamage > 0 ? "\n<color=red> -" + e.dotDamage + "</color> " : "    ";
-            statsEnemy.text += "\nArmor  " + e.armor + "    ";
-            statsEnemy.text += e.armorBonus < 0 ? "<color=red>" + e.armorBonus + "</color> " : "<color=green>" + e.armorBonus + "</color> ";
-            statsEnemy.text += "\nInitiative   " + e.initiative;
+            //statsEnemy.text += "\nArmor  " + e.armor + "    ";
+            //statsEnemy.text += e.armorBonus < 0 ? "<color=red>" + e.armorBonus + "</color> " : "<color=green>" + e.armorBonus + "</color> ";
+            //statsEnemy.text += "\nInitiative   " + e.initiative;
             statsEnemy.text +=  "\nDodge  " + e.dodge + "    ";
             statsEnemy.text += e.dodgeBonus < 0 ? "<color=red>" + e.dodgeBonus + "</color> " : "<color=green>" + e.dodgeBonus + "</color> ";
             statsEnemy.text += "\nDamage  " + e.damageRange.x + " - " + e.damageRange.y + "    ";
             statsEnemy.text += e.damageBonus < 0 ? "<color=red>" + e.damageBonus + " </color> " : "<color=green>" + e.damageBonus + "</color> ";
             statsEnemy.text += "\nCritic Chance  " + Mathf.Round(e.critChance * 100) + "%" + "    ";
             statsEnemy.text += e.critChanceBonus < 0 ? "<color=red>" + e.critChanceBonus + " </color> " : "<color=green>" + e.critChanceBonus + "</color> ";
-            statsEnemy.text += "\nCritic Damage  " + Mathf.Round(e.critDamage * 100) + "%" + "    ";
-            statsEnemy.text += e.critDamageBonus < 0 ? "<color=red>" + e.critDamageBonus + " </color> " : "<color=green>" + e.critDamageBonus + "</color> ";
+            //statsEnemy.text += "\nCritic Damage  " + Mathf.Round(e.critDamage * 100) + "%" + "    ";
+            //statsEnemy.text += e.critDamageBonus < 0 ? "<color=red>" + e.critDamageBonus + " </color> " : "<color=green>" + e.critDamageBonus + "</color> ";
             statsEnemy.text += "\nCurrent Element  " + e.currentElement.ToString();
     }
     public void ResetEnemyDisplayUI()
