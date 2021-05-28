@@ -11,6 +11,8 @@ public class Ally : Characters
     public SpriteRenderer bodyArmor;
     public SpriteRenderer helmet;
     public SpriteRenderer weapon;
+    public Sprite weaponSpriteBase;
+    public Sprite weaponSpriteAnim;
     public float holdAllyCombo;
     private void Start()
     {
@@ -135,7 +137,16 @@ public class Ally : Characters
         body.sprite = cs.itemSprites[0];
         helmet.sprite = cs.itemSprites[1];
         bodyArmor.sprite = cs.itemSprites[2];
-        weapon.sprite = cs.itemSprites[3];
+        weaponSpriteBase = cs.itemSprites[3];
+        if(cs.GetItem(NItem.EPartType.Weapon).itemWeaponType == NItem.EWeaponType.Bow)
+        {
+            weaponSpriteAnim = cs.itemSprites[4];
+        }
+        else
+        {
+            weaponSpriteAnim = weaponSpriteBase;
+        }
+        weapon.sprite = weaponSpriteBase;
         teamPosition = teamPos;
         maxHealth = cs.maxHealth;
         damageRange = new Vector2(cs.attack - cs.attack * 0.1f, cs.attack + cs.attack * 0.1f);
