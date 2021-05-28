@@ -700,7 +700,7 @@ MonoBehaviour:
   body: {fileID: 8781212782479631214}
   bodyArmor: {fileID: 2420134106888775266}
   helmet: {fileID: 5337923811147838028}
-  weapon: {fileID: 0}
+  weapon: {fileID: 2186882810477824906}
   holdAllyCombo: 0
 --- !u!61 &2169942591526643263
 BoxCollider2D:

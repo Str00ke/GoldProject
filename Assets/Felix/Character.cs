@@ -30,7 +30,7 @@ public class Character : MonoBehaviour
     private void Awake()
     {
         items = new NItem.ItemScriptableObject[4];
-        itemSprites = new Sprite[3];
+        itemSprites = new Sprite[5];
     }
 
     public void SetCharacterScriptableObject(CharacterScriptableObject characterScriptableObject)
