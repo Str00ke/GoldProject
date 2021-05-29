@@ -138,6 +138,21 @@ public class Ally : Characters
         helmet.sprite = cs.itemSprites[1];
         bodyArmor.sprite = cs.itemSprites[2];
         weaponSpriteBase = cs.itemSprites[3];
+        switch (cs.GetItem(NItem.EPartType.Weapon).itemWeaponType)
+        {
+            case NItem.EWeaponType.Sword:
+                abilities[0] = AbilitiesManager.abilitiesManager.weaponAbilities[0];
+                abilities[1] = AbilitiesManager.abilitiesManager.weaponAbilities[2];
+                break;
+            case NItem.EWeaponType.Bow:
+                abilities[0] = AbilitiesManager.abilitiesManager.weaponAbilities[1];
+                abilities[1] = AbilitiesManager.abilitiesManager.weaponAbilities[3];
+                break;
+            case NItem.EWeaponType.Staff:
+                abilities[0] = AbilitiesManager.abilitiesManager.weaponAbilities[1];
+                abilities[1] = AbilitiesManager.abilitiesManager.weaponAbilities[4];
+                break;
+        }
         if(weaponSpriteBase != null && cs.GetItem(NItem.EPartType.Weapon).itemWeaponType == NItem.EWeaponType.Bow)
         {
             weaponSpriteAnim = cs.itemSprites[4];

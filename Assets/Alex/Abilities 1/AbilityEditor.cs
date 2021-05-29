@@ -142,6 +142,8 @@ public class AbilityEditor : Editor
         {
             ability.targetType = (Ability.TargetType)EditorGUILayout.EnumPopup("Target ", ability.targetType);
             ability.weaponAbilityType = (Ability.WeaponAbilityType)EditorGUILayout.EnumPopup("Weapon type ", ability.weaponAbilityType);
+            if(ability.weaponAbilityType == Ability.WeaponAbilityType.DEFENSE)
+                ability.turnDuration = EditorGUILayout.IntField("Armor buff duration", ability.turnDuration);
         }
 
     }
