@@ -14,6 +14,8 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public Vector2 debuffsInitialPos = new Vector2(-40, -10.5f);
     public Vector2 buffsInitialPos = new Vector2(40, -10.5f);
     [Header("Labels")]
+    public GameObject cursorSelected;
+    public GameObject cursorPlaying;
     public string charName;
     public Image stateIcon;
     public Sprite[] stateIcons;
@@ -203,11 +205,13 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 break;
         }
     }
-    public virtual void OnPointerDown(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
+        onPointerHold = true;
     }
-    public virtual void OnPointerUp(PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)
     {
+        onPointerHold = false;
     }
     public void ChangeStats(string name, float maxHP, Vector2 dmgRange, int dodg, float critCh, float critDmg, int armr, int position)
     {

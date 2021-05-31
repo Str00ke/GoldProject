@@ -44,7 +44,7 @@ public class Enemy : Characters
         }
         if (holdCharac > holdCharacValue)
         {
-            if (!isSelected)
+            /*if (!isSelected)
             {
                 if (CombatManager.combatManager.enemySelected != null)
                 {
@@ -54,14 +54,20 @@ public class Enemy : Characters
                 isSelected = true;
                 CombatManager.combatManager.enemySelected = this;
             }
-            UIManager.uiManager.enemyStatsUI.SetActive(true);
+            UIManager.uiManager.statsUI.SetActive(true);*/
+            if (!isSelected)
+            {
+                if (CombatManager.combatManager.charSelected != null)
+                {
+                    CombatManager.combatManager.charSelected.isSelected = false;
+                    CombatManager.combatManager.charSelected = null;
+                }
+                isSelected = true;
+                CombatManager.combatManager.charSelected = this;
+            }
+            UIManager.uiManager.statsUI.SetActive(true);
         }
 
-        if(!removed && isDead)
-        {
-            CombatManager.combatManager.RemoveEnemy(this);
-            removed = true;
-        }
     }
 
     public void CreateEnemy(Ennemy e, int teamPos, Level level, MapRoom mapRoom)
@@ -72,6 +78,10 @@ public class Enemy : Characters
         healthBar = GameObject.Find(gameObject.name + "/CanvasSlider/healthBar").GetComponent<Slider>();
         canvasChar = GameObject.Find(gameObject.name + "/CanvasSlider");
         healthBarOutline = GameObject.Find(gameObject.name + "/CanvasSlider/HealthBarOutline");
+        cursorSelected = GameObject.Find(gameObject.name + "/CanvasSlider/cursorSelected");
+        cursorPlaying = GameObject.Find(gameObject.name + "/CanvasSlider/cursorPlaying");
+        cursorSelected.SetActive(false);
+        cursorPlaying.SetActive(false);
         healthBarOutline.SetActive(false);
         maxHealth = e.maxHealth;
         enemyType = e.enemyType;
@@ -89,15 +99,6 @@ public class Enemy : Characters
         health = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = health;
-    }
-    public override void OnPointerDown(PointerEventData eventData)
-    {
-        onPointerHold = true;
-    }
-    public override void OnPointerUp(PointerEventData eventData)
-    {
-        UIManager.uiManager.ResetEnemyDisplayUI();
-        onPointerHold = false;
     }
 
     public override void TakeDamage(float value, float duration)
@@ -119,6 +120,11 @@ public class Enemy : Characters
         {
             health = 0;
             isDead = true;
+        }
+        if (!removed && isDead)
+        {
+            CombatManager.combatManager.RemoveEnemy(this);
+            removed = true;
         }
     }
 

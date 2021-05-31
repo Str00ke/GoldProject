@@ -61,7 +61,7 @@ public class AllyTuto : CharactersTuto
                 isSelected = true;
                 TutoCombat.tutoCombat.allySelected = this;
             }
-            UIManager.uiManager.allyStatsUI.SetActive(true);
+            UIManager.uiManager.statsUI.SetActive(true);
         }
     }
 
@@ -120,7 +120,7 @@ public class AllyTuto : CharactersTuto
     public override void OnPointerUp(PointerEventData eventData)
     {
         Debug.Log("UP");
-        UIManager.uiManager.ResetAllyDisplayUI();
+        UIManager.uiManager.ResetDisplayStatsUI();
         onPointerHold = false;
     }
 

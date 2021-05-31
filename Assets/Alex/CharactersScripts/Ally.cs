@@ -26,6 +26,8 @@ public class Ally : Characters
         durationMove = 1.0f;
         healthBar = GameObject.Find(gameObject.name + "/CanvasChar/healthBar").GetComponent<Slider>();
         canvasChar = GameObject.Find(gameObject.name + "/CanvasChar");
+        cursorSelected = GameObject.Find(gameObject.name + "/CanvasChar/cursorSelected");
+        cursorPlaying = GameObject.Find(gameObject.name + "/CanvasChar/cursorPlaying");
         durationDecreaseHealth = 1.0f;
         //ISTARGETABLE FOR ABILITIES
         isTargetable = false;
@@ -49,23 +51,20 @@ public class Ally : Characters
         {
             holdCharac = 0;
         }
-        if (holdCharac > holdCharacValue && holdCharac < holdAllyCombo)
+        if (holdCharac > holdCharacValue)
         {
             if (!isSelected)
             {
-                if (CombatManager.combatManager.allySelected != null)
+                if (CombatManager.combatManager.charSelected != null)
                 {
-                    CombatManager.combatManager.allySelected.isSelected = false;
-                    CombatManager.combatManager.allySelected = null;
+                    CombatManager.combatManager.charSelected.isSelected = false;
+                    CombatManager.combatManager.charSelected = null;
                 }
                 isSelected = true;
-                CombatManager.combatManager.allySelected = this;
+                CombatManager.combatManager.charSelected = this;
+                UIManager.uiManager.UpdatePosCursorSelect();
             }
-            UIManager.uiManager.allyStatsUI.SetActive(true);
-        }
-        if(!hasPlayed && holdCharac > holdAllyCombo && CombatManager.combatManager.allyPlaying != this)
-        {
-            CombatManager.combatManager.allyCombo = this;
+            UIManager.uiManager.statsUI.SetActive(true);
         }
     }
 
@@ -116,16 +115,6 @@ public class Ally : Characters
                 }
                 break;
         }
-    }
-    public override void OnPointerDown(PointerEventData eventData)
-    {
-        onPointerHold = true;
-    }
-    public override void OnPointerUp(PointerEventData eventData)
-    {
-        Debug.Log("UP");
-        UIManager.uiManager.ResetAllyDisplayUI();
-        onPointerHold = false;
     }
 
     public void CreateChar(Character cs, int teamPos)

@@ -13,11 +13,10 @@ public class CombatManager : MonoBehaviour
     public List<Ally> allies;
     public List<Characters> fightersList;
     //public GameObject attackButton;
-    public Ally allySelected = null;
+    public Characters charSelected = null;
 
     [Header("Enemies")]
     public List<Enemy> enemies;
-    public Enemy enemySelected = null;
     public float delay = 0.0f;
     public float attackDuration = 2.0f;
 
@@ -373,9 +372,9 @@ public class CombatManager : MonoBehaviour
         {
             if (enemies[i] == e)
             {
-                if (enemies[i] == enemySelected)
+                if (enemies[i] == charSelected)
                 {
-                    enemySelected = null;
+                    charSelected = null;
                 }
                 enemies.Remove(e);
                 numPos = e.teamPosition;
