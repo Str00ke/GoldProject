@@ -60,6 +60,7 @@ public class CharacterManager : MonoBehaviour
         characters[indexChar] = nChar;
 
         RefreshTeamScene();
+        SelectCharacterStats(indexChar);
     }
 
     public void SummonCharacter(CharacterScriptableObject cso)
@@ -95,7 +96,19 @@ public class CharacterManager : MonoBehaviour
         {
             bool charIsNull = AskForCharacter(i) == null;
 
+            // Summon button
             slotsTeam[i].transform.GetChild(4).gameObject.SetActive(charIsNull);
+
+            // Carroussel
+            if (i == 0 || charIsNull)
+                slotsTeam[i].transform.GetChild(5).gameObject.SetActive(false);
+            else
+                slotsTeam[i].transform.GetChild(5).gameObject.SetActive(true);
+
+            if (i == slotsTeam.Length - 1 || charIsNull)
+                slotsTeam[i].transform.GetChild(6).gameObject.SetActive(false);
+            else
+                slotsTeam[i].transform.GetChild(6).gameObject.SetActive(true);
 
             /* Set characters sprites */
             GameObject spritesGo = slotsTeam[i].transform.GetChild(2).gameObject;
@@ -355,60 +368,6 @@ public class CharacterManager : MonoBehaviour
         statsUIPanel.transform.GetChild(5).GetComponent<Text>().text = "";
     }
 
-    /*private void ShowItemPanel(int indexSlot, int indexPartItem, NItem.ItemScriptableObject item)
-    {
-        itemPanel.SetActive(true);
-
-        Inventory inv = Inventory.inventory;
-
-        Vector3 itemPos = slotsTeam[indexSlot].transform.GetChild(0).GetChild(indexPartItem).position;
-
-        itemPanel.transform.position = itemPos + new Vector3(175f * inv.mainCanvas.localScale.x, 0f, 0f);
-
-        for (int i = 0; i < 4; i++)
-        {
-            itemPanel.transform.GetChild(i).gameObject.SetActive(true);
-            itemPanel.transform.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
-        }
-
-        itemPanel.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => inv.OpenInventory());
-        itemPanel.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => inv.SelectionCharacterOneItemPart(indexSlot));
-        itemPanel.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => inv.SelectionOneItemPart(indexPartItem));
-
-        if (item != null)
-        {
-            //itemPanel.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => inv.ToggleItemStatsScreen(item));
-
-            if (item.itemPartType != NItem.EPartType.Gem)
-            {
-                itemPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => RemoveCharacterItem(indexSlot, item));
-                itemPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => OpenTeamScene());
-            }
-            else
-            {
-                itemPanel.transform.GetChild(2).gameObject.SetActive(false);
-            }
-        }
-        else
-        {
-            itemPanel.transform.GetChild(1).gameObject.SetActive(false);
-            itemPanel.transform.GetChild(2).gameObject.SetActive(false);
-        }
-
-        itemPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => CloseItemPanel());
-    }
-
-    private void CloseItemPanel()
-    {
-        itemPanel.SetActive(false);
-    }
-
-    public void CloseTeamScene()
-    {
-        teamSceneGo.SetActive(false);
-        CloseItemPanel();
-    }*/
-
     private void RemoveCharacterItem(int characterIndex, NItem.ItemScriptableObject item)
     {
         Character character = AskForCharacter(characterIndex);
@@ -440,6 +399,34 @@ public class CharacterManager : MonoBehaviour
     #endregion
     
     #region CharacterSwapScene
+
+    public void SwapRight(int indexChar)
+    {
+        if (indexChar <= 0)
+            return;
+
+        Character characterTemp = characters[indexChar];
+        characters[indexChar] = characters[indexChar - 1];
+        characters[indexChar - 1] = characterTemp;
+
+        RefreshTeamScene();
+        SelectCharacterStats(indexChar - 1);
+        Inventory.inventory.CloseInventory();
+    }
+
+    public void SwapLeft(int indexChar)
+    {
+        if (indexChar >= characters.Length - 1)
+            return;
+
+        Character characterTemp = characters[indexChar];
+        characters[indexChar] = characters[indexChar + 1];
+        characters[indexChar + 1] = characterTemp;
+
+        RefreshTeamScene();
+        SelectCharacterStats(indexChar + 1);
+        Inventory.inventory.CloseInventory();
+    }
 
     /*public void OpenCharacterSwapScene()
     {
