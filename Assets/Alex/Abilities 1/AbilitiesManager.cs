@@ -294,20 +294,6 @@ public class AbilitiesManager : MonoBehaviour
             {
                 CristalAction(abi);
             }
-            /*if (abi.crType == Ability.CristalAbilityType.HEAL)
-            {
-                if (cm.charSelected.isTargetable)
-                {
-                    CristalAction(abi);
-                }
-            }
-            else
-            {
-                if (cm.charSelected.isTargetable)
-                {
-                    CristalAction(abi);
-                }
-            }*/
             //------------------------------------------------------------ABILITY ON WEAPONS----------------------------------------------------
         }
         else if (abi.objectType == Ability.ObjectType.WEAPON)
@@ -374,48 +360,6 @@ public class AbilitiesManager : MonoBehaviour
     public void CristalAction(Ability a)
     {
         var cm = CombatManager.combatManager;
-        /*if(a.crType == Ability.CristalAbilityType.HEAL)
-        {
-            switch (a.crHealType)
-            {
-                case Ability.CristalHealType.BOOST:
-                    cm.allyPlaying.LaunchBuff(cm.allySelected, a);
-                    break;
-                case Ability.CristalHealType.BATH:
-                    AbilityBath(a);
-                    break;
-                case Ability.CristalHealType.DRINK:
-                    cm.allyPlaying.LaunchHeal(cm.allySelected, a);
-                    cm.allyPlaying.LaunchBuff(cm.allySelected, a);
-                    break;
-            }
-        }else if (a.crType == Ability.CristalAbilityType.ATTACK)
-        {
-            switch (a.crAttackType)
-            {
-                case Ability.CristalAttackType.NORMAL:
-                    cm.allyPlaying.LaunchAttack(cm.enemySelected, a);
-                    break;
-                case Ability.CristalAttackType.DOT:
-                    cm.allyPlaying.LaunchAttack(cm.enemySelected, a);
-                    cm.allyPlaying.PutDot(cm.enemySelected, a);
-                    break;
-                case Ability.CristalAttackType.MARK:
-                    cm.allyPlaying.PutMark(cm.enemySelected, a);
-                    break;
-            }
-        }else if (a.crType == Ability.CristalAbilityType.OTHERS)
-        {
-            switch (a.crSpecialType)
-            {
-                case Ability.CristalSpecialType.DESTRUCTION:
-                    cm.allyPlaying.LaunchDestruction(cm.enemySelected, a);
-                    cm.allyPlaying.LaunchAttack(cm.enemySelected, a);
-                    break;
-                case Ability.CristalSpecialType.COPY:
-                    break;
-            }
-        }*/
         if (a.crType == Ability.CristalAbilityType.HEAL)
         {
             switch (a.crHealType)

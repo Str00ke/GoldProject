@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabIconStatus: {fileID: 3782918157968805354, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-  buffStatusSprite: {fileID: 21300000, guid: e6e320ae13dd6c348afcf895f58d2c82, type: 3}
-  debuffStatusSprite: {fileID: 21300000, guid: 225a47f27e565a5448dde947a2b4003c, type: 3}
-  dotStatusSprite: {fileID: 21300000, guid: f96d0f2ea4131f94cb1578f74edf77fa, type: 3}
-  markStatusSprite: {fileID: 21300000, guid: a49e145b357eab44cb4177e4e0884f30, type: 3}
+  buffStatusSprite: {fileID: 21300000, guid: 33a0ea73c5005cf44915495a8365ba16, type: 3}
+  debuffStatusSprite: {fileID: 21300000, guid: 57644236fb38d0d46ac97397f006bbeb, type: 3}
+  dotStatusSprite: {fileID: 21300000, guid: 9f39ee6dd5059bd45b49cc586d61e8f8, type: 3}
+  markStatusSprite: {fileID: 21300000, guid: 1573684a8041d4741a5fa0f32062de6b, type: 3}
   statusOffset: 0.15
   statusId: 0
 --- !u!1 &1053933509547045663
@@ -1136,7 +1136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7422386929248991354
 Transform:
   m_ObjectHideFlags: 0
@@ -2767,11 +2767,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1752089008, guid: 1994534d80af304419248f54d40c1441, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1752089008, guid: 1994534d80af304419248f54d40c1441, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 94287638558679980, guid: 1994534d80af304419248f54d40c1441, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2783,11 +2783,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2867006815025643280, guid: 1994534d80af304419248f54d40c1441, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2867006815025643280, guid: 1994534d80af304419248f54d40c1441, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4510668456567727187, guid: 1994534d80af304419248f54d40c1441, type: 3}
       propertyPath: m_Name
@@ -2795,7 +2795,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4510668456567727187, guid: 1994534d80af304419248f54d40c1441, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4510668456567727196, guid: 1994534d80af304419248f54d40c1441, type: 3}
       propertyPath: m_Sprite
