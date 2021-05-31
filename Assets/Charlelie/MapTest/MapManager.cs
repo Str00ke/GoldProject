@@ -17,7 +17,7 @@ public class MapManager : MonoBehaviour
     PlayerPoint playerPoint;
     public Level level;
     List<MapRoom> testArr = new List<MapRoom>();
-    int testMax = 0;
+    public int testMax = 0;
     int rDistFromStart = 0;
     int rTestDone = 0;
 

@@ -11,7 +11,7 @@ public class LevelManager : MonoBehaviour
     GameObject combatRef;
     MapManager mapManager;
     public Text testTxt;
-
+    public bool fightFMiniBoss, fightSMiniBoss = false;
     static LevelManager _levelManager;
 
 
@@ -55,6 +55,7 @@ public class LevelManager : MonoBehaviour
         shop.SetActive(false);
         testTxt.text = "Disable Obliterate";
         obliterate.SetActive(false);
+        EnnemyManager._enemyManager.SetRoomsDiff(mapManager.testMax);
     }
 
 

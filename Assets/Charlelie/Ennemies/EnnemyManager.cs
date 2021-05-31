@@ -42,6 +42,7 @@ public struct DungeonPart
 public struct DungeonDifficulty
 {
     public EElement dungeonType;
+    public Ennemy firstMiniBoss, secondMiniBoss, boss;
     public DungeonPart part1;
     public DungeonPart part2;
     public DungeonPart part3;
@@ -58,6 +59,7 @@ public class EnnemyManager : MonoBehaviour
     public static EnnemyManager _enemyManager;
 
     int easyMin, easyMax, middleMin, middleMax, hardMin, hardMax;
+
 
     private void Awake()
     {
@@ -85,14 +87,60 @@ public class EnnemyManager : MonoBehaviour
             return EPart.PART1;
         else if (roomNbr >= middleMin && roomNbr <= middleMax)
             return EPart.PART2;
-        else if (roomNbr >= hardMin && roomNbr <= hardMax)
+        else
             return EPart.PART3;
 
-        return EPart.PART1;
     }
 
     public Ennemy SetEnemyPool(Level level, MapRoom mapRoom)
     {
+
+        if (mapRoom.distFromStart == easyMax && !LevelManager.GetInstance().fightFMiniBoss)
+        {
+           switch (level.levelType)
+           {
+                case LevelType.EASY:
+                    return easyDungeon.firstMiniBoss;
+
+                case LevelType.MEDIUM:
+                    return moyenDungeon.firstMiniBoss;
+
+                case LevelType.HARD:
+                    return hardDungeon.firstMiniBoss;
+           }
+
+        } 
+        else if (mapRoom.distFromStart == middleMax && !LevelManager.GetInstance().fightSMiniBoss)
+        {
+            LevelManager.GetInstance().fightSMiniBoss = true;
+            switch (level.levelType)
+            {
+                case LevelType.EASY:
+                    return easyDungeon.secondMiniBoss;
+
+                case LevelType.MEDIUM:
+                    return moyenDungeon.secondMiniBoss;
+
+                case LevelType.HARD:
+                    return hardDungeon.secondMiniBoss;
+            }
+        } 
+        else if (mapRoom.roomType == RoomType.END)
+        {
+            switch (level.levelType)
+            {
+                case LevelType.EASY:
+                    return easyDungeon.boss;
+
+                case LevelType.MEDIUM:
+                    return moyenDungeon.boss;
+
+                case LevelType.HARD:
+                    return hardDungeon.boss;
+            }
+        }
+
+
         Ennemy ennemy = null;
         switch (level.levelType)
         {
@@ -194,6 +242,11 @@ public class EnnemyManager : MonoBehaviour
 
     public int GetMaxEnemiesInRoom(Level level, MapRoom room)
     {
+        if ((room.distFromStart == easyMax && !LevelManager.GetInstance().fightFMiniBoss) || (room.distFromStart == middleMax && !LevelManager.GetInstance().fightSMiniBoss) || room.roomType == RoomType.END) 
+        {
+            return 1;
+        }
+
         DungeonDifficulty dD = new DungeonDifficulty();
         switch (level.levelType)
         {
