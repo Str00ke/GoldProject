@@ -29,6 +29,7 @@ public class CharacterManager : MonoBehaviour
         characters = new Character[3];
 
         RefreshTeamScene();
+        ResetCharacterStats();
     }
 
     public Character AskForCharacter(int indexChar)
@@ -176,6 +177,39 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    public void ResetCharacterStats()
+    {
+        selectedChar = 0;
+
+        for (int z = 0; z < 4; z++)
+        {
+            itemsUIPanel.transform.GetChild(z).GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
+            if (z != 3)
+            {
+                itemsUIPanel.transform.GetChild(z).GetChild(1).GetComponent<Button>().onClick.RemoveAllListeners();
+                itemsUIPanel.transform.GetChild(z).GetChild(2).GetComponent<Button>().onClick.RemoveAllListeners();
+            }
+        }
+
+        // SELECTED CHARACTER
+        itemsUIPanel.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = null;
+        itemsUIPanel.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = null;
+        itemsUIPanel.transform.GetChild(2).GetChild(0).GetComponent<Image>().sprite = null;
+        itemsUIPanel.transform.GetChild(3).GetChild(0).GetComponent<Image>().sprite = null;
+
+        // Show informations
+        informationsUIPanel.transform.GetChild(0).GetComponent<Text>().text = "";
+        informationsUIPanel.transform.GetChild(1).GetComponent<Text>().text = "";
+
+        // Show Stats
+        statsUIPanel.transform.GetChild(0).GetComponent<Text>().text = "";
+        statsUIPanel.transform.GetChild(1).GetComponent<Text>().text = "";
+        statsUIPanel.transform.GetChild(2).GetComponent<Text>().text = "";
+        statsUIPanel.transform.GetChild(3).GetComponent<Text>().text = "";
+        statsUIPanel.transform.GetChild(4).GetComponent<Text>().text = "";
+        statsUIPanel.transform.GetChild(5).GetComponent<Text>().text = "";
+    }
+
     public void SelectCharacterStats(int indexChar)
     {
         if (characters[indexChar] == null)
@@ -189,6 +223,7 @@ public class CharacterManager : MonoBehaviour
             if (z != 3)
             {
                 itemsUIPanel.transform.GetChild(z).GetChild(1).GetComponent<Button>().onClick.RemoveAllListeners();
+                itemsUIPanel.transform.GetChild(z).GetChild(2).GetComponent<Button>().onClick.RemoveAllListeners();
             }
         }
 
