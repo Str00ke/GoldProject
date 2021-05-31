@@ -50,12 +50,10 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public float maxHealth;
     public Vector2 damageRange;
     public float initiative;
-    [HideInInspector]
     public float dodge;
     public float dodgeValue;
     public float critChance;
     public float critDamage;
-    [HideInInspector]
     public float armor;
     public float armorValue;
     [Range(0.0f, 1.0f)]

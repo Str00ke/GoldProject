@@ -385,7 +385,8 @@ public class CombatManager : MonoBehaviour
                     EndFight<Enemy>();
             }
         }
-        UpdatePosEnemies(numPos);
+        if(e)
+            UpdatePosEnemies(numPos);
     }
     public void UpdatePosEnemies(int numPos) 
     {

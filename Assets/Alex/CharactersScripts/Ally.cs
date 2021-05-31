@@ -281,6 +281,8 @@ public class Ally : Characters
         isTargetable = false;
         health = 0;
         healthBar.gameObject.SetActive(false);
+        GetComponentInChildren<DamagedBarScript>().gameObject.SetActive(false);
+        gameObject.SetActive(false);
         body.sprite = head.sprite;
         head.sprite = null;
         Character c = CharacterManager.characterManager.AskForCharacter(teamPosition);

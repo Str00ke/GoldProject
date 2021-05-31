@@ -8,6 +8,7 @@ public class Enemy : Characters
 {
     public EEnemyType enemyType;
     public EElement enemyElement;
+    bool removed;
     void Awake()
     {
         stateIcons = UIManager.uiManager.stateIcons;
@@ -56,6 +57,11 @@ public class Enemy : Characters
             UIManager.uiManager.enemyStatsUI.SetActive(true);
         }
 
+        if(!removed && isDead)
+        {
+            CombatManager.combatManager.RemoveEnemy(this);
+            removed = true;
+        }
     }
 
     public void CreateEnemy(Ennemy e, int teamPos, Level level, MapRoom mapRoom)
@@ -94,6 +100,10 @@ public class Enemy : Characters
         onPointerHold = false;
     }
 
+    public override void TakeDamage(float value, float duration)
+    {
+        StartCoroutine(TakeDamageCor(value, duration));
+    }
     public override IEnumerator TakeDamageCor(float value, float duration)
     {
         ShowFloatingHealth(Mathf.Round(value).ToString(), true);
@@ -108,7 +118,7 @@ public class Enemy : Characters
         if (health <= 0)
         {
             health = 0;
-            CombatManager.combatManager.RemoveEnemy(this);
+            isDead = true;
         }
     }
 
