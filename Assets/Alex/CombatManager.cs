@@ -346,7 +346,7 @@ public class CombatManager : MonoBehaviour
             //EndFight<Ally>(allies);
         }
     }
-    public void RemoveEnemy(int numPos) 
+    /*public void RemoveEnemy(int numPos) 
     {
         for (int i = enemies.Count - 1; i >= 0; i--)
         {
@@ -360,20 +360,38 @@ public class CombatManager : MonoBehaviour
                 enemies.Remove(enemies[i]);
                 Destroy(e.gameObject);
                 if (enemies.Count <= 0)
-                    EndFight<Enemy>();
+                    EndFight<Enemy>();s
             }
         }
         UpdatePosEnemies(numPos);
 
+    }*/
+    public void RemoveEnemy(Enemy e)
+    {
+        int numPos = 0;
+        for (int i = enemies.Count - 1; i >= 0; i--)
+        {
+            if (enemies[i] == e)
+            {
+                if (enemies[i] == enemySelected)
+                {
+                    enemySelected = null;
+                }
+                enemies.Remove(e);
+                numPos = e.teamPosition;
+                Destroy(e.gameObject);
+
+                if (enemies.Count <= 0)
+                    EndFight<Enemy>();
+            }
+        }
+        UpdatePosEnemies(numPos);
     }
     public void UpdatePosEnemies(int numPos) 
     {
         foreach (Enemy e in enemies)
         {
-            if (e.teamPosition < numPos)
-            {
-            }
-            else if (e.teamPosition > numPos)
+           if (e.teamPosition > numPos)
             {
                 e.teamPosition--;
                 e.ChangePos();
@@ -392,7 +410,7 @@ public class CombatManager : MonoBehaviour
     {
         for (int i = 0; i < enemies.Count; ++i)
         {
-            RemoveEnemy(i);
+            RemoveEnemy(enemies[i]);
         }
     }
 }

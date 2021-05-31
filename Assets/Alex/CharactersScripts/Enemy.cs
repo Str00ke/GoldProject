@@ -108,7 +108,7 @@ public class Enemy : Characters
         if (health <= 0)
         {
             health = 0;
-            CombatManager.combatManager.RemoveEnemy(teamPosition);
+            CombatManager.combatManager.RemoveEnemy(this);
         }
     }
 
