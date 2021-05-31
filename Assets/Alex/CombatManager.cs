@@ -380,14 +380,6 @@ public class CombatManager : MonoBehaviour
             }
         }
     }
-
-    /*void EndFight(bool win)
-    {
-        if (win)
-            FindObjectOfType<LevelManager>().WinFight();
-        else if (!win)
-            FindObjectOfType<LevelManager>().LoseFight();
-    }*/
     void EndFight<T>()
     {
         if (typeof(T) == typeof(Enemy))

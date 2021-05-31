@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Ally : Characters
+public class AllyTuto : CharactersTuto
 {
     public SpriteRenderer head;
     public SpriteRenderer body;
@@ -16,9 +16,9 @@ public class Ally : Characters
     public float holdAllyCombo;
     private void Start()
     {
-        holdAllyCombo = holdCharacValue*2;
-        stateIcons = UIManager.uiManager.stateIcons;
-        CombatManager.combatManager.allies.Add(this);
+        holdAllyCombo = holdCharacValue * 2;
+        stateIcons = UITuto.uiTuto.stateIcons;
+        TutoCombat.tutoCombat.allies.Add(this);
         charType = CharType.ALLY;
         anim = this.GetComponent<Animator>();
         thisColorBody = body;
@@ -53,26 +53,22 @@ public class Ally : Characters
         {
             if (!isSelected)
             {
-                if (CombatManager.combatManager.allySelected != null)
+                if (TutoCombat.tutoCombat.allySelected != null)
                 {
-                    CombatManager.combatManager.allySelected.isSelected = false;
-                    CombatManager.combatManager.allySelected = null;
+                    TutoCombat.tutoCombat.allySelected.isSelected = false;
+                    TutoCombat.tutoCombat.allySelected = null;
                 }
                 isSelected = true;
-                CombatManager.combatManager.allySelected = this;
+                TutoCombat.tutoCombat.allySelected = this;
             }
             UIManager.uiManager.allyStatsUI.SetActive(true);
         }
-        if(!hasPlayed && holdCharac > holdAllyCombo && CombatManager.combatManager.allyPlaying != this)
-        {
-            CombatManager.combatManager.allyCombo = this;
-        }
     }
 
-    public void CreateChar(string name) 
+    public void CreateChar(string name)
     {
         charName = name;
-        maxHealth = Random.Range(50,80);
+        maxHealth = Random.Range(50, 80);
         damageRange = new Vector2(Random.Range(10, 12), Random.Range(15, 18));
         dodge = Random.Range(5, 25);
         initiative = Random.Range(1, 14);
@@ -153,7 +149,7 @@ public class Ally : Characters
                 abilities[1] = AbilitiesManager.abilitiesManager.weaponAbilities[4];
                 break;
         }
-        if(weaponSpriteBase != null && cs.GetItem(NItem.EPartType.Weapon).itemWeaponType == NItem.EWeaponType.Bow)
+        if (weaponSpriteBase != null && cs.GetItem(NItem.EPartType.Weapon).itemWeaponType == NItem.EWeaponType.Bow)
         {
             weaponSpriteAnim = cs.itemSprites[4];
         }
@@ -225,7 +221,7 @@ public class Ally : Characters
         health = endValue;
         if (health <= 0)
         {
-            CombatManager.combatManager.RemoveAlly(this);
+            TutoCombat.tutoCombat.RemoveAlly(this);
         }
         yield return new WaitForSeconds(duration);
         GetComponentInChildren<DamagedBarScript>().UpdateDamagedBar(endValue, duration, false);
@@ -238,13 +234,44 @@ public class Ally : Characters
             healthBar.gameObject.SetActive(false);
         }
         yield return null;
+        /*float startValue = healthBar.value;
+        float endValue = startValue - value;
+        endValue = Mathf.Round(endValue);
+        float elapsed = 0.0f;
+        float ratio = 0.0f;
+        health = endValue;
+        if (health <= 0)
+        {
+            TutoCombat.tutoCombat.RemoveAlly(this);
+        }
+            while (elapsed < duration)
+        {
+            ratio = elapsed / duration;
+            healthBar.value = Mathf.Lerp(startValue, endValue, ratio);
+            if (healthBar.value <= 0)
+            {
+                health = 0;
+                break;
+            }
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        healthBar.value = endValue;
+        if (health <= 0)
+        {
+            isDead = true;
+            isTargetable = false;
+            health = 0;
+            healthBar.gameObject.SetActive(false);
+        }
+        yield return new WaitForSeconds(duration * 2);*/
     }
-    
+
     public override void TakeHealing(float value, float duration)
     {
         ShowFloatingHealth(Mathf.Round(value).ToString(), false);
         StartCoroutine(TakeHealingCor(value, duration));
-    }   
+    }
     public override IEnumerator TakeHealingCor(float value, float duration)
     {
         var startValue = healthBar.value;
@@ -285,8 +312,8 @@ public class Ally : Characters
         head.sprite = null;
         Character c = CharacterManager.characterManager.AskForCharacter(teamPosition);
         c.RemoveItem((NItem.EPartType)3);
-        c.RemoveItem((NItem.EPartType)Random.Range(0,3));
-        for(int i = 0; i < 3; i++)
+        c.RemoveItem((NItem.EPartType)Random.Range(0, 3));
+        for (int i = 0; i < 3; i++)
         {
             NItem.ItemScriptableObject item = c.GetItem((NItem.EPartType)i);
             if (item)

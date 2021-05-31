@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StatusManager : MonoBehaviour
+public class StatusTuto : MonoBehaviour
 {
     public GameObject prefabIconStatus;
-    public List<Status> StatusList = new List<Status>();
-    public static StatusManager statusManager;
+    public List<StatusTuto1> StatusList = new List<StatusTuto1>();
+    public static StatusTuto statusTuto;
     public Sprite buffStatusSprite;
     public Sprite debuffStatusSprite;
     public Sprite dotStatusSprite;
@@ -17,30 +17,29 @@ public class StatusManager : MonoBehaviour
 
     private void Awake()
     {
-        if (statusManager == null)
+        if (statusTuto == null)
         {
-            statusManager = this;
+            statusTuto = this;
         }
-        else if (statusManager != this)
+        else if (statusTuto != this)
             Destroy(gameObject);
     }
-    public void UpdateStatus(Characters c)
+    public void UpdateStatus(CharactersTuto c)
     {
-        for(int i = StatusList.Count - 1; i >=0; i--)
+        for (int i = StatusList.Count - 1; i >= 0; i--)
         {
-            Status s = StatusList[i];
             if (c == StatusList[i].statusTarget)
             {
                 StatusList[i].turnsActive--;
-                if (StatusList[i].statusType == Status.StatusTypes.DOT || StatusList[i].statusType == Status.StatusTypes.BLEEDING)
+                if (StatusList[i].statusType == StatusTuto1.StatusTypes.DOT && StatusList[i].statusType == StatusTuto1.StatusTypes.BLEEDING)
                     c.TakeDamageDots(StatusList[i].statusElement, StatusList[i].dmg);
             }
             if (StatusList[i].turnsActive <= 0)
             {
-                if(c == StatusList[i].statusTarget && StatusList[i].statusType == Status.StatusTypes.MARK)
+                if (c == StatusList[i].statusTarget && StatusList[i].statusType == StatusTuto1.StatusTypes.MARK)
                 {
                     c.TakeDamageMark(StatusList[i].statusElement, StatusList[i].dmg);
-                } 
+                }
                 Debug.Log("Status fini");
                 StatusList[i].RevertStatus();
                 StatusList.RemoveAt(i);
@@ -48,7 +47,7 @@ public class StatusManager : MonoBehaviour
         }
     }
 
-    public void AddDisplayStatus(Characters c, Status status)
+    public void AddDisplayStatus(CharactersTuto c, StatusTuto1 status)
     {
         GameObject temp = Instantiate(prefabIconStatus);
         temp.name = "Status" + status.statusId;
@@ -56,14 +55,14 @@ public class StatusManager : MonoBehaviour
         temp.transform.SetParent(c.canvasChar.transform);
         // temp.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         temp.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-        if (status.statusType == Status.StatusTypes.DOT || status.statusType == Status.StatusTypes.BLEEDING)
+        if (status.statusType == StatusTuto1.StatusTypes.DOT || status.statusType == StatusTuto1.StatusTypes.BLEEDING)
         {
             //temp.GetComponent<RectTransform>().anchoredPosition = new Vector2(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.Count), c.debuffsInitialPos.y);
             temp.transform.position = c.transform.position + new Vector3(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.Count), c.debuffsInitialPos.y);
             c.prefabsIconStatusDebuffs.Add(temp);
             temp.GetComponent<Image>().sprite = dotStatusSprite;
         }
-        else if(status.statusType == Status.StatusTypes.MARK)
+        else if (status.statusType == StatusTuto1.StatusTypes.MARK)
         {
             //temp.GetComponent<RectTransform>().anchoredPosition = new Vector2(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.Count), c.debuffsInitialPos.y);
             temp.transform.position = c.transform.position + new Vector3(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.Count), c.debuffsInitialPos.y);
@@ -72,7 +71,7 @@ public class StatusManager : MonoBehaviour
         }
         else
         {
-            if (status.buffOrDebuff == Status.BuffOrDebuff.BUFF)
+            if (status.buffOrDebuff == StatusTuto1.BuffOrDebuff.BUFF)
             {
                 //temp.GetComponent<RectTransform>().anchoredPosition = new Vector2(c.buffsInitialPos.x - (statusOffset * c.prefabsIconStatusBuffs.Count), c.buffsInitialPos.y);
                 temp.transform.position = c.transform.position + new Vector3(c.buffsInitialPos.x - (statusOffset * c.prefabsIconStatusBuffs.Count), c.buffsInitialPos.y);
@@ -88,9 +87,9 @@ public class StatusManager : MonoBehaviour
             }
         }
     }
-    public void DeleteDisplayStatus(Characters c, Status status)
+    public void DeleteDisplayStatus(CharactersTuto c, StatusTuto1 status)
     {
-        if(status.buffOrDebuff == Status.BuffOrDebuff.BUFF)
+        if (status.buffOrDebuff == StatusTuto1.BuffOrDebuff.BUFF)
         {
             for (int i = c.prefabsIconStatusBuffs.Count - 1; i >= 0; i--)
             {
@@ -104,10 +103,10 @@ public class StatusManager : MonoBehaviour
             for (int i = c.prefabsIconStatusBuffs.Count - 1; i >= 0; i--)
             {
                 // c.prefabsIconStatusBuffs[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(c.buffsInitialPos.x + (statusOffset * i), c.buffsInitialPos.y);
-                c.prefabsIconStatusBuffs[i].transform.position = c.transform.position + new Vector3(c.buffsInitialPos.x - (statusOffset * i), c.buffsInitialPos.y);
+                c.prefabsIconStatusBuffs[i].transform.position = c.transform.position + new Vector3(c.buffsInitialPos.x + (statusOffset * i), c.buffsInitialPos.y);
             }
         }
-        if (status.buffOrDebuff == Status.BuffOrDebuff.DEBUFF)
+        if (status.buffOrDebuff == StatusTuto1.BuffOrDebuff.DEBUFF)
         {
             for (int i = c.prefabsIconStatusDebuffs.Count - 1; i >= 0; i--)
             {
@@ -118,10 +117,10 @@ public class StatusManager : MonoBehaviour
                     Destroy(temp);
                 }
             }
-            for (int i = c.prefabsIconStatusDebuffs.Count - 1; i >= 0; i--)
+            foreach (GameObject g in c.prefabsIconStatusDebuffs)
             {
-                // c.prefabsIconStatusBuffs[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(c.buffsInitialPos.x + (statusOffset * i), c.buffsInitialPos.y);
-                c.prefabsIconStatusDebuffs[i].transform.position = c.transform.position + new Vector3(c.debuffsInitialPos.x + (statusOffset * i), c.debuffsInitialPos.y);
+                // g.GetComponent<RectTransform>().anchoredPosition = new Vector2(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.IndexOf(g)), c.debuffsInitialPos.y);
+                g.transform.position = c.transform.position + new Vector3(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.IndexOf(g)), c.debuffsInitialPos.y);
             }
         }
     }
