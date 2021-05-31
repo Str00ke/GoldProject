@@ -14,7 +14,7 @@ public class PlayGamesController : MonoBehaviour {
 
     private void Awake()
     {
-        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+        /*PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
         // enables saving game progress.
         //.EnableSavedGames()
         // requests the email address of the player be available.
@@ -33,6 +33,7 @@ public class PlayGamesController : MonoBehaviour {
         PlayGamesPlatform.DebugLogEnabled = true;
         // Activate the Google Play Games platform
         PlayGamesPlatform.Activate();
+        */
     }
 
     public void Authenticate()
@@ -77,6 +78,6 @@ public class PlayGamesController : MonoBehaviour {
 
     public static void ShowLeaderboardUI()
     {
-        PlayGamesPlatform.Instance.ShowLeaderboardUI(GPGSIds.leaderboard_testleaderboard);
+        //PlayGamesPlatform.Instance.ShowLeaderboardUI(GPGSIds.leaderboard_testleaderboard);
     }
 }
