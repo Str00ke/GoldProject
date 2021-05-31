@@ -31,7 +31,7 @@ public class StatusManager : MonoBehaviour
             if (c == StatusList[i].statusTarget)
             {
                 StatusList[i].turnsActive--;
-                if (StatusList[i].statusType == Status.StatusTypes.DOT)
+                if (StatusList[i].statusType == Status.StatusTypes.DOT && StatusList[i].statusType == Status.StatusTypes.BLEEDING)
                     c.TakeDamageDots(StatusList[i].statusElement, StatusList[i].dmg);
             }
             if (StatusList[i].turnsActive <= 0)
@@ -39,7 +39,7 @@ public class StatusManager : MonoBehaviour
                 if(c == StatusList[i].statusTarget && StatusList[i].statusType == Status.StatusTypes.MARK)
                 {
                     c.TakeDamageMark(StatusList[i].statusElement, StatusList[i].dmg);
-                }
+                } 
                 Debug.Log("Status fini");
                 StatusList[i].RevertStatus();
                 StatusList.RemoveAt(i);

@@ -160,6 +160,10 @@ public class CombatManager : MonoBehaviour
                 if (fightersList[currCharAttacking].charType == Characters.CharType.ALLY)
                 {
                     allyPlaying = (Ally)fightersList[currCharAttacking];
+                    if (allyPlaying.inDefenceMode)
+                    {
+                        allyPlaying.inDefenceMode = false;
+                    }
                 }
                 else
                 {

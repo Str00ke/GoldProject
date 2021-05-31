@@ -110,32 +110,6 @@ public class Enemy : Characters
             health = 0;
             CombatManager.combatManager.RemoveEnemy(teamPosition);
         }
-        /*float startValue = health;
-        float endValue = startValue - value;
-        endValue = Mathf.Round(endValue);
-        float elapsed = 0.0f;
-        float ratio = 0.0f;
-        health = endValue;
-        while (elapsed < duration)
-        {
-            ratio = elapsed / duration;
-            healthBar.value = Mathf.Lerp(startValue, endValue, ratio);
-            if (healthBar.value <= 0)
-            {
-                health = 0;
-                break;
-            }
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        healthBar.value = endValue;
-        yield return new WaitForSeconds(durationDecreaseHealth);
-        GetComponentInChildren<DamagedBarScript>().UpdateDamagedBar(value, duration, false);
-        if (health <= 0)
-        {
-            health = 0;
-            CombatManager.combatManager.RemoveEnemy(teamPosition);
-        }*/
     }
 
     

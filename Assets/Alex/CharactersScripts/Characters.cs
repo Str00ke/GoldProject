@@ -228,21 +228,30 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         float dmg = Mathf.Round(Random.Range(damageRange.x, damageRange.y));
         dmg *= (ability.multiplicator / 100);
-        //-CRITIC DAMAGE-
-        if (Random.Range(0.0f, 1.0f) < this.critChance)
+        if(Random.Range(0,100) < receiver.dodge)
         {
-            FindObjectOfType<CameraScript>().CamShake(0.4f, 0.3f);
-            dmg += dmg * this.critDamage;
+            receiver.ShowFloatingHealth("Dodge", true);
         }
         else
         {
-            FindObjectOfType<CameraScript>().CamShake(0.2f, 0.05f);
+            //-CRITIC DAMAGE-
+            if (Random.Range(0.0f, 1.0f) < this.critChance)
+            {
+                FindObjectOfType<CameraScript>().CamShake(0.4f, 0.3f);
+                dmg += dmg * this.critDamage;
+            }
+            else
+            {
+                FindObjectOfType<CameraScript>().CamShake(0.2f, 0.05f);
+            }
+
+            //-ARMOR MODIF ON DAMAGE-
+            dmg -= receiver.armor;
+            dmg = dmg < 0 ? 0 : dmg;
+            //-ELEMENTAL REACTIONS-
+            receiver.TakeDamage(dmg, durationDecreaseHealth);
+            receiver.ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), ability.elementType.ToString()));
         }
-        //-ARMOR MODIF ON DAMAGE-
-        dmg -= armor / 100;
-        //-ELEMENTAL REACTIONS-
-        receiver.TakeDamage(dmg, durationDecreaseHealth);
-        receiver.ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), ability.elementType.ToString()));
     }
     //--------------------------------HEAL FUNCTION------------------------------------------------
     public void LaunchHeal(Characters receiver, Ability ability)
@@ -437,7 +446,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     }
 
-    public void ShowFloatingHealth(float value, bool red)
+    public void ShowFloatingHealth(string value, bool red)
     {
         GameObject go = Instantiate(floatingHealth, transform.position, Quaternion.identity, transform);
         if (red)

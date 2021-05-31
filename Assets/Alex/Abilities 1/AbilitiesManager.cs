@@ -19,6 +19,7 @@ public class AbilitiesManager : MonoBehaviour
     public AbilityScript Ability03;
     public AbilityScript Ability04;
     //public Ability[] abilitiesWeaponsAllies;
+    public Ability[] weaponAbilities;
     public Ability[] cristalsAsh;
     public Ability[] cristalsIce;
     public Ability[] cristalsMud;
@@ -165,7 +166,7 @@ public class AbilitiesManager : MonoBehaviour
         }
         else
         {
-            if (ab.targetType == Ability.TargetType.RANGE)
+            //if (ab.targetType == Ability.TargetType.RANGE)
                 switch (ab.targetType)
                 {
                     case Ability.TargetType.ALLIES:
@@ -269,27 +270,29 @@ public class AbilitiesManager : MonoBehaviour
     {
         var cm = CombatManager.combatManager;
         //-----------------------CHANGE ABILITY IN FUNCTION OF TARGETTYPE---------------------------------
-        switch (abi.objectType)
+        if (abi.objectType == Ability.ObjectType.CRISTAL)
         {
             //----------------------------------------------------ABILITIES ON CRISTAL----------------------------------------
-            case Ability.ObjectType.CRISTAL:
-                if(abi.crType == Ability.CristalAbilityType.HEAL)
+            if (abi.crType == Ability.CristalAbilityType.HEAL)
+            {
+                if (cm.allySelected.isTargetable)
                 {
-                    if (cm.allySelected.isTargetable)
-                    {
-                        CristalAction(abi);
-                    }
+                    CristalAction(abi);
                 }
-                else
+            }
+            else
+            {
+                if (cm.enemySelected.isTargetable)
                 {
-                    if (cm.enemySelected.isTargetable)
-                    {
-                        CristalAction(abi);
-                    }
+                    CristalAction(abi);
                 }
-                break;
+            }
             //------------------------------------------------------------ABILITY ON WEAPONS----------------------------------------------------
-            case Ability.ObjectType.WEAPON:
+        }
+        else if (abi.objectType == Ability.ObjectType.WEAPON)
+        {
+            if (abi.weaponAbilityType != Ability.WeaponAbilityType.DEFENSE)
+            {
                 switch (abi.targetType)
                 {
                     case Ability.TargetType.RANGE:
@@ -298,7 +301,7 @@ public class AbilitiesManager : MonoBehaviour
                         {
                             if (abi.weaponAbilityType == Ability.WeaponAbilityType.PIERCE)
                             {
-                                if(cm.enemies.Count <= 1)
+                                if (cm.enemies.Count <= 1)
                                 {
                                     cm.allyPlaying.LaunchAttack(cm.enemySelected, abi);
                                 }
@@ -307,7 +310,7 @@ public class AbilitiesManager : MonoBehaviour
                                     cm.allyPlaying.LaunchAttack(cm.enemySelected, abi);
                                     for (int i = cm.enemies.Count - 1; i >= 0; i--)
                                     {
-                                        if(cm.enemies[i].teamPosition == cm.enemySelected.teamPosition + 1)
+                                        if (cm.enemies[i].teamPosition == cm.enemySelected.teamPosition + 1)
                                         {
                                             Enemy ndEnemy = cm.enemies[i];
                                             cm.allyPlaying.LaunchAttack(ndEnemy, abi);
@@ -335,9 +338,17 @@ public class AbilitiesManager : MonoBehaviour
                         }
                         break;
                 }
-                break;
+            }
+            else
+            {
+                if (cm.allySelected.isTargetable)
+                {
+                    cm.allyPlaying.inDefenceMode = true;
+                    Status s = new Status(cm.allyPlaying, 0.6f, abi, Status.StatusTypes.ARMORBONUSPERC);
+                }
+            }
         }
-        
+         
     }
     public void CristalAction(Ability a)
     {

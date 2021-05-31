@@ -1355,6 +1355,12 @@ MonoBehaviour:
   Ability02: {fileID: 0}
   Ability03: {fileID: 0}
   Ability04: {fileID: 0}
+  weaponAbilities:
+  - {fileID: 11400000, guid: 6fbab3162f95bf449bcfa1a0c164de7b, type: 2}
+  - {fileID: 11400000, guid: f8ac5098f638b8d41b97be57ba7eb954, type: 2}
+  - {fileID: 11400000, guid: c51bf42cbcf6c5c4589022cd24632352, type: 2}
+  - {fileID: 11400000, guid: 60a15ee046ce7f94bb3971ab8b42d4b9, type: 2}
+  - {fileID: 11400000, guid: 9300612b4816bf54dbc75713cc7bb92b, type: 2}
   cristalsAsh:
   - {fileID: 11400000, guid: 7b3f72dc691b22347b8d1d3495e42a91, type: 2}
   - {fileID: 11400000, guid: 1de95040a0b022c49a6db7e3be8ae153, type: 2}
