@@ -301,6 +301,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 }
                 break;
         }
+        receiver.ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), ability.elementType.ToString()));
     }
     public void LaunchDestruction(Characters receiver, Ability ability)
     {

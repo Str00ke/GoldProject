@@ -28,10 +28,11 @@ public class StatusManager : MonoBehaviour
     {
         for(int i = StatusList.Count - 1; i >=0; i--)
         {
+            Status s = StatusList[i];
             if (c == StatusList[i].statusTarget)
             {
                 StatusList[i].turnsActive--;
-                if (StatusList[i].statusType == Status.StatusTypes.DOT && StatusList[i].statusType == Status.StatusTypes.BLEEDING)
+                if (StatusList[i].statusType == Status.StatusTypes.DOT || StatusList[i].statusType == Status.StatusTypes.BLEEDING)
                     c.TakeDamageDots(StatusList[i].statusElement, StatusList[i].dmg);
             }
             if (StatusList[i].turnsActive <= 0)
@@ -103,7 +104,7 @@ public class StatusManager : MonoBehaviour
             for (int i = c.prefabsIconStatusBuffs.Count - 1; i >= 0; i--)
             {
                 // c.prefabsIconStatusBuffs[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(c.buffsInitialPos.x + (statusOffset * i), c.buffsInitialPos.y);
-                c.prefabsIconStatusBuffs[i].transform.position = c.transform.position + new Vector3(c.buffsInitialPos.x + (statusOffset * i), c.buffsInitialPos.y);
+                c.prefabsIconStatusBuffs[i].transform.position = c.transform.position + new Vector3(c.buffsInitialPos.x - (statusOffset * i), c.buffsInitialPos.y);
             }
         }
         if (status.buffOrDebuff == Status.BuffOrDebuff.DEBUFF)
@@ -117,10 +118,10 @@ public class StatusManager : MonoBehaviour
                     Destroy(temp);
                 }
             }
-            foreach (GameObject g in c.prefabsIconStatusDebuffs)
+            for (int i = c.prefabsIconStatusDebuffs.Count - 1; i >= 0; i--)
             {
-                // g.GetComponent<RectTransform>().anchoredPosition = new Vector2(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.IndexOf(g)), c.debuffsInitialPos.y);
-                g.transform.position = c.transform.position + new Vector3(c.debuffsInitialPos.x + (statusOffset * c.prefabsIconStatusDebuffs.IndexOf(g)), c.debuffsInitialPos.y);
+                // c.prefabsIconStatusBuffs[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(c.buffsInitialPos.x + (statusOffset * i), c.buffsInitialPos.y);
+                c.prefabsIconStatusDebuffs[i].transform.position = c.transform.position + new Vector3(c.debuffsInitialPos.x + (statusOffset * i), c.debuffsInitialPos.y);
             }
         }
     }
