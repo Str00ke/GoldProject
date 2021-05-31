@@ -21,6 +21,9 @@ MonoBehaviour:
   critDamage: 125
   initiative: 10
   armor: 5
-  element: 0
-  enemyAbilities: []
-  enemySpecialsAbilities: []
+  element: 1
+  enemyAbilities:
+  - {fileID: 11400000, guid: 339b3b47eb400d24e90347ae579ebbf6, type: 2}
+  - {fileID: 11400000, guid: 3aa29f96a43107e48a69b2579056750f, type: 2}
+  enemySpecialsAbilities:
+  - {fileID: 11400000, guid: 02961977e52a2704bb2f4a6314df180f, type: 2}

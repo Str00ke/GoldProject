@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40102682e9e99234baf7862f25a929e2, type: 3}
-  m_Name: AttackEnemyBase01
+  m_Name: AttackEnemyBase03
   m_EditorClassIdentifier: 
-  name: AttackEnemy01
+  name: EnemyAbilityBase
   type: 
-  multiplicator: 80
+  multiplicator: 100
   icon: {fileID: 0}
   bonusmalus: 0
   destruModif: 0
@@ -22,10 +22,10 @@ MonoBehaviour:
   markMult: 0
   turnDuration: 0
   objectType: 1
-  weaponAbilityType: 3
+  weaponAbilityType: 1
   crType: 0
   crHealType: 0
   crAttackType: 0
   crSpecialType: 0
-  targetType: 0
+  targetType: 1
   elementType: 0

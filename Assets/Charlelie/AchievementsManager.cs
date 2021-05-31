@@ -9,13 +9,13 @@ public static class AchievementsManager
 {
     static void UnlockAchievement(string ach)
     {
-        Social.ReportProgress(ach, 100.00f, (bool success) =>
+        /*Social.ReportProgress(ach, 100.00f, (bool success) =>
         {
             if (success)
                 Debug.Log("Achievement unlocked: " + ach);
             else
                 Debug.Log("Achievement problem for: " + ach);
-        });
+        });*/
     }
 
     public static void Logged()
