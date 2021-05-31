@@ -207,9 +207,9 @@ public class MapManager : MonoBehaviour
 
     public void StartToEnd(MapRoom room, int index)
     {
-        Debug.Log("Index: " + index);
+        //Debug.Log("Index: " + index);
         room.roomNbr = index;
-        Debug.Log("Room nbr: " + room.roomNbr);
+        //Debug.Log("Room nbr: " + room.roomNbr);
         room.SetNbr();
         
         rTestDone++;
@@ -225,14 +225,14 @@ public class MapManager : MonoBehaviour
             {
                 if (room.linkedRoom[i].roomType == RoomType.END)
                 {
-                    Debug.Log("ARRIVED!!!");
-                    Debug.Log("Arrival at: " + index + 1);
+                    //Debug.Log("ARRIVED!!!");
+                    //Debug.Log("Arrival at: " + index + 1);
                     room.linkedRoom[i].roomNbr = index + 1;
                     testMax = room.roomNbr;
                     StartToEnd(room.linkedRoom[i], index + 1);
                     result = true;
                 }
-                Debug.Log("++= " + (room.roomNbr + 1));
+                //Debug.Log("++= " + (room.roomNbr + 1));
                 if (testMax == 0)
                     StartToEnd(room.linkedRoom[i], (room.roomNbr + 1));
                 else if (index + 1 > testMax && room.linkedRoom[i].roomType != RoomType.END)
@@ -243,20 +243,20 @@ public class MapManager : MonoBehaviour
 
         if (rTestDone <= 1)
         {
-            Debug.Log(result);
+            //Debug.Log(result);
         }
     }
 
     public void RandomizeShop()
     {
 
-        Debug.Log("Setting shop... ");
+        //Debug.Log("Setting shop... ");
         foreach (MapRoom room in roomArr)
         {
-            Debug.Log(".");
+            //Debug.Log(".");
             if (room.roomType != RoomType.START && room.roomType != RoomType.END)
             {
-                Debug.Log("..");
+                //Debug.Log("..");
                 /*float rand = Random.Range(0, roomArr.Length);
                 if (rand > 5)
                 {

@@ -44,10 +44,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   easyDungeon:
+    dungeonType: 0
     part1:
+      maxEnemiesInRoom: 1
       ennemiesPool:
-      - {fileID: 11400000, guid: d4e5cf981a1fa8b45a25dc2d38ba3542, type: 2}
-      - {fileID: 11400000, guid: 705e0ca7867bea94787b701d83e53e7f, type: 2}
+      - {fileID: 11400000, guid: 551c83fc69adb7f4887043d20f75e0ce, type: 2}
+      - {fileID: 11400000, guid: ce014b8a19ca93c4fb95b601f2c890e6, type: 2}
       maxHealthMultiplicator: 1
       damageRangeMultiplicator: 1
       dodgeMultiplicator: 1
@@ -56,26 +58,34 @@ MonoBehaviour:
       initiativeMultiplicator: 1
       armorMultiplicator: 1
     part2:
-      ennemiesPool: []
-      maxHealthMultiplicator: 0
-      damageRangeMultiplicator: 0
-      dodgeMultiplicator: 0
-      critChanceMultiplicator: 0
-      critDamageMultiplicator: 0
-      initiativeMultiplicator: 0
-      armorMultiplicator: 0
+      maxEnemiesInRoom: 2
+      ennemiesPool:
+      - {fileID: 11400000, guid: 551c83fc69adb7f4887043d20f75e0ce, type: 2}
+      - {fileID: 11400000, guid: ce014b8a19ca93c4fb95b601f2c890e6, type: 2}
+      maxHealthMultiplicator: 2
+      damageRangeMultiplicator: 2
+      dodgeMultiplicator: 2
+      critChanceMultiplicator: 2
+      critDamageMultiplicator: 2
+      initiativeMultiplicator: 2
+      armorMultiplicator: 2
     part3:
-      ennemiesPool: []
-      maxHealthMultiplicator: 0
-      damageRangeMultiplicator: 0
-      dodgeMultiplicator: 0
-      critChanceMultiplicator: 0
-      critDamageMultiplicator: 0
-      initiativeMultiplicator: 0
-      armorMultiplicator: 0
+      maxEnemiesInRoom: 3
+      ennemiesPool:
+      - {fileID: 11400000, guid: 551c83fc69adb7f4887043d20f75e0ce, type: 2}
+      - {fileID: 11400000, guid: ce014b8a19ca93c4fb95b601f2c890e6, type: 2}
+      maxHealthMultiplicator: 3
+      damageRangeMultiplicator: 3
+      dodgeMultiplicator: 3
+      critChanceMultiplicator: 3
+      critDamageMultiplicator: 3
+      initiativeMultiplicator: 3
+      armorMultiplicator: 3
     background: {fileID: 0}
   moyenDungeon:
+    dungeonType: 0
     part1:
+      maxEnemiesInRoom: 0
       ennemiesPool: []
       maxHealthMultiplicator: 0
       damageRangeMultiplicator: 0
@@ -85,6 +95,7 @@ MonoBehaviour:
       initiativeMultiplicator: 0
       armorMultiplicator: 0
     part2:
+      maxEnemiesInRoom: 0
       ennemiesPool: []
       maxHealthMultiplicator: 0
       damageRangeMultiplicator: 0
@@ -94,6 +105,7 @@ MonoBehaviour:
       initiativeMultiplicator: 0
       armorMultiplicator: 0
     part3:
+      maxEnemiesInRoom: 0
       ennemiesPool: []
       maxHealthMultiplicator: 0
       damageRangeMultiplicator: 0
@@ -104,7 +116,9 @@ MonoBehaviour:
       armorMultiplicator: 0
     background: {fileID: 0}
   hardDungeon:
+    dungeonType: 0
     part1:
+      maxEnemiesInRoom: 0
       ennemiesPool: []
       maxHealthMultiplicator: 0
       damageRangeMultiplicator: 0
@@ -114,6 +128,7 @@ MonoBehaviour:
       initiativeMultiplicator: 0
       armorMultiplicator: 0
     part2:
+      maxEnemiesInRoom: 0
       ennemiesPool: []
       maxHealthMultiplicator: 0
       damageRangeMultiplicator: 0
@@ -123,6 +138,7 @@ MonoBehaviour:
       initiativeMultiplicator: 0
       armorMultiplicator: 0
     part3:
+      maxEnemiesInRoom: 0
       ennemiesPool: []
       maxHealthMultiplicator: 0
       damageRangeMultiplicator: 0

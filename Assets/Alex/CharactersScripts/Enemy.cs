@@ -69,6 +69,7 @@ public class Enemy : Characters
         healthBarOutline.SetActive(false);
         maxHealth = e.maxHealth;
         enemyType = e.enemyType;
+        SetEnemyImg();
         damageRange = e.damageRange;
         dodge = e.dodge * 100;
         critChance = e.critChance;
@@ -83,6 +84,24 @@ public class Enemy : Characters
         health = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = health;
+    }
+
+    void SetEnemyImg()
+    {
+        switch (enemyType)
+        {
+            case (EEnemyType.SNAKE):
+                gameObject.GetComponent<SpriteRenderer>().sprite = EnemiesImgPath.GetSprite(EnemiesImgPath.Snake_Spr);
+                break;
+
+            case (EEnemyType.GIRAFFE):
+                gameObject.GetComponent<SpriteRenderer>().sprite = EnemiesImgPath.GetSprite(EnemiesImgPath.Giraffe_Spr);
+                break;
+
+            case (EEnemyType.DEATH):
+                gameObject.GetComponent<SpriteRenderer>().sprite = EnemiesImgPath.GetSprite(EnemiesImgPath.Death_Spr);
+                break;
+        }
     }
     public override void OnPointerDown(PointerEventData eventData)
     {

@@ -13,7 +13,8 @@ public enum EElement
 public enum EEnemyType
 {
     SNAKE,
-    GIRAFFE
+    GIRAFFE,
+    DEATH
 }
 
 

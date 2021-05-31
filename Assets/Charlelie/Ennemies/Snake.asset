@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470ec357602151341a5515c24ca19ad1, type: 3}
   m_Name: Snake
   m_EditorClassIdentifier: 
-  enemyName: 
-  maxHealth: 0
+  enemyName: Snake
+  maxHealth: 200
   enemyType: 0
-  damageRange: {x: 0, y: 0}
-  dodge: 0
-  critChance: 0
-  critDamage: 0
-  initiative: 0
-  armor: 0
+  damageRange: {x: 27, y: 33}
+  dodge: 0.1
+  critChance: 0.1
+  critDamage: 125
+  initiative: 10
+  armor: 5
   element: 0
   enemyAbilities: []
   enemySpecialsAbilities: []

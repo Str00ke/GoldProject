@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470ec357602151341a5515c24ca19ad1, type: 3}
   m_Name: Death
   m_EditorClassIdentifier: 
-  enemyName: 
-  maxHealth: 0
-  enemyType: 0
-  damageRange: {x: 0, y: 0}
-  dodge: 0
-  critChance: 0
-  critDamage: 0
-  initiative: 0
-  armor: 0
+  enemyName: Death
+  maxHealth: 600
+  enemyType: 2
+  damageRange: {x: 42, y: 47}
+  dodge: 0.2
+  critChance: 0.05
+  critDamage: 100
+  initiative: 15
+  armor: 30
   element: 0
   enemyAbilities: []
   enemySpecialsAbilities: []
