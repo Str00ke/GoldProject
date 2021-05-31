@@ -143,11 +143,7 @@ public class CombatManager : MonoBehaviour
         {
             while (!fightersList[currCharAttacking] || fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead)
             {
-                //--------------------STUN STATUS----------------------------
-                if (fightersList[currCharAttacking].stunned)
-                {
-                    fightersList[currCharAttacking].stunned = false;
-                }
+                StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
                 currCharAttacking++;
                 //---------------- ---IF EVERY FIGHTERS HAVE PLAYED -> NEXT TURN----------------------------
                 if (currCharAttacking >= fightersList.Count)
@@ -279,13 +275,13 @@ public class CombatManager : MonoBehaviour
                         if (allyDef)
                         {
                             fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
-                            allyDef.stunned = true;
+                            Status s = new Status(allyDef, 0, 1, Status.StatusTypes.STUN);
                             allyDef.inDefenceMode = false;
                         }
                         else
                         {
                             fightersList[currCharAttacking].LaunchAttack(allyAtt, abilityUsed);
-                            allyAtt.stunned = true;
+                            Status s = new Status(allyAtt, 0, 1, Status.StatusTypes.STUN);
                         }
                     }
                 }
@@ -317,7 +313,6 @@ public class CombatManager : MonoBehaviour
 
         while (fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead || !fightersList[currCharAttacking])
         {
-            fightersList[currCharAttacking].stunned = false;
             currCharAttacking++;
             if (currCharAttacking >= fightersList.Count)
             {
