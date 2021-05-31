@@ -1,6 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
+public static class EnemiesImgPath
+{
+    public const string Snake_Spr = "Snake";
+    public const string Giraffe_Spr = "Giraffe";
+    public const string Death_Spr = "Death";
+
+    public static Sprite GetSprite(string enemy)
+    {
+        return Resources.Load<Sprite>(enemy);
+    }
+}
+
 
 public enum EPart
 {
@@ -12,6 +26,8 @@ public enum EPart
 [System.Serializable]
 public struct DungeonPart
 {
+    [Range(1, 3)]
+    public int maxEnemiesInRoom;
     public Ennemy[] ennemiesPool;
     public int maxHealthMultiplicator;
     public int damageRangeMultiplicator;
@@ -25,6 +41,7 @@ public struct DungeonPart
 [System.Serializable]
 public struct DungeonDifficulty
 {
+    public EElement dungeonType;
     public DungeonPart part1;
     public DungeonPart part2;
     public DungeonPart part3;
@@ -34,6 +51,7 @@ public struct DungeonDifficulty
 [System.Serializable]
 public class EnnemyManager : MonoBehaviour
 {
+
     public DungeonDifficulty easyDungeon;
     public DungeonDifficulty moyenDungeon;
     public DungeonDifficulty hardDungeon;
@@ -79,7 +97,7 @@ public class EnnemyManager : MonoBehaviour
         switch (level.levelType)
         {
             case LevelType.EASY:
-                ennemy = GetRandEnnemy(easyDungeon, RoomDiffMult(/*mapRoom.distFromStart*/0));
+                ennemy = GetRandEnnemy(easyDungeon, RoomDiffMult(mapRoom.distFromStart));
                 break;
 
             case LevelType.MEDIUM:
@@ -90,25 +108,41 @@ public class EnnemyManager : MonoBehaviour
                 ennemy = GetRandEnnemy(hardDungeon, RoomDiffMult(mapRoom.distFromStart));
                 break;
         }
+        ennemy.element = SetEnemyElem();
         return ennemy;
+    }
+
+    EElement SetEnemyElem()
+    {
+        int rand = UnityEngine.Random.Range(0, 10);
+        if (rand <= 7)
+        {
+            return LevelManager.GetInstance().level.levelElem;
+        }
+        else
+        {
+            Array values = Enum.GetValues(typeof(EElement));
+            System.Random random = new System.Random();
+            EElement randomElem = (EElement)values.GetValue(random.Next(values.Length));
+            return randomElem;
+        }
     }
 
     Ennemy GetRandEnnemy(DungeonDifficulty dD, EPart dP)
     {
         Ennemy ennemy = null;
-        Debug.Log("GetRandEnnemy");
         switch (dP)
         {
             case EPart.PART1:
-                ennemy = dD.part1.ennemiesPool[Random.Range(0, dD.part1.ennemiesPool.Length)];
+                ennemy = dD.part1.ennemiesPool[UnityEngine.Random.Range(0, dD.part1.ennemiesPool.Length)];
                 break;
 
             case EPart.PART2:
-                ennemy = dD.part2.ennemiesPool[Random.Range(0, dD.part2.ennemiesPool.Length)];
+                ennemy = dD.part2.ennemiesPool[UnityEngine.Random.Range(0, dD.part2.ennemiesPool.Length)];
                 break;
 
             case EPart.PART3:
-                ennemy = dD.part3.ennemiesPool[Random.Range(0, dD.part3.ennemiesPool.Length)];
+                ennemy = dD.part3.ennemiesPool[UnityEngine.Random.Range(0, dD.part3.ennemiesPool.Length)];
                 break;
         }
 
@@ -156,5 +190,42 @@ public class EnnemyManager : MonoBehaviour
         enemy.critDamage *= dP.critDamageMultiplicator;
         enemy.initiative *= dP.initiativeMultiplicator;
         enemy.armor *= dP.armorMultiplicator;
+    }
+
+    public int GetMaxEnemiesInRoom(Level level, MapRoom room)
+    {
+        DungeonDifficulty dD = new DungeonDifficulty();
+        switch (level.levelType)
+        {
+            case LevelType.EASY:
+                dD = _enemyManager.easyDungeon;
+                break;
+
+            case LevelType.MEDIUM:
+                dD = _enemyManager.moyenDungeon;
+                break;
+
+            case LevelType.HARD:
+                dD = _enemyManager.hardDungeon;
+                break;
+        }
+        EPart eDP = RoomDiffMult(room.distFromStart);
+        DungeonPart dP = new DungeonPart();
+        switch (eDP)
+        {
+            case EPart.PART1:
+                dP = dD.part1;
+                break;
+
+            case EPart.PART2:
+                dP = dD.part2;
+                break;
+
+            case EPart.PART3:
+                dP = dD.part3;
+                break;
+        }
+
+        return dP.maxEnemiesInRoom;
     }
 }

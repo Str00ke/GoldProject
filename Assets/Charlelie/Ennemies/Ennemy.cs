@@ -4,7 +4,6 @@ using UnityEngine;
 
 public enum EElement
 {
-    BASE,
     ICE,
     ASH,
     MUD,

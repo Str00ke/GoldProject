@@ -96,7 +96,7 @@ public class Enemy : Characters
 
     public override IEnumerator TakeDamageCor(float value, float duration)
     {
-        ShowFloatingHealth(Mathf.Round(value), true);
+        ShowFloatingHealth(Mathf.Round(value).ToString(), true);
         float startValue = health;
         float endValue = startValue - value;
         endValue = Mathf.Round(endValue);
@@ -115,7 +115,7 @@ public class Enemy : Characters
     
     public override void TakeHealing(float value, float duration)
     {
-        ShowFloatingHealth(Mathf.Round(value), false);
+        ShowFloatingHealth(Mathf.Round(value).ToString(), false);
         StartCoroutine(TakeHealingCor(value, duration));
     }
     public override IEnumerator TakeHealingCor(float value, float duration)

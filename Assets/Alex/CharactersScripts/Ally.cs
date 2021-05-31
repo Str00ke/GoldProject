@@ -217,7 +217,8 @@ public class Ally : Characters
 
     public override IEnumerator TakeDamageCor(float value, float duration)
     {
-        ShowFloatingHealth(Mathf.Round(value), true);
+        CombatManager.combatManager.hasTookDamage = true;
+        ShowFloatingHealth(Mathf.Round(value).ToString(), true);
         float startValue = healthBar.value;
         float endValue = startValue - value;
         endValue = Mathf.Round(endValue);
@@ -273,7 +274,8 @@ public class Ally : Characters
     
     public override void TakeHealing(float value, float duration)
     {
-        ShowFloatingHealth(Mathf.Round(value), false);
+        CombatManager.combatManager.hasHeal = true;
+        ShowFloatingHealth(Mathf.Round(value).ToString(), false);
         StartCoroutine(TakeHealingCor(value, duration));
     }   
     public override IEnumerator TakeHealingCor(float value, float duration)
