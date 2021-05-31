@@ -231,6 +231,10 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             //-ELEMENTAL REACTIONS-
             receiver.TakeDamage(dmg, durationDecreaseHealth);
             receiver.ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), ability.elementType.ToString()));
+            if (receiver.GetType() == typeof(Enemy))
+            {
+                AchievementsManager.DamageDeal(dmg);
+            }
         }
     }
     //--------------------------------HEAL FUNCTION------------------------------------------------

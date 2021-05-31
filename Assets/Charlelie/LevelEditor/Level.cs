@@ -64,6 +64,7 @@ public class Level
     public LevelRoom[,] rooms;
     public LevelRoom startRoom, endRoom;
     public LevelType levelType;
+    public EElement levelElem;
     public Level(int _mapW, int _mapH, int _roomNbr, string _name, LevelType _levelType)
     {
         mapW = _mapW;

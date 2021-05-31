@@ -153,7 +153,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 70
+  m_FontSize: 50
   m_FontStyle: 3
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 47d5606ec00579746b7c21e228f8b7f0, type: 3}
@@ -186,48 +186,6 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0
       outWeight: 0
-    - serializedVersion: 3
-      time: 0.4054206
-      value: 0.6288096
-      inSlope: 1.1416869
-      outSlope: 1.1416869
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.9999857
-      value: 1.0042572
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  alphaText:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0.028879477
-      outSlope: 0.028879477
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.40833333
-    - serializedVersion: 3
-      time: 0.4985388
-      value: 0.0045843422
-      inSlope: 0.051142197
-      outSlope: 0.051142197
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.36480972
-      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 1

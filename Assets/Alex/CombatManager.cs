@@ -27,6 +27,7 @@ public class CombatManager : MonoBehaviour
     public int nbCharsPlayed = 0;
     public int currCharAttacking = 0;
     public int rosterSize;
+    public bool hasDied, hasTookDamage, hasHeal = false;
 
     Coroutine nextCharCor;
 
@@ -65,7 +66,8 @@ public class CombatManager : MonoBehaviour
     {
         Level level = LevelManager.GetInstance().level;
         MapRoom mapRoom = PlayerPoint._playerPoint.onRoom;
-        for (int i = 0; i < 3; ++i)
+        int index = EnnemyManager._enemyManager.GetMaxEnemiesInRoom(level, mapRoom);
+        for (int i = 0; i < index; ++i)
         {
             Ennemy e = EnnemyManager._enemyManager.SetEnemyPool(level, mapRoom);
             if (!e)
@@ -339,6 +341,7 @@ public class CombatManager : MonoBehaviour
     {
 
         allies.Remove(a);
+        hasDied = true;
         if (allies.Count <= 0)
         {
             FindObjectOfType<LevelManager>().losePanel.SetActive(true);
@@ -402,7 +405,10 @@ public class CombatManager : MonoBehaviour
     void EndFight<T>()
     {
         if (typeof(T) == typeof(Enemy))
+        {
+            AchievementsManager.OnCombatEnd(this);
             FindObjectOfType<LevelManager>().WinFight();
+        }           
         else if (typeof(T) == typeof(Ally))
             FindObjectOfType<LevelManager>().LoseFight();
     }

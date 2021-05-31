@@ -10,20 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 470ec357602151341a5515c24ca19ad1, type: 3}
-  m_Name: Ennemy1
+  m_Name: Snake
   m_EditorClassIdentifier: 
   enemyName: Snake
   maxHealth: 200
   enemyType: 0
-  damageRange: {x: 15, y: 20}
-  dodge: 0.15
-  critChance: 0.2
-  critDamage: 1
-  initiative: 8
-  armor: 20
-  element: 2
-  enemyAbilities:
-  - {fileID: 11400000, guid: 339b3b47eb400d24e90347ae579ebbf6, type: 2}
-  - {fileID: 11400000, guid: 3aa29f96a43107e48a69b2579056750f, type: 2}
-  enemySpecialsAbilities:
-  - {fileID: 11400000, guid: ee2b8cc13192047429db8f42ba4f5b5c, type: 2}
+  damageRange: {x: 27, y: 33}
+  dodge: 0.1
+  critChance: 0.1
+  critDamage: 125
+  initiative: 10
+  armor: 5
+  element: 0
+  enemyAbilities: []
+  enemySpecialsAbilities: []
