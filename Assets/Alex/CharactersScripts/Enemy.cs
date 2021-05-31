@@ -44,17 +44,6 @@ public class Enemy : Characters
         }
         if (holdCharac > holdCharacValue)
         {
-            /*if (!isSelected)
-            {
-                if (CombatManager.combatManager.enemySelected != null)
-                {
-                    CombatManager.combatManager.enemySelected.isSelected = false;
-                    CombatManager.combatManager.enemySelected = null;
-                }
-                isSelected = true;
-                CombatManager.combatManager.enemySelected = this;
-            }
-            UIManager.uiManager.statsUI.SetActive(true);*/
             if (!isSelected)
             {
                 if (CombatManager.combatManager.charSelected != null)
@@ -64,8 +53,8 @@ public class Enemy : Characters
                 }
                 isSelected = true;
                 CombatManager.combatManager.charSelected = this;
+                UIManager.uiManager.statsUI.SetActive(true);
             }
-            UIManager.uiManager.statsUI.SetActive(true);
         }
 
     }

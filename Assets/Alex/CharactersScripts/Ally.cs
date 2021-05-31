@@ -28,6 +28,8 @@ public class Ally : Characters
         canvasChar = GameObject.Find(gameObject.name + "/CanvasChar");
         cursorSelected = GameObject.Find(gameObject.name + "/CanvasChar/cursorSelected");
         cursorPlaying = GameObject.Find(gameObject.name + "/CanvasChar/cursorPlaying");
+        cursorSelected.SetActive(false);
+        cursorPlaying.SetActive(false);
         durationDecreaseHealth = 1.0f;
         //ISTARGETABLE FOR ABILITIES
         isTargetable = false;
@@ -62,9 +64,8 @@ public class Ally : Characters
                 }
                 isSelected = true;
                 CombatManager.combatManager.charSelected = this;
-                UIManager.uiManager.UpdatePosCursorSelect();
+                UIManager.uiManager.statsUI.SetActive(true);
             }
-            UIManager.uiManager.statsUI.SetActive(true);
         }
     }
 

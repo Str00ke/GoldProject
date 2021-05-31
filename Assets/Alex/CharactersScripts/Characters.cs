@@ -153,36 +153,15 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
     public void ChangeColor()
     {
-        if (isSelected && !CanAttack && !hasPlayed)
+        if (isSelected)
         {
-            thisColorBody.color = selectedColor;
-            thisColorHead.color = selectedColor;
+            cursorSelected.SetActive(true);
         }
-        else if (!isSelected && !CanAttack && !hasPlayed)
+        else
         {
-            thisColorBody.color = baseColor;
-            thisColorHead.color = baseColor;
+            cursorSelected.SetActive(false);
         }
-        else if (CanAttack)
-        {
-            thisColorBody.color = AttackColor;
-            thisColorHead.color = AttackColor;
-        }
-        else if (CanAttack && isSelected)
-        {
-            thisColorBody.color = selectedColor;
-            thisColorHead.color = selectedColor;
-        }
-        else if (hasPlayed && !isSelected)
-        {
-            thisColorBody.color = hasPlayedColor;
-            thisColorHead.color = hasPlayedColor;
-        }
-        else if (hasPlayed && isSelected)
-        {
-            thisColorBody.color = selectedColor;
-            thisColorHead.color = selectedColor;
-        }
+        //Cursor playing display in NextCharAttack in CombatManager
     }
     public void UpdateStateIcon()
     {

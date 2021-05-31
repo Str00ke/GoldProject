@@ -109,13 +109,6 @@ public class Status
                     statusTarget.armor -= diffModif;
                     buffOrDebuff = BuffOrDebuff.DEBUFF;
                     break;
-                case StatusTypes.BLEEDING:
-                    diffModif = bonusmalus;
-                    statusTarget.dotDamage -= (int)diffModif;
-                    statusElement = StatusElement.BASE;
-                    statusTarget.bleedingDmg += diffModif;
-                    buffOrDebuff = BuffOrDebuff.DEBUFF;
-                    break;
                 case StatusTypes.HEALBONUS:
                     diffModif = bonusmalus;
                     statusTarget.healBonus += (int)diffModif;
@@ -181,6 +174,13 @@ public class Status
                 case StatusTypes.DOT:
                     buffOrDebuff = BuffOrDebuff.DEBUFF;
                     statusTarget.dotDamage += (int)dmg;
+                    break;
+                case StatusTypes.BLEEDING:
+                    diffModif = bonusmalus;
+                    statusTarget.dotDamage -= (int)diffModif;
+                    statusElement = StatusElement.BASE;
+                    dmg = diffModif;
+                    buffOrDebuff = BuffOrDebuff.DEBUFF;
                     break;
                 case StatusTypes.MARK:
                     buffOrDebuff = BuffOrDebuff.DEBUFF;

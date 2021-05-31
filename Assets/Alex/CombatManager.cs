@@ -131,8 +131,8 @@ public class CombatManager : MonoBehaviour
         fightersList[currCharAttacking].CanAttack = false;
         fightersList[currCharAttacking].hasPlayed = true;
         yield return new WaitForSeconds(3.0f);
+        fightersList[currCharAttacking].cursorPlaying.SetActive(false);
         currCharAttacking++;
-
         if (currCharAttacking >= fightersList.Count)
         {
             TurnPassed();
@@ -156,6 +156,7 @@ public class CombatManager : MonoBehaviour
             if (currCharAttacking < fightersList.Count)
             {
                 fightersList[currCharAttacking].CanAttack = true;
+                fightersList[currCharAttacking].cursorPlaying.SetActive(true);
                 if (fightersList[currCharAttacking].charType == Characters.CharType.ALLY)
                 {
                     allyPlaying = (Ally)fightersList[currCharAttacking];
