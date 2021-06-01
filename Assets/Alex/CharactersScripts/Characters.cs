@@ -12,6 +12,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public GameObject healthBarOutline;
     public GameObject canvasChar;
     [Header("Labels")]
+    public GameObject cursorNotPlayedYet;
     public GameObject cursorSelected;
     public GameObject cursorPlaying;
     public string charName;

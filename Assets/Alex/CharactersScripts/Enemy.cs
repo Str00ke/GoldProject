@@ -67,6 +67,7 @@ public class Enemy : Characters
         healthBar = GameObject.Find(gameObject.name + "/CanvasSlider/healthBar").GetComponent<Slider>();
         canvasChar = GameObject.Find(gameObject.name + "/CanvasSlider");
         healthBarOutline = GameObject.Find(gameObject.name + "/CanvasSlider/HealthBarOutline");
+        cursorNotPlayedYet = GameObject.Find(gameObject.name + "/CanvasSlider/cursorNotPlayedYet");
         cursorSelected = GameObject.Find(gameObject.name + "/CanvasSlider/cursorSelected");
         cursorPlaying = GameObject.Find(gameObject.name + "/CanvasSlider/cursorPlaying");
         cursorSelected.SetActive(false);
