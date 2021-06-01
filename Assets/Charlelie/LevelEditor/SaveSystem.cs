@@ -155,7 +155,7 @@ public static class SaveSystem
             Debug.Log("Done downloading");
 
             byte[] yourBytes = www.bytes;
-            Level test = /*ByteArrayToObject(yourBytes)*/ReatFile(yourBytes);
+            Level test = /*ByteArrayToObject(yourBytes)*/ReadFile(yourBytes);
             return test;
 
         }
@@ -189,7 +189,7 @@ public static class SaveSystem
 
     }
 
-    public static Level ReatFile(byte[] arr)
+    public static Level ReadFile(byte[] arr)
     {
         //I have to read the file which I have wrote to an byte array            
 
