@@ -23,6 +23,7 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public int distFromStart = 0;
     public Text textNbr;
     public int roomNbr;
+    public Sprite[] hallwayImgs;
 
     //Remplacer GameObject par les types une foit ajoutés
     GameObject[] ennemies;
@@ -124,11 +125,42 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 {
                     linkedRoom[i].gameObject.SetActive(true);
                     linkedRoom[i].isDiscovered = true;
+
+
+                    GameObject go = new GameObject();
+                    go.transform.parent = this.transform;
+                    Image img = go.AddComponent<Image>();
+                    img.sprite = hallwayImgs[Random.Range(0, hallwayImgs.Length)];
+                    go.GetComponent<RectTransform>().sizeDelta = new Vector2(0.64f, 0.64f);
+                    if (linkedRoom[i].pos.GetLength(0) == pos.GetLength(0))
+                    {
+                        if (linkedRoom[i].pos.GetLength(1) == pos.GetLength(1) + 1)
+                        {
+                            go.GetComponent<RectTransform>().localPosition = new Vector2(0, -25);
+                        }
+                        else
+                        {
+                            go.GetComponent<RectTransform>().localPosition = new Vector2(0, 25);
+                        }
+                    }
+                    else if (linkedRoom[i].pos.GetLength(1) == pos.GetLength(1))
+                    {
+                        if (linkedRoom[i].pos.GetLength(0) == pos.GetLength(0) + 1)
+                        {
+                            go.GetComponent<RectTransform>().localPosition = new Vector2(25, 0);
+                            go.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, 90);
+                        }
+                        else
+                        {
+                            go.GetComponent<RectTransform>().localPosition = new Vector2(-25, 0);
+                            go.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, -90);
+                        }
+                    }
                 }
+
                 
-                GameObject go = new GameObject();
-                go.transform.parent = this.transform; //TODO: Move line with touch
-                LineRenderer lr = go.AddComponent<LineRenderer>();
+                
+                /*LineRenderer lr = go.AddComponent<LineRenderer>();
                 Material mat = new Material(Shader.Find("Unlit/Texture"));
                 lr.material = mat;
                 lr.startColor = Color.gray;
@@ -136,7 +168,7 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 lr.startWidth = 0.3f;
                 lr.endWidth = 0.3f;
                 lr.SetPosition(0, transform.position);
-                lr.SetPosition(1, linkedRoom[i].gameObject.transform.position);
+                lr.SetPosition(1, linkedRoom[i].gameObject.transform.position);*/
             }
         }
     }

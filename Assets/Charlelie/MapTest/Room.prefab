@@ -148,6 +148,9 @@ MonoBehaviour:
   distFromStart: 0
   textNbr: {fileID: 8149697673191206704}
   roomNbr: 0
+  hallwayImgs:
+  - {fileID: 21300000, guid: 129904674b84a544bb664f5a8ce24312, type: 3}
+  - {fileID: 21300000, guid: ab8b5bc47f8d4b548bb72a3cd4191551, type: 3}
 --- !u!1 &3266313335009689300
 GameObject:
   m_ObjectHideFlags: 0
