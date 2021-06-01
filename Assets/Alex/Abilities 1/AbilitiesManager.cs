@@ -412,13 +412,14 @@ public class AbilitiesManager : MonoBehaviour
         switch (a.elementType)
         {
             case Ability.ElementType.ASH:
-                cm.allyPlaying.LaunchHeal(cm.charSelected, a);
+                Characters tempC = cm.charSelected;
+                cm.allyPlaying.LaunchHeal(tempC, a);
                 if (cm.allies.Count > 1)
                 {
-                    int randA = Random.Range(0, cm.allies.Count - 1);
-                    while (cm.allies[randA] == cm.charSelected)
+                    int randA = Random.Range(0, cm.allies.Count);
+                    while (cm.allies[randA] == tempC)
                     {
-                        randA = Random.Range(0, cm.allies.Count - 1);
+                        randA = Random.Range(0, cm.allies.Count);
                     }
                     cm.allyPlaying.LaunchHeal(cm.allies[randA], a);
                 }

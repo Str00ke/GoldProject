@@ -58,7 +58,6 @@ public class CharactersTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     public float dodgeValue;
     public float critChance;
     public float critDamage;
-    [HideInInspector]
     public float armor;
     public float armorValue;
     [Range(0.0f, 1.0f)]

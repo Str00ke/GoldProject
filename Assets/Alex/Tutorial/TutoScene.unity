@@ -554,7 +554,7 @@ MonoBehaviour:
   dodgeValue: 0
   critChance: 0.1
   critDamage: 1.5
-  armor: 0
+  armor: 20
   armorValue: 20
   precision: 1
   healthBar: {fileID: 0}
@@ -571,7 +571,7 @@ MonoBehaviour:
   confusion: 0
   turnsConfusionValue: 2
   turnsConfusion: 0
-  holdCharacValue: 1.2
+  holdCharacValue: 0.5
   holdCharac: 0
   armorBonus: 0
   precisionMalus: 0
@@ -1156,7 +1156,7 @@ MonoBehaviour:
   dodgeValue: 0
   critChance: 0.1
   critDamage: 1.5
-  armor: 0
+  armor: 20
   armorValue: 20
   precision: 1
   healthBar: {fileID: 0}
@@ -1173,7 +1173,7 @@ MonoBehaviour:
   confusion: 0
   turnsConfusionValue: 2
   turnsConfusion: 0
-  holdCharacValue: 1.2
+  holdCharacValue: 0.5
   holdCharac: 0
   armorBonus: 0
   precisionMalus: 0
@@ -1419,7 +1419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.22272372, a: 1}
+  m_Color: {r: 0.13616937, g: 0.31132078, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1944,103 +1944,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1001 &786694603
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3782918157968805354, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_Name
-      value: IconStatus
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -40
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -10.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115928638174213661, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5c4de6805a03bb443a6a65f207fe53c9, type: 3}
 --- !u!4 &790348261
 Transform:
   m_ObjectHideFlags: 0
@@ -3451,7 +3354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.22272372, a: 1}
+  m_Color: {r: 0.13616937, g: 0.31132078, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4308,7 +4211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.22272372, a: 1}
+  m_Color: {r: 0.13616937, g: 0.31132078, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4405,7 +4308,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2169942591891982579}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.08, y: -0.6200005, z: 0}
+  m_LocalPosition: {x: -6.74, y: -0.6200005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1525152961}
@@ -4554,7 +4457,7 @@ MonoBehaviour:
   dodgeValue: 0
   critChance: 0.1
   critDamage: 1.5
-  armor: 0
+  armor: 20
   armorValue: 20
   precision: 1
   healthBar: {fileID: 0}
@@ -4571,7 +4474,7 @@ MonoBehaviour:
   confusion: 0
   turnsConfusionValue: 2
   turnsConfusion: 0
-  holdCharacValue: 1.2
+  holdCharacValue: 0.5
   holdCharac: 0
   armorBonus: 0
   precisionMalus: 0
@@ -4952,7 +4855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0.055834293, a: 1}
+  m_Color: {r: 0.3301887, g: 0, b: 0.018128045, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6326,7 +6229,7 @@ MonoBehaviour:
   confusion: 0
   turnsConfusionValue: 2
   turnsConfusion: 0
-  holdCharacValue: 1.2
+  holdCharacValue: 0.5
   holdCharac: 0
   armorBonus: 0
   precisionMalus: 0
@@ -6510,7 +6413,7 @@ GameObject:
   - component: {fileID: 7422386928574415146}
   - component: {fileID: 7422386928574415148}
   m_Layer: 0
-  m_Name: CombatManagerTuto
+  m_Name: ManagerTuto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6531,7 +6434,7 @@ MonoBehaviour:
   allies: []
   fightersList: []
   charSelected: {fileID: 0}
-  stepTutoButtonPrefab: {fileID: 6727998603951702957, guid: 5962dab864b7d824397139d1fc2503e9, type: 3}
+  stepTutoButtonPrefab: {fileID: 8876204032551595929, guid: e62b930fcc1665d44ab19c4508bf753b, type: 3}
   chars:
   - {fileID: 2169942591891982580}
   - {fileID: 172339159}
@@ -6543,8 +6446,8 @@ MonoBehaviour:
   turnNumber: 0
   currCharAttacking: 0
   TutoStepTexts:
-  - An enemy appears! We are three, i hope we can kill it.
-  - 
+  - An enemy appears! Stay behind me friends.
+  - Be careful! He is going to attack!
   - 
   - 
   - 
