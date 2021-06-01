@@ -26,6 +26,7 @@ public class Ally : Characters
         durationMove = 1.0f;
         healthBar = GameObject.Find(gameObject.name + "/CanvasChar/healthBar").GetComponent<Slider>();
         canvasChar = GameObject.Find(gameObject.name + "/CanvasChar");
+        cursorNotPlayedYet = GameObject.Find(gameObject.name + "/CanvasChar/cursorNotPlayedYet");
         cursorSelected = GameObject.Find(gameObject.name + "/CanvasChar/cursorSelected");
         cursorPlaying = GameObject.Find(gameObject.name + "/CanvasChar/cursorPlaying");
         cursorSelected.SetActive(false);
@@ -289,5 +290,6 @@ public class Ally : Characters
                 c.RemoveItem((NItem.EPartType)i);
             }
         }
+        Destroy(c.gameObject);
     }
 }

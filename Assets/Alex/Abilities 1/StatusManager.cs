@@ -89,10 +89,18 @@ public class StatusManager : MonoBehaviour
                 Destroy(temp);
             }
         }
+
+        c.statusLines = 0;
+        c.statusPerLine = 0;
         for (int i = c.prefabsIconStatus.Count - 1; i >= 0; i--)
         {
-            // c.prefabsIconStatusBuffs[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(c.buffsInitialPos.x + (statusOffset * i), c.buffsInitialPos.y);
-            c.prefabsIconStatus[i].transform.position = c.transform.position + new Vector3(c.debuffsInitialPos.x + (statusOffset * i), c.debuffsInitialPos.y);
+            c.prefabsIconStatus[i].transform.position = c.transform.position + new Vector3(c.debuffsInitialPos.x + (statusOffset * (i - c.statusPerLineMax * c.statusLines)), c.debuffsInitialPos.y - (statusOffset * (i/c.statusPerLineMax)));
+            if (c.statusPerLine >= c.statusPerLineMax)
+            {
+                c.statusLines++;
+                c.statusPerLine = 0;
+            }
+            c.statusPerLine++;
         }
     }
 }

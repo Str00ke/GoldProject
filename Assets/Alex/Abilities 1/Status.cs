@@ -100,6 +100,7 @@ public class Status
                 case StatusTypes.ARMORMALUS:
                     diffModif = statusTarget.armor * bonusmalus;
                     diffModif = Mathf.Round(diffModif);
+                    diffModif += 5;
                     statusTarget.armorBonus -= diffModif;
                     statusTarget.armor -= diffModif;
                     buffOrDebuff = BuffOrDebuff.DEBUFF;
