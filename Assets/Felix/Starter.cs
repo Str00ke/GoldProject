@@ -19,7 +19,7 @@ public class Starter : MonoBehaviour
         // LoadScene tuto
 
         // Else load lobby
-        LoadScene("FScene");
+        //LoadScene("FScene");
     }
 
     public void LoadScene(string sceneName)

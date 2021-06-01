@@ -10,9 +10,6 @@ public enum ELobbyState
     Inventory,
     InventoryItemPartSelection,
     Shop,
-    Credits,
-    Options,
-    Dungeons,
     Loading
 }
 
@@ -28,9 +25,12 @@ public class LobbyManager : MonoBehaviour
     public GameObject CreditsMenu;
     public GameObject DungeonsMenu;
     public GameObject ShopMenu;
+    public Transform shopButton;
 
     private NItem.ItemScriptableObject itemToBuy;
     private GameObject itemsShopSelected = null;
+
+    public bool isFirstGameDone = false;
 
     [Header("Loading Screen")]
     private AsyncOperation loadingAsync;
@@ -52,6 +52,7 @@ public class LobbyManager : MonoBehaviour
 
     private void Start()
     {
+        isFirstGameDone = bool.Parse(PlayerPrefs.GetString("FirstGame", "false"));
         CloseAllMenu();
     }
 
@@ -63,9 +64,17 @@ public class LobbyManager : MonoBehaviour
 
     public void CloseAllMenu()
     {
-        OptionsMenu.SetActive(false);
-        CreditsMenu.SetActive(false);
-        DungeonsMenu.SetActive(false);
+        if (!isFirstGameDone)
+            isFirstGameDone = bool.Parse(PlayerPrefs.GetString("FirstGame", "false"));
+        else if (isFirstGameDone && !shopButton.GetChild(0).gameObject.activeSelf)
+        {
+            shopButton.GetChild(0).gameObject.SetActive(false);
+            shopButton.GetComponent<Image>().raycastTarget = true;
+        }
+
+        //OptionsMenu.SetActive(false);
+        //CreditsMenu.SetActive(false);
+        //DungeonsMenu.SetActive(false);
         Inventory.inventory.CloseInventory();
         ShopMenu.SetActive(false);
 
@@ -75,28 +84,11 @@ public class LobbyManager : MonoBehaviour
         CharacterManager.characterManager.SelectCharacterStats(CharacterManager.characterManager.selectedChar);
     }
 
-    public void OpenOptions()
-    {
-        OptionsMenu.SetActive(true);
-        lobbyState = ELobbyState.Options;
-    }
-
-    public void OpenCredits()
-    {
-        CreditsMenu.SetActive(true);
-        lobbyState = ELobbyState.Credits;
-    }
-
-    public void OpenDungeons()
-    {
-        DungeonsMenu.SetActive(true);
-        lobbyState = ELobbyState.Dungeons;
-
-        CharacterManager.characterManager.SelectCharacterStats(CharacterManager.characterManager.selectedChar);
-    }
-
     public void OpenShop()
     {
+        if (!isFirstGameDone)
+            return;
+
         ShopMenu.SetActive(true); 
 
         lobbyState = ELobbyState.Shop;
