@@ -418,8 +418,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2843170519588903881}
   - component: {fileID: 2186882810477824906}
-  - component: {fileID: 4059343810275198706}
   - component: {fileID: 4812156237212218325}
+  - component: {fileID: 4272423037781769326}
   m_Layer: 0
   m_Name: FloatingWeapon
   m_TagString: Untagged
@@ -492,25 +492,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &4059343810275198706
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 464410077340603007}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 464a0e196dab04d4a9fa89bc92ba28d5, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &4812156237212218325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -523,6 +504,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a387aaad4727ca4994c01db59a8c92f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4272423037781769326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 464410077340603007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30872097f43779242b60f5846e673a01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUi: 0
+  isPlaying: 0
+  amplitude: 0.3
+  frequency: 0.5
 --- !u!1 &2130872346068094978
 GameObject:
   m_ObjectHideFlags: 0

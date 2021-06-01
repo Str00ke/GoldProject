@@ -13,6 +13,7 @@ public class CharacterManager : MonoBehaviour
     [Header("Summon")]
     public CharacterScriptableObject[] charactersScriptable;
     public NItem.ItemScriptableObject[] gemsScriptable;
+    public NItem.ItemScriptableObject stickSo;
 
     [Header("Team Scene")]
     [SerializeField] private GameObject[] slotsTeam;
@@ -57,36 +58,12 @@ public class CharacterManager : MonoBehaviour
         Character nChar = nGameObject.AddComponent<Character>();
         nChar.SetCharacterScriptableObject(charactersScriptable[UnityEngine.Random.Range(0, charactersScriptable.Length)]);
         nChar.AddItem(gemsScriptable[UnityEngine.Random.Range(0, gemsScriptable.Length)], NItem.EPartType.Gem);
+        nChar.AddItem(stickSo, NItem.EPartType.Weapon);
 
         characters[indexChar] = nChar;
 
         RefreshTeamScene();
         SelectCharacterStats(indexChar);
-    }
-
-    public void SummonCharacter(CharacterScriptableObject cso)
-    {
-        GameObject nGameObject = new GameObject("Character");
-        nGameObject.transform.parent = gameObject.transform;
-        Character nChar = nGameObject.AddComponent<Character>();
-        nChar.SetCharacterScriptableObject(cso);
-
-        bool isSet = false;
-
-        for (int i = 0; i < characters.Length; i++)
-        {
-            if (characters[i] == null)
-            {
-                characters[i] = nChar;
-                isSet = true;
-                break;
-            }
-        }
-
-        if (!isSet)
-        {
-            Destroy(nGameObject);
-        }
     }
 
     #region TeamScene
@@ -164,15 +141,18 @@ public class CharacterManager : MonoBehaviour
             }
 
             // WEAPON
+            FloatingObject floatingObject = spritesGo.transform.GetChild(0).gameObject.GetComponent<FloatingObject>();
             img = spritesGo.transform.GetChild(0).GetComponent<Image>();
             if (!charIsNull && character.itemSprites[3] != null)
             {
                 img.sprite = character.itemSprites[3];
                 img.color = new Vector4(1f, 1f, 1f, 1f);
+                floatingObject.isPlaying = true;
             }
             else
             {
                 img.color = new Vector4(1f, 1f, 1f, 0f);
+                floatingObject.isPlaying = false;
             }
         }
     }
