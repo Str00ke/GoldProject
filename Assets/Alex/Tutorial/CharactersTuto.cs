@@ -14,6 +14,9 @@ public class CharactersTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     public Vector2 debuffsInitialPos = new Vector2(-40, -10.5f);
     public Vector2 buffsInitialPos = new Vector2(40, -10.5f);
     [Header("Labels")]
+    public GameObject cursorNotPlayedYet;
+    public GameObject cursorSelected;
+    public GameObject cursorPlaying;
     public string charName;
     public Image stateIcon;
     public Sprite[] stateIcons;
@@ -70,9 +73,11 @@ public class CharactersTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     public float dodgeModif = 0.2f;
 
     [Header("StatusVariables")]
+    public int statusPerLine = 0;
+    public int statusPerLineMax = 6;
+    public int statusLines = 0;
     public List<StatusTuto1> statusList = new List<StatusTuto1>();
-    public List<GameObject> prefabsIconStatusBuffs;
-    public List<GameObject> prefabsIconStatusDebuffs;
+    public List<GameObject> prefabsIconStatus;
     public bool stunned;
     public bool confusion;
     public int turnsConfusionValue = 2;
@@ -104,12 +109,6 @@ public class CharactersTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     public bool hasPlayed;
     public bool CanAttack;
     public bool isSelected;
-    public SpriteRenderer thisColorHead;
-    public SpriteRenderer thisColorBody;
-    public Color selectedColor;
-    public Color hasPlayedColor;
-    public Color AttackColor;
-    public Color baseColor;
     [HideInInspector]
     public float durationDecreaseHealth; //animation time in seconds
 
@@ -154,36 +153,15 @@ public class CharactersTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     }
     public void ChangeColor()
     {
-        if (isSelected && !CanAttack && !hasPlayed)
+        if (isSelected)
         {
-            thisColorBody.color = selectedColor;
-            thisColorHead.color = selectedColor;
+            cursorSelected.SetActive(true);
         }
-        else if (!isSelected && !CanAttack && !hasPlayed)
+        else
         {
-            thisColorBody.color = baseColor;
-            thisColorHead.color = baseColor;
+            cursorSelected.SetActive(false);
         }
-        else if (CanAttack)
-        {
-            thisColorBody.color = AttackColor;
-            thisColorHead.color = AttackColor;
-        }
-        else if (CanAttack && isSelected)
-        {
-            thisColorBody.color = selectedColor;
-            thisColorHead.color = selectedColor;
-        }
-        else if (hasPlayed && !isSelected)
-        {
-            thisColorBody.color = hasPlayedColor;
-            thisColorHead.color = hasPlayedColor;
-        }
-        else if (hasPlayed && isSelected)
-        {
-            thisColorBody.color = selectedColor;
-            thisColorHead.color = selectedColor;
-        }
+        //Cursor playing display in NextCharAttack in CombatManager
     }
     public void UpdateStateIcon()
     {
@@ -206,11 +184,13 @@ public class CharactersTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHand
                 break;
         }
     }
-    public virtual void OnPointerDown(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
+        onPointerHold = true;
     }
-    public virtual void OnPointerUp(PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)
     {
+        onPointerHold = false;
     }
     public void ChangeStats(string name, float maxHP, Vector2 dmgRange, int dodg, float critCh, float critDmg, int armr, int position)
     {
@@ -284,7 +264,7 @@ public class CharactersTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHand
             case Ability.ElementType.MUD:
                 if (ability.crHealType == Ability.CristalHealType.BOOST)
                 {
-                    StatusTuto1 s = new StatusTuto1(receiver, ability.bonusmalus, ability, StatusTuto1.StatusTypes.ARMORBONUSFLAT);
+                    StatusTuto1 s = new StatusTuto1(receiver, ability.bonusmalus, ability, StatusTuto1.StatusTypes.ARMORBONUS);
                 }
                 else if (ability.crHealType == Ability.CristalHealType.DRINK)
                 {
@@ -349,7 +329,7 @@ public class CharactersTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHand
             case CurrentElement.ASH:
                 if (ndElement == CurrentElement.ICE)
                 {
-                    stunned = true;
+                    StatusTuto1 s = new StatusTuto1(this, 0, 2, StatusTuto1.StatusTypes.STUN);
                     currentElement = CurrentElement.BASE;
                 }
                 else if (ndElement == CurrentElement.MUD)
@@ -377,7 +357,7 @@ public class CharactersTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHand
                 }
                 else if (ndElement == CurrentElement.PSY)
                 {
-                    StatusTuto1 s = new StatusTuto1(this, 0.3f, 2, StatusTuto1.StatusTypes.ARMORBONUSPERC);
+                    StatusTuto1 s = new StatusTuto1(this, 10, 2, StatusTuto1.StatusTypes.ARMORBONUS);
                     currentElement = CurrentElement.BASE;
                 }
                 break;
@@ -394,7 +374,7 @@ public class CharactersTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHand
                 }
                 else if (ndElement == CurrentElement.PSY)
                 {
-                    StatusTuto1 s = new StatusTuto1(this, 5.0f, 2, StatusTuto1.StatusTypes.BLEEDING);
+                    StatusTuto1 s = new StatusTuto1(this, 5.0f, 3, StatusTuto1.StatusTypes.BLEEDING);
                     Debug.Log("Put bleeding");
                     s.statusElement = StatusTuto1.StatusElement.BASE;
                     currentElement = CurrentElement.BASE;
@@ -420,8 +400,10 @@ public class CharactersTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         }
         UpdateStateIcon();
     }
-    public virtual void TakeHealing(float value, float duration)
+    public void TakeHealing(float value, float duration)
     {
+        ShowFloatingHealth(Mathf.Round(value).ToString(), false);
+        StartCoroutine(TakeHealingCor(value, duration));
     }
     public virtual IEnumerator TakeHealingCor(float value, float duration)
     {
@@ -433,7 +415,6 @@ public class CharactersTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         TakeDamage(dmg, durationDecreaseHealth);
         Debug.Log("Receiver : " + gameObject.name + "Dot damage " + dmg + " Dot element " + stElem.ToString());
         ElementReactions((CurrentElement)stElem);
-        UpdateDisplayDots();
     }
     public void TakeDamageMark(StatusTuto1.StatusElement stElem, float dmg)
     {
@@ -441,11 +422,6 @@ public class CharactersTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         Debug.Log("Receiver : " + gameObject.name + "Mark damage " + dmg + " Mark element " + stElem.ToString());
         ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), stElem.ToString()));
     }
-    public void UpdateDisplayDots()
-    {
-
-    }
-
     public void ShowFloatingHealth(string value, bool red)
     {
         GameObject go = Instantiate(floatingHealth, transform.position, Quaternion.identity, transform);
@@ -473,7 +449,7 @@ public class CharactersTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     IEnumerator ChangePosCoroutine(float duration)
     {
         Vector3 startPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-        Vector3 endPos = new Vector3(posInitial.x + offsetPos * teamPosition, posInitial.y);
+        Vector3 endPos = new Vector3(posInitial.x - offsetPos * teamPosition, posInitial.y);
         float elapsed = 0.0f;
         float ratio = 0.0f;
         while (elapsed < duration)

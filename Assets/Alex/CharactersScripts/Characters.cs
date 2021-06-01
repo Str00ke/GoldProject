@@ -107,12 +107,6 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public bool hasPlayed;
     public bool CanAttack;
     public bool isSelected;
-    public SpriteRenderer thisColorHead;
-    public SpriteRenderer thisColorBody;
-    public Color selectedColor;
-    public Color hasPlayedColor;
-    public Color AttackColor;
-    public Color baseColor;
     [HideInInspector]
     public float durationDecreaseHealth; //animation time in seconds
 

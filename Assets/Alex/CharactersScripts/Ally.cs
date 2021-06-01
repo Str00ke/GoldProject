@@ -21,8 +21,6 @@ public class Ally : Characters
         CombatManager.combatManager.allies.Add(this);
         charType = CharType.ALLY;
         anim = this.GetComponent<Animator>();
-        thisColorBody = body;
-        thisColorHead = head;
         durationMove = 1.0f;
         healthBar = GameObject.Find(gameObject.name + "/CanvasChar/healthBar").GetComponent<Slider>();
         canvasChar = GameObject.Find(gameObject.name + "/CanvasChar");

@@ -16,8 +16,6 @@ public class Enemy : Characters
         CombatManager.combatManager.enemies.Add(this);
         charType = CharType.ENEMY; 
         anim = this.GetComponent<Animator>();
-        thisColorBody = this.GetComponent<SpriteRenderer>();
-        thisColorHead = this.GetComponent<SpriteRenderer>();
         durationMove = 1.0f;
         durationDecreaseHealth = 1.0f;
 
