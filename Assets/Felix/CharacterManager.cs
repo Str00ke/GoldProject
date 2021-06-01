@@ -164,15 +164,18 @@ public class CharacterManager : MonoBehaviour
             }
 
             // WEAPON
+            FloatingObject floatingObject = spritesGo.transform.GetChild(0).gameObject.GetComponent<FloatingObject>();
             img = spritesGo.transform.GetChild(0).GetComponent<Image>();
             if (!charIsNull && character.itemSprites[3] != null)
             {
                 img.sprite = character.itemSprites[3];
                 img.color = new Vector4(1f, 1f, 1f, 1f);
+                floatingObject.isPlaying = true;
             }
             else
             {
                 img.color = new Vector4(1f, 1f, 1f, 0f);
+                floatingObject.isPlaying = false;
             }
         }
     }
