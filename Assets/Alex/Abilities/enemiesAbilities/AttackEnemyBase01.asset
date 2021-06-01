@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: AttackEnemy01
   type: 
-  multiplicator: 100
+  multiplicator: 80
   icon: {fileID: 0}
   bonusmalus: 0
   destruModif: 0

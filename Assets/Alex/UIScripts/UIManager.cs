@@ -6,12 +6,10 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager uiManager = null;
-    public GameObject enemyStatsUI;
-    public GameObject allyStatsUI;
-    public Text labelAlly;
-    public Text statsAlly;
-    public Text labelEnemy;
-    public Text statsEnemy;
+    public GameObject statsUI;
+    public Text labelChar;
+    public Text statsCharRight;
+    public Text statsCharLeft;
     public Text turnsText;
     public Sprite[] stateIcons;
 
@@ -29,27 +27,24 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemyStatsUI = GameObject.Find("EnemyUI");
-        allyStatsUI = GameObject.Find("AllyUI");
+        statsUI = GameObject.Find("StatsUI");
         turnsText = GameObject.Find("TurnsNumber").GetComponent<Text>();
-        labelAlly = GameObject.Find("LabelAllySelected").GetComponent<Text>();
-        labelEnemy = GameObject.Find("LabelEnemySelected").GetComponent<Text>();
-        statsAlly = GameObject.Find("StatsAllySelected").GetComponent<Text>();
-        statsEnemy = GameObject.Find("StatsEnemySelected").GetComponent<Text>();
-        enemyStatsUI.SetActive(false);
-        allyStatsUI.SetActive(false);
+        labelChar = GameObject.Find("LabelCharSelected").GetComponent<Text>();
+        statsCharRight = GameObject.Find("StatsCharSelectedRight").GetComponent<Text>();
+        statsCharLeft = GameObject.Find("StatsCharSelectedLeft").GetComponent<Text>();
+        statsUI.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        ChangeTexts();
-        if(CombatManager.combatManager.enemySelected)
-            UpdateEnemyUI(CombatManager.combatManager.enemySelected);
+        //ChangeTexts();
+        if(CombatManager.combatManager.charSelected)
+            UpdateStatsUI(CombatManager.combatManager.charSelected);
     }
 
 
-    public void ChangeTexts()
+    /*public void ChangeTexts()
     {
         var cm = CombatManager.combatManager;
         if (cm.allySelected)
@@ -66,51 +61,34 @@ public class UIManager : MonoBehaviour
         }
 
 
-    }
-    public void UpdateEnemyUI(Enemy e)
+    }*/
+    public void UpdatePosCursorSelect()
     {
-            labelEnemy.text = e.charName;
-            statsEnemy.text = "Health  " + e.health + "/" + e.maxHealth + "    ";
-            statsEnemy.text += e.healthDebuff < 0 ? "<color=red>" + e.healthDebuff + "</color> " :  "<color=green>" + e.healthDebuff + "</color> ";
-            statsEnemy.text += e.dotDamage > 0 ? "\n<color=red> -" + e.dotDamage + "</color> " : "    ";
-            statsEnemy.text += "\nArmor  " + e.armor + "    ";
-            statsEnemy.text += e.armorBonus < 0 ? "<color=red>" + e.armorBonus + "</color> " : "<color=green>" + e.armorBonus + "</color> ";
-            statsEnemy.text += "\nInitiative   " + e.initiative;
-            statsEnemy.text +=  "\nDodge  " + e.dodge + "    ";
-            statsEnemy.text += e.dodgeBonus < 0 ? "<color=red>" + e.dodgeBonus + "</color> " : "<color=green>" + e.dodgeBonus + "</color> ";
-            statsEnemy.text += "\nDamage  " + e.damageRange.x + " - " + e.damageRange.y + "    ";
-            statsEnemy.text += e.damageBonus < 0 ? "<color=red>" + e.damageBonus + " </color> " : "<color=green>" + e.damageBonus + "</color> ";
-            statsEnemy.text += "\nCritic Chance  " + Mathf.Round(e.critChance * 100) + "%" + "    ";
-            statsEnemy.text += e.critChanceBonus < 0 ? "<color=red>" + e.critChanceBonus + " </color> " : "<color=green>" + e.critChanceBonus + "</color> ";
-            statsEnemy.text += "\nCritic Damage  " + Mathf.Round(e.critDamage * 100) + "%" + "    ";
-            statsEnemy.text += e.critDamageBonus < 0 ? "<color=red>" + e.critDamageBonus + " </color> " : "<color=green>" + e.critDamageBonus + "</color> ";
-            statsEnemy.text += "\nCurrent Element  " + e.currentElement.ToString();
+
     }
-    public void ResetEnemyDisplayUI()
+    public void ResetDisplayStatsUI()
     {
-        enemyStatsUI.SetActive(false);
+        statsUI.SetActive(false);
     }
-    public void UpdateAllyUI(Ally a)
+    public void UpdateStatsUI(Characters c)
     {
-        labelEnemy.text = a.charName;
-        statsEnemy.text = "Health  " + a.health + "/" + a.maxHealth + "    ";
-        statsEnemy.text += a.healthDebuff < 0 ? "<color=red> -" + a.healthDebuff + "</color> " : "<color=green> +" + a.healthDebuff + "</color> ";
-        statsEnemy.text += a.dotDamage > 0 ? "\n<color=red> -" + a.dotDamage + "</color> " : "    ";
-        statsEnemy.text += "\nArmor  " + a.armor + "    ";
-        statsEnemy.text += a.armorBonus < 0 ? "<color=red> -" + a.armorBonus + "</color> " : "<color=green> +" + a.armorBonus + "</color> ";
-        statsEnemy.text += "\nInitiative   " + a.initiative;
-        statsEnemy.text += "\nDodge  " + a.dodge + "    ";
-        statsEnemy.text += a.dodgeBonus < 0 ? "<color=red> -" + a.dodgeBonus + "</color> " : "<color=green> +" + a.dodgeBonus + "</color> ";
-        statsEnemy.text += "\nDamage  " + a.damageRange.x + " - " + a.damageRange.y + "    ";
-        statsEnemy.text += a.damageBonus < 0 ? "<color=red> -" + a.damageBonus + " </color> " : "<color=green> +" + a.damageBonus + "</color> ";
-        statsEnemy.text += "\nCritic Chance  " + Mathf.Round(a.critChance * 100) + "%" + "    ";
-        statsEnemy.text += a.critChanceBonus < 0 ? "<color=red> -" + a.critChanceBonus + " </color> " : "<color=green> +" + a.critChanceBonus + "</color> ";
-        statsEnemy.text += "\nCritic Damage  " + Mathf.Round(a.critDamage * 100) + "%" + "    ";
-        statsEnemy.text += a.critDamageBonus < 0 ? "<color=red> -" + a.critDamageBonus + " </color> " : "<color=green> +" + a.critDamageBonus + "</color> ";
-        statsEnemy.text += "\nCurrent Element  " + a.currentElement.ToString();
-    }
-    public void ResetAllyDisplayUI()
-    {
-        allyStatsUI.SetActive(false);
+        labelChar.text = c.charName;
+        statsCharLeft.text = "Health  " + Mathf.Round(c.health) + "/" + Mathf.Round(c.maxHealth) + "    ";
+        statsCharLeft.text += c.healthDebuff < 0 ? "<color=red>" + c.healthDebuff + "</color> " : "<color=green>" + c.healthDebuff + "</color> ";
+        statsCharLeft.text += "\nArmor  " + c.armor + "    ";
+        statsCharLeft.text += c.armorBonus < 0 ? "<color=red>" + c.armorBonus + "</color> " : "<color=green>" + c.armorBonus + "</color> ";
+        statsCharLeft.text += "\nDodge  " + Mathf.Round(c.dodge) + "    ";
+        statsCharLeft.text += c.dodgeBonus < 0 ? "<color=red>" + c.dodgeBonus + "</color> " : "<color=green>" + c.dodgeBonus + "</color> ";
+        statsCharLeft.text += "\nInitiative   " + c.initiative;
+        statsCharLeft.text += "\nCurrent Element  " + c.currentElement.ToString();
+
+
+        statsCharRight.text = c.dotDamage > 0 ? "Dot : <color=red> -" + c.dotDamage + "</color> " : "    ";
+        statsCharRight.text += "\nDamage  " + Mathf.Round(c.damageRange.x) + " - " + Mathf.Round(c.damageRange.y)  + "    ";
+        statsCharRight.text += c.damageBonus < 0 ? "<color=red>" + c.damageBonus + " </color> " : "<color=green>" + c.damageBonus + "</color> ";
+        statsCharRight.text += "\nCritic Chance  " + Mathf.Round(c.critChance * 100) + "%" + "    ";
+        statsCharRight.text += c.critChanceBonus < 0 ? "<color=red>" + c.critChanceBonus + " </color> " : "<color=green>" + c.critChanceBonus + "</color> ";
+        statsCharRight.text += "\nCritic Damage  " + Mathf.Round(c.critDamage * 100) + "%" + "    ";
+        statsCharRight.text += c.critDamageBonus < 0 ? "<color=red>" + c.critDamageBonus + " </color> " : "<color=green>" + c.critDamageBonus + "</color> ";
     }
 }

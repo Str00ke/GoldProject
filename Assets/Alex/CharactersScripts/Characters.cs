@@ -11,9 +11,9 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public bool onPointerHold;
     public GameObject healthBarOutline;
     public GameObject canvasChar;
-    public Vector2 debuffsInitialPos = new Vector2(-40, -10.5f);
-    public Vector2 buffsInitialPos = new Vector2(40, -10.5f);
     [Header("Labels")]
+    public GameObject cursorSelected;
+    public GameObject cursorPlaying;
     public string charName;
     public Image stateIcon;
     public Sprite[] stateIcons;
@@ -50,12 +50,10 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public float maxHealth;
     public Vector2 damageRange;
     public float initiative;
-    [HideInInspector]
     public float dodge;
     public float dodgeValue;
     public float critChance;
     public float critDamage;
-    [HideInInspector]
     public float armor;
     public float armorValue;
     [Range(0.0f, 1.0f)]
@@ -71,8 +69,12 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     [Header("StatusVariables")]
     public List<Status> statusList = new List<Status>();
-    public List<GameObject> prefabsIconStatusBuffs;
-    public List<GameObject> prefabsIconStatusDebuffs;
+    public Vector2 debuffsInitialPos = new Vector2(-40, -10.5f);
+    public Vector2 buffsInitialPos = new Vector2(40, -10.5f);
+    public List<GameObject> prefabsIconStatus;
+    public int statusPerLine = 0;
+    public int statusPerLineMax = 6;
+    public int statusLines = 0; 
     public bool stunned;
     public bool confusion;
     public int turnsConfusionValue = 2;
@@ -104,7 +106,6 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public bool hasPlayed;
     public bool CanAttack;
     public bool isSelected;
-    [HideInInspector]
     public SpriteRenderer thisColorHead;
     public SpriteRenderer thisColorBody;
     public Color selectedColor;
@@ -154,36 +155,15 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
     public void ChangeColor()
     {
-        if (isSelected && !CanAttack && !hasPlayed)
+        if (isSelected)
         {
-            thisColorBody.color = selectedColor;
-            thisColorHead.color = selectedColor;
+            cursorSelected.SetActive(true);
         }
-        else if (!isSelected && !CanAttack && !hasPlayed)
+        else
         {
-            thisColorBody.color = baseColor;
-            thisColorHead.color = baseColor;
+            cursorSelected.SetActive(false);
         }
-        else if (CanAttack)
-        {
-            thisColorBody.color = AttackColor;
-            thisColorHead.color = AttackColor;
-        }
-        else if (CanAttack && isSelected)
-        {
-            thisColorBody.color = selectedColor;
-            thisColorHead.color = selectedColor;
-        }
-        else if (hasPlayed && !isSelected)
-        {
-            thisColorBody.color = hasPlayedColor;
-            thisColorHead.color = hasPlayedColor;
-        }
-        else if (hasPlayed && isSelected)
-        {
-            thisColorBody.color = selectedColor;
-            thisColorHead.color = selectedColor;
-        }
+        //Cursor playing display in NextCharAttack in CombatManager
     }
     public void UpdateStateIcon()
     {
@@ -206,11 +186,13 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 break;
         }
     }
-    public virtual void OnPointerDown(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
+        onPointerHold = true;
     }
-    public virtual void OnPointerUp(PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)
     {
+        onPointerHold = false;
     }
     public void ChangeStats(string name, float maxHP, Vector2 dmgRange, int dodg, float critCh, float critDmg, int armr, int position)
     {
@@ -288,7 +270,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             case Ability.ElementType.MUD:
                 if (ability.crHealType == Ability.CristalHealType.BOOST)
                 {
-                    Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.ARMORBONUSFLAT);
+                    Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.ARMORBONUS);
                 }
                 else if (ability.crHealType == Ability.CristalHealType.DRINK)
                 {
@@ -306,6 +288,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 }
                 break;
         }
+        receiver.ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), ability.elementType.ToString()));
     }
     public void LaunchDestruction(Characters receiver, Ability ability)
     {
@@ -353,7 +336,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             case CurrentElement.ASH:
                 if (ndElement == CurrentElement.ICE)
                 {
-                    stunned = true;
+                    Status s = new Status(this, 0, 2, Status.StatusTypes.STUN);
                     currentElement = CurrentElement.BASE;
                 }
                 else if (ndElement == CurrentElement.MUD)
@@ -381,7 +364,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 }
                 else if (ndElement == CurrentElement.PSY)
                 {
-                    Status s = new Status(this, 0.3f, 2, Status.StatusTypes.ARMORBONUSPERC);
+                    Status s = new Status(this, 10, 2, Status.StatusTypes.ARMORBONUS);
                     currentElement = CurrentElement.BASE;
                 }
                 break;
@@ -501,6 +484,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         Gizmos.color = Color.red;
         Gizmos.DrawCube(transform.position + (Vector3)buffsInitialPos, new Vector3(0.1f, 0.1f, 0.1f));
         Gizmos.DrawCube(transform.position + (Vector3)debuffsInitialPos, new Vector3(0.1f, 0.1f, 0.1f));
+        Gizmos.DrawCube((Vector3)posInitial, new Vector3(0.1f, 0.1f, 0.1f));
 
     }
 }

@@ -13,11 +13,10 @@ public class CombatManager : MonoBehaviour
     public List<Ally> allies;
     public List<Characters> fightersList;
     //public GameObject attackButton;
-    public Ally allySelected = null;
+    public Characters charSelected = null;
 
     [Header("Enemies")]
     public List<Enemy> enemies;
-    public Enemy enemySelected = null;
     public float delay = 0.0f;
     public float attackDuration = 2.0f;
 
@@ -134,8 +133,8 @@ public class CombatManager : MonoBehaviour
         fightersList[currCharAttacking].CanAttack = false;
         fightersList[currCharAttacking].hasPlayed = true;
         yield return new WaitForSeconds(3.0f);
+        fightersList[currCharAttacking].cursorPlaying.SetActive(false);
         currCharAttacking++;
-
         if (currCharAttacking >= fightersList.Count)
         {
             TurnPassed();
@@ -144,11 +143,7 @@ public class CombatManager : MonoBehaviour
         {
             while (!fightersList[currCharAttacking] || fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead)
             {
-                //--------------------STUN STATUS----------------------------
-                if (fightersList[currCharAttacking].stunned)
-                {
-                    fightersList[currCharAttacking].stunned = false;
-                }
+                StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
                 currCharAttacking++;
                 //---------------- ---IF EVERY FIGHTERS HAVE PLAYED -> NEXT TURN----------------------------
                 if (currCharAttacking >= fightersList.Count)
@@ -159,6 +154,7 @@ public class CombatManager : MonoBehaviour
             if (currCharAttacking < fightersList.Count)
             {
                 fightersList[currCharAttacking].CanAttack = true;
+                fightersList[currCharAttacking].cursorPlaying.SetActive(true);
                 if (fightersList[currCharAttacking].charType == Characters.CharType.ALLY)
                 {
                     allyPlaying = (Ally)fightersList[currCharAttacking];
@@ -279,13 +275,13 @@ public class CombatManager : MonoBehaviour
                         if (allyDef)
                         {
                             fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
-                            allyDef.stunned = true;
+                            Status s = new Status(allyDef, 0, 1, Status.StatusTypes.STUN);
                             allyDef.inDefenceMode = false;
                         }
                         else
                         {
                             fightersList[currCharAttacking].LaunchAttack(allyAtt, abilityUsed);
-                            allyAtt.stunned = true;
+                            Status s = new Status(allyAtt, 0, 1, Status.StatusTypes.STUN);
                         }
                     }
                 }
@@ -317,7 +313,6 @@ public class CombatManager : MonoBehaviour
 
         while (fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead || !fightersList[currCharAttacking])
         {
-            fightersList[currCharAttacking].stunned = false;
             currCharAttacking++;
             if (currCharAttacking >= fightersList.Count)
             {
@@ -349,7 +344,7 @@ public class CombatManager : MonoBehaviour
             //EndFight<Ally>(allies);
         }
     }
-    public void RemoveEnemy(int numPos) 
+    /*public void RemoveEnemy(int numPos) 
     {
         for (int i = enemies.Count - 1; i >= 0; i--)
         {
@@ -363,28 +358,45 @@ public class CombatManager : MonoBehaviour
                 enemies.Remove(enemies[i]);
                 Destroy(e.gameObject);
                 if (enemies.Count <= 0)
-                    EndFight<Enemy>();
+                    EndFight<Enemy>();s
             }
         }
         UpdatePosEnemies(numPos);
 
+    }*/
+    public void RemoveEnemy(Enemy e)
+    {
+        int numPos = 0;
+        for (int i = enemies.Count - 1; i >= 0; i--)
+        {
+            if (enemies[i] == e)
+            {
+                if (enemies[i] == charSelected)
+                {
+                    charSelected = null;
+                }
+                enemies.Remove(e);
+                numPos = e.teamPosition;
+                Destroy(e.gameObject);
+
+                if (enemies.Count <= 0)
+                    EndFight<Enemy>();
+            }
+        }
+        if(e)
+            UpdatePosEnemies(numPos);
     }
     public void UpdatePosEnemies(int numPos) 
     {
         foreach (Enemy e in enemies)
         {
-            if (e.teamPosition < numPos)
-            {
-            }
-            else if (e.teamPosition > numPos)
+           if (e.teamPosition > numPos)
             {
                 e.teamPosition--;
                 e.ChangePos();
             }
         }
     }
-
-    
     void EndFight<T>()
     {
         if (typeof(T) == typeof(Enemy))
@@ -400,7 +412,7 @@ public class CombatManager : MonoBehaviour
     {
         for (int i = 0; i < enemies.Count; ++i)
         {
-            RemoveEnemy(i);
+            RemoveEnemy(enemies[i]);
         }
     }
 }

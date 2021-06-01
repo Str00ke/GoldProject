@@ -8,6 +8,7 @@ public class Enemy : Characters
 {
     public EEnemyType enemyType;
     public EElement enemyElement;
+    bool removed;
     void Awake()
     {
         stateIcons = UIManager.uiManager.stateIcons;
@@ -45,15 +46,15 @@ public class Enemy : Characters
         {
             if (!isSelected)
             {
-                if (CombatManager.combatManager.enemySelected != null)
+                if (CombatManager.combatManager.charSelected != null)
                 {
-                    CombatManager.combatManager.enemySelected.isSelected = false;
-                    CombatManager.combatManager.enemySelected = null;
+                    CombatManager.combatManager.charSelected.isSelected = false;
+                    CombatManager.combatManager.charSelected = null;
                 }
                 isSelected = true;
-                CombatManager.combatManager.enemySelected = this;
+                CombatManager.combatManager.charSelected = this;
+                UIManager.uiManager.statsUI.SetActive(true);
             }
-            UIManager.uiManager.enemyStatsUI.SetActive(true);
         }
 
     }
@@ -66,6 +67,10 @@ public class Enemy : Characters
         healthBar = GameObject.Find(gameObject.name + "/CanvasSlider/healthBar").GetComponent<Slider>();
         canvasChar = GameObject.Find(gameObject.name + "/CanvasSlider");
         healthBarOutline = GameObject.Find(gameObject.name + "/CanvasSlider/HealthBarOutline");
+        cursorSelected = GameObject.Find(gameObject.name + "/CanvasSlider/cursorSelected");
+        cursorPlaying = GameObject.Find(gameObject.name + "/CanvasSlider/cursorPlaying");
+        cursorSelected.SetActive(false);
+        cursorPlaying.SetActive(false);
         healthBarOutline.SetActive(false);
         maxHealth = e.maxHealth;
         enemyType = e.enemyType;
@@ -103,16 +108,11 @@ public class Enemy : Characters
                 break;
         }
     }
-    public override void OnPointerDown(PointerEventData eventData)
-    {
-        onPointerHold = true;
-    }
-    public override void OnPointerUp(PointerEventData eventData)
-    {
-        UIManager.uiManager.ResetEnemyDisplayUI();
-        onPointerHold = false;
-    }
 
+    public override void TakeDamage(float value, float duration)
+    {
+        StartCoroutine(TakeDamageCor(value, duration));
+    }
     public override IEnumerator TakeDamageCor(float value, float duration)
     {
         ShowFloatingHealth(Mathf.Round(value).ToString(), true);
@@ -127,7 +127,12 @@ public class Enemy : Characters
         if (health <= 0)
         {
             health = 0;
-            CombatManager.combatManager.RemoveEnemy(teamPosition);
+            isDead = true;
+        }
+        if (!removed && isDead)
+        {
+            CombatManager.combatManager.RemoveEnemy(this);
+            removed = true;
         }
     }
 
