@@ -8,6 +8,7 @@ public class Inventory : MonoBehaviour
 {
     public RectTransform mainCanvas;
     public int golds = 0;
+    public int souls = 0;
 
     [Header("Item Inventory")]
     private int nbLines = 0;
@@ -339,6 +340,16 @@ public class Inventory : MonoBehaviour
             golds = 0;
 
         // refresh golds text
+    }
+
+    public void AddSouls(int _souls)
+    {
+        souls += _souls;
+
+        if (souls < 0)
+            souls = 0;
+
+        // refresh souls text
     }
 }
 
