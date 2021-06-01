@@ -171,11 +171,13 @@ public class CharacterManager : MonoBehaviour
             }
         }
 
-        // SELECTED CHARACTER
-        itemsUIPanel.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = null;
-        itemsUIPanel.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = null;
-        itemsUIPanel.transform.GetChild(2).GetChild(0).GetComponent<Image>().sprite = null;
-        itemsUIPanel.transform.GetChild(3).GetChild(0).GetComponent<Image>().sprite = null;
+        // SELECTED CHARACTER ITEMS
+        for (int i = 0; i < 3; i++)
+        {
+            itemsUIPanel.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = null;
+            itemsUIPanel.transform.GetChild(i).GetChild(1).gameObject.SetActive(false);
+            itemsUIPanel.transform.GetChild(i).GetChild(2).gameObject.SetActive(false);
+        }
 
         // Show informations
         informationsUIPanel.transform.GetChild(0).GetComponent<Text>().text = "";
@@ -325,7 +327,6 @@ public class CharacterManager : MonoBehaviour
             itemsUIPanel.transform.GetChild(3).GetChild(0).GetComponent<Button>().onClick.AddListener(() => SelectItemStats(gem));
         }
 
-
         if (indexChar != -1)
         {
             // Show informations
@@ -336,9 +337,9 @@ public class CharacterManager : MonoBehaviour
             statsUIPanel.transform.GetChild(0).GetComponent<Text>().text = " Health " + characters[indexChar].maxHealth;
             statsUIPanel.transform.GetChild(1).GetComponent<Text>().text = " Armor " + characters[indexChar].armor;
             statsUIPanel.transform.GetChild(2).GetComponent<Text>().text = " Attack " + characters[indexChar].attack;
-            statsUIPanel.transform.GetChild(3).GetComponent<Text>().text = " Dodge% " + characters[indexChar].dodge * 100f + "%";
-            statsUIPanel.transform.GetChild(4).GetComponent<Text>().text = " Crit% " + characters[indexChar].criticalChance * 100f + "%";
-            statsUIPanel.transform.GetChild(5).GetComponent<Text>().text = " CritDmg% " + characters[indexChar].crititalDamage * 100f + "%";
+            statsUIPanel.transform.GetChild(3).GetComponent<Text>().text = " Dodge " + characters[indexChar].dodge * 100f + "%";
+            statsUIPanel.transform.GetChild(4).GetComponent<Text>().text = " Crit " + characters[indexChar].criticalChance * 100f + "%";
+            statsUIPanel.transform.GetChild(5).GetComponent<Text>().text = " CritDmg " + characters[indexChar].crititalDamage * 100f + "%";
         }
     }
 
@@ -373,12 +374,12 @@ public class CharacterManager : MonoBehaviour
         }
         else if (valueName == "" && item.dodge > 0)
         {
-            statsUIPanel.transform.GetChild(0).GetComponent<Text>().text = " Dodge " + item.dodge;
+            statsUIPanel.transform.GetChild(0).GetComponent<Text>().text = " Dodge " + item.dodge * 100f + "%";
             valueName = "Dodge";
         }
         else if (valueName == "" && item.criticalChance > 0)
         {
-            statsUIPanel.transform.GetChild(0).GetComponent<Text>().text = " Crit% " + item.criticalChance + "%";
+            statsUIPanel.transform.GetChild(0).GetComponent<Text>().text = " Crit " + item.criticalChance * 100f + "%";
             valueName = "Crit%";
         }
         else if (valueName == "" && item.crititalDamage > 0)
@@ -401,11 +402,11 @@ public class CharacterManager : MonoBehaviour
         }
         else if (valueName != "Dodge" && item.dodge > 0)
         {
-            statsUIPanel.transform.GetChild(3).GetComponent<Text>().text = " Dodge " + item.dodge;
+            statsUIPanel.transform.GetChild(3).GetComponent<Text>().text = " Dodge " + item.dodge * 100f + "%";
         }
         else if (valueName != "Crit%" && item.criticalChance > 0)
         {
-            statsUIPanel.transform.GetChild(3).GetComponent<Text>().text = " Crit% " + item.criticalChance + "%";
+            statsUIPanel.transform.GetChild(3).GetComponent<Text>().text = " Crit " + item.criticalChance * 100f + "%";
         }
         else if (valueName != "CritDmg" && item.crititalDamage > 0)
         {
