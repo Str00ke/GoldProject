@@ -351,7 +351,7 @@ public class AbilitiesManager : MonoBehaviour
                 if (cm.charSelected.isTargetable)
                 {
                     cm.allyPlaying.inDefenceMode = true;
-                    Status s = new Status(cm.allyPlaying, 0.6f, abi, Status.StatusTypes.ARMORBONUSPERC);
+                    Status s = new Status(cm.allyPlaying, Mathf.Round(cm.allyPlaying.armor * 0.6f), abi, Status.StatusTypes.ARMORBONUS);
                 }
             }
         }

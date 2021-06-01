@@ -11,8 +11,6 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public bool onPointerHold;
     public GameObject healthBarOutline;
     public GameObject canvasChar;
-    public Vector2 debuffsInitialPos = new Vector2(-40, -10.5f);
-    public Vector2 buffsInitialPos = new Vector2(40, -10.5f);
     [Header("Labels")]
     public GameObject cursorSelected;
     public GameObject cursorPlaying;
@@ -71,8 +69,12 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     [Header("StatusVariables")]
     public List<Status> statusList = new List<Status>();
-    public List<GameObject> prefabsIconStatusBuffs;
-    public List<GameObject> prefabsIconStatusDebuffs;
+    public Vector2 debuffsInitialPos = new Vector2(-40, -10.5f);
+    public Vector2 buffsInitialPos = new Vector2(40, -10.5f);
+    public List<GameObject> prefabsIconStatus;
+    public int statusPerLine = 0;
+    public int statusPerLineMax = 6;
+    public int statusLines = 0; 
     public bool stunned;
     public bool confusion;
     public int turnsConfusionValue = 2;
@@ -268,7 +270,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             case Ability.ElementType.MUD:
                 if (ability.crHealType == Ability.CristalHealType.BOOST)
                 {
-                    Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.ARMORBONUSFLAT);
+                    Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.ARMORBONUS);
                 }
                 else if (ability.crHealType == Ability.CristalHealType.DRINK)
                 {
@@ -334,7 +336,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             case CurrentElement.ASH:
                 if (ndElement == CurrentElement.ICE)
                 {
-                    stunned = true;
+                    Status s = new Status(this, 0, 2, Status.StatusTypes.STUN);
                     currentElement = CurrentElement.BASE;
                 }
                 else if (ndElement == CurrentElement.MUD)
@@ -362,7 +364,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 }
                 else if (ndElement == CurrentElement.PSY)
                 {
-                    Status s = new Status(this, 0.3f, 2, Status.StatusTypes.ARMORBONUSPERC);
+                    Status s = new Status(this, 10, 2, Status.StatusTypes.ARMORBONUS);
                     currentElement = CurrentElement.BASE;
                 }
                 break;
