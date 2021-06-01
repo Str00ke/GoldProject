@@ -431,8 +431,16 @@ public class CharacterManager : MonoBehaviour
         {
             statsUIPanel.transform.GetChild(3).GetComponent<Text>().text = " CritDmg " + item.crititalDamage * 100f + "%";
         }
+        else if (item.itemType.ToString() != "None")
+        {
+            statsUIPanel.transform.GetChild(3).GetComponent<Text>().text = " " + item.itemType.ToString();
+        }
+        else
+        {
+            statsUIPanel.transform.GetChild(3).GetComponent<Text>().text = "";
+        }
 
-        statsUIPanel.transform.GetChild(1).GetComponent<Text>().text =  item.itemType != NItem.EItemType.None ? " " + item.itemType.ToString() : ""; // gem
+        statsUIPanel.transform.GetChild(1).GetComponent<Text>().text = "";
         statsUIPanel.transform.GetChild(2).GetComponent<Text>().text = "";
         statsUIPanel.transform.GetChild(4).GetComponent<Text>().text = "";
         statsUIPanel.transform.GetChild(5).GetComponent<Text>().text = "";
