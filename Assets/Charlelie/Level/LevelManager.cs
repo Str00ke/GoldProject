@@ -3,6 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public static class LevelData
+{
+    static Ally[] _chars;
+
+
+    static void SetData(Ally[] allies)
+    {
+        _chars = allies;
+    }
+
+    static void GetData()
+    {
+        
+    }
+}
+
+
 public class LevelManager : MonoBehaviour
 {
     public Level level;
@@ -13,6 +30,8 @@ public class LevelManager : MonoBehaviour
     public Text testTxt;
     public bool fightFMiniBoss, fightSMiniBoss = false;
     static LevelManager _levelManager;
+    [Header("Rate for fighting room")]
+    public float fightRate = 30;
 
 
     void Awake()
@@ -120,12 +139,16 @@ public class LevelManager : MonoBehaviour
     {
         if (!FindObjectOfType<PlayerPoint>().onRoom.isFinished)
         {
-            float rand = Random.Range(0, 10);
-            if (rand < 3)
+            if (!EnnemyManager._enemyManager.CheckIfOnBossRoom(PlayerPoint._playerPoint.onRoom))
             {
-                FindObjectOfType<PlayerPoint>().onRoom.OnFinishRoom();
-                return;
+                float rand = Random.Range(0, 100);
+                if (rand > fightRate)
+                {
+                    FindObjectOfType<PlayerPoint>().onRoom.OnFinishRoom();
+                    return;
+                }
             }
+            
             combatRef = Instantiate(combatPrefab, Vector2.zero, transform.rotation);
             FindObjectOfType<MapManager>().ShowMap();
             FindObjectOfType<MapManager>().UpdateBtn();
@@ -161,5 +184,10 @@ public class LevelManager : MonoBehaviour
     public void Retry()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+    }
+
+    public void ReturnToLobby()
+    {
+
     }
 }
