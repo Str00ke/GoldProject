@@ -48,6 +48,7 @@ MonoBehaviour:
   debuffStatusSprite: {fileID: 21300000, guid: 57644236fb38d0d46ac97397f006bbeb, type: 3}
   dotStatusSprite: {fileID: 21300000, guid: 9f39ee6dd5059bd45b49cc586d61e8f8, type: 3}
   markStatusSprite: {fileID: 21300000, guid: 1573684a8041d4741a5fa0f32062de6b, type: 3}
+  stunStatusSprite: {fileID: 21300000, guid: 45f30b6bf11eb4643a24cfd2e530febe, type: 3}
   statusOffset: 0.15
   statusId: 0
 --- !u!1 &1053933509547045663

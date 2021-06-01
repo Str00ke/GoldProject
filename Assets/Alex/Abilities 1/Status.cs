@@ -28,8 +28,7 @@ public class Status
     public BuffOrDebuff buffOrDebuff;
     public enum StatusTypes
     {
-        ARMORBONUSPERC,
-        ARMORBONUSFLAT,
+        ARMORBONUS,
         ARMORMALUS,
         HEALBONUS,
         PRECISIONMALUS,
@@ -42,7 +41,8 @@ public class Status
         HEALTHDEBUFF,
         BLEEDING,
         DOT,
-        MARK
+        MARK,
+        STUN
     }
     public StatusTypes statusType;
 
@@ -91,13 +91,7 @@ public class Status
         {
             switch (statusType)
             {
-                case StatusTypes.ARMORBONUSPERC:
-                    diffModif = statusTarget.armor * bonusmalus;
-                    statusTarget.armorBonus += diffModif;
-                    statusTarget.armor += diffModif;
-                    buffOrDebuff = BuffOrDebuff.BUFF;
-                    break;
-                case StatusTypes.ARMORBONUSFLAT:
+                case StatusTypes.ARMORBONUS:
                     diffModif = bonusmalus;
                     statusTarget.armorBonus += diffModif;
                     statusTarget.armor += diffModif;
@@ -105,6 +99,7 @@ public class Status
                     break;
                 case StatusTypes.ARMORMALUS:
                     diffModif = statusTarget.armor * bonusmalus;
+                    diffModif = Mathf.Round(diffModif);
                     statusTarget.armorBonus -= diffModif;
                     statusTarget.armor -= diffModif;
                     buffOrDebuff = BuffOrDebuff.DEBUFF;
@@ -185,6 +180,10 @@ public class Status
                 case StatusTypes.MARK:
                     buffOrDebuff = BuffOrDebuff.DEBUFF;
                     break;
+                case StatusTypes.STUN:
+                    statusTarget.stunned = true;
+                    buffOrDebuff = BuffOrDebuff.DEBUFF;
+                    break;
             }
             statusId = StatusManager.statusManager.statusId;
             StatusManager.statusManager.statusId++;
@@ -193,14 +192,9 @@ public class Status
     }
     public void RevertStatus()
     {
-        statusTarget.statusList.Remove(this);
         switch (statusType)
         {
-            case StatusTypes.ARMORBONUSPERC:
-                statusTarget.armor -= diffModif;
-                statusTarget.armorBonus -= (int)diffModif;
-                break;
-            case StatusTypes.ARMORBONUSFLAT:
+            case StatusTypes.ARMORBONUS:
                 statusTarget.armor -= diffModif;
                 statusTarget.armorBonus -= (int)diffModif;
                 break;
@@ -252,7 +246,11 @@ public class Status
             case StatusTypes.DOT:
                 statusTarget.dotDamage -= (int)dmg;
                 break;
+            case StatusTypes.STUN:
+                statusTarget.stunned = false;
+                break;
         }
+        statusTarget.statusList.Remove(this);
         StatusManager.statusManager.DeleteDisplayStatus(statusTarget, this);
     }
 }
