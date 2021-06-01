@@ -21,9 +21,6 @@ public class LobbyManager : MonoBehaviour
 
     public RectTransform mainCanvas;
 
-    public GameObject OptionsMenu;
-    public GameObject CreditsMenu;
-    public GameObject DungeonsMenu;
     public GameObject ShopMenu;
     public Transform shopButton;
 
@@ -35,19 +32,23 @@ public class LobbyManager : MonoBehaviour
     [Header("Loading Screen")]
     private AsyncOperation loadingAsync;
     public GameObject loadingScene;
-    public Slider loadingSlider;
-    public RectTransform charSpriteLoading;
+    public Image loadingSlider;
 
     private void Awake()
     {
         LobbyManager[] lob = FindObjectsOfType<LobbyManager>();
 
         if (lob.Length > 1)
-            Destroy(mainCanvas);
+        {
+            /*if (!LobbyManager.lobbyManager.mainCanvas.transform.GetChild(0).gameObject.activeSelf)
+                LobbyManager.lobbyManager.SwitchLobbyUI();*/
+
+            Destroy(mainCanvas.gameObject);
+        }
 
         lobbyManager = this;
 
-        DontDestroyOnLoad(mainCanvas);
+        DontDestroyOnLoad(mainCanvas.gameObject);
     }
 
     private void Start()
@@ -66,15 +67,12 @@ public class LobbyManager : MonoBehaviour
     {
         if (!isFirstGameDone)
             isFirstGameDone = bool.Parse(PlayerPrefs.GetString("FirstGame", "false"));
-        else if (isFirstGameDone && !shopButton.GetChild(0).gameObject.activeSelf)
+
+        if (isFirstGameDone && !shopButton.GetChild(0).gameObject.activeSelf)
         {
             shopButton.GetChild(0).gameObject.SetActive(false);
-            shopButton.GetComponent<Image>().raycastTarget = true;
         }
 
-        //OptionsMenu.SetActive(false);
-        //CreditsMenu.SetActive(false);
-        //DungeonsMenu.SetActive(false);
         Inventory.inventory.CloseInventory();
         ShopMenu.SetActive(false);
 
@@ -149,18 +147,13 @@ public class LobbyManager : MonoBehaviour
         loadingAsync = SceneManager.LoadSceneAsync(sceneName);
         loadingAsync.allowSceneActivation = false;
 
-        float sliderSize = loadingSlider.GetComponent<RectTransform>().sizeDelta.x;
-
         while (!loadingAsync.isDone)
         {
-            loadingSlider.value = loadingAsync.progress;
-
-            charSpriteLoading.anchoredPosition = new Vector2((loadingSlider.value < 0.5f ? -1f : 1f) * (sliderSize / 2f) * (1 - loadingSlider.value), charSpriteLoading.anchoredPosition.y);
+            loadingSlider.fillAmount = loadingAsync.progress;
 
             if (loadingAsync.progress >= 0.9f)
             {
-                loadingSlider.value = 0.99f;
-                charSpriteLoading.anchoredPosition = new Vector2(sliderSize / 2f, charSpriteLoading.anchoredPosition.y);
+                loadingSlider.fillAmount = 1f;
                 loadingAsync.allowSceneActivation = true;
             }
 
