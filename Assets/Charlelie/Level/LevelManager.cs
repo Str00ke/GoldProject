@@ -5,19 +5,57 @@ using UnityEngine.UI;
 
 public static class LevelData
 {
-    static Ally[] _chars;
+    static int _gold = 0;
+    static int _souls = 0;
+    static List<NItem.ItemScriptableObject> _so = new List<NItem.ItemScriptableObject>();
 
 
-    static void SetData(Ally[] allies)
+    public static void SetData(int gold, int souls, List<NItem.ItemScriptableObject> so)
     {
-        _chars = allies;
+        _gold = gold;
+        _souls = souls;
+        _so = so;
     }
 
-    static void GetData()
+
+    public static int GetGold()
     {
-        
+        return _gold;
+    }
+
+    public static int GetSouls()
+    {
+        return _souls;
+    }
+
+    public static List<NItem.ItemScriptableObject> GetSO()
+    {
+        return _so;
+    }
+
+    public static void AddSoToList(NItem.ItemScriptableObject so)
+    {
+        _so.Add(so);
+    }
+
+    public static void AddGold(int value)
+    {
+        _gold += value;
+    }
+
+    public static void AddSouls(int value)
+    {
+        _souls += value;
+    }
+
+    public static void EraseData()
+    {
+        _gold = 0;
+        _souls = 0;
+        _so.Clear();
     }
 }
+
 
 
 public class LevelManager : MonoBehaviour
@@ -105,6 +143,7 @@ public class LevelManager : MonoBehaviour
     public void LoseFight()
     {
         Debug.Log("Game Over!");
+        LevelData.EraseData();
     }
 
     public void StartRoom()
@@ -188,6 +227,25 @@ public class LevelManager : MonoBehaviour
 
     public void ReturnToLobby()
     {
+        LobbyManager.lobbyManager.LoadScene("FScene");
+    }
 
+    /*public void OnGetLoot(Object loot)
+    {
+        switch (loot)
+        {
+            case /*Gold:
+                Add
+        }
+    }*/
+
+    public void UpdateDataValues()
+    {
+        Inventory.inventory.AddGolds(LevelData.GetGold());
+        //Inventory.inventory.AddSouls(LevelData.GetSouls());
+        foreach (NItem.ItemScriptableObject so in LevelData.GetSO())
+        {
+            Inventory.inventory.AddItem(so);
+        }
     }
 }
