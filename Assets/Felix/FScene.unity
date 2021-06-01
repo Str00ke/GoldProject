@@ -1980,6 +1980,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCanvas: {fileID: 618581378}
   golds: 0
+  souls: 0
   itemPartButton:
   - {fileID: 301418941}
   - {fileID: 680055925}
@@ -14048,7 +14049,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -34.5, y: 100}
+  m_AnchoredPosition: {x: -34.500034, y: 100}
   m_SizeDelta: {x: 411, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1591084693
