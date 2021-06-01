@@ -101,6 +101,7 @@ public class CombatManager : MonoBehaviour
         //SORT BY INITIATIVE
         SortFightersInit();
         fightersList[currCharAttacking].CanAttack = true;
+        fightersList[currCharAttacking].cursorPlaying.SetActive(true);
         if (fightersList[currCharAttacking].charType == Characters.CharType.ALLY)
         {
             allyPlaying = (Ally)fightersList[currCharAttacking];
@@ -130,10 +131,16 @@ public class CombatManager : MonoBehaviour
     }
    IEnumerator NextCharAttackCor()
     {
-        fightersList[currCharAttacking].CanAttack = false;
-        fightersList[currCharAttacking].hasPlayed = true;
+        if(currCharAttacking >= 0)
+        {
+            fightersList[currCharAttacking].CanAttack = false;
+            fightersList[currCharAttacking].hasPlayed = true;
+        }
         yield return new WaitForSeconds(3.0f);
-        fightersList[currCharAttacking].cursorPlaying.SetActive(false);
+        if (currCharAttacking >= 0)
+        {
+            fightersList[currCharAttacking].cursorPlaying.SetActive(false);
+        }
         currCharAttacking++;
         if (currCharAttacking >= fightersList.Count)
         {
@@ -144,6 +151,9 @@ public class CombatManager : MonoBehaviour
             while (!fightersList[currCharAttacking] || fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead)
             {
                 StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
+                fightersList[currCharAttacking].cursorPlaying.SetActive(true);
+                yield return new WaitForSeconds(1.5f);
+                fightersList[currCharAttacking].cursorPlaying.SetActive(false);
                 currCharAttacking++;
                 //---------------- ---IF EVERY FIGHTERS HAVE PLAYED -> NEXT TURN----------------------------
                 if (currCharAttacking >= fightersList.Count)
@@ -296,7 +306,7 @@ public class CombatManager : MonoBehaviour
     {
         StopCoroutine(nextCharCor);
         nextCharCor = null;
-        currCharAttacking = 0;
+        currCharAttacking = -1;
         nbCharsPlayed = 0;
         turnNumber++;
         UIManager.uiManager.turnsText.text = "" + turnNumber;
@@ -311,8 +321,10 @@ public class CombatManager : MonoBehaviour
                 e.hasPlayed = false;
         }
 
-        while (fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead || !fightersList[currCharAttacking])
+        NextCharAttack();
+        /*while (fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead || !fightersList[currCharAttacking])
         {
+            StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
             currCharAttacking++;
             if (currCharAttacking >= fightersList.Count)
             {
@@ -321,6 +333,7 @@ public class CombatManager : MonoBehaviour
             }
         }
 
+        StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
         fightersList[currCharAttacking].CanAttack = true;
         if (fightersList[currCharAttacking].charType == Characters.CharType.ALLY)
         {
@@ -330,7 +343,7 @@ public class CombatManager : MonoBehaviour
         {
             allyPlaying = null;
         }
-        CharAttack(currCharAttacking);
+        CharAttack(currCharAttacking);*/
     }
     public void RemoveAlly(Ally a) 
     {

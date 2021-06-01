@@ -45,6 +45,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   easyDungeon:
     dungeonType: 0
+    firstMiniBoss: {fileID: 11400000, guid: ceee71f78bcde234d946781c3b5b3fc7, type: 2}
+    secondMiniBoss: {fileID: 11400000, guid: 51471bdfd113efd4eb331132836fd6f7, type: 2}
+    boss: {fileID: 11400000, guid: 417cd056e06114d4795de06ebd6eb13d, type: 2}
     part1:
       maxEnemiesInRoom: 1
       ennemiesPool:
@@ -84,6 +87,9 @@ MonoBehaviour:
     background: {fileID: 0}
   moyenDungeon:
     dungeonType: 0
+    firstMiniBoss: {fileID: 0}
+    secondMiniBoss: {fileID: 0}
+    boss: {fileID: 0}
     part1:
       maxEnemiesInRoom: 0
       ennemiesPool: []
@@ -117,6 +123,9 @@ MonoBehaviour:
     background: {fileID: 0}
   hardDungeon:
     dungeonType: 0
+    firstMiniBoss: {fileID: 0}
+    secondMiniBoss: {fileID: 0}
+    boss: {fileID: 0}
     part1:
       maxEnemiesInRoom: 0
       ennemiesPool: []

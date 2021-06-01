@@ -6,19 +6,12 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    private enum EState
-    {
-        Inventory,
-        InventoryItemPartSelection
-    }
-
     public RectTransform mainCanvas;
     public int golds = 0;
 
     [Header("Item Inventory")]
     private int nbLines = 0;
     private List<GameObject> itemList = new List<GameObject>();
-    private EState state;
     private GameObject itemPanelTarget;
     private Character characterItemChoosed;
 
@@ -42,17 +35,11 @@ public class Inventory : MonoBehaviour
         inventoryGo.SetActive(false);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-            OpenInventory();
-    }
-
     #region ItemInventoryPart
 
     public void OpenInventory()
     {
-        state = EState.Inventory;
+        LobbyManager.lobbyManager.lobbyState = ELobbyState.Inventory;
 
         inventoryGo.SetActive(true);
     }
@@ -60,8 +47,6 @@ public class Inventory : MonoBehaviour
     public void CloseInventory()
     {
         inventoryGo.SetActive(false);
-
-        CharacterManager.characterManager.RefreshTeamScene();
 
         CloseItemPanel();
 
@@ -101,6 +86,7 @@ public class Inventory : MonoBehaviour
             }
         }
 
+        // Item panel
         buttonNItem.onClick.AddListener(() => ShowItemPanel(nItem));
 
         bool isActivePart = itemPartButton[(int)item.itemPartType].color.b == 0f;
@@ -151,25 +137,28 @@ public class Inventory : MonoBehaviour
     {
         ItemInInventory iii = item.GetComponent<ItemInInventory>();
 
-        if (state == EState.InventoryItemPartSelection)
+        if (LobbyManager.lobbyManager.lobbyState == ELobbyState.InventoryItemPartSelection)
         {
             SetChoosedItem(characterItemChoosed, iii.item, item);
             CloseInventory();
             return;
         }
 
-        panelItem.SetActive(true);
+        // Show stats
+        CharacterManager.characterManager.SelectItemStats(iii.item);
+
+        //panelItem.SetActive(true);
 
         // Move panel
-        itemPanelTarget = item.gameObject;
+        //itemPanelTarget = item.gameObject;
 
-        RefreshPositionItemPanel();
+        //RefreshPositionItemPanel();
 
-        panelItem.transform.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
+        //panelItem.transform.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
 
-        if (state == EState.Inventory)
+        if (LobbyManager.lobbyManager.lobbyState == ELobbyState.Inventory)
         {
-            panelItem.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => DeleteItem(item));
+            //panelItem.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => DeleteItem(item));
 
             for (int i = 0; i < buttonsItemSet.Length; i++)
             {
@@ -268,7 +257,7 @@ public class Inventory : MonoBehaviour
 
         ButtonSelectionItemPart(itemPart);
 
-        state = EState.InventoryItemPartSelection;
+        LobbyManager.lobbyManager.lobbyState = ELobbyState.InventoryItemPartSelection;
     }
 
     public void SelectionCharacterOneItemPart(int slotIndex)

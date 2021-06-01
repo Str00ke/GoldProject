@@ -18,7 +18,7 @@ MonoBehaviour:
   damageRange: {x: 42, y: 47}
   dodge: 0.2
   critChance: 0.05
-  critDamage: 100
+  critDamage: 1
   initiative: 15
   armor: 30
   element: 0
