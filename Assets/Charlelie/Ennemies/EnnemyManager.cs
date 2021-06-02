@@ -58,7 +58,7 @@ public class EnnemyManager : MonoBehaviour
     public DungeonDifficulty hardDungeon;
     public static EnnemyManager _enemyManager;
 
-    int easyMin, easyMax, middleMin, middleMax, hardMin, hardMax;
+    public int easyMin, easyMax, middleMin, middleMax, hardMin, hardMax;
 
 
     private void Awake()
@@ -101,7 +101,7 @@ public class EnnemyManager : MonoBehaviour
             Debug.Log("First mini boss");
             LevelManager.GetInstance().fightFMiniBoss = true;
             switch (level.levelType)
-           {
+            {
                 case LevelType.EASY:
                     return easyDungeon.firstMiniBoss;
 
@@ -110,7 +110,7 @@ public class EnnemyManager : MonoBehaviour
 
                 case LevelType.HARD:
                     return hardDungeon.firstMiniBoss;
-           }
+            }
 
         } 
         else if (mapRoom.distFromStart == middleMax && !LevelManager.GetInstance().fightSMiniBoss)
