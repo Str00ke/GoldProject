@@ -19,6 +19,8 @@ public class FloatingObject : MonoBehaviour
 
     private void Start()
     {
+        load = Random.Range(0f, 5f);
+
         if (isUi)
         {
             rectTransform = GetComponent<RectTransform>();
@@ -27,8 +29,6 @@ public class FloatingObject : MonoBehaviour
         else
         {
             posOffset = transform.localPosition;
-
-            load = Random.Range(0f, 5f);
         }
     }
 
