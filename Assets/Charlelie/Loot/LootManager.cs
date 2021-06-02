@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class LootManager : MonoBehaviour
 {
+    Vector2 goldPlace = new Vector2(-6, -2);
     public static LootManager lootManager;
-    public AnimationCurve animCurve;
+    public AnimationCurve animCurveGold;
+    public AnimationCurve animCurveSoul;
+    public AnimationCurve animCurveItem;
+    public AnimationCurve animCurveFalling;
+    List<object> lootOnGround = new List<object>();
 
     [Header("Gold rate")]
     public float goldRatePart1;
@@ -46,12 +51,45 @@ public class LootManager : MonoBehaviour
         lootManager = this;   
     }
 
-    public void CreateLoot()
+
+    public void SetLoot()
     {
-        LootItem<NItem.ItemScriptableObject> go = GetLoot<NItem.ItemScriptableObject>(PlayerPoint._playerPoint.onRoom);
-        go.InstantiateObject();
-        //go.MoveTowards(new Vector2(100, 100));
-        go.ApplyToPlayer();
+        LootItem<GoldPrefab> gold = GetLoot<GoldPrefab>(PlayerPoint._playerPoint.onRoom);
+        LootItem<SoulGO> soul = GetLoot<SoulGO>(PlayerPoint._playerPoint.onRoom);
+        gold.InstantiateObject();
+        soul.InstantiateObject();
+        lootOnGround.Add(gold);
+        lootOnGround.Add(soul);
+
+        StartCoroutine(ItemFall(gold.instance, (isDone) =>
+        {
+            if (isDone)
+            {
+                gold.isAtGround = true;
+            }
+        }));
+
+        StartCoroutine(ItemFall(soul.instance, (isDone) =>
+        {
+            if (isDone)
+            {
+                soul.isAtGround = true;
+            }
+        }));
+    }
+
+    public void SetLootItem()
+    {
+        LootItem<NItem.ItemScriptableObject> item = GetLoot<NItem.ItemScriptableObject>(PlayerPoint._playerPoint.onRoom);
+        item.InstantiateObject();
+        lootOnGround.Add(item);
+        StartCoroutine(ItemFall(item.instance, (isDone) =>
+        {
+            if (isDone)
+            {
+                item.isAtGround = true;
+            }
+        }));
     }
 
     public LootItem<T> GetLoot<T>(MapRoom room)
@@ -76,6 +114,11 @@ public class LootManager : MonoBehaviour
             LootItem<T> gold = new LootItem<T>(goldPrefab);
             gold.SetAmount(edP);
             return gold;
+        } else if (typeof(T) == typeof(SoulGO))
+        {
+            LootItem<T> soul = new LootItem<T>(soulPrefab);
+            soul.SetAmount(edP);
+            return soul;
         }
         return null;
     }
@@ -123,5 +166,73 @@ public class LootManager : MonoBehaviour
         return tmp[Random.Range(0, tmp.Count)];
     }
 
-    
+
+    public void GiveLootToPlayer()
+    {
+        foreach(object obj in lootOnGround)
+        {
+            if (obj as LootItem<GoldPrefab> != null)
+            {
+                StartCoroutine(MoveGoldToPlayer((obj as LootItem<GoldPrefab>).instance, (obj as LootItem<GoldPrefab>)));
+            }
+            else if (obj as LootItem<SoulGO> != null)
+            {
+                StartCoroutine(MoveSoulToCounter((obj as LootItem<SoulGO>).instance, (obj as LootItem<SoulGO>)));
+            }
+        }
+    }
+
+    IEnumerator MoveGoldToPlayer(GameObject go, LootItem<GoldPrefab> obj)
+    {
+        Vector3 startPos = new Vector3(go.transform.position.x, go.transform.position.y, go.transform.position.z);
+        Vector3 endPos = goldPlace;
+        float elapsed = 0.0f;
+        float ratio = 0.0f;
+        float duration = 5.0f;
+        while (elapsed < duration)
+        {
+            ratio = elapsed / duration;
+            go.transform.position = Vector3.Lerp(startPos, endPos, ratio);
+            elapsed += Time.deltaTime;
+            duration -= 0.05f;
+            yield return null;
+        }
+        obj.ApplyToPlayer();
+    }
+
+    IEnumerator MoveSoulToCounter(GameObject go, LootItem<SoulGO> obj)
+    {
+        Vector3 startPos = new Vector3(go.transform.position.x, go.transform.position.y, go.transform.position.z);
+        Vector3 endPos = goldPlace;
+        float elapsed = 0.0f;
+        float ratio = 0.0f;
+        float duration = 5.0f;
+        while (elapsed < duration)
+        {
+            ratio = elapsed / duration;
+            go.transform.position = Vector3.Lerp(startPos, endPos, ratio);
+            elapsed += Time.deltaTime;
+            duration -= 0.05f;
+            yield return null;
+        }
+        obj.ApplyToPlayer();
+    }
+
+    IEnumerator ItemFall(GameObject obj, System.Action<bool> isDone)
+    {
+        float prevValue = 0;
+        float progress = 0;
+        float curve = 0;
+        while (curve < 1)
+        {
+            progress = animCurveFalling.Evaluate(curve);
+            if (Mathf.Abs(progress) > prevValue)
+                obj.transform.position = new Vector2(obj.transform.position.x, obj.transform.position.x + progress);
+            else
+                obj.transform.position = new Vector2(obj.transform.position.x, obj.transform.position.x - progress);
+            curve += 0.01f;
+            yield return new WaitForSeconds(0.01f);
+        }
+        isDone(true);
+    }
 }

@@ -1230,37 +1230,73 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab1e490bbde6c044ea1956ec6f4367f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animCurve:
+  animCurveGold:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  animCurveSoul:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  animCurveItem:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  animCurveFalling:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
+      time: 0.18511981
+      value: 0.9764565
+      inSlope: 2.2632194
+      outSlope: 2.2632194
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.3083575
+      outWeight: 0.23728114
+    - serializedVersion: 3
+      time: 0.37923306
+      value: 1.0380362
+      inSlope: -1.2233118
+      outSlope: -1.2233118
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.99404556
+      value: -0.741416
+      inSlope: -1.9828489
+      outSlope: -1.9828489
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.05697894
       outWeight: 0
     m_PreInfinity: 2
-    m_PostInfinity: 1
+    m_PostInfinity: 2
     m_RotationOrder: 4
   goldRatePart1: 1
   goldRatePart2: 2
   goldRatePart3: 3
   goldPrefab: {fileID: 6269990825463304577, guid: f44f461ce713d1f4e9fd1721f4ca77ea, type: 3}
-  soulsRatePart1: 0
-  soulsRatePart2: 0
-  soulsRatePart3: 0
+  soulsRatePart1: 1
+  soulsRatePart2: 2
+  soulsRatePart3: 3
   soulPrefab: {fileID: 1352459420657129781, guid: 5c3ae9ed1ed5e4f46914eab3a5fc6b3a, type: 3}
   soDropList:
   - {fileID: 11400000, guid: 6dcc11243dea9dd4b819c6cc5c8b2f81, type: 2}
@@ -1268,12 +1304,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: abfe34177801ec941b5a4d275c921203, type: 2}
   - {fileID: 11400000, guid: fc50ea869403f0b44aa362a8e7afbea6, type: 2}
   itemPrefab: {fileID: 4080804661506440170, guid: e394ae553f1baf04ea49b3b8ff76f20e, type: 3}
-  itemRarityPart1: 0
-  itemRarityPart2: 0
-  itemRarityPart3: 0
-  itemRarityMiniBoss1: 0
-  itemRarityMiniBoss2: 0
-  itemRarityBoss: 0
+  itemRarityPart1: 4
+  itemRarityPart2: 4
+  itemRarityPart3: 3
+  itemRarityMiniBoss1: 3
+  itemRarityMiniBoss2: 3
+  itemRarityBoss: 2
 --- !u!4 &449665110
 Transform:
   m_ObjectHideFlags: 0
@@ -3441,7 +3477,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 449665109}
         m_TargetAssemblyTypeName: LootManager, Assembly-CSharp
-        m_MethodName: CreateLoot
+        m_MethodName: SetLoot
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

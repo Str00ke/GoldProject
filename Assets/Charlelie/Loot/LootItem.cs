@@ -6,8 +6,9 @@ using UnityEngine;
 public class LootItem<T>
 {
     int amount;
-    Object obj;
-    GameObject instance;
+    public Object obj;
+    public GameObject instance;
+    public bool isAtGround = false;
 
     public LootItem(Object _obj)
     {
@@ -73,7 +74,7 @@ public class LootItem<T>
             go.GetComponent<SOLoot>().so = itemSO;
         }
         else
-          instance = (GameObject)MonoBehaviour.Instantiate(obj);
+          instance = (GameObject)MonoBehaviour.Instantiate(obj, new Vector2(2, 2), Quaternion.identity);
     }
 
     public void MoveTowards(Vector2 vec)
@@ -84,17 +85,11 @@ public class LootItem<T>
 
     public void ApplyToPlayer()
     {
-        float timer = 2500;
-        /*while(timer > 0)
-        {
-            timer -= Time.deltaTime;
-            Debug.Log(timer);
-        }*/
-
+        Debug.Log("Apply");
         if (typeof(T) == typeof(GoldPrefab)) LevelData.AddGold(amount);
         else if (typeof(T) == typeof(SoulGO)) LevelData.AddSouls(amount);
         else if (typeof(T) == typeof(NItem.ItemScriptableObject)) LevelData.AddSoToList(obj as NItem.ItemScriptableObject);
-        MonoBehaviour.Destroy(instance, 10.0f);
+        MonoBehaviour.Destroy(instance, 0.5f);
     }   
 
     
