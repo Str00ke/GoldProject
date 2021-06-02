@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Google Play game services IDs. Save this file as res/values/games-ids.xml in your project.-->
+<resources>
+  <!--app_id-->
+  <string name="app_id" translatable="false">321074237759</string>
+  <!--package_name-->
+  <string name="package_name" translatable="false">com.iimjv24T2.DarkUTest</string>
+  <!--achievement What is that-->
+  <string name="achievement_what_is_that" translatable="false">CgkIv6KQjKwJEAIQBA</string>
+  <!--achievement Team Fruit-->
+  <string name="achievement_team_fruit" translatable="false">CgkIv6KQjKwJEAIQBQ</string>
+  <!--achievement Invicible-->
+  <string name="achievement_invicible" translatable="false">CgkIv6KQjKwJEAIQBg</string>
+  <!--achievement Immortel-->
+  <string name="achievement_immortel" translatable="false">CgkIv6KQjKwJEAIQBw</string>
+  <!--achievement Like Rambo-->
+  <string name="achievement_like_rambo" translatable="false">CgkIv6KQjKwJEAIQCA</string>
+  <!--achievement Logged!-->
+  <string name="achievement_logged" translatable="false">CgkIv6KQjKwJEAIQCQ</string>
+  <!--achievement Damage dealer copper-->
+  <string name="achievement_damage_dealer_copper" translatable="false">CgkIv6KQjKwJEAIQCw</string>
+  <!--achievement Damage dealer silver-->
+  <string name="achievement_damage_dealer_silver" translatable="false">CgkIv6KQjKwJEAIQDA</string>
+  <!--achievement Damage dealer gold-->
+  <string name="achievement_damage_dealer_gold" translatable="false">CgkIv6KQjKwJEAIQDQ</string>
+  <!--achievement Damage dealer diamond-->
+  <string name="achievement_damage_dealer_diamond" translatable="false">CgkIv6KQjKwJEAIQDg</string>
+  <!--leaderboard TestLeaderboard-->
+  <string name="leaderboard_testleaderboard" translatable="false">CgkIv6KQjKwJEAIQAw</string>
+</resources>
