@@ -25,6 +25,7 @@ public class AbilitiesTuto : MonoBehaviour
     public Ability[] cristalsPsy;
     public Ability[] abilitiesEnemies;
 
+    public Sprite abilityBlank;
 
 
     private void Awake()
@@ -89,22 +90,43 @@ public class AbilitiesTuto : MonoBehaviour
             if(TutoCombat.tutoCombat.allyPlaying.abilities[0])
             {
                 Ability01.GetComponent<SpriteRenderer>().sprite = TutoCombat.tutoCombat.allyPlaying.abilities[0].icon;
+                Debug.Log(TutoCombat.tutoCombat.allyPlaying.abilities[0].icon.name);
                 Ability01.ability = TutoCombat.tutoCombat.allyPlaying.abilities[0];
+            }
+            else
+            {
+                Ability01.GetComponent<SpriteRenderer>().sprite = abilityBlank;
+                Ability01.ability = null;
             }
             if (TutoCombat.tutoCombat.allyPlaying.abilities[1])
             {
                 Ability02.GetComponent<SpriteRenderer>().sprite = TutoCombat.tutoCombat.allyPlaying.abilities[1].icon;
                 Ability02.ability = TutoCombat.tutoCombat.allyPlaying.abilities[1];
             }
+            else
+            {
+                Ability02.GetComponent<SpriteRenderer>().sprite = abilityBlank;
+                Ability02.ability = null;
+            }
             if (TutoCombat.tutoCombat.allyPlaying.abilitiesCristal[0])
             {
                 Ability03.GetComponent<SpriteRenderer>().sprite = TutoCombat.tutoCombat.allyPlaying.abilitiesCristal[0].icon;
                 Ability03.ability = TutoCombat.tutoCombat.allyPlaying.abilitiesCristal[0];
             }
+            else
+            {
+                Ability03.GetComponent<SpriteRenderer>().sprite = abilityBlank;
+                Ability03.ability = null;
+            }
             if (TutoCombat.tutoCombat.allyPlaying.abilitiesCristal[1])
             {
                 Ability04.GetComponent<SpriteRenderer>().sprite = TutoCombat.tutoCombat.allyPlaying.abilitiesCristal[1].icon;
                 Ability04.ability = TutoCombat.tutoCombat.allyPlaying.abilitiesCristal[1];
+            }
+            else
+            {
+                Ability04.GetComponent<SpriteRenderer>().sprite = abilityBlank;
+                Ability04.ability = null;
             }
 
             if (abilitySelected)
@@ -169,49 +191,62 @@ public class AbilitiesTuto : MonoBehaviour
         }
         else
         {
-            //if (ab.targetType == Ability.TargetType.RANGE)
-            switch (ab.targetType)
+            if (ab.weaponAbilityType == Ability.WeaponAbilityType.DEFENSE)
             {
-                case Ability.TargetType.ALLIES:
-                    foreach (AllyTuto a in TutoCombat.tutoCombat.allies)
-                    {
-                        if (!a.isDead)
-                            a.isTargetable = true;
-                        else
-                            a.isTargetable = false;
-                    }
-                    foreach (EnemyTuto e in TutoCombat.tutoCombat.enemies)
-                    {
-                        e.isTargetable = false;
-                    }
-                    break;
-                case Ability.TargetType.RANGE:
-                    foreach (EnemyTuto e in TutoCombat.tutoCombat.enemies)
+                foreach (AllyTuto a in TutoCombat.tutoCombat.allies)
+                {
+                    if (!a.isDead && a == TutoCombat.tutoCombat.allyPlaying)
+                        a.isTargetable = true;
+                    else if(!a.isDead)
+                        a.isTargetable = false;
+                }
+                foreach (EnemyTuto e in TutoCombat.tutoCombat.enemies)
+                {
+                    e.isTargetable = false;
+                }
+            }
+            else if (ab.targetType == Ability.TargetType.ALLIES)
+            {
+                foreach (AllyTuto a in TutoCombat.tutoCombat.allies)
+                {
+                    if (!a.isDead)
+                        a.isTargetable = true;
+                    else
+                        a.isTargetable = false;
+                }
+                foreach (EnemyTuto e in TutoCombat.tutoCombat.enemies)
+                {
+                    e.isTargetable = false;
+                }
+            }
+            else if (ab.targetType == Ability.TargetType.RANGE)
+            {
+                foreach (EnemyTuto e in TutoCombat.tutoCombat.enemies)
+                {
+                    e.isTargetable = true;
+                }
+                foreach (AllyTuto a in TutoCombat.tutoCombat.allies)
+                {
+                    a.isTargetable = false;
+                }
+            }
+            else if (ab.targetType == Ability.TargetType.MELEE)
+            {
+                foreach (EnemyTuto e in TutoCombat.tutoCombat.enemies)
+                {
+                    if (e.isMelee)
                     {
                         e.isTargetable = true;
                     }
-                    foreach (AllyTuto a in TutoCombat.tutoCombat.allies)
+                    else
                     {
-                        a.isTargetable = false;
+                        e.isTargetable = false;
                     }
-                    break;
-                case Ability.TargetType.MELEE:
-                    foreach (EnemyTuto e in TutoCombat.tutoCombat.enemies)
-                    {
-                        if (e.isMelee)
-                        {
-                            e.isTargetable = true;
-                        }
-                        else
-                        {
-                            e.isTargetable = false;
-                        }
-                    }
-                    foreach (AllyTuto a in TutoCombat.tutoCombat.allies)
-                    {
-                        a.isTargetable = false;
-                    }
-                    break;
+                }
+                foreach (AllyTuto a in TutoCombat.tutoCombat.allies)
+                {
+                    a.isTargetable = false;
+                }
             }
         }
     }
@@ -341,12 +376,13 @@ public class AbilitiesTuto : MonoBehaviour
                         }
                         break;
                 }
-            }
+            }   
             else
             {
                 if (cm.charSelected.isTargetable)
                 {
-                    cm.allyPlaying.inDefenceMode = true;
+                    cm.allyPlaying.inDefenceMode = true; 
+                    new StatusTuto1(cm.allyPlaying, 0, abi, StatusTuto1.StatusTypes.DEFENCE);
                     new StatusTuto1(cm.allyPlaying, Mathf.Round(cm.allyPlaying.armor * 0.4f), abi, StatusTuto1.StatusTypes.ARMORBONUS);
                 }
             }
@@ -451,10 +487,10 @@ public class AbilitiesTuto : MonoBehaviour
                 {
                     if (abilitySelected.ability == cm.allyPlaying.abilitiesCristal[i])
                     {
-                        cm.allyPlaying.abilitiesCristal[i] = AbilitiesManager.abilitiesManager.cristalsAsh[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsAsh.Length)];
+                        cm.allyPlaying.abilitiesCristal[i] = AbilitiesTuto.abilitiesTuto.cristalsAsh[Random.Range(0, AbilitiesTuto.abilitiesTuto.cristalsAsh.Length)];
                         while (cm.allyPlaying.abilitiesCristal[0] == cm.allyPlaying.abilitiesCristal[1])
                         {
-                            cm.allyPlaying.abilitiesCristal[i] = AbilitiesManager.abilitiesManager.cristalsAsh[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsAsh.Length)];
+                            cm.allyPlaying.abilitiesCristal[i] = AbilitiesTuto.abilitiesTuto.cristalsAsh[Random.Range(0, AbilitiesTuto.abilitiesTuto.cristalsAsh.Length)];
                         }
                     }
                 }
@@ -464,10 +500,10 @@ public class AbilitiesTuto : MonoBehaviour
                 {
                     if (abilitySelected.ability == cm.allyPlaying.abilitiesCristal[i])
                     {
-                        cm.allyPlaying.abilitiesCristal[i] = AbilitiesManager.abilitiesManager.cristalsIce[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsIce.Length)];
+                        cm.allyPlaying.abilitiesCristal[i] = AbilitiesTuto.abilitiesTuto.cristalsIce[Random.Range(0, AbilitiesTuto.abilitiesTuto.cristalsIce.Length)];
                         while (cm.allyPlaying.abilitiesCristal[0] == cm.allyPlaying.abilitiesCristal[1])
                         {
-                            cm.allyPlaying.abilitiesCristal[i] = AbilitiesManager.abilitiesManager.cristalsIce[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsIce.Length)];
+                            cm.allyPlaying.abilitiesCristal[i] = AbilitiesTuto.abilitiesTuto.cristalsIce[Random.Range(0, AbilitiesTuto.abilitiesTuto.cristalsIce.Length)];
                         }
                     }
                 }
@@ -477,10 +513,10 @@ public class AbilitiesTuto : MonoBehaviour
                 {
                     if (abilitySelected.ability == cm.allyPlaying.abilitiesCristal[i])
                     {
-                        cm.allyPlaying.abilitiesCristal[i] = AbilitiesManager.abilitiesManager.cristalsMud[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsMud.Length)];
+                        cm.allyPlaying.abilitiesCristal[i] = AbilitiesTuto.abilitiesTuto.cristalsMud[Random.Range(0, AbilitiesTuto.abilitiesTuto.cristalsMud.Length)];
                         while (cm.allyPlaying.abilitiesCristal[0] == cm.allyPlaying.abilitiesCristal[1])
                         {
-                            cm.allyPlaying.abilitiesCristal[i] = AbilitiesManager.abilitiesManager.cristalsMud[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsMud.Length)];
+                            cm.allyPlaying.abilitiesCristal[i] = AbilitiesTuto.abilitiesTuto.cristalsMud[Random.Range(0, AbilitiesTuto.abilitiesTuto.cristalsMud.Length)];
                         }
                     }
                 }
@@ -490,10 +526,10 @@ public class AbilitiesTuto : MonoBehaviour
                 {
                     if (abilitySelected.ability == cm.allyPlaying.abilitiesCristal[i])
                     {
-                        cm.allyPlaying.abilitiesCristal[i] = AbilitiesManager.abilitiesManager.cristalsPsy[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsPsy.Length)];
+                        cm.allyPlaying.abilitiesCristal[i] = AbilitiesTuto.abilitiesTuto.cristalsPsy[Random.Range(0, AbilitiesTuto.abilitiesTuto.cristalsPsy.Length)];
                         while (cm.allyPlaying.abilitiesCristal[0] == cm.allyPlaying.abilitiesCristal[1])
                         {
-                            cm.allyPlaying.abilitiesCristal[i] = AbilitiesManager.abilitiesManager.cristalsPsy[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsPsy.Length)];
+                            cm.allyPlaying.abilitiesCristal[i] = AbilitiesTuto.abilitiesTuto.cristalsPsy[Random.Range(0, AbilitiesTuto.abilitiesTuto.cristalsPsy.Length)];
                         }
                     }
                 }
