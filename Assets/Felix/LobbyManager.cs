@@ -37,19 +37,19 @@ public class LobbyManager : MonoBehaviour
 
     private void Awake()
     {
-        LobbyManager[] lob = FindObjectsOfType<LobbyManager>();
 
-        if (lob.Length > 1)
+        if (lobbyManager != null)
         {
             /*if (!LobbyManager.lobbyManager.mainCanvas.transform.GetChild(0).gameObject.activeSelf)
                 LobbyManager.lobbyManager.SwitchLobbyUI();*/
 
             Destroy(mainCanvas.gameObject);
         }
-
-        lobbyManager = this;
-
-        DontDestroyOnLoad(mainCanvas.gameObject);
+        else
+        {
+            lobbyManager = this;
+            DontDestroyOnLoad(mainCanvas.gameObject);
+        }
     }
 
     private void Start()
