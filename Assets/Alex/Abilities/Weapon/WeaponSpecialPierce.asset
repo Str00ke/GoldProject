@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Pierce
   type: 
   multiplicator: 75
-  icon: {fileID: 21300000, guid: 5a1b3b2d6ef09e343ba9f7229c3d8195, type: 3}
+  icon: {fileID: 21300000, guid: 506a9a54b5282f54ca38496787496b07, type: 3}
   bonusmalus: 0
   destruModif: 0
   dotMult: 0

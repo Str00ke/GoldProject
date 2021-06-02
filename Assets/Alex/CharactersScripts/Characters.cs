@@ -71,7 +71,6 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [Header("StatusVariables")]
     public List<Status> statusList = new List<Status>();
     public Vector2 debuffsInitialPos = new Vector2(-40, -10.5f);
-    public Vector2 buffsInitialPos = new Vector2(40, -10.5f);
     public List<GameObject> prefabsIconStatus;
     public int statusPerLine = 0;
     public int statusPerLineMax = 6;
@@ -486,7 +485,6 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawCube(transform.position + (Vector3)buffsInitialPos, new Vector3(0.1f, 0.1f, 0.1f));
         Gizmos.DrawCube(transform.position + (Vector3)debuffsInitialPos, new Vector3(0.1f, 0.1f, 0.1f));
         Gizmos.DrawCube((Vector3)posInitial, new Vector3(0.1f, 0.1f, 0.1f));
 

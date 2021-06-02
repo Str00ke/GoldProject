@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Drink Mud
   type: 
   multiplicator: 50
-  icon: {fileID: 21300000, guid: 2e5f01f34457903408f1f1a2df896901, type: 3}
+  icon: {fileID: 21300000, guid: 1c30a3b7f3ecbd64997ef2410896978d, type: 3}
   bonusmalus: 20
   destruModif: 0
   dotMult: 0

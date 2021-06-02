@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Range Attack
   type: 
   multiplicator: 100
-  icon: {fileID: 21300000, guid: f67749165df4e2c46bbe4468a5d03cfa, type: 3}
+  icon: {fileID: 21300000, guid: 12a90000c6e227147b7c562f806556a8, type: 3}
   bonusmalus: 0
   destruModif: 0
   dotMult: 0
