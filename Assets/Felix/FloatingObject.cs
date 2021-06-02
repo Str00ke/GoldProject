@@ -28,7 +28,7 @@ public class FloatingObject : MonoBehaviour
         {
             posOffset = transform.localPosition;
 
-            StartCoroutine(WaitC(Random.Range(0f, 1.5f)));
+            load = Random.Range(0f, 5f);
         }
     }
 
@@ -46,11 +46,5 @@ public class FloatingObject : MonoBehaviour
             else
                 transform.localPosition = tempPos;
         }
-    }
-
-    IEnumerator WaitC(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        isPlaying = true;
     }
 }
