@@ -225,6 +225,7 @@ public class CharacterManager : MonoBehaviour
         {
             int x = selectedChar;
             NItem.ItemScriptableObject head = characters[selectedChar].GetItem(NItem.EPartType.Head);
+            itemsUIPanel.transform.GetChild(0).GetComponent<Image>().sprite = Inventory.inventory.raritySprites[(int)head.itemRarity];
 
             //items.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => ShowItemPanel(x, 0, head));
             itemsUIPanel.transform.GetChild(0).GetChild(0).GetComponent<Button>().onClick.AddListener(() => SelectItemStats(head));
@@ -238,8 +239,9 @@ public class CharacterManager : MonoBehaviour
         else
         {
             itemsUIPanel.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+            itemsUIPanel.transform.GetChild(0).GetComponent<Image>().sprite = null;
 
-            if (lobbyManager.lobbyState == ELobbyState.Menu || lobbyManager.lobbyState == ELobbyState.Inventory || lobbyManager.lobbyState == ELobbyState.InventoryItemPartSelection)
+            if (lobbyManager.lobbyState == ELobbyState.Menu || lobbyManager.lobbyState == ELobbyState.Inventory || lobbyManager.lobbyState == ELobbyState.InventoryItemPartSelection || lobbyManager.lobbyState == ELobbyState.Shop)
             {
                 itemsUIPanel.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
                 itemsUIPanel.transform.GetChild(0).GetChild(2).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.OpenInventory());
@@ -257,6 +259,7 @@ public class CharacterManager : MonoBehaviour
         {
             int x = selectedChar;
             NItem.ItemScriptableObject body = characters[selectedChar].GetItem(NItem.EPartType.Body);
+            itemsUIPanel.transform.GetChild(1).GetComponent<Image>().sprite = Inventory.inventory.raritySprites[(int)body.itemRarity];
 
             //items.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => ShowItemPanel(x, 1, body));
             itemsUIPanel.transform.GetChild(1).GetChild(0).GetComponent<Button>().onClick.AddListener(() => SelectItemStats(body));
@@ -270,8 +273,9 @@ public class CharacterManager : MonoBehaviour
         else
         {
             itemsUIPanel.transform.GetChild(1).GetChild(1).gameObject.SetActive(false);
+            itemsUIPanel.transform.GetChild(1).GetComponent<Image>().sprite = null;
 
-            if (lobbyManager.lobbyState == ELobbyState.Menu || lobbyManager.lobbyState == ELobbyState.Inventory || lobbyManager.lobbyState == ELobbyState.InventoryItemPartSelection)
+            if (lobbyManager.lobbyState == ELobbyState.Menu || lobbyManager.lobbyState == ELobbyState.Inventory || lobbyManager.lobbyState == ELobbyState.InventoryItemPartSelection || lobbyManager.lobbyState == ELobbyState.Shop)
             {
                 itemsUIPanel.transform.GetChild(1).GetChild(2).gameObject.SetActive(true);
                 itemsUIPanel.transform.GetChild(1).GetChild(2).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.OpenInventory());
@@ -290,8 +294,13 @@ public class CharacterManager : MonoBehaviour
         {
             int x = selectedChar;
             NItem.ItemScriptableObject weapon = characters[selectedChar].GetItem(NItem.EPartType.Weapon);
+            itemsUIPanel.transform.GetChild(2).GetComponent<Image>().sprite = Inventory.inventory.raritySprites[(int)weapon.itemRarity];
 
             itemsUIPanel.transform.GetChild(2).GetChild(0).GetComponent<Button>().onClick.AddListener(() => SelectItemStats(weapon));
+        }
+        else
+        {
+            itemsUIPanel.transform.GetChild(2).GetComponent<Image>().sprite = null;
         }
 
         itemsUIPanel.transform.GetChild(3).GetChild(0).GetComponent<Image>().sprite = characters[selectedChar].GetItem(NItem.EPartType.Gem) != null ? characters[selectedChar].GetItem(NItem.EPartType.Gem).itemUiSprite : null;
@@ -299,8 +308,13 @@ public class CharacterManager : MonoBehaviour
         {
             int x = selectedChar;
             NItem.ItemScriptableObject gem = characters[selectedChar].GetItem(NItem.EPartType.Gem);
+            itemsUIPanel.transform.GetChild(3).GetComponent<Image>().sprite = Inventory.inventory.raritySprites[(int)gem.itemRarity];
 
             itemsUIPanel.transform.GetChild(3).GetChild(0).GetComponent<Button>().onClick.AddListener(() => SelectItemStats(gem));
+        }
+        else
+        {
+            itemsUIPanel.transform.GetChild(3).GetComponent<Image>().sprite = null;
         }
 
         if (indexChar != -1)

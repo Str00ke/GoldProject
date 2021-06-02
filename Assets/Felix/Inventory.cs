@@ -15,6 +15,9 @@ public class Inventory : MonoBehaviour
     public Text soulText;
     public GameObject textPrefab;
 
+    [Header("Rarity")]
+    public Sprite[] raritySprites;
+
     [Header("Item Inventory")]
     private int nbLines = 0;
     private List<GameObject> itemList = new List<GameObject>();
@@ -74,8 +77,9 @@ public class Inventory : MonoBehaviour
         ItemInInventory iii = nItem.AddComponent<ItemInInventory>();
         iii.item = item;
 
-        nItem.GetComponent<Image>().sprite = item.itemUiSprite;
-        
+        nItem.GetComponent<Image>().sprite = raritySprites[(int)item.itemRarity]; //item.itemUiSprite;
+        nItem.transform.GetChild(0).GetComponent<Image>().sprite = item.itemUiSprite;
+
         Button buttonNItem = nItem.GetComponent<Button>();
 
         itemList.Insert(indexItemTypes[(int)item.itemPartType, (int)item.itemRarity], nItem);

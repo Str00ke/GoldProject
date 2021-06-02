@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87f1b7c176c2dab46b42dfb6a9ffe6bb, type: 3}
-  m_Name: bone Cloak 2
+  m_Name: bone Cloak L
   m_EditorClassIdentifier: 
-  itemName: Bone Cloak R
-  health: 46
+  itemName: Bone Cloak L
+  health: 157
   armor: 0
-  attack: 20
+  attack: 40
   dodge: 0
   criticalChance: 0
   crititalDamage: 0
   itemPartType: 1
   itemType: 0
-  itemRarity: 0
+  itemRarity: 1
   itemWeaponType: 0
-  itemUiSprite: {fileID: 0}
+  itemUiSprite: {fileID: 21300000, guid: 0102b1f98ab35d04cae7aac9c177735c, type: 3}
   itemSprites:
-  - {fileID: 21300000, guid: 50be26938411ad940bf339e232a67e9d, type: 3}
+  - {fileID: 21300000, guid: 4dc150a2302dd254fa046f7c44f66fca, type: 3}
   - {fileID: 21300000, guid: 63d8b7deeb80471418e2fc5605eaef08, type: 3}
   - {fileID: 21300000, guid: 67d2705b83e2fa74694438a1a728f65f, type: 3}
