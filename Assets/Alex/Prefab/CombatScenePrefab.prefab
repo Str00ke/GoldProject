@@ -248,8 +248,6 @@ MonoBehaviour:
   selectedColor: {r: 0.56294775, g: 0.5943396, b: 0, a: 1}
   idleColor: {r: 1, g: 1, b: 1, a: 1}
   isSelected: 0
-  displayUIHoldTouchDurationMax: 0
-  displayUIHoldTouchDuration: 0
 --- !u!61 &7453891230568163921
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2117,8 +2115,6 @@ MonoBehaviour:
   selectedColor: {r: 0.56294775, g: 0.5943396, b: 0, a: 1}
   idleColor: {r: 1, g: 1, b: 1, a: 1}
   isSelected: 0
-  displayUIHoldTouchDurationMax: 0
-  displayUIHoldTouchDuration: 0
 --- !u!61 &9061631810609055060
 BoxCollider2D:
   m_ObjectHideFlags: 0
