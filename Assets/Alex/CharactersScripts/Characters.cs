@@ -121,6 +121,8 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     [Header("Animation")]
     public Animator anim;
+    protected Characters charToAttack;
+    protected float dmgToDeal;
 
 
     public void ChangePos()
@@ -232,15 +234,20 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             //-ARMOR MODIF ON DAMAGE-
             dmg -= receiver.armor;
             dmg = dmg < 0 ? 0 : dmg;
+
             //-ELEMENTAL REACTIONS-
+           
             receiver.TakeDamage(dmg, durationDecreaseHealth);
+
             receiver.ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), ability.elementType.ToString()));
+
             if (receiver.GetType() == typeof(Enemy))
             {
                 AchievementsManager.DamageDeal(dmg);
             }
         }
     }
+
     //--------------------------------HEAL FUNCTION------------------------------------------------
     public void LaunchHeal(Characters receiver, Ability ability)
     {
