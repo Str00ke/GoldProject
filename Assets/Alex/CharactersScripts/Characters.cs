@@ -12,6 +12,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public GameObject healthBarOutline;
     public GameObject canvasChar;
     [Header("Labels")]
+    public GameObject cursorNotPlayedYet;
     public GameObject cursorSelected;
     public GameObject cursorPlaying;
     public string charName;
@@ -70,7 +71,6 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [Header("StatusVariables")]
     public List<Status> statusList = new List<Status>();
     public Vector2 debuffsInitialPos = new Vector2(-40, -10.5f);
-    public Vector2 buffsInitialPos = new Vector2(40, -10.5f);
     public List<GameObject> prefabsIconStatus;
     public int statusPerLine = 0;
     public int statusPerLineMax = 6;
@@ -106,12 +106,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public bool hasPlayed;
     public bool CanAttack;
     public bool isSelected;
-    public SpriteRenderer thisColorHead;
-    public SpriteRenderer thisColorBody;
-    public Color selectedColor;
-    public Color hasPlayedColor;
-    public Color AttackColor;
-    public Color baseColor;
+    public bool canBeSelected = true;
     [HideInInspector]
     public float durationDecreaseHealth; //animation time in seconds
 
@@ -125,6 +120,8 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     [Header("Animation")]
     public Animator anim;
+    protected Characters charToAttack;
+    protected float dmgToDeal;
 
 
     public void ChangePos()
@@ -145,12 +142,16 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
     public void InteractiveHoldToSelect()
     {
-        if(holdCharac < holdCharacValue && onPointerHold)
+        if (canBeSelected)
         {
-            transform.localScale = new Vector3(transform.localScale.x - Time.deltaTime/5, transform.localScale.y - Time.deltaTime/5, transform.localScale.z - Time.deltaTime/5);
-        }else if(holdCharac > holdCharacValue || !onPointerHold)
-        {
-            transform.localScale = new Vector3(1,1,1);
+            if (holdCharac < holdCharacValue && onPointerHold)
+            {
+                transform.localScale = new Vector3(transform.localScale.x - Time.deltaTime / 5, transform.localScale.y - Time.deltaTime / 5, transform.localScale.z - Time.deltaTime / 5);
+            }
+            else if (holdCharac > holdCharacValue || !onPointerHold)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
         }
     }
     public void ChangeColor()
@@ -188,11 +189,13 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        onPointerHold = true;
+        if (canBeSelected)
+            onPointerHold = true;
     }
     public void OnPointerUp(PointerEventData eventData)
     {
-        onPointerHold = false;
+        if (canBeSelected)
+            onPointerHold = false;
     }
     public void ChangeStats(string name, float maxHP, Vector2 dmgRange, int dodg, float critCh, float critDmg, int armr, int position)
     {
@@ -230,15 +233,20 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             //-ARMOR MODIF ON DAMAGE-
             dmg -= receiver.armor;
             dmg = dmg < 0 ? 0 : dmg;
+
             //-ELEMENTAL REACTIONS-
+           
             receiver.TakeDamage(dmg, durationDecreaseHealth);
+
             receiver.ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), ability.elementType.ToString()));
+
             if (receiver.GetType() == typeof(Enemy))
             {
                 AchievementsManager.DamageDeal(dmg);
             }
         }
     }
+
     //--------------------------------HEAL FUNCTION------------------------------------------------
     public void LaunchHeal(Characters receiver, Ability ability)
     {
@@ -420,17 +428,12 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         TakeDamage(dmg, durationDecreaseHealth);
         Debug.Log("Receiver : " + gameObject.name + "Dot damage " + dmg + " Dot element " + stElem.ToString());
         ElementReactions((CurrentElement)stElem);
-        UpdateDisplayDots();
     }
     public void TakeDamageMark(Status.StatusElement stElem, float dmg)
     {
         TakeDamage(dmg, durationDecreaseHealth);
         Debug.Log("Receiver : " + gameObject.name + "Mark damage " + dmg + " Mark element " + stElem.ToString());
         ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), stElem.ToString()));
-    }
-    public void UpdateDisplayDots()
-    {
-
     }
 
     public void ShowFloatingHealth(string value, bool red)
@@ -482,7 +485,6 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawCube(transform.position + (Vector3)buffsInitialPos, new Vector3(0.1f, 0.1f, 0.1f));
         Gizmos.DrawCube(transform.position + (Vector3)debuffsInitialPos, new Vector3(0.1f, 0.1f, 0.1f));
         Gizmos.DrawCube((Vector3)posInitial, new Vector3(0.1f, 0.1f, 0.1f));
 

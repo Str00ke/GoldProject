@@ -11,13 +11,10 @@ public class AbilityScript : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public Color selectedColor;
     public Color idleColor;
     public bool isSelected;
-    public float displayUIHoldTouchDurationMax;
-    public float displayUIHoldTouchDuration;
     // Start is called before the first frame update
     void Start()
     {
         thisColor = GetComponent<SpriteRenderer>();
-        displayUIHoldTouchDurationMax = 1.0f;
     }
 
     // Update is called once per frame
@@ -67,6 +64,5 @@ public class AbilityScript : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     }
     public void OnPointerUp(PointerEventData eventData)
     {
-        displayUIHoldTouchDuration = 0;
     }
 }

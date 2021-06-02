@@ -12,12 +12,9 @@ public class EnemyTuto : CharactersTuto, IPointerDownHandler, IPointerUpHandler
     void Start()
     {
         stateIcons = UITuto.uiTuto.stateIcons;
-        stateIcons = UITuto.uiTuto.stateIcons;
         TutoCombat.tutoCombat.enemies.Add(this);
         charType = CharType.ENEMY;
         anim = this.GetComponent<Animator>();
-        thisColorBody = this.GetComponent<SpriteRenderer>();
-        thisColorHead = this.GetComponent<SpriteRenderer>();
         durationDecreaseHealth = 1.0f;
 
         //ISTARGETABLE FOR ABILITIES
@@ -26,9 +23,15 @@ public class EnemyTuto : CharactersTuto, IPointerDownHandler, IPointerUpHandler
         healthBar = GameObject.Find(gameObject.name + "/CanvasSlider/healthBar").GetComponent<Slider>();
         canvasChar = GameObject.Find(gameObject.name + "/CanvasSlider");
         healthBarOutline = GameObject.Find(gameObject.name + "/CanvasSlider/HealthBarOutline");
+        cursorNotPlayedYet = GameObject.Find(gameObject.name + "/CanvasSlider/cursorNotPlayedYet");
+        cursorSelected = GameObject.Find(gameObject.name + "/CanvasSlider/cursorSelected");
+        cursorPlaying = GameObject.Find(gameObject.name + "/CanvasSlider/cursorPlaying");
+        cursorSelected.SetActive(false);
+        cursorPlaying.SetActive(false);
         health = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = health;
+        TutoCombat.tutoCombat.enemies.Add(this);
     }
 
 
@@ -50,28 +53,18 @@ public class EnemyTuto : CharactersTuto, IPointerDownHandler, IPointerUpHandler
         {
             if (!isSelected)
             {
-                if (TutoCombat.tutoCombat.enemySelected != null)
+                if (TutoCombat.tutoCombat.charSelected != null)
                 {
-                    TutoCombat.tutoCombat.enemySelected.isSelected = false;
-                    TutoCombat.tutoCombat.enemySelected = null;
+                    TutoCombat.tutoCombat.charSelected.isSelected = false;
+                    TutoCombat.tutoCombat.charSelected = null;
                 }
                 isSelected = true;
-                TutoCombat.tutoCombat.enemySelected = this;
+                TutoCombat.tutoCombat.charSelected = this;
+                UITuto.uiTuto.statsUI.SetActive(true);
             }
-            UITuto.uiTuto.enemyStatsUI.SetActive(true);
         }
 
     }
-    public override void OnPointerDown(PointerEventData eventData)
-    {
-        onPointerHold = true;
-    }
-    public override void OnPointerUp(PointerEventData eventData)
-    {
-        UITuto.uiTuto.ResetEnemyDisplayUI();
-        onPointerHold = false;
-    }
-
 
     public override IEnumerator TakeDamageCor(float value, float duration)
     {
@@ -87,11 +80,6 @@ public class EnemyTuto : CharactersTuto, IPointerDownHandler, IPointerUpHandler
     }
 
 
-    public override void TakeHealing(float value, float duration)
-    {
-        ShowFloatingHealth(Mathf.Round(value).ToString(), false);
-        StartCoroutine(TakeHealingCor(value, duration));
-    }
     public override IEnumerator TakeHealingCor(float value, float duration)
     {
         var startValue = healthBar.value;

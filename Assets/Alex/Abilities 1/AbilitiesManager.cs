@@ -350,7 +350,7 @@ public class AbilitiesManager : MonoBehaviour
             {
                 if (cm.charSelected.isTargetable)
                 {
-                    cm.allyPlaying.inDefenceMode = true;
+                    Status defStatus = new Status(cm.allyPlaying, 0, abi, Status.StatusTypes.DEFENCE);
                     Status s = new Status(cm.allyPlaying, Mathf.Round(cm.allyPlaying.armor * 0.6f), abi, Status.StatusTypes.ARMORBONUS);
                 }
             }
@@ -412,13 +412,14 @@ public class AbilitiesManager : MonoBehaviour
         switch (a.elementType)
         {
             case Ability.ElementType.ASH:
-                cm.allyPlaying.LaunchHeal(cm.charSelected, a);
+                Characters tempC = cm.charSelected;
+                cm.allyPlaying.LaunchHeal(tempC, a);
                 if (cm.allies.Count > 1)
                 {
-                    int randA = Random.Range(0, cm.allies.Count - 1);
-                    while (cm.allies[randA] == cm.charSelected)
+                    int randA = Random.Range(0, cm.allies.Count);
+                    while (cm.allies[randA] == tempC)
                     {
-                        randA = Random.Range(0, cm.allies.Count - 1);
+                        randA = Random.Range(0, cm.allies.Count);
                     }
                     cm.allyPlaying.LaunchHeal(cm.allies[randA], a);
                 }

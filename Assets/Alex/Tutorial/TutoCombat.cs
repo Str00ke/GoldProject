@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using UnityEngine.UI;
 public class TutoCombat : MonoBehaviour
 {
     [Header("Objects")]
-    public GameObject charPrefab;
-    public GameObject enemyPrefab;
     public static TutoCombat tutoCombat = null;
     public List<AllyTuto> allies;
     public List<CharactersTuto> fightersList;
-    public AllyTuto allySelected = null;
+    public CharactersTuto charSelected = null;
+    public GameObject stepTutoButtonPrefab;
+    public AllyTuto[] chars;
+    CharactersTuto charAttackedByDeath = null;
+
 
     [Header("Enemies")]
     public List<EnemyTuto> enemies;
-    public EnemyTuto enemySelected = null;
     public float delay = 0.0f;
     public float attackDuration = 2.0f;
 
@@ -25,6 +27,9 @@ public class TutoCombat : MonoBehaviour
     public int currCharAttacking = 0;
 
     Coroutine nextCharCor;
+
+    public string[] TutoStepTexts;
+    public int currentStepTuto;
 
     private void Awake()
     {
@@ -38,145 +43,56 @@ public class TutoCombat : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(StartCombat());
+        TutorialFunction();
     }
 
-    IEnumerator StartCombat()
+    public void TutorialFunction()
     {
-        yield return new WaitForSeconds(1.5f);
-        FightBegins();
-    }
-
-    public void FightBegins()
-    {
-        //SORT BY INITIATIVE
-        foreach (AllyTuto c in allies)
+        switch (currentStepTuto)
         {
-            fightersList.Add(c);
-        }
-        foreach (EnemyTuto e in enemies)
-        {
-            fightersList.Add(e);
-        }
-        SortFightersInit();
-        fightersList[currCharAttacking].CanAttack = true;
-        if (fightersList[currCharAttacking].charType == CharactersTuto.CharType.ALLY)
-        {
-            allyPlaying = (AllyTuto)fightersList[currCharAttacking];
-        }
-        else
-        {
-            allyPlaying = null;
-        }
-    }
-    public void SortFightersInit()
-    {
-        fightersList = fightersList.OrderBy(e => e.initiative).ToList();
-        fightersList.Reverse();
-    }
-    public void NextCharAttack()
-    {
-        nextCharCor = StartCoroutine(NextCharAttackCor());
-    }
-    IEnumerator NextCharAttackCor()
-    {
-        fightersList[currCharAttacking].CanAttack = false;
-        fightersList[currCharAttacking].hasPlayed = true;
-        yield return new WaitForSeconds(3.0f);
-        currCharAttacking++;
-
-        if (currCharAttacking >= fightersList.Count)
-        {
-            TurnPassed();
-        }
-        else
-        {
-            while (!fightersList[currCharAttacking] || fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead)
-            {
-                //--------------------STUN STATUS----------------------------
-                if (fightersList[currCharAttacking].stunned)
-                {
-                    fightersList[currCharAttacking].stunned = false;
-                }
-                currCharAttacking++;
-                //---------------- ---IF EVERY FIGHTERS HAVE PLAYED -> NEXT TURN----------------------------
-                if (currCharAttacking >= fightersList.Count)
-                {
-                    TurnPassed();
-                }
-            }
-            if (currCharAttacking < fightersList.Count)
-            {
-                fightersList[currCharAttacking].CanAttack = true;
-                if (fightersList[currCharAttacking].charType == CharactersTuto.CharType.ALLY)
-                {
-                    allyPlaying = (AllyTuto)fightersList[currCharAttacking];
-                    if (allyPlaying.inDefenceMode)
-                    {
-                        allyPlaying.inDefenceMode = false;
-                    }
-                }
-                else
-                {
-                    allyPlaying = null;
-                }
-                //UPDATE STATUS ON CHARACTER PLAYING
-                StatusTuto.statusTuto.UpdateStatus(fightersList[currCharAttacking]);
-            }
+            case 0:
+                BreakTuto(TutoStepTexts[0]);
+                    break;
+            case 1:
+                allyPlaying = chars[0];
+                charAttackedByDeath = chars[0];
+                allyPlaying.cursorPlaying.SetActive(true);
+                break;
+            case 2:
+                chars[0].cursorPlaying.SetActive(false);
+                chars[0].cursorNotPlayedYet.SetActive(false);
+                StatusTuto1 s1 = new StatusTuto1(chars[0], 0, chars[0].abilities[0], StatusTuto1.StatusTypes.DEFENCE);
+                StatusTuto1 s2 = new StatusTuto1(chars[0], chars[0].armor * 0.6f, chars[0].abilities[0], StatusTuto1.StatusTypes.ARMORBONUS);
+                allyPlaying = null;
+                BreakTuto(TutoStepTexts[1]);
+                break;
+            case 3:
+                enemies[0].cursorPlaying.SetActive(true);
+                enemies[0].LaunchAttack(charAttackedByDeath, enemies[0].abilities[0]);
+                break;
+            case 4:
+                enemies[0].cursorNotPlayedYet.SetActive(false);
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
         }
     }
-    public void EnemyAttack()
+    public void BreakTuto(string textTuto)
     {
-        StartCoroutine(EnemyAttackCor());
+        GameObject tutoPrefab = Instantiate(stepTutoButtonPrefab);
+        tutoPrefab.GetComponentInChildren<Text>().text = textTuto;
+        tutoPrefab.transform.SetParent(GameObject.Find("Canvas").transform);
     }
-    IEnumerator EnemyAttackCor()
+    public void GoNextStepTuto()
     {
-        int allyAttacked = Random.Range(0, allies.Count);
-        while (allies[allyAttacked].isDead)
-        {
-            allyAttacked = Random.Range(0, allies.Count);
-        }
-        NextCharAttack();
-        yield return null;
-    }
-    public void TurnPassed()
-    {
-        StopCoroutine(nextCharCor);
-        nextCharCor = null;
-        currCharAttacking = 0;
-        turnNumber++;
-        UIManager.uiManager.turnsText.text = "" + turnNumber;
-        foreach (AllyTuto c in allies)
-        {
-            if (!c.isDead)
-                c.hasPlayed = false;
-        }
-        foreach (EnemyTuto e in enemies)
-        {
-            if (!e.isDead)
-                e.hasPlayed = false;
-        }
-
-        while (fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead || !fightersList[currCharAttacking])
-        {
-            fightersList[currCharAttacking].stunned = false;
-            currCharAttacking++;
-            if (currCharAttacking >= fightersList.Count)
-            {
-                TurnPassed();
-                return;
-            }
-        }
-
-        fightersList[currCharAttacking].CanAttack = true;
-        if (fightersList[currCharAttacking].charType == CharactersTuto.CharType.ALLY)
-        {
-            allyPlaying = (AllyTuto)fightersList[currCharAttacking];
-        }
-        else
-        {
-            allyPlaying = null;
-        }
+        currentStepTuto++;
+        TutorialFunction();
     }
     public void RemoveAlly(AllyTuto a)
     {

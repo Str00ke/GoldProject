@@ -15,12 +15,12 @@ MonoBehaviour:
   name: Mark Mud
   type: 
   multiplicator: 0
-  icon: {fileID: 21300000, guid: 7038f8f33a43bd54aa69f9d790c6d1c4, type: 3}
+  icon: {fileID: 21300000, guid: 9b3c534c913185944974b7755ef93e49, type: 3}
   bonusmalus: 0
   destruModif: 0
   dotMult: 0
   markMult: 140
-  turnDuration: 1
+  turnDuration: 2
   objectType: 0
   weaponAbilityType: 0
   crType: 2

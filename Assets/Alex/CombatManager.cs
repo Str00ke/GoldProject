@@ -135,11 +135,13 @@ public class CombatManager : MonoBehaviour
         {
             fightersList[currCharAttacking].CanAttack = false;
             fightersList[currCharAttacking].hasPlayed = true;
+            fightersList[currCharAttacking].cursorNotPlayedYet.SetActive(false);
         }
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(fightersList[currCharAttacking].durationDecreaseHealth+0.1f);
         if (currCharAttacking >= 0)
         {
-            fightersList[currCharAttacking].cursorPlaying.SetActive(false);
+            if(fightersList[currCharAttacking].cursorPlaying)
+                fightersList[currCharAttacking].cursorPlaying.SetActive(false);
         }
         currCharAttacking++;
         if (currCharAttacking >= fightersList.Count)
@@ -161,6 +163,7 @@ public class CombatManager : MonoBehaviour
                     TurnPassed();
                 }
             }
+            yield return new WaitForSeconds(1.5f);
             if (currCharAttacking < fightersList.Count)
             {
                 fightersList[currCharAttacking].CanAttack = true;
@@ -168,10 +171,6 @@ public class CombatManager : MonoBehaviour
                 if (fightersList[currCharAttacking].charType == Characters.CharType.ALLY)
                 {
                     allyPlaying = (Ally)fightersList[currCharAttacking];
-                    if (allyPlaying.inDefenceMode)
-                    {
-                        allyPlaying.inDefenceMode = false;
-                    }
                 }
                 else
                 {
@@ -205,6 +204,7 @@ public class CombatManager : MonoBehaviour
         }
         if(allies.Count > 0)
             EnemyAbilityAttack(allies[allyAttacked], inDefence);
+        yield return new WaitForSeconds(fightersList[currCharAttacking].durationDecreaseHealth + 0.1f);
         NextCharAttack();
         yield return null;
     }
@@ -286,7 +286,11 @@ public class CombatManager : MonoBehaviour
                         {
                             fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
                             Status s = new Status(allyDef, 0, 1, Status.StatusTypes.STUN);
-                            allyDef.inDefenceMode = false;
+                            foreach(Status s1 in allyDef.statusList)
+                            {
+                                if (s.statusType == Status.StatusTypes.DEFENCE)
+                                    s.RevertStatus();
+                            }
                         }
                         else
                         {
@@ -306,23 +310,27 @@ public class CombatManager : MonoBehaviour
     {
         StopCoroutine(nextCharCor);
         nextCharCor = null;
-        currCharAttacking = -1;
+        currCharAttacking = 0;
         nbCharsPlayed = 0;
         turnNumber++;
         UIManager.uiManager.turnsText.text = "" + turnNumber;
         foreach (Ally c in allies)
         {
-            if(!c.isDead)
+            if (!c.isDead)
+            {
                 c.hasPlayed = false;
+                fightersList[currCharAttacking].cursorNotPlayedYet.SetActive(true);
+            }
         }
         foreach (Enemy e in enemies)
         {   
             if (!e.isDead)
+            {
                 e.hasPlayed = false;
+                fightersList[currCharAttacking].cursorNotPlayedYet.SetActive(true);
+            }
         }
-
-        NextCharAttack();
-        /*while (fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead || !fightersList[currCharAttacking])
+        while (fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead || !fightersList[currCharAttacking])
         {
             StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
             currCharAttacking++;
@@ -335,6 +343,7 @@ public class CombatManager : MonoBehaviour
 
         StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
         fightersList[currCharAttacking].CanAttack = true;
+        fightersList[currCharAttacking].cursorPlaying.SetActive(true);
         if (fightersList[currCharAttacking].charType == Characters.CharType.ALLY)
         {
             allyPlaying = (Ally)fightersList[currCharAttacking];
@@ -343,7 +352,7 @@ public class CombatManager : MonoBehaviour
         {
             allyPlaying = null;
         }
-        CharAttack(currCharAttacking);*/
+        CharAttack(currCharAttacking);
     }
     public void RemoveAlly(Ally a) 
     {
@@ -353,30 +362,9 @@ public class CombatManager : MonoBehaviour
         if (allies.Count <= 0)
         {
             FindObjectOfType<LevelManager>().losePanel.SetActive(true);
-            //EndFight(false);
-            //EndFight<Ally>(allies);
+            EndFight<Ally>();
         }
     }
-    /*public void RemoveEnemy(int numPos) 
-    {
-        for (int i = enemies.Count - 1; i >= 0; i--)
-        {
-            if (enemies[i].teamPosition == numPos)
-            {
-                if (enemies[i] == enemySelected)
-                {
-                    enemySelected = null;
-                }
-                Enemy e = enemies[i];
-                enemies.Remove(enemies[i]);
-                Destroy(e.gameObject);
-                if (enemies.Count <= 0)
-                    EndFight<Enemy>();s
-            }
-        }
-        UpdatePosEnemies(numPos);
-
-    }*/
     public void RemoveEnemy(Enemy e)
     {
         int numPos = 0;
@@ -416,6 +404,10 @@ public class CombatManager : MonoBehaviour
         {
             AchievementsManager.OnCombatEnd(this);
             FindObjectOfType<LevelManager>().WinFight();
+            foreach(Ally a in allies)
+            {
+                CharacterManager.characterManager.AskForCharacter(a.teamPosition).health = (int)a.health;
+            }
         }           
         else if (typeof(T) == typeof(Ally))
             FindObjectOfType<LevelManager>().LoseFight();

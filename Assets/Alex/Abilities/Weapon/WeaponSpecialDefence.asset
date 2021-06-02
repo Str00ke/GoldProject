@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Defence
   type: 
   multiplicator: 0
-  icon: {fileID: 21300000, guid: c47d3df7ce1fb1c40991d87f73389dfd, type: 3}
+  icon: {fileID: 21300000, guid: c020374063de8a24c9af9576e60b1335, type: 3}
   bonusmalus: 0
   destruModif: 0
   dotMult: 0

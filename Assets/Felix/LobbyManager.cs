@@ -10,9 +10,6 @@ public enum ELobbyState
     Inventory,
     InventoryItemPartSelection,
     Shop,
-    Credits,
-    Options,
-    Dungeons,
     Loading
 }
 
@@ -24,34 +21,40 @@ public class LobbyManager : MonoBehaviour
 
     public RectTransform mainCanvas;
 
-    public GameObject OptionsMenu;
-    public GameObject CreditsMenu;
-    public GameObject DungeonsMenu;
     public GameObject ShopMenu;
+    public Transform shopButton;
+    public Button playButton;
 
     private NItem.ItemScriptableObject itemToBuy;
     private GameObject itemsShopSelected = null;
 
+    public bool isFirstGameDone = false;
+
     [Header("Loading Screen")]
     private AsyncOperation loadingAsync;
     public GameObject loadingScene;
-    public Slider loadingSlider;
-    public RectTransform charSpriteLoading;
+    public Image loadingSlider;
 
     private void Awake()
     {
         LobbyManager[] lob = FindObjectsOfType<LobbyManager>();
 
         if (lob.Length > 1)
-            Destroy(mainCanvas);
+        {
+            /*if (!LobbyManager.lobbyManager.mainCanvas.transform.GetChild(0).gameObject.activeSelf)
+                LobbyManager.lobbyManager.SwitchLobbyUI();*/
+
+            Destroy(mainCanvas.gameObject);
+        }
 
         lobbyManager = this;
 
-        DontDestroyOnLoad(mainCanvas);
+        DontDestroyOnLoad(mainCanvas.gameObject);
     }
 
     private void Start()
     {
+        isFirstGameDone = bool.Parse(PlayerPrefs.GetString("FirstGame", "false"));
         CloseAllMenu();
     }
 
@@ -63,9 +66,8 @@ public class LobbyManager : MonoBehaviour
 
     public void CloseAllMenu()
     {
-        OptionsMenu.SetActive(false);
-        CreditsMenu.SetActive(false);
-        DungeonsMenu.SetActive(false);
+        RefreshLockedButton();
+
         Inventory.inventory.CloseInventory();
         ShopMenu.SetActive(false);
 
@@ -75,28 +77,34 @@ public class LobbyManager : MonoBehaviour
         CharacterManager.characterManager.SelectCharacterStats(CharacterManager.characterManager.selectedChar);
     }
 
-    public void OpenOptions()
+    public void RefreshLockedButton()
     {
-        OptionsMenu.SetActive(true);
-        lobbyState = ELobbyState.Options;
+        if (!isFirstGameDone)
+            isFirstGameDone = bool.Parse(PlayerPrefs.GetString("FirstGame", "false"));
+
+        if (isFirstGameDone && !shopButton.GetChild(0).gameObject.activeSelf)
+        {
+            shopButton.GetChild(0).gameObject.SetActive(false);
+        }
+
+        CharacterManager characterManager = CharacterManager.characterManager;
+
+        if (!characterManager.AskForCharacter(0) && !characterManager.AskForCharacter(1) && !characterManager.AskForCharacter(2))
+            playButton.interactable = false;
+        else
+            playButton.interactable = true;
     }
 
-    public void OpenCredits()
+    public void Play()
     {
-        CreditsMenu.SetActive(true);
-        lobbyState = ELobbyState.Credits;
-    }
-
-    public void OpenDungeons()
-    {
-        DungeonsMenu.SetActive(true);
-        lobbyState = ELobbyState.Dungeons;
-
-        CharacterManager.characterManager.SelectCharacterStats(CharacterManager.characterManager.selectedChar);
+        LoadScene("Level");
     }
 
     public void OpenShop()
     {
+        if (!isFirstGameDone)
+            return;
+
         ShopMenu.SetActive(true); 
 
         lobbyState = ELobbyState.Shop;
@@ -157,18 +165,13 @@ public class LobbyManager : MonoBehaviour
         loadingAsync = SceneManager.LoadSceneAsync(sceneName);
         loadingAsync.allowSceneActivation = false;
 
-        float sliderSize = loadingSlider.GetComponent<RectTransform>().sizeDelta.x;
-
         while (!loadingAsync.isDone)
         {
-            loadingSlider.value = loadingAsync.progress;
-
-            charSpriteLoading.anchoredPosition = new Vector2((loadingSlider.value < 0.5f ? -1f : 1f) * (sliderSize / 2f) * (1 - loadingSlider.value), charSpriteLoading.anchoredPosition.y);
+            loadingSlider.fillAmount = loadingAsync.progress;
 
             if (loadingAsync.progress >= 0.9f)
             {
-                loadingSlider.value = 0.99f;
-                charSpriteLoading.anchoredPosition = new Vector2(sliderSize / 2f, charSpriteLoading.anchoredPosition.y);
+                loadingSlider.fillAmount = 1f;
                 loadingAsync.allowSceneActivation = true;
             }
 

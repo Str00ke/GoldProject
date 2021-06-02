@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f1b7c176c2dab46b42dfb6a9ffe6bb, type: 3}
   m_Name: capmagicU
   m_EditorClassIdentifier: 
-  itemName: Magic Cap
+  itemName: Magic Helmet
   health: 157
   armor: 0
   attack: 115
@@ -23,5 +23,8 @@ MonoBehaviour:
   itemType: 0
   itemRarity: 0
   itemWeaponType: 0
-  itemUiSprite: {fileID: 0}
-  itemSprites: []
+  itemUiSprite: {fileID: 21300000, guid: a122740d5afff5e4fafb9f4f02c041f5, type: 3}
+  itemSprites:
+  - {fileID: 21300000, guid: fdc79314f80340046a660ff214765884, type: 3}
+  - {fileID: 21300000, guid: da5f355990ea35648961ee9f5a512c07, type: 3}
+  - {fileID: 21300000, guid: 8ffa327b2da6f584daef25e3c182a388, type: 3}

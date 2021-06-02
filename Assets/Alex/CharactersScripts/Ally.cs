@@ -21,11 +21,10 @@ public class Ally : Characters
         CombatManager.combatManager.allies.Add(this);
         charType = CharType.ALLY;
         anim = this.GetComponent<Animator>();
-        thisColorBody = body;
-        thisColorHead = head;
         durationMove = 1.0f;
         healthBar = GameObject.Find(gameObject.name + "/CanvasChar/healthBar").GetComponent<Slider>();
         canvasChar = GameObject.Find(gameObject.name + "/CanvasChar");
+        cursorNotPlayedYet = GameObject.Find(gameObject.name + "/CanvasChar/cursorNotPlayedYet");
         cursorSelected = GameObject.Find(gameObject.name + "/CanvasChar/cursorSelected");
         cursorPlaying = GameObject.Find(gameObject.name + "/CanvasChar/cursorPlaying");
         cursorSelected.SetActive(false);
@@ -207,6 +206,7 @@ public class Ally : Characters
 
     public override IEnumerator TakeDamageCor(float value, float duration)
     {
+        GetComponentInChildren<DamagedBarScript>().gameObject.GetComponentInChildren<Image>().color = Color.grey;
         CombatManager.combatManager.hasTookDamage = true;
         ShowFloatingHealth(Mathf.Round(value).ToString(), true);
         float startValue = healthBar.value;
@@ -216,13 +216,13 @@ public class Ally : Characters
         health = endValue;
         if (health <= 0)
         {
-            CombatManager.combatManager.RemoveAlly(this);
         }
         yield return new WaitForSeconds(duration);
         GetComponentInChildren<DamagedBarScript>().UpdateDamagedBar(endValue, duration, false);
         yield return new WaitForSeconds(duration);
         if (health <= 0)
         {
+            CombatManager.combatManager.RemoveAlly(this);
             isDead = true;
             isTargetable = false;
             health = 0;
@@ -264,13 +264,13 @@ public class Ally : Characters
         }
         healthBar.value = endValue;
         health = endValue;
-        yield return new WaitForSeconds(durationDecreaseHealth);
     }
     public void Death()
     {
         isMelee = false;
         isDead = true;
         isTargetable = false;
+        canBeSelected = false;
         health = 0;
         healthBar.gameObject.SetActive(false);
         GetComponentInChildren<DamagedBarScript>().gameObject.SetActive(false);
@@ -289,5 +289,6 @@ public class Ally : Characters
                 c.RemoveItem((NItem.EPartType)i);
             }
         }
+        Destroy(c.gameObject);
     }
 }

@@ -15,9 +15,12 @@ MonoBehaviour:
   name: Drink Ash
   type: 
   multiplicator: 50
-  icon: {fileID: 21300000, guid: 0fe9b94d7477b3b45965627fe284e44c, type: 3}
-  bonusmalus: 40
-  turnDuration: 1
+  icon: {fileID: 21300000, guid: ccea6fb1bef440046b5f735d9b81bf04, type: 3}
+  bonusmalus: 0.4
+  destruModif: 0
+  dotMult: 0
+  markMult: 0
+  turnDuration: 2
   objectType: 0
   weaponAbilityType: 0
   crType: 1

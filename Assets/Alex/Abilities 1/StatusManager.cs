@@ -13,6 +13,7 @@ public class StatusManager : MonoBehaviour
     public Sprite dotStatusSprite;
     public Sprite markStatusSprite;
     public Sprite stunStatusSprite;
+    public Sprite defenceStatusSprite;
     public float statusOffset = 0.13f;
     public int statusId;
 
@@ -42,7 +43,6 @@ public class StatusManager : MonoBehaviour
                 {
                     c.TakeDamageMark(c.statusList[i].statusElement, c.statusList[i].dmg);
                 }
-                Debug.Log("Status fini");
                 c.statusList[i].RevertStatus();
                 StatusList.RemoveAt(i);
             }
@@ -70,6 +70,8 @@ public class StatusManager : MonoBehaviour
             temp.GetComponent<Image>().sprite = markStatusSprite;
         else if (status.statusType == Status.StatusTypes.STUN)
             temp.GetComponent<Image>().sprite = stunStatusSprite;
+        else if (status.statusType == Status.StatusTypes.DEFENCE)
+            temp.GetComponent<Image>().sprite = defenceStatusSprite;
         else if(status.buffOrDebuff == Status.BuffOrDebuff.BUFF)
             temp.GetComponent<Image>().sprite = buffStatusSprite;
         else
@@ -89,10 +91,18 @@ public class StatusManager : MonoBehaviour
                 Destroy(temp);
             }
         }
+
+        c.statusLines = 0;
+        c.statusPerLine = 0;
         for (int i = c.prefabsIconStatus.Count - 1; i >= 0; i--)
         {
-            // c.prefabsIconStatusBuffs[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(c.buffsInitialPos.x + (statusOffset * i), c.buffsInitialPos.y);
-            c.prefabsIconStatus[i].transform.position = c.transform.position + new Vector3(c.debuffsInitialPos.x + (statusOffset * i), c.debuffsInitialPos.y);
+            c.prefabsIconStatus[i].transform.position = c.transform.position + new Vector3(c.debuffsInitialPos.x + (statusOffset * (i - c.statusPerLineMax * c.statusLines)), c.debuffsInitialPos.y - (statusOffset * (i/c.statusPerLineMax)));
+            if (c.statusPerLine >= c.statusPerLineMax)
+            {
+                c.statusLines++;
+                c.statusPerLine = 0;
+            }
+            c.statusPerLine++;
         }
     }
 }

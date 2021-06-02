@@ -16,8 +16,6 @@ public class Enemy : Characters
         CombatManager.combatManager.enemies.Add(this);
         charType = CharType.ENEMY; 
         anim = this.GetComponent<Animator>();
-        thisColorBody = this.GetComponent<SpriteRenderer>();
-        thisColorHead = this.GetComponent<SpriteRenderer>();
         durationMove = 1.0f;
         durationDecreaseHealth = 1.0f;
 
@@ -67,6 +65,7 @@ public class Enemy : Characters
         healthBar = GameObject.Find(gameObject.name + "/CanvasSlider/healthBar").GetComponent<Slider>();
         canvasChar = GameObject.Find(gameObject.name + "/CanvasSlider");
         healthBarOutline = GameObject.Find(gameObject.name + "/CanvasSlider/HealthBarOutline");
+        cursorNotPlayedYet = GameObject.Find(gameObject.name + "/CanvasSlider/cursorNotPlayedYet");
         cursorSelected = GameObject.Find(gameObject.name + "/CanvasSlider/cursorSelected");
         cursorPlaying = GameObject.Find(gameObject.name + "/CanvasSlider/cursorPlaying");
         cursorSelected.SetActive(false);
