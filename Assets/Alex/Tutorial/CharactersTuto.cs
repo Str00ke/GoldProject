@@ -205,6 +205,7 @@ public class CharactersTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     //---------------------------SIMPLE ATTACK FUNCTION----------------------------
     public void LaunchAttack(CharactersTuto receiver, Ability ability)
     {
+        Debug.Log(receiver.gameObject.name);
         float dmg = Mathf.Round(Random.Range(damageRange.x, damageRange.y));
         dmg *= (ability.multiplicator / 100);
         if (Random.Range(0, 100) < receiver.dodge)

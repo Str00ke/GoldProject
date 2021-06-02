@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Drink Psy
   type: 
   multiplicator: 50
-  icon: {fileID: 21300000, guid: fe1c3c718961d1f48a73181872857e25, type: 3}
+  icon: {fileID: 21300000, guid: 7afa4daad884c614fa44eaa309444f23, type: 3}
   bonusmalus: 0.5
   destruModif: 0
   dotMult: 0

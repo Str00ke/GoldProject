@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Drink Ash
   type: 
   multiplicator: 50
-  icon: {fileID: 21300000, guid: 9d39e8efd7db23445b848afca9a6c69a, type: 3}
+  icon: {fileID: 21300000, guid: ccea6fb1bef440046b5f735d9b81bf04, type: 3}
   bonusmalus: 0.4
   destruModif: 0
   dotMult: 0

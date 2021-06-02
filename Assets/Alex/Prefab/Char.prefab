@@ -732,11 +732,10 @@ MonoBehaviour:
   bleedingDmg: 0
   armorModif: 2
   dodgeModif: 0.2
-  debuffsInitialPos: {x: -0.43, y: -1.38}
-  buffsInitialPos: {x: 0.4, y: -1.38}
+  debuffsInitialPos: {x: -0.43, y: -1.42}
   prefabsIconStatus: []
   statusPerLine: 0
-  statusPerLineMax: 6
+  statusPerLineMax: 5
   statusLines: 0
   stunned: 0
   confusion: 0
@@ -762,6 +761,7 @@ MonoBehaviour:
   hasPlayed: 0
   CanAttack: 0
   isSelected: 0
+  canBeSelected: 1
   durationDecreaseHealth: 0
   teamPosition: 0
   posInitial: {x: -3.62, y: -0.5}

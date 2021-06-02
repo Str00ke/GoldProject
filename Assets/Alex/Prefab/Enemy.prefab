@@ -905,11 +905,10 @@ MonoBehaviour:
   bleedingDmg: 0
   armorModif: 2
   dodgeModif: 0.2
-  debuffsInitialPos: {x: -0.38, y: -1.55}
-  buffsInitialPos: {x: 0.35, y: -1.55}
+  debuffsInitialPos: {x: -0.38, y: -1.57}
   prefabsIconStatus: []
   statusPerLine: 0
-  statusPerLineMax: 6
+  statusPerLineMax: 5
   statusLines: 0
   stunned: 0
   confusion: 0
@@ -935,12 +934,7 @@ MonoBehaviour:
   hasPlayed: 0
   CanAttack: 0
   isSelected: 0
-  thisColorHead: {fileID: 0}
-  thisColorBody: {fileID: 0}
-  selectedColor: {r: 0.5283019, g: 0.20683517, b: 0.20683517, a: 1}
-  hasPlayedColor: {r: 0.41509432, g: 0.41509432, b: 0.41509432, a: 1}
-  AttackColor: {r: 1, g: 0, b: 0, a: 1}
-  baseColor: {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 1}
+  canBeSelected: 1
   durationDecreaseHealth: 0
   teamPosition: 0
   posInitial: {x: 3, y: -0.5}
