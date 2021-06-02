@@ -29,13 +29,13 @@ public struct DungeonPart
     [Range(1, 3)]
     public int maxEnemiesInRoom;
     public Ennemy[] ennemiesPool;
-    public int maxHealthMultiplicator;
-    public int damageRangeMultiplicator;
-    public int dodgeMultiplicator;
-    public int critChanceMultiplicator;
-    public int critDamageMultiplicator;
-    public int initiativeMultiplicator;
-    public int armorMultiplicator;
+    public float maxHealthMultiplicator;
+    public float damageRangeMultiplicator;
+    public float dodgeMultiplicator;
+    public float critChanceMultiplicator;
+    public float critDamageMultiplicator;
+    public float initiativeMultiplicator;
+    public float armorMultiplicator;
 }
 
 [System.Serializable]
@@ -58,7 +58,7 @@ public class EnnemyManager : MonoBehaviour
     public DungeonDifficulty hardDungeon;
     public static EnnemyManager _enemyManager;
 
-    int easyMin, easyMax, middleMin, middleMax, hardMin, hardMax;
+    public int easyMin, easyMax, middleMin, middleMax, hardMin, hardMax;
 
 
     private void Awake()
@@ -79,6 +79,7 @@ public class EnnemyManager : MonoBehaviour
 
         hardMin = middleMax + 1;
         hardMax = maxNbr;
+        //Debug.Log(easyMax + " " + middleMax + " " + hardMax);
     }
 
     public EPart RoomDiffMult(int roomNbr)
@@ -94,11 +95,13 @@ public class EnnemyManager : MonoBehaviour
 
     public Ennemy SetEnemyPool(Level level, MapRoom mapRoom)
     {
-
+        Debug.Log(mapRoom.distFromStart);
         if (mapRoom.distFromStart == easyMax && !LevelManager.GetInstance().fightFMiniBoss)
         {
-           switch (level.levelType)
-           {
+            Debug.Log("First mini boss");
+            LevelManager.GetInstance().fightFMiniBoss = true;
+            switch (level.levelType)
+            {
                 case LevelType.EASY:
                     return easyDungeon.firstMiniBoss;
 
@@ -107,7 +110,7 @@ public class EnnemyManager : MonoBehaviour
 
                 case LevelType.HARD:
                     return hardDungeon.firstMiniBoss;
-           }
+            }
 
         } 
         else if (mapRoom.distFromStart == middleMax && !LevelManager.GetInstance().fightSMiniBoss)
@@ -280,5 +283,10 @@ public class EnnemyManager : MonoBehaviour
         }
 
         return dP.maxEnemiesInRoom;
+    }
+
+    public bool CheckIfOnBossRoom(MapRoom room)
+    {
+        return ((room.distFromStart == easyMax) || (room.distFromStart == middleMax) || room.roomType == RoomType.END);
     }
 }
