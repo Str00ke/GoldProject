@@ -10,6 +10,10 @@ public class Inventory : MonoBehaviour
     public int golds = 0;
     public int souls = 0;
 
+    [Header("UI gold & souls")]
+    public Text goldText;
+    public Text soulText;
+
     [Header("Item Inventory")]
     private int nbLines = 0;
     private List<GameObject> itemList = new List<GameObject>();
@@ -34,6 +38,9 @@ public class Inventory : MonoBehaviour
 
         panelItem.SetActive(false);
         inventoryGo.SetActive(false);
+
+        AddGolds(0);
+        AddSouls(0);
     }
 
     #region ItemInventoryPart
@@ -340,6 +347,7 @@ public class Inventory : MonoBehaviour
             golds = 0;
 
         // refresh golds text
+        goldText.text = golds.ToString();
     }
 
     public void AddSouls(int _souls)
@@ -350,6 +358,7 @@ public class Inventory : MonoBehaviour
             souls = 0;
 
         // refresh souls text
+        soulText.text = souls.ToString();
     }
 }
 

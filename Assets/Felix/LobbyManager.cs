@@ -23,6 +23,7 @@ public class LobbyManager : MonoBehaviour
 
     public GameObject ShopMenu;
     public Transform shopButton;
+    public Button playButton;
 
     private NItem.ItemScriptableObject itemToBuy;
     private GameObject itemsShopSelected = null;
@@ -65,13 +66,7 @@ public class LobbyManager : MonoBehaviour
 
     public void CloseAllMenu()
     {
-        if (!isFirstGameDone)
-            isFirstGameDone = bool.Parse(PlayerPrefs.GetString("FirstGame", "false"));
-
-        if (isFirstGameDone && !shopButton.GetChild(0).gameObject.activeSelf)
-        {
-            shopButton.GetChild(0).gameObject.SetActive(false);
-        }
+        RefreshLockedButton();
 
         Inventory.inventory.CloseInventory();
         ShopMenu.SetActive(false);
@@ -80,6 +75,29 @@ public class LobbyManager : MonoBehaviour
 
         CharacterManager.characterManager.RefreshTeamScene();
         CharacterManager.characterManager.SelectCharacterStats(CharacterManager.characterManager.selectedChar);
+    }
+
+    public void RefreshLockedButton()
+    {
+        if (!isFirstGameDone)
+            isFirstGameDone = bool.Parse(PlayerPrefs.GetString("FirstGame", "false"));
+
+        if (isFirstGameDone && !shopButton.GetChild(0).gameObject.activeSelf)
+        {
+            shopButton.GetChild(0).gameObject.SetActive(false);
+        }
+
+        CharacterManager characterManager = CharacterManager.characterManager;
+
+        if (!characterManager.AskForCharacter(0) && !characterManager.AskForCharacter(1) && !characterManager.AskForCharacter(2))
+            playButton.interactable = false;
+        else
+            playButton.interactable = true;
+    }
+
+    public void Play()
+    {
+        LoadScene("Level");
     }
 
     public void OpenShop()

@@ -19,6 +19,8 @@ public class FloatingObject : MonoBehaviour
 
     private void Start()
     {
+        load = Random.Range(0f, 5f);
+
         if (isUi)
         {
             rectTransform = GetComponent<RectTransform>();
@@ -27,8 +29,6 @@ public class FloatingObject : MonoBehaviour
         else
         {
             posOffset = transform.localPosition;
-
-            StartCoroutine(WaitC(Random.Range(0f, 1.5f)));
         }
     }
 
@@ -46,11 +46,5 @@ public class FloatingObject : MonoBehaviour
             else
                 transform.localPosition = tempPos;
         }
-    }
-
-    IEnumerator WaitC(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        isPlaying = true;
     }
 }

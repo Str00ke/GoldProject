@@ -435,7 +435,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 464410077340603007}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.136, y: 0, z: 0}
+  m_LocalPosition: {x: -0.231, y: -0.529, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2169942591526643261}
@@ -517,7 +517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUi: 0
-  isPlaying: 0
+  isPlaying: 1
   amplitude: 0.3
   frequency: 0.5
 --- !u!1 &2130872346068094978
@@ -607,7 +607,6 @@ GameObject:
   - component: {fileID: 2169942591526643202}
   - component: {fileID: 2169942591526643260}
   - component: {fileID: 2169942591526643263}
-  - component: {fileID: -3420722700975039485}
   m_Layer: 0
   m_Name: Char
   m_TagString: Untagged
@@ -763,19 +762,13 @@ MonoBehaviour:
   hasPlayed: 0
   CanAttack: 0
   isSelected: 0
-  thisColorHead: {fileID: 0}
-  thisColorBody: {fileID: 0}
-  selectedColor: {r: 0.29654682, g: 0.5283019, b: 0.38611743, a: 1}
-  hasPlayedColor: {r: 0.4056604, g: 0.4056604, b: 0.4056604, a: 1}
-  AttackColor: {r: 0, g: 1, b: 0, a: 1}
-  baseColor: {r: 1, g: 1, b: 1, a: 1}
   durationDecreaseHealth: 0
   teamPosition: 0
   posInitial: {x: -3.62, y: -0.5}
   offsetPos: 1.5
   speedMove: 1
   durationMove: 1
-  anim: {fileID: -3420722700975039485}
+  anim: {fileID: 0}
   head: {fileID: 3748049479024999297}
   body: {fileID: 8781212782479631214}
   bodyArmor: {fileID: 2420134106888775266}
@@ -810,25 +803,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0934814, y: 1.7950993}
   m_EdgeRadius: 0
---- !u!95 &-3420722700975039485
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2169942591526643203}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 228677f2e08be6f4e991417b1e2c859b, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2232025527479324829
 GameObject:
   m_ObjectHideFlags: 0
