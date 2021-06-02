@@ -429,17 +429,12 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         TakeDamage(dmg, durationDecreaseHealth);
         Debug.Log("Receiver : " + gameObject.name + "Dot damage " + dmg + " Dot element " + stElem.ToString());
         ElementReactions((CurrentElement)stElem);
-        UpdateDisplayDots();
     }
     public void TakeDamageMark(Status.StatusElement stElem, float dmg)
     {
         TakeDamage(dmg, durationDecreaseHealth);
         Debug.Log("Receiver : " + gameObject.name + "Mark damage " + dmg + " Mark element " + stElem.ToString());
         ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), stElem.ToString()));
-    }
-    public void UpdateDisplayDots()
-    {
-
     }
 
     public void ShowFloatingHealth(string value, bool red)

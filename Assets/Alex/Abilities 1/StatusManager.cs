@@ -43,7 +43,6 @@ public class StatusManager : MonoBehaviour
                 {
                     c.TakeDamageMark(c.statusList[i].statusElement, c.statusList[i].dmg);
                 }
-                Debug.Log("Status fini");
                 c.statusList[i].RevertStatus();
                 StatusList.RemoveAt(i);
             }
