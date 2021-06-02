@@ -4265,7 +4265,7 @@ MonoBehaviour:
   ShopMenu: {fileID: 763516971}
   shopButton: {fileID: 438933638}
   playButton: {fileID: 1046476038}
-  isFirstGameDone: 0
+  isFirstGameDone: 1
   loadingScene: {fileID: 754465011}
   loadingSlider: {fileID: 1377975266}
 --- !u!4 &568211287
