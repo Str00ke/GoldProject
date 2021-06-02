@@ -13,6 +13,7 @@ public class Inventory : MonoBehaviour
     [Header("UI gold & souls")]
     public Text goldText;
     public Text soulText;
+    public GameObject textPrefab;
 
     [Header("Item Inventory")]
     private int nbLines = 0;
@@ -346,8 +347,16 @@ public class Inventory : MonoBehaviour
         if (golds < 0)
             golds = 0;
 
+        Text goldObj = Instantiate(textPrefab, goldText.transform.parent).GetComponent<Text>();
+        goldObj.transform.position = new Vector3(goldObj.transform.position.x - 50f, goldObj.transform.position.y, goldObj.transform.position.z);
+        goldObj.text = _golds > 0 ? "+" + _golds.ToString() : _golds.ToString();
+        goldObj.color = _golds < 0 ? Color.red : Color.green;
+
         // refresh golds text
         goldText.text = golds.ToString();
+
+        StartCoroutine(IncreaseGoldText(goldObj.gameObject, 2f, _golds));
+        Destroy(goldObj.gameObject, 2f);
     }
 
     public void AddSouls(int _souls)
@@ -357,8 +366,25 @@ public class Inventory : MonoBehaviour
         if (souls < 0)
             souls = 0;
 
+        Text goldObj = Instantiate(textPrefab, soulText.transform.parent).GetComponent<Text>();
+        goldObj.transform.position = new Vector3(goldObj.transform.position.x - 50f, goldObj.transform.position.y, goldObj.transform.position.z);
+        goldObj.text = _souls > 0 ? "+" + _souls.ToString() : _souls.ToString();
+        goldObj.color = _souls < 0 ? Color.red : Color.green;
+
         // refresh souls text
         soulText.text = souls.ToString();
+
+        StartCoroutine(IncreaseGoldText(goldObj.gameObject, 2f, _souls));
+        Destroy(goldObj.gameObject, 2f);
+    }
+
+    IEnumerator IncreaseGoldText(GameObject goldGo, float duration, int _golds)
+    {
+        while (goldGo != null)
+        {
+            goldGo.transform.position = new Vector3(goldGo.transform.position.x, goldGo.transform.position.y + Time.deltaTime * 75f, goldGo.transform.position.z);
+            yield return null;
+        }
     }
 }
 
