@@ -15,12 +15,12 @@ MonoBehaviour:
   name: Destruction Ice
   type: 
   multiplicator: 25
-  icon: {fileID: 21300000, guid: 75114e1d4787b3d4fbb8ea4bdc3e62f9, type: 3}
+  icon: {fileID: 21300000, guid: 9c13a586e2b0c484786845a297d392c5, type: 3}
   bonusmalus: 10
   destruModif: 0.3
   dotMult: 0
   markMult: 0
-  turnDuration: 2
+  turnDuration: 3
   objectType: 0
   weaponAbilityType: 0
   crType: 3

@@ -107,6 +107,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public bool hasPlayed;
     public bool CanAttack;
     public bool isSelected;
+    public bool canBeSelected = true;
     [HideInInspector]
     public float durationDecreaseHealth; //animation time in seconds
 
@@ -142,12 +143,16 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
     public void InteractiveHoldToSelect()
     {
-        if(holdCharac < holdCharacValue && onPointerHold)
+        if (canBeSelected)
         {
-            transform.localScale = new Vector3(transform.localScale.x - Time.deltaTime/5, transform.localScale.y - Time.deltaTime/5, transform.localScale.z - Time.deltaTime/5);
-        }else if(holdCharac > holdCharacValue || !onPointerHold)
-        {
-            transform.localScale = new Vector3(1,1,1);
+            if (holdCharac < holdCharacValue && onPointerHold)
+            {
+                transform.localScale = new Vector3(transform.localScale.x - Time.deltaTime / 5, transform.localScale.y - Time.deltaTime / 5, transform.localScale.z - Time.deltaTime / 5);
+            }
+            else if (holdCharac > holdCharacValue || !onPointerHold)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
         }
     }
     public void ChangeColor()
@@ -185,11 +190,13 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        onPointerHold = true;
+        if (canBeSelected)
+            onPointerHold = true;
     }
     public void OnPointerUp(PointerEventData eventData)
     {
-        onPointerHold = false;
+        if (canBeSelected)
+            onPointerHold = false;
     }
     public void ChangeStats(string name, float maxHP, Vector2 dmgRange, int dodg, float critCh, float critDmg, int armr, int position)
     {
@@ -422,17 +429,12 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         TakeDamage(dmg, durationDecreaseHealth);
         Debug.Log("Receiver : " + gameObject.name + "Dot damage " + dmg + " Dot element " + stElem.ToString());
         ElementReactions((CurrentElement)stElem);
-        UpdateDisplayDots();
     }
     public void TakeDamageMark(Status.StatusElement stElem, float dmg)
     {
         TakeDamage(dmg, durationDecreaseHealth);
         Debug.Log("Receiver : " + gameObject.name + "Mark damage " + dmg + " Mark element " + stElem.ToString());
         ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), stElem.ToString()));
-    }
-    public void UpdateDisplayDots()
-    {
-
     }
 
     public void ShowFloatingHealth(string value, bool red)

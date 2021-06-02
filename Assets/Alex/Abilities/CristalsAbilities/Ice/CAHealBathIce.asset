@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Bath Ice
   type: 
   multiplicator: 100
-  icon: {fileID: 21300000, guid: 0e2a2c4635578bd4f96003907456d7f6, type: 3}
+  icon: {fileID: 21300000, guid: 62fdb02e2b431514d9aa317de96051ca, type: 3}
   bonusmalus: 0
   destruModif: 0
   dotMult: 0

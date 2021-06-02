@@ -15,9 +15,12 @@ MonoBehaviour:
   name: Drink Psy
   type: 
   multiplicator: 50
-  icon: {fileID: 21300000, guid: e723cb40e51d3a1429e1f548e18cf3e0, type: 3}
+  icon: {fileID: 21300000, guid: fe1c3c718961d1f48a73181872857e25, type: 3}
   bonusmalus: 0.5
-  turnDuration: 1
+  destruModif: 0
+  dotMult: 0
+  markMult: 0
+  turnDuration: 2
   objectType: 0
   weaponAbilityType: 0
   crType: 1

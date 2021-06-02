@@ -15,12 +15,12 @@ MonoBehaviour:
   name: Drink Ice
   type: 
   multiplicator: 50
-  icon: {fileID: 21300000, guid: 6360d55a67bff844ba7cbf6837ce970e, type: 3}
+  icon: {fileID: 21300000, guid: 62fdb02e2b431514d9aa317de96051ca, type: 3}
   bonusmalus: 0.3
   destruModif: 0
   dotMult: 0
   markMult: 0
-  turnDuration: 1
+  turnDuration: 2
   objectType: 0
   weaponAbilityType: 0
   crType: 1

@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Bath Ash
   type: 
   multiplicator: 75
-  icon: {fileID: 21300000, guid: 97587b9fc8181774191b0b8147aa3268, type: 3}
+  icon: {fileID: 21300000, guid: 9d39e8efd7db23445b848afca9a6c69a, type: 3}
   bonusmalus: 0
   destruModif: 0
   dotMult: 0

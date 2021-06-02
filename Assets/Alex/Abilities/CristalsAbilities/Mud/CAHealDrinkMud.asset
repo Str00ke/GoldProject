@@ -15,9 +15,12 @@ MonoBehaviour:
   name: Drink Mud
   type: 
   multiplicator: 50
-  icon: {fileID: 21300000, guid: 84b7f54497c20524aa5f836fe8a49d34, type: 3}
+  icon: {fileID: 21300000, guid: 2e5f01f34457903408f1f1a2df896901, type: 3}
   bonusmalus: 20
-  turnDuration: 1
+  destruModif: 0
+  dotMult: 0
+  markMult: 0
+  turnDuration: 2
   objectType: 0
   weaponAbilityType: 0
   crType: 1
