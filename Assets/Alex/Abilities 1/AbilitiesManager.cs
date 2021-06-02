@@ -350,7 +350,7 @@ public class AbilitiesManager : MonoBehaviour
             {
                 if (cm.charSelected.isTargetable)
                 {
-                    cm.allyPlaying.inDefenceMode = true;
+                    Status defStatus = new Status(cm.allyPlaying, 0, abi, Status.StatusTypes.DEFENCE);
                     Status s = new Status(cm.allyPlaying, Mathf.Round(cm.allyPlaying.armor * 0.6f), abi, Status.StatusTypes.ARMORBONUS);
                 }
             }

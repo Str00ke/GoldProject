@@ -15,10 +15,11 @@ MonoBehaviour:
   name: Dot Mud
   type: 
   multiplicator: 30
-  icon: {fileID: 21300000, guid: 38d84e251d5215d47b26c2184ad73c2f, type: 3}
+  icon: {fileID: 21300000, guid: 45547cc9aa4338547b28533487f6a2c2, type: 3}
   bonusmalus: 0
   destruModif: 0
   dotMult: 40
+  markMult: 0
   turnDuration: 2
   objectType: 0
   weaponAbilityType: 0

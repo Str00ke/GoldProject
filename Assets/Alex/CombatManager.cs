@@ -137,7 +137,7 @@ public class CombatManager : MonoBehaviour
             fightersList[currCharAttacking].hasPlayed = true;
             fightersList[currCharAttacking].cursorNotPlayedYet.SetActive(false);
         }
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(fightersList[currCharAttacking].durationDecreaseHealth+0.1f);
         if (currCharAttacking >= 0)
         {
             if(fightersList[currCharAttacking].cursorPlaying)
@@ -171,10 +171,6 @@ public class CombatManager : MonoBehaviour
                 if (fightersList[currCharAttacking].charType == Characters.CharType.ALLY)
                 {
                     allyPlaying = (Ally)fightersList[currCharAttacking];
-                    if (allyPlaying.inDefenceMode)
-                    {
-                        allyPlaying.inDefenceMode = false;
-                    }
                 }
                 else
                 {
@@ -208,6 +204,7 @@ public class CombatManager : MonoBehaviour
         }
         if(allies.Count > 0)
             EnemyAbilityAttack(allies[allyAttacked], inDefence);
+        yield return new WaitForSeconds(fightersList[currCharAttacking].durationDecreaseHealth + 0.1f);
         NextCharAttack();
         yield return null;
     }
@@ -289,7 +286,11 @@ public class CombatManager : MonoBehaviour
                         {
                             fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
                             Status s = new Status(allyDef, 0, 1, Status.StatusTypes.STUN);
-                            allyDef.inDefenceMode = false;
+                            foreach(Status s1 in allyDef.statusList)
+                            {
+                                if (s.statusType == Status.StatusTypes.DEFENCE)
+                                    s.RevertStatus();
+                            }
                         }
                         else
                         {

@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Attack Normal Psy
   type: 
   multiplicator: 90
-  icon: {fileID: 21300000, guid: ddbff9f3d9eac704c8faf1e9d0edef98, type: 3}
+  icon: {fileID: 21300000, guid: 6d59b09b072be274cb674e7e4dfe21fa, type: 3}
   bonusmalus: 0
   destruModif: 0
   dotMult: 0

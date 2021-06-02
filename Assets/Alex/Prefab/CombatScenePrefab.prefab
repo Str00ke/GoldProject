@@ -49,6 +49,7 @@ MonoBehaviour:
   dotStatusSprite: {fileID: 21300000, guid: 9f39ee6dd5059bd45b49cc586d61e8f8, type: 3}
   markStatusSprite: {fileID: 21300000, guid: 1573684a8041d4741a5fa0f32062de6b, type: 3}
   stunStatusSprite: {fileID: 21300000, guid: 45f30b6bf11eb4643a24cfd2e530febe, type: 3}
+  defenceStatusSprite: {fileID: 21300000, guid: e15c9386e758b58439c73cb4837ee7ac, type: 3}
   statusOffset: 0.15
   statusId: 0
 --- !u!1 &1053933509547045663
@@ -228,7 +229,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &2918288437976068035
@@ -248,8 +249,6 @@ MonoBehaviour:
   selectedColor: {r: 0.56294775, g: 0.5943396, b: 0, a: 1}
   idleColor: {r: 1, g: 1, b: 1, a: 1}
   isSelected: 0
-  displayUIHoldTouchDurationMax: 0
-  displayUIHoldTouchDuration: 0
 --- !u!61 &7453891230568163921
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2097,7 +2096,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &9185235526284686603
@@ -2117,8 +2116,6 @@ MonoBehaviour:
   selectedColor: {r: 0.56294775, g: 0.5943396, b: 0, a: 1}
   idleColor: {r: 1, g: 1, b: 1, a: 1}
   isSelected: 0
-  displayUIHoldTouchDurationMax: 0
-  displayUIHoldTouchDuration: 0
 --- !u!61 &9061631810609055060
 BoxCollider2D:
   m_ObjectHideFlags: 0

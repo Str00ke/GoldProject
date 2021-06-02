@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Attack Normal Ice
   type: 
   multiplicator: 90
-  icon: {fileID: 21300000, guid: 5a1b3b2d6ef09e343ba9f7229c3d8195, type: 3}
+  icon: {fileID: 21300000, guid: 875d7ac70b3c5224e9b3153fa98139c1, type: 3}
   bonusmalus: 0
   destruModif: 0
   dotMult: 0

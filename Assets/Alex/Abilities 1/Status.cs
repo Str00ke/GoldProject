@@ -42,7 +42,8 @@ public class Status
         BLEEDING,
         DOT,
         MARK,
-        STUN
+        STUN,
+        DEFENCE
     }
     public StatusTypes statusType;
 
@@ -185,6 +186,10 @@ public class Status
                     statusTarget.stunned = true;
                     buffOrDebuff = BuffOrDebuff.DEBUFF;
                     break;
+                case StatusTypes.DEFENCE:
+                    statusTarget.inDefenceMode = true;
+                    buffOrDebuff = BuffOrDebuff.BUFF;
+                    break;
             }
             statusId = StatusManager.statusManager.statusId;
             StatusManager.statusManager.statusId++;
@@ -249,6 +254,10 @@ public class Status
                 break;
             case StatusTypes.STUN:
                 statusTarget.stunned = false;
+                break;
+            case StatusTypes.DEFENCE:
+                statusTarget.inDefenceMode = false;
+                buffOrDebuff = BuffOrDebuff.BUFF;
                 break;
         }
         statusTarget.statusList.Remove(this);

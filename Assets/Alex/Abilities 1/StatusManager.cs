@@ -13,6 +13,7 @@ public class StatusManager : MonoBehaviour
     public Sprite dotStatusSprite;
     public Sprite markStatusSprite;
     public Sprite stunStatusSprite;
+    public Sprite defenceStatusSprite;
     public float statusOffset = 0.13f;
     public int statusId;
 
@@ -70,6 +71,8 @@ public class StatusManager : MonoBehaviour
             temp.GetComponent<Image>().sprite = markStatusSprite;
         else if (status.statusType == Status.StatusTypes.STUN)
             temp.GetComponent<Image>().sprite = stunStatusSprite;
+        else if (status.statusType == Status.StatusTypes.DEFENCE)
+            temp.GetComponent<Image>().sprite = defenceStatusSprite;
         else if(status.buffOrDebuff == Status.BuffOrDebuff.BUFF)
             temp.GetComponent<Image>().sprite = buffStatusSprite;
         else
