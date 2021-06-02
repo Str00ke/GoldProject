@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class TutoCombat : MonoBehaviour
 {
     [Header("Objects")]
+    public float durationStep;
     public static TutoCombat tutoCombat = null;
     public List<AllyTuto> allies;
     public List<CharactersTuto> fightersList;
@@ -45,8 +46,11 @@ public class TutoCombat : MonoBehaviour
     {
         TutorialFunction();
     }
-
     public void TutorialFunction()
+    {
+        StartCoroutine(TutorialFunctionCor());
+    }
+    public IEnumerator TutorialFunctionCor()
     {
         switch (currentStepTuto)
         {
@@ -54,26 +58,32 @@ public class TutoCombat : MonoBehaviour
                 BreakTuto(TutoStepTexts[0]);
                     break;
             case 1:
+                BreakTuto(TutoStepTexts[1]);
+                break;
+            case 2:
                 allyPlaying = chars[0];
                 charAttackedByDeath = chars[0];
                 allyPlaying.cursorPlaying.SetActive(true);
                 break;
-            case 2:
+            case 3:
+                //GO TO NEXT STEP WITH ABILITY LAUNCH
                 chars[0].cursorPlaying.SetActive(false);
                 chars[0].cursorNotPlayedYet.SetActive(false);
                 StatusTuto1 s1 = new StatusTuto1(chars[0], 0, chars[0].abilities[0], StatusTuto1.StatusTypes.DEFENCE);
                 StatusTuto1 s2 = new StatusTuto1(chars[0], chars[0].armor * 0.6f, chars[0].abilities[0], StatusTuto1.StatusTypes.ARMORBONUS);
                 allyPlaying = null;
-                BreakTuto(TutoStepTexts[1]);
-                break;
-            case 3:
-                enemies[0].cursorPlaying.SetActive(true);
-                enemies[0].LaunchAttack(charAttackedByDeath, enemies[0].abilities[0]);
+                BreakTuto(TutoStepTexts[2]);
                 break;
             case 4:
+                yield return new WaitForSeconds(durationStep);
+                enemies[0].cursorPlaying.SetActive(true);
+                enemies[0].LaunchAttack(charAttackedByDeath, enemies[0].abilities[0]);
                 enemies[0].cursorNotPlayedYet.SetActive(false);
+                enemies[0].cursorPlaying.SetActive(false);
+                GoNextStepTuto();
                 break;
             case 5:
+                allyPlaying = chars[0];
                 break;
             case 6:
                 break;
@@ -82,6 +92,7 @@ public class TutoCombat : MonoBehaviour
             case 8:
                 break;
         }
+        yield return null;
     }
     public void disableChar(CharactersTuto c)
     {

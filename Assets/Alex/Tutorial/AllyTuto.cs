@@ -25,6 +25,9 @@ public class AllyTuto : CharactersTuto
         cursorSelected.SetActive(false);
         cursorPlaying.SetActive(false);
         durationDecreaseHealth = 1.0f;
+        health = maxHealth;
+        healthBar.maxValue = maxHealth;
+        healthBar.value = health;
         //ISTARGETABLE FOR ABILITIES
         isTargetable = false;
         healthBarOutline = GameObject.Find(gameObject.name + "/CanvasChar/HealthBarOutline");
@@ -83,7 +86,7 @@ public class AllyTuto : CharactersTuto
             isDead = true;
             isTargetable = false;
             health = 0;
-            healthBar.gameObject.SetActive(false);
+            canvasChar.gameObject.SetActive(false);
         }
         yield return null;
     }

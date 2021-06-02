@@ -571,7 +571,7 @@ MonoBehaviour:
   confusion: 0
   turnsConfusionValue: 2
   turnsConfusion: 0
-  holdCharacValue: 0.5
+  holdCharacValue: 0.3
   holdCharac: 0
   armorBonus: 0
   precisionMalus: 0
@@ -1173,7 +1173,7 @@ MonoBehaviour:
   confusion: 0
   turnsConfusionValue: 2
   turnsConfusion: 0
-  holdCharacValue: 0.5
+  holdCharacValue: 0.3
   holdCharac: 0
   armorBonus: 0
   precisionMalus: 0
@@ -4475,7 +4475,7 @@ MonoBehaviour:
   confusion: 0
   turnsConfusionValue: 2
   turnsConfusion: 0
-  holdCharacValue: 0.5
+  holdCharacValue: 0.3
   holdCharac: 0
   armorBonus: 0
   precisionMalus: 0
@@ -6204,11 +6204,11 @@ MonoBehaviour:
   itemElement: 0
   health: 2500
   maxHealth: 2500
-  damageRange: {x: 200, y: 250}
+  damageRange: {x: 90, y: 115}
   initiative: 1
   dodge: 0
   dodgeValue: 0
-  critChance: 0.5
+  critChance: 0
   critDamage: 2
   armor: 0
   armorValue: 0
@@ -6227,7 +6227,7 @@ MonoBehaviour:
   confusion: 0
   turnsConfusionValue: 2
   turnsConfusion: 0
-  holdCharacValue: 0.5
+  holdCharacValue: 0.3
   holdCharac: 0
   armorBonus: 0
   precisionMalus: 0
@@ -6337,8 +6337,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 179.68327, y: 13.853006}
-  m_SizeDelta: {x: 120.3016, y: 104.602}
+  m_AnchoredPosition: {x: 182.0733, y: 13.853006}
+  m_SizeDelta: {x: 131.2481, y: 104.602}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7122387982697173677
 CanvasRenderer:
@@ -6429,6 +6429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5cdff9f3ab9064459aa36c7b2588775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  durationStep: 1.5
   allies: []
   fightersList: []
   charSelected: {fileID: 0}
@@ -6445,8 +6446,8 @@ MonoBehaviour:
   currCharAttacking: 0
   TutoStepTexts:
   - An enemy appears! Stay behind me friends.
+  - (Hold a character to select it, use its ability!)
   - Be careful! He is going to attack!
-  - 
   - 
   - 
   currentStepTuto: 0
@@ -7586,7 +7587,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -44.479, y: 13}
+  m_AnchoredPosition: {x: -56.908, y: 46.5}
   m_SizeDelta: {x: 88.958, y: 19.988}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7422386929867993869
@@ -8133,8 +8134,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 61.60399, y: 13.853006}
-  m_SizeDelta: {x: 115.8529, y: 104.602}
+  m_AnchoredPosition: {x: 52.011, y: 13.853006}
+  m_SizeDelta: {x: 128.88, y: 104.602}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7422386930434045702
 GameObject:
