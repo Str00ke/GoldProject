@@ -123,9 +123,9 @@ public class AllyTuto : CharactersTuto
         isDead = true;
         isTargetable = false;
         health = 0;
-        healthBar.gameObject.SetActive(false);
-        GetComponentInChildren<DamagedBarScript>().gameObject.SetActive(false);
-        
+        /*healthBar.gameObject.SetActive(false);
+        GetComponentInChildren<DamagedBarScript>().gameObject.SetActive(false);*/
+        canvasChar.gameObject.SetActive(false);
         Character c = CharacterManager.characterManager.AskForCharacter(teamPosition);
         c.RemoveItem((NItem.EPartType)3);
         c.RemoveItem((NItem.EPartType)Random.Range(0, 3));

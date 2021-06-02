@@ -83,6 +83,11 @@ public class TutoCombat : MonoBehaviour
                 break;
         }
     }
+    public void disableChar(CharactersTuto c)
+    {
+        c.cursorPlaying.SetActive(false);
+        c.cursorNotPlayedYet.SetActive(false);
+    }
     public void BreakTuto(string textTuto)
     {
         GameObject tutoPrefab = Instantiate(stepTutoButtonPrefab);
