@@ -164,7 +164,7 @@ public class CharacterManager : MonoBehaviour
         for (int z = 0; z < 4; z++)
         {
             itemsUIPanel.transform.GetChild(z).GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
-            if (z != 3)
+            if (z != 3 && z != 2)
             {
                 itemsUIPanel.transform.GetChild(z).GetChild(1).GetComponent<Button>().onClick.RemoveAllListeners();
                 itemsUIPanel.transform.GetChild(z).GetChild(2).GetComponent<Button>().onClick.RemoveAllListeners();
@@ -172,7 +172,7 @@ public class CharacterManager : MonoBehaviour
         }
 
         // SELECTED CHARACTER ITEMS
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
         {
             itemsUIPanel.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = null;
             itemsUIPanel.transform.GetChild(i).GetChild(1).gameObject.SetActive(false);
@@ -212,7 +212,7 @@ public class CharacterManager : MonoBehaviour
         for (int z = 0; z < 4; z++)
         {
             itemsUIPanel.transform.GetChild(z).GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
-            if (z != 3)
+            if (z != 3 && z != 2)
             {
                 itemsUIPanel.transform.GetChild(z).GetChild(1).GetComponent<Button>().onClick.RemoveAllListeners();
                 itemsUIPanel.transform.GetChild(z).GetChild(2).GetComponent<Button>().onClick.RemoveAllListeners();
@@ -291,30 +291,7 @@ public class CharacterManager : MonoBehaviour
             int x = selectedChar;
             NItem.ItemScriptableObject weapon = characters[selectedChar].GetItem(NItem.EPartType.Weapon);
 
-            //items.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => ShowItemPanel(x, 2, weapon));
             itemsUIPanel.transform.GetChild(2).GetChild(0).GetComponent<Button>().onClick.AddListener(() => SelectItemStats(weapon));
-
-            // Remove item
-            itemsUIPanel.transform.GetChild(2).GetChild(1).gameObject.SetActive(true);
-            itemsUIPanel.transform.GetChild(2).GetChild(1).GetComponent<Button>().onClick.AddListener(() => RemoveCharacterItem(selectedChar, weapon));
-
-            itemsUIPanel.transform.GetChild(2).GetChild(2).gameObject.SetActive(false);
-        }
-        else
-        {
-            itemsUIPanel.transform.GetChild(2).GetChild(1).gameObject.SetActive(false);
-
-            if (lobbyManager.lobbyState == ELobbyState.Menu || lobbyManager.lobbyState == ELobbyState.Inventory || lobbyManager.lobbyState == ELobbyState.InventoryItemPartSelection)
-            {
-                itemsUIPanel.transform.GetChild(2).GetChild(2).gameObject.SetActive(true);
-                itemsUIPanel.transform.GetChild(2).GetChild(2).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.OpenInventory());
-                itemsUIPanel.transform.GetChild(2).GetChild(2).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.SelectionCharacterOneItemPart(selectedChar));
-                itemsUIPanel.transform.GetChild(2).GetChild(2).GetComponent<Button>().onClick.AddListener(() => Inventory.inventory.SelectionOneItemPart(2));
-            }
-            else
-            {
-                itemsUIPanel.transform.GetChild(2).GetChild(2).gameObject.SetActive(false);
-            }
         }
 
         itemsUIPanel.transform.GetChild(3).GetChild(0).GetComponent<Image>().sprite = characters[selectedChar].GetItem(NItem.EPartType.Gem) != null ? characters[selectedChar].GetItem(NItem.EPartType.Gem).itemUiSprite : null;
@@ -323,7 +300,6 @@ public class CharacterManager : MonoBehaviour
             int x = selectedChar;
             NItem.ItemScriptableObject gem = characters[selectedChar].GetItem(NItem.EPartType.Gem);
 
-            //items.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => ShowItemPanel(x, 3, gem));
             itemsUIPanel.transform.GetChild(3).GetChild(0).GetComponent<Button>().onClick.AddListener(() => SelectItemStats(gem));
         }
 
