@@ -95,9 +95,9 @@ public class LevelManager : MonoBehaviour
         mapManager.Init();
         mapManager.GenerateMap();
         FindObjectOfType<PlayerPoint>().Init();
-        mapManager.MapLinkRooms();
-        mapManager.RandomizeShop();
+        mapManager.MapLinkRooms();     
         mapManager.StartToEnd(PlayerPoint._playerPoint.startRoom, 0);
+        mapManager.RandomizeShop();
         StartRoom();
         shop.SetActive(false);
         obliterate.SetActive(false);

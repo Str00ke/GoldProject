@@ -131,29 +131,30 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                     go.transform.parent = this.transform;
                     Image img = go.AddComponent<Image>();
                     img.sprite = hallwayImgs[Random.Range(0, hallwayImgs.Length)];
-                    go.GetComponent<RectTransform>().sizeDelta = new Vector2(0.64f, 0.64f);
+                    go.GetComponent<RectTransform>().sizeDelta = new Vector2(1f, 1f);
+                    go.GetComponent<Image>().raycastTarget = false;
                     if (linkedRoom[i].pos.GetLength(0) == pos.GetLength(0))
                     {
                         if (linkedRoom[i].pos.GetLength(1) == pos.GetLength(1) + 1)
                         {
-                            go.GetComponent<RectTransform>().localPosition = new Vector2(0, -25);
+                            go.GetComponent<RectTransform>().localPosition = new Vector2(0, -60);
                         }
                         else
                         {
-                            go.GetComponent<RectTransform>().localPosition = new Vector2(0, 25);
+                            go.GetComponent<RectTransform>().localPosition = new Vector2(0, 60);
                         }
                     }
                     else if (linkedRoom[i].pos.GetLength(1) == pos.GetLength(1))
                     {
                         if (linkedRoom[i].pos.GetLength(0) == pos.GetLength(0) + 1)
                         {
-                            go.GetComponent<RectTransform>().localPosition = new Vector2(25, 0);
-                            go.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, 90);
+                            go.GetComponent<RectTransform>().localPosition = new Vector2(60, 0);
+                            go.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, -90);
                         }
                         else
                         {
-                            go.GetComponent<RectTransform>().localPosition = new Vector2(-25, 0);
-                            go.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, -90);
+                            go.GetComponent<RectTransform>().localPosition = new Vector2(-60, 0);
+                            go.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, 90);
                         }
                     }
                 }

@@ -66,15 +66,15 @@ public class LootManager : MonoBehaviour
         lootOnGround.Add(gold);
         lootOnGround.Add(soul);
 
-        StartCoroutine(ItemFall(gold.instance, (isDone) =>
+        /*StartCoroutine(ItemFall(gold.instance, (isDone) =>
         {
             if (isDone)
             {
                 gold.isAtGround = true;
             }
-        }));
+        }));*/
 
-        SoulFloat(soul.instance);
+        //SoulFloat(soul.instance);
         /*StartCoroutine(ItemFall(soul.instance, (isDone) =>
         {
             if (isDone)
@@ -95,7 +95,8 @@ public class LootManager : MonoBehaviour
             if (isDone)
             {
                 item.isAtGround = true;
-                GiveLootToPlayer();
+                Invoke("GiveLootToPlayer", 0.5f);
+                //GiveLootToPlayer();
             }
         }));
     }
@@ -181,23 +182,35 @@ public class LootManager : MonoBehaviour
 
     public void GiveLootToPlayer()
     {
+        bool isItem = false;
         Debug.Log(lootOnGround.Count);
-        foreach(object obj in lootOnGround)
+        for (int i = 0; i < lootOnGround.Count; ++i)
         {
-            if (obj as LootItem<GoldPrefab> != null)
+            Debug.Log("Loot: " + lootOnGround.Count);
+            if (lootOnGround[i] as LootItem<GoldPrefab> != null)
             {
-                StartCoroutine(MoveGoldToPlayer((obj as LootItem<GoldPrefab>).instance, (obj as LootItem<GoldPrefab>)));
+                //StartCoroutine(MoveGoldToPlayer((obj as LootItem<GoldPrefab>).instance, (obj as LootItem<GoldPrefab>)));
+                (lootOnGround[i] as LootItem<GoldPrefab>).ApplyToPlayer();                  
             }
-            else if (obj as LootItem<SoulGO> != null)
+            else if (lootOnGround[i] as LootItem<SoulGO> != null)
             {
-                StartCoroutine(MoveSoulToCounter((obj as LootItem<SoulGO>).instance, (obj as LootItem<SoulGO>)));
-            } else if (obj as LootItem<NItem.ItemScriptableObject> != null)
-            {
-                GiveItem(obj as LootItem<NItem.ItemScriptableObject>);
+                //StartCoroutine(MoveSoulToCounter((obj as LootItem<SoulGO>).instance, (obj as LootItem<SoulGO>)));
+                Debug.Log((lootOnGround[i] as LootItem<SoulGO>).instance);
+                (lootOnGround[i] as LootItem<SoulGO>).ApplyToPlayer();
             }
-
-            if (lootOnGround.Count <= 0) break;
+            else if (lootOnGround[i] as LootItem<NItem.ItemScriptableObject> != null)
+            {
+                //GiveItem(obj as LootItem<NItem.ItemScriptableObject>);
+                isItem = true;
+                (lootOnGround[i] as LootItem<NItem.ItemScriptableObject>).ApplyToPlayer();
+                Invoke("InvokeEndFight", 0.25f);
+                //InvokeEndFight();
+            }
+            //lootOnGround.RemoveAt(i);
         }
+        lootOnGround.Clear();
+        if (!isItem)
+            SpawnChest();
     }
 
     void GiveItem(LootItem<NItem.ItemScriptableObject> obj)
