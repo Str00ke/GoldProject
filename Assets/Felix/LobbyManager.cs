@@ -83,7 +83,7 @@ public class LobbyManager : MonoBehaviour
         if (!isFirstGameDone)
             isFirstGameDone = bool.Parse(PlayerPrefs.GetString("FirstGame", "false"));
 
-        if (isFirstGameDone && !shopButton.GetChild(0).gameObject.activeSelf)
+        if (isFirstGameDone && shopButton.GetChild(0).gameObject.activeSelf)
         {
             shopButton.GetChild(0).gameObject.SetActive(false);
         }
