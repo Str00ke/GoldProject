@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class LootManager : MonoBehaviour
 {
@@ -16,6 +18,14 @@ public class LootManager : MonoBehaviour
     public List<object> lootOnGround = new List<object>();
     public GameObject chest;
     public int goldValue = 50;
+    int golds, souls;
+    LootItem<NItem.ItemScriptableObject> itemHold;
+
+    [Header("Result panel")]
+    public GameObject panel;
+    public Text goldTxt;
+    public Text soulTxt;
+    public Image itemImg;
 
     [Header("Gold rate")]
     public float goldRatePart1;
@@ -61,10 +71,12 @@ public class LootManager : MonoBehaviour
     {
         LootItem<GoldPrefab> gold = GetLoot<GoldPrefab>(PlayerPoint._playerPoint.onRoom, pos);
         LootItem<SoulGO> soul = GetLoot<SoulGO>(PlayerPoint._playerPoint.onRoom, pos);
-        gold.InstantiateObject(pos);
+        golds = gold.amount;
+        souls = soul.amount;
+        /*gold.InstantiateObject(pos);
         soul.InstantiateObject(pos);
         lootOnGround.Add(gold);
-        lootOnGround.Add(soul);
+        lootOnGround.Add(soul);*/
 
         /*StartCoroutine(ItemFall(gold.instance, (isDone) =>
         {
@@ -90,6 +102,8 @@ public class LootManager : MonoBehaviour
         LootItem<NItem.ItemScriptableObject> item = GetLoot<NItem.ItemScriptableObject>(PlayerPoint._playerPoint.onRoom, pos);
         item.InstantiateObject(pos);
         lootOnGround.Add(item);
+        //itemHold = item;
+        itemImg.sprite = item.instance.GetComponent<SpriteRenderer>().sprite;
         StartCoroutine(ItemFall(item.instance, (isDone) =>
         {
             if (isDone)
@@ -179,6 +193,13 @@ public class LootManager : MonoBehaviour
         return tmp[Random.Range(0, tmp.Count)];
     }
 
+    public void SetResultPanel()
+    {
+        goldTxt.text = golds.ToString();
+        soulTxt.text = souls.ToString();
+        //itemImg.sprite = itemHold.instance.GetComponent<SpriteRenderer>().sprite;
+        panel.SetActive(true);
+    }
 
     public void GiveLootToPlayer()
     {
@@ -203,7 +224,7 @@ public class LootManager : MonoBehaviour
                 //GiveItem(obj as LootItem<NItem.ItemScriptableObject>);
                 isItem = true;
                 (lootOnGround[i] as LootItem<NItem.ItemScriptableObject>).ApplyToPlayer();
-                Invoke("InvokeEndFight", 0.25f);
+                Invoke("SetResultPanel", 0.25f);
                 //InvokeEndFight();
             }
             //lootOnGround.RemoveAt(i);
@@ -220,7 +241,7 @@ public class LootManager : MonoBehaviour
         Invoke("InvokeEndFight", 1.75f);
     }
 
-    void InvokeEndFight()
+    public void InvokeEndFight()
     {
         CombatManager.combatManager.EndFightAfterLoot();
     }

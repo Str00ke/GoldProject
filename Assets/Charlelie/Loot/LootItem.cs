@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class LootItem<T>
 {
-    int amount;
+    public int amount;
     public Object obj;
     public GameObject instance;
     public bool isAtGround = false;

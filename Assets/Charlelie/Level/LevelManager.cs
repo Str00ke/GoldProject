@@ -63,7 +63,7 @@ public class LevelManager : MonoBehaviour
 {
     public Level level;
     public string levelName;
-    public GameObject combatPrefab, shop, obliterate, levelFinishedTxt, losePanel;
+    public GameObject combatPrefab, shop, obliterate, levelFinishedTxt, losePanel, pauseButton;
     GameObject combatRef;
     MapManager mapManager;
     public bool fightFMiniBoss, fightSMiniBoss = false;
@@ -121,6 +121,7 @@ public class LevelManager : MonoBehaviour
         FindObjectOfType<MapManager>().UpdateBtn();
         FindObjectOfType<MapManager>().OnFinishRoom();
         obliterate.SetActive(false);
+        pauseButton.SetActive(true);
     }
 
     public void LoseFight()
@@ -172,6 +173,7 @@ public class LevelManager : MonoBehaviour
             FindObjectOfType<MapManager>().ShowMap();
             FindObjectOfType<MapManager>().UpdateBtn();
             obliterate.SetActive(true);
+            pauseButton.SetActive(false);
         }
     }
 

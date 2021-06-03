@@ -163,7 +163,7 @@ public class MapManager : MonoBehaviour
 
     public void UpdateBtn()
     {
-        mapBtn.SetActive(!mapBtn.activeSelf);
+        //mapBtn.SetActive(!mapBtn.activeSelf);
     }
 
     public void InitPlayerPoint()
