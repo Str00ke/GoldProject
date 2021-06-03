@@ -73,10 +73,11 @@ public class LootManager : MonoBehaviour
         LootItem<SoulGO> soul = GetLoot<SoulGO>(PlayerPoint._playerPoint.onRoom, pos);
         golds = gold.amount;
         souls = soul.amount;
-        /*gold.InstantiateObject(pos);
+        Debug.Log(golds);
+        gold.InstantiateObject(pos);
         soul.InstantiateObject(pos);
         lootOnGround.Add(gold);
-        lootOnGround.Add(soul);*/
+        lootOnGround.Add(soul);
 
         /*StartCoroutine(ItemFall(gold.instance, (isDone) =>
         {
@@ -204,23 +205,26 @@ public class LootManager : MonoBehaviour
     public void GiveLootToPlayer()
     {
         bool isItem = false;
-        Debug.Log(lootOnGround.Count);
+        //Debug.Log(lootOnGround.Count);
         for (int i = 0; i < lootOnGround.Count; ++i)
         {
             Debug.Log("Loot: " + lootOnGround.Count);
             if (lootOnGround[i] as LootItem<GoldPrefab> != null)
             {
+                Debug.Log("Loot: Gold");
                 //StartCoroutine(MoveGoldToPlayer((obj as LootItem<GoldPrefab>).instance, (obj as LootItem<GoldPrefab>)));
+                Debug.Log("amount: " + (lootOnGround[i] as LootItem<GoldPrefab>).amount);
                 (lootOnGround[i] as LootItem<GoldPrefab>).ApplyToPlayer();                  
             }
             else if (lootOnGround[i] as LootItem<SoulGO> != null)
             {
+                Debug.Log("Loot: Soul");
                 //StartCoroutine(MoveSoulToCounter((obj as LootItem<SoulGO>).instance, (obj as LootItem<SoulGO>)));
-                Debug.Log((lootOnGround[i] as LootItem<SoulGO>).instance);
                 (lootOnGround[i] as LootItem<SoulGO>).ApplyToPlayer();
             }
             else if (lootOnGround[i] as LootItem<NItem.ItemScriptableObject> != null)
             {
+                Debug.Log("IsItem");
                 //GiveItem(obj as LootItem<NItem.ItemScriptableObject>);
                 isItem = true;
                 (lootOnGround[i] as LootItem<NItem.ItemScriptableObject>).ApplyToPlayer();

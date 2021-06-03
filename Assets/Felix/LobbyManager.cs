@@ -183,4 +183,10 @@ public class LobbyManager : MonoBehaviour
         SwitchLobbyUI();
         
     }
+
+    public void AddScoreToLeaderboard()
+    {
+        //int fVal = LevelData.GetSouls() + Inventory.inventory.souls;
+        PlayGamesController.PostToLeaderboard(Inventory.inventory.souls);
+    }
 }

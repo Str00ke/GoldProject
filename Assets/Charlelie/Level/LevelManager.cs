@@ -102,7 +102,7 @@ public class LevelManager : MonoBehaviour
         shop.SetActive(false);
         obliterate.SetActive(false);
         EnnemyManager._enemyManager.SetRoomsDiff(mapManager.testMax);
-        
+        LevelData.EraseData();
     }
 
 
@@ -217,5 +217,6 @@ public class LevelManager : MonoBehaviour
         {
             Inventory.inventory.AddItem(so);
         }
+        //LobbyManager.lobbyManager.AddScoreToLeaderboard();
     }
 }
