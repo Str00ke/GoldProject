@@ -13,14 +13,19 @@ MonoBehaviour:
   m_Name: Girafffe(boss)
   m_EditorClassIdentifier: 
   enemyName: Giraffe boss
-  maxHealth: 650
+  maxHealth: 250
   enemyType: 1
-  damageRange: {x: 0, y: 0}
-  dodge: 0
-  critChance: 0
-  critDamage: 0
-  initiative: 0
-  armor: 0
-  element: 0
-  enemyAbilities: []
-  enemySpecialsAbilities: []
+  damageRange: {x: 14, y: 20}
+  dodge: 0.05
+  critChance: 0.1
+  critDamage: 1
+  initiative: 8
+  armor: 7
+  element: 1
+  enemyAbilities:
+  - {fileID: 11400000, guid: 339b3b47eb400d24e90347ae579ebbf6, type: 2}
+  - {fileID: 11400000, guid: 3aa29f96a43107e48a69b2579056750f, type: 2}
+  - {fileID: 11400000, guid: f0c37bc5ce7359f4a82efb16e0badc74, type: 2}
+  enemySpecialsAbilities:
+  - {fileID: 11400000, guid: 02961977e52a2704bb2f4a6314df180f, type: 2}
+  - {fileID: 11400000, guid: 084393e7d21f5b440a686b49b84dc8bf, type: 2}

@@ -94,6 +94,7 @@ public class Status
             {
                 case StatusTypes.ARMORBONUS:
                     diffModif = bonusmalus;
+                    diffModif = Mathf.Round(diffModif);
                     statusTarget.armorBonus += diffModif;
                     statusTarget.armor += diffModif;
                     buffOrDebuff = BuffOrDebuff.BUFF;
@@ -108,6 +109,7 @@ public class Status
                     break;
                 case StatusTypes.HEALBONUS:
                     diffModif = bonusmalus;
+                    diffModif = Mathf.Round(diffModif);
                     statusTarget.healBonus += (int)diffModif;
                     statusTarget.healReceivedModif += diffModif;
                     buffOrDebuff = BuffOrDebuff.BUFF;
@@ -126,38 +128,44 @@ public class Status
                     break;
                 case StatusTypes.DODGEBONUSFLAT:
                     diffModif = bonusmalus;
-                    statusTarget.dodgeBonus += (int)diffModif;
+                    diffModif = Mathf.Round(diffModif);
+                    statusTarget.dodgeBonus += Mathf.Round(diffModif);
                     statusTarget.dodge += diffModif;
                     buffOrDebuff = BuffOrDebuff.BUFF;
                     break;
                 case StatusTypes.DODGEMALUS:
                     diffModif = bonusmalus;
-                    statusTarget.dodgeBonus -= (int)diffModif;
+                    diffModif = Mathf.Round(diffModif);
+                    statusTarget.dodgeBonus -= diffModif;
                     statusTarget.dodge -= diffModif;
                     buffOrDebuff = BuffOrDebuff.DEBUFF;
                     break;
                 case StatusTypes.CRITDAMAGEBONUS:
                     diffModif = bonusmalus;
-                    statusTarget.critDamageBonus += (int)diffModif;
+                    diffModif = Mathf.Round(diffModif);
+                    statusTarget.critDamageBonus += Mathf.Round(diffModif * 100);
                     statusTarget.critDamage += diffModif;
                     buffOrDebuff = BuffOrDebuff.BUFF;
                     break;
                 case StatusTypes.CRITRATEBONUS:
                     diffModif = bonusmalus;
-                    statusTarget.critChanceBonus += (int)diffModif;
+                    diffModif = Mathf.Round(diffModif);
+                    statusTarget.critChanceBonus += Mathf.Round(diffModif * 100);
                     statusTarget.critChance += diffModif;
                     buffOrDebuff = BuffOrDebuff.BUFF;
                     break;
                 case StatusTypes.DAMAGEBONUS:
                     diffModif = bonusmalus;
-                    statusTarget.damageBonus += (int)diffModif;
+                    diffModif = Mathf.Round(diffModif);
+                    statusTarget.damageBonus += Mathf.Round(diffModif);
                     statusTarget.damageRange.x += diffModif;
                     statusTarget.damageRange.y += diffModif;
                     buffOrDebuff = BuffOrDebuff.BUFF;
                     break;
                 case StatusTypes.DAMAGEMALUS:
                     diffModif = bonusmalus;
-                    statusTarget.damageBonus += (int)diffModif;
+                    diffModif = Mathf.Round(diffModif);
+                    statusTarget.damageBonus -= Mathf.Round(diffModif);
                     statusTarget.damageRange.x -= diffModif;
                     statusTarget.damageRange.y -= diffModif;
                     buffOrDebuff = BuffOrDebuff.DEBUFF;
@@ -166,6 +174,8 @@ public class Status
                     diffModif = bonusmalus;
                     statusTarget.healthDebuff += (int)diffModif;
                     statusTarget.maxHealth -= diffModif;
+                    if (statusTarget.maxHealth < statusTarget.health)
+                        statusTarget.health = statusTarget.maxHealth;
                     buffOrDebuff = BuffOrDebuff.DEBUFF;
                     break;
                 case StatusTypes.DOT:
@@ -174,7 +184,7 @@ public class Status
                     break;
                 case StatusTypes.BLEEDING:
                     diffModif = bonusmalus;
-                    statusTarget.dotDamage -= (int)diffModif;
+                    statusTarget.dotDamage += (int)diffModif;
                     statusElement = StatusElement.BASE;
                     dmg = diffModif;
                     buffOrDebuff = BuffOrDebuff.DEBUFF;

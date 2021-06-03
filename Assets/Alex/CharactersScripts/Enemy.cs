@@ -12,7 +12,6 @@ public class Enemy : Characters
     void Awake()
     {
         stateIcons = UIManager.uiManager.stateIcons;
-        stateIcons = UIManager.uiManager.stateIcons;
         CombatManager.combatManager.enemies.Add(this);
         charType = CharType.ENEMY; 
         anim = this.GetComponent<Animator>();

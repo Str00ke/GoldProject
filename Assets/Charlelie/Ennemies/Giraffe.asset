@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Giraffe
   m_EditorClassIdentifier: 
   enemyName: Giraffe
-  maxHealth: 150
+  maxHealth: 50
   enemyType: 1
-  damageRange: {x: 17, y: 23}
+  damageRange: {x: 8, y: 14}
   dodge: 0.05
   critChance: 0.05
   critDamage: 0.75
   initiative: 3
-  armor: 10
-  element: 0
+  armor: 4
+  element: 1
   enemyAbilities:
   - {fileID: 11400000, guid: 339b3b47eb400d24e90347ae579ebbf6, type: 2}
   - {fileID: 11400000, guid: 3aa29f96a43107e48a69b2579056750f, type: 2}

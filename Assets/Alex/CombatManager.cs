@@ -137,7 +137,7 @@ public class CombatManager : MonoBehaviour
             fightersList[currCharAttacking].hasPlayed = true;
             fightersList[currCharAttacking].cursorNotPlayedYet.SetActive(false);
         }
-        yield return new WaitForSeconds(fightersList[currCharAttacking].durationDecreaseHealth+0.1f);
+        yield return new WaitForSeconds(fightersList[currCharAttacking].durationDecreaseHealth * 2);
         if (currCharAttacking >= 0)
         {
             if(fightersList[currCharAttacking].cursorPlaying)

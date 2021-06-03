@@ -171,19 +171,19 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         switch (currentElement)
         {
             case CurrentElement.BASE:
-                stateIcon.sprite = UIManager.uiManager.stateIcons[4]; ;
+                stateIcon.sprite = UIManager.uiManager.stateIcons[0]; ;
                 break;
             case CurrentElement.ICE:
-                stateIcon.sprite = UIManager.uiManager.stateIcons[0];
-                break;
-            case CurrentElement.ASH:
                 stateIcon.sprite = UIManager.uiManager.stateIcons[1];
                 break;
-            case CurrentElement.MUD:
+            case CurrentElement.ASH:
                 stateIcon.sprite = UIManager.uiManager.stateIcons[2];
                 break;
-            case CurrentElement.PSY:
+            case CurrentElement.MUD:
                 stateIcon.sprite = UIManager.uiManager.stateIcons[3];
+                break;
+            case CurrentElement.PSY:
+                stateIcon.sprite = UIManager.uiManager.stateIcons[4];
                 break;
         }
     }

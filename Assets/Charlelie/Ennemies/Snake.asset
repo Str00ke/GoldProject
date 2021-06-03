@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: Snake
   m_EditorClassIdentifier: 
   enemyName: Snake
-  maxHealth: 100
+  maxHealth: 50
   enemyType: 0
-  damageRange: {x: 27, y: 33}
+  damageRange: {x: 10, y: 15}
   dodge: 0.1
   critChance: 0.1
   critDamage: 1.25
   initiative: 10
-  armor: 5
+  armor: 3
   element: 0
   enemyAbilities:
   - {fileID: 11400000, guid: 339b3b47eb400d24e90347ae579ebbf6, type: 2}
   - {fileID: 11400000, guid: 3aa29f96a43107e48a69b2579056750f, type: 2}
   enemySpecialsAbilities:
-  - {fileID: 11400000, guid: 02961977e52a2704bb2f4a6314df180f, type: 2}
+  - {fileID: 11400000, guid: ee2b8cc13192047429db8f42ba4f5b5c, type: 2}

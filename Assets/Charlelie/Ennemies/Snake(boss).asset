@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Snake(boss)
   m_EditorClassIdentifier: 
   enemyName: Snake Boss
-  maxHealth: 500
+  maxHealth: 250
   enemyType: 0
-  damageRange: {x: 28, y: 34}
+  damageRange: {x: 16, y: 22}
   dodge: 0.1
   critChance: 0.15
   critDamage: 1.25
   initiative: 10
-  armor: 10
-  element: 0
+  armor: 6
+  element: 1
   enemyAbilities:
   - {fileID: 11400000, guid: 339b3b47eb400d24e90347ae579ebbf6, type: 2}
   - {fileID: 11400000, guid: 3aa29f96a43107e48a69b2579056750f, type: 2}
