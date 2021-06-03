@@ -222,11 +222,8 @@ public class Ally : Characters
         yield return new WaitForSeconds(duration);
         if (health <= 0)
         {
-            CombatManager.combatManager.RemoveAlly(this);
-            isDead = true;
-            isTargetable = false;
             health = 0;
-            healthBar.gameObject.SetActive(false);
+            Death();
         }
         yield return null;
     }
@@ -267,14 +264,15 @@ public class Ally : Characters
     }
     public void Death()
     {
+        CombatManager.combatManager.RemoveAlly(this);
         isMelee = false;
         isDead = true;
         isTargetable = false;
         canBeSelected = false;
         health = 0;
-        healthBar.gameObject.SetActive(false);
-        GetComponentInChildren<DamagedBarScript>().gameObject.SetActive(false);
-        gameObject.SetActive(false);
+        GetComponentInChildren<Canvas>().gameObject.SetActive(false);
+        //GetComponentInChildren<DamagedBarScript>().gameObject.SetActive(false);
+       // gameObject.SetActive(false);
         body.sprite = head.sprite;
         head.sprite = null;
         Character c = CharacterManager.characterManager.AskForCharacter(teamPosition);

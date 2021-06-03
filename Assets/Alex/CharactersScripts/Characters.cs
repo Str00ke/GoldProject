@@ -73,7 +73,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public Vector2 debuffsInitialPos = new Vector2(-40, -10.5f);
     public List<GameObject> prefabsIconStatus;
     public int statusPerLine = 0;
-    public int statusPerLineMax = 6;
+    public int statusPerLineMax = 5;
     public int statusLines = 0; 
     public bool stunned;
     public bool confusion;
@@ -344,7 +344,19 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             case CurrentElement.ASH:
                 if (ndElement == CurrentElement.ICE)
                 {
-                    Status s = new Status(this, 0, 2, Status.StatusTypes.STUN);
+                    Status s = null;
+                    foreach (Status s1 in statusList)
+                    {
+                        if (s1.statusType == Status.StatusTypes.DEFENCE)
+                            s1.RevertStatus();
+                        else if (s1.statusType == Status.StatusTypes.STUN)
+                        {
+                            s = s1;
+                            s1.turnsActive = 1;
+                        }
+                    }
+                    if (s == null)
+                        s = new Status(this, 0, 1, Status.StatusTypes.STUN);
                     currentElement = CurrentElement.BASE;
                 }
                 else if (ndElement == CurrentElement.MUD)

@@ -30,7 +30,6 @@ public class StatusManager : MonoBehaviour
     {
         for (int i = c.statusList.Count - 1; i >= 0; i--)
         {
-            Status s = StatusList[i];
             if (c == c.statusList[i].statusTarget)
             {
                 c.statusList[i].turnsActive--;
@@ -53,7 +52,6 @@ public class StatusManager : MonoBehaviour
     {
         GameObject temp = Instantiate(prefabIconStatus);
         temp.name = "Status" + status.statusId;
-        temp.transform.localPosition = new Vector3(1, 1, 1);
         temp.transform.SetParent(c.canvasChar.transform);
         temp.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
 
@@ -82,27 +80,39 @@ public class StatusManager : MonoBehaviour
     }
     public void DeleteDisplayStatus(Characters c, Status status)
     {
+        int indDestroyed = 0;
+        Vector3 posDestroyed = Vector3.zero;
         for (int i = c.prefabsIconStatus.Count - 1; i >= 0; i--)
         {
             if ("Status" + status.statusId == c.prefabsIconStatus[i].name)
             {
                 GameObject temp = c.prefabsIconStatus[i];
+                posDestroyed = temp.transform.position;
                 c.prefabsIconStatus.Remove(temp);
                 Destroy(temp);
+                indDestroyed = i;
             }
         }
 
-        c.statusLines = 0;
-        c.statusPerLine = 0;
-        for (int i = c.prefabsIconStatus.Count - 1; i >= 0; i--)
+        for(int i = indDestroyed; i < c.prefabsIconStatus.Count; i++)
         {
-            c.prefabsIconStatus[i].transform.position = c.transform.position + new Vector3(c.debuffsInitialPos.x + (statusOffset * (i - c.statusPerLineMax * c.statusLines)), c.debuffsInitialPos.y - (statusOffset * (i/c.statusPerLineMax)));
+            Vector3 temp = c.prefabsIconStatus[i].transform.position;
+            c.prefabsIconStatus[i].transform.position = posDestroyed;
+            posDestroyed = temp;
+        }
+        c.statusPerLine--;
+        c.statusLines = c.statusPerLine < 0 ? c.statusLines-1 : c.statusLines;
+        /*c.statusLines = 0;
+        c.statusPerLine = 0;
+        foreach (GameObject g in c.prefabsIconStatus)
+        {
+            g.transform.position = c.transform.position + new Vector3(c.debuffsInitialPos.x + (statusOffset * (c.statusPerLine - c.statusPerLineMax * c.statusLines)), c.debuffsInitialPos.y - (statusOffset * (c.statusPerLine / c.statusPerLineMax)));
+            c.statusPerLine++;
             if (c.statusPerLine >= c.statusPerLineMax)
             {
                 c.statusLines++;
                 c.statusPerLine = 0;
             }
-            c.statusPerLine++;
-        }
+        }*/
     }
 }

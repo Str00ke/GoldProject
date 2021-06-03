@@ -18,8 +18,7 @@ public class Ability : ScriptableObject
     public enum ObjectType 
     {
         CRISTAL,
-        WEAPON,
-        COMBO
+        WEAPON
     }
     public ObjectType objectType;
     public enum WeaponAbilityType
@@ -28,7 +27,7 @@ public class Ability : ScriptableObject
         BASE,
         WAVE,
         PIERCE,
-        DEFENSE
+        DEFENCE
     }
     public WeaponAbilityType weaponAbilityType;
 
@@ -37,8 +36,7 @@ public class Ability : ScriptableObject
     {
         NONE,
         HEAL,
-        ATTACK,
-        OTHERS
+        ATTACK
     }
     public CristalAbilityType crType;
 
@@ -55,15 +53,10 @@ public class Ability : ScriptableObject
         NONE,
         NORMAL,
         DOT,
-        MARK
+        MARK,
+        DESTRUCTION
     }
     public CristalAttackType crAttackType;
-    public enum CristalSpecialType
-    {
-        DESTRUCTION,
-        COPY
-    }
-    public CristalSpecialType crSpecialType;
     
     public enum TargetType
     {

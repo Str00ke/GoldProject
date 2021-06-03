@@ -20,12 +20,11 @@ MonoBehaviour:
   destruModif: 0
   dotMult: 0
   markMult: 0
-  turnDuration: 0
+  turnDuration: 2
   objectType: 1
   weaponAbilityType: 4
   crType: 0
   crHealType: 0
   crAttackType: 0
-  crSpecialType: 0
   targetType: 2
   elementType: 0

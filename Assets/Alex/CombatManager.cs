@@ -190,10 +190,10 @@ public class CombatManager : MonoBehaviour
     {
         Ally inDefence = null;
         int allyAttacked = Random.Range(0, allies.Count);
-        while (allies[allyAttacked].isDead) 
+        /*while (allies[allyAttacked].isDead) 
         {
             allyAttacked = Random.Range(0, allies.Count);
-        }
+        }*/
         foreach (Ally a in allies)
         {
             if (a.inDefenceMode && !a.isDead)
@@ -204,108 +204,131 @@ public class CombatManager : MonoBehaviour
             }
         }
         if(allies.Count > 0)
-            EnemyAbilityAttack(allies[allyAttacked], inDefence);
+        {
+            List<Characters> targets;
+            Ability ab = EnemyAbilityAttack(allies[allyAttacked], out targets);
+            Debug.Log(targets + "" + ab);
+        }
         yield return new WaitForSeconds(fightersList[currCharAttacking].durationDecreaseHealth + 0.1f);
         NextCharAttack();
-        yield return null;
     }
     //---------------Referenced in EnemyAttack()-------------
-    public void EnemyAbilityAttack(Ally allyAtt, Ally allyDef)
+    public Ability EnemyAbilityAttack(Ally allyAtt, out List<Characters> enemyTargets)
     {
-        if (allies.Count > 0)
+        Ability abilityUsed;
+        List<Characters> targets = new List<Characters>();
+        if (fightersList[currCharAttacking].abilitiesCristal.Length > 0)
         {
-            Ability abilityUsed;
-            //ENEMY ATTACK ANIMATION
-            if (fightersList[currCharAttacking].abilitiesCristal.Length > 0)
+            int rand = Random.Range(0, 100);
+            if(rand < 20)
             {
-                int rand = Random.Range(0, 100);
-                if(rand < 20)
-                {
-                    abilityUsed = fightersList[currCharAttacking].abilities[Random.Range(0, fightersList[currCharAttacking].abilitiesCristal.Length)];
-                }
-                else
-                {
-                    abilityUsed = fightersList[currCharAttacking].abilities[Random.Range(0, fightersList[currCharAttacking].abilities.Length)];
-                }
+                abilityUsed = fightersList[currCharAttacking].abilities[Random.Range(0, fightersList[currCharAttacking].abilitiesCristal.Length)];
             }
             else
             {
                 abilityUsed = fightersList[currCharAttacking].abilities[Random.Range(0, fightersList[currCharAttacking].abilities.Length)];
             }
-            if(abilityUsed.objectType == Ability.ObjectType.WEAPON)
+        }
+        else
+        {
+            abilityUsed = fightersList[currCharAttacking].abilities[Random.Range(0, fightersList[currCharAttacking].abilities.Length)];
+        }
+        if(abilityUsed.objectType == Ability.ObjectType.WEAPON)
+        {
+            switch (abilityUsed.weaponAbilityType)
             {
-                switch (abilityUsed.weaponAbilityType)
-                {
-                    case Ability.WeaponAbilityType.BASE:
-                        if (allyDef)
-                            fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
-                        else
-                            fightersList[currCharAttacking].LaunchAttack(allyAtt, abilityUsed);
-                        break;
-                    case Ability.WeaponAbilityType.PIERCE:
-                        if (allyDef)
-                        {
-                            fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
-                        }
-                        else
-                        {
-                            allies[0].isMelee = true;
-                            fightersList[currCharAttacking].LaunchAttack(allies[0], abilityUsed);
-                            if (allies.Count > 1 && allies[1].teamPosition == allies[0].teamPosition + 1)
-                            {
-                                fightersList[currCharAttacking].LaunchAttack(allies[1], abilityUsed);
-                            }
-                        }
-                        break;
-                    case Ability.WeaponAbilityType.WAVE:
-                        for (int i = allies.Count - 1; i >= 0; i--)
-                        {
-                            fightersList[currCharAttacking].LaunchAttack(allies[i], abilityUsed);
-                        }
-                        break;
-                }
-            }else if (abilityUsed.objectType == Ability.ObjectType.CRISTAL)
-            {
-                if(abilityUsed.crType == Ability.CristalAbilityType.ATTACK)
-                {
-                    if(abilityUsed.crAttackType == Ability.CristalAttackType.DOT)
+                case Ability.WeaponAbilityType.BASE:
+                    fightersList[currCharAttacking].LaunchAttack(allyAtt, abilityUsed);
+                    targets.Add(allyAtt);
+                    break;
+                case Ability.WeaponAbilityType.PIERCE:
+                    if (allyAtt.inDefenceMode)
                     {
-                        if (allyDef)
+                        fightersList[currCharAttacking].LaunchAttack(allyAtt, abilityUsed);
+                        targets.Add(allyAtt);
+                    }
+                    else
+                    {
+                        allies[0].isMelee = true;
+                        fightersList[currCharAttacking].LaunchAttack(allies[0], abilityUsed);
+                        targets.Add(allies[0]);
+                        if (allies.Count > 1 && allies[1].teamPosition == allies[0].teamPosition + 1)
                         {
-                            fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
-                            fightersList[currCharAttacking].PutDot(allyDef, abilityUsed);
-                        }
-                        else
-                        {
-                            fightersList[currCharAttacking].LaunchAttack(allyAtt, abilityUsed);
-                            fightersList[currCharAttacking].PutDot(allyAtt, abilityUsed);
+                            fightersList[currCharAttacking].LaunchAttack(allies[1], abilityUsed);
+                            targets.Add(allies[1]);
                         }
                     }
-                    else if(abilityUsed.crAttackType == Ability.CristalAttackType.NORMAL)
+                    break;
+                case Ability.WeaponAbilityType.WAVE:
+                    for (int i = allies.Count - 1; i >= 0; i--)
                     {
-                        if (allyDef)
+                        fightersList[currCharAttacking].LaunchAttack(allies[i], abilityUsed);
+                        targets.Add(allies[i]);
+                    }
+                    break;
+            }
+        }else if (abilityUsed.objectType == Ability.ObjectType.CRISTAL)
+        {
+            if(abilityUsed.crType == Ability.CristalAbilityType.ATTACK)
+            {
+                if(abilityUsed.crAttackType == Ability.CristalAttackType.DOT)
+                {
+                    fightersList[currCharAttacking].LaunchAttack(allyAtt, abilityUsed);
+                    fightersList[currCharAttacking].PutDot(allyAtt, abilityUsed);
+                    targets.Add(allyAtt);
+                    
+                }
+                else if(abilityUsed.crAttackType == Ability.CristalAttackType.NORMAL)
+                {
+                    if (allyAtt.inDefenceMode)
+                    {
+                        fightersList[currCharAttacking].LaunchAttack(allyAtt, abilityUsed);
+                        Status s = null;
+                        targets.Add(allyAtt);
+                        foreach (Status s1 in allyAtt.statusList)
                         {
-                            fightersList[currCharAttacking].LaunchAttack(allyDef, abilityUsed);
-                            Status s = new Status(allyDef, 0, 1, Status.StatusTypes.STUN);
-                            foreach(Status s1 in allyDef.statusList)
+                            if (s1.statusType == Status.StatusTypes.DEFENCE)
+                                s1.RevertStatus();
+                            else if (s1.statusType == Status.StatusTypes.STUN)
                             {
-                                if (s.statusType == Status.StatusTypes.DEFENCE)
-                                    s.RevertStatus();
+                                s = s1;
+                                s1.turnsActive = 1;
                             }
                         }
-                        else
-                        {
-                            fightersList[currCharAttacking].LaunchAttack(allyAtt, abilityUsed);
-                            Status s = new Status(allyAtt, 0, 1, Status.StatusTypes.STUN);
-                        }
+                        if(s == null)
+                            s = new Status(allyAtt, 0, 1, Status.StatusTypes.STUN);
                     }
-                }
-                else if(abilityUsed.crType == Ability.CristalAbilityType.HEAL)
-                {
-                    fightersList[currCharAttacking].LaunchHeal(enemies[Random.Range(0, enemies.Count)], abilityUsed);
+                    else
+                    {
+                        fightersList[currCharAttacking].LaunchAttack(allyAtt, abilityUsed);
+                        Status s = null;
+                        foreach (Status s1 in allyAtt.statusList)
+                        {
+                            if (s1.statusType == Status.StatusTypes.DEFENCE)
+                                s1.RevertStatus();
+                            else if (s1.statusType == Status.StatusTypes.STUN)
+                            {
+                                s = s1;
+                                s1.turnsActive = 1;
+                            }
+                        }
+                        if (s == null)
+                            s = new Status(allyAtt, 0, 1, Status.StatusTypes.STUN);
+                        targets.Add(allyAtt);
+                    }
                 }
             }
+            else if(abilityUsed.crType == Ability.CristalAbilityType.HEAL)
+            {
+                Enemy randE = enemies[Random.Range(0, enemies.Count)];
+                fightersList[currCharAttacking].LaunchHeal(randE, abilityUsed);
+                targets.Add(randE);
+            }
         }
+        enemyTargets = targets;
+        return abilityUsed;
+        //ATTACK ANIM
+
     }
     public void TurnPassed()
     {

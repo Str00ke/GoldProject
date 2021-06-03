@@ -23,9 +23,8 @@ MonoBehaviour:
   turnDuration: 3
   objectType: 0
   weaponAbilityType: 0
-  crType: 3
+  crType: 2
   crHealType: 0
-  crAttackType: 0
-  crSpecialType: 0
+  crAttackType: 4
   targetType: 0
   elementType: 4
