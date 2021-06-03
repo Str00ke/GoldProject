@@ -278,7 +278,7 @@ public class Ally : Characters
         body.sprite = head.sprite;
         head.sprite = null;
         Character c = CharacterManager.characterManager.AskForCharacter(teamPosition);
-        c.RemoveItem((NItem.EPartType)3);
+        c.RemoveItem(NItem.EPartType.Gem);
         c.RemoveItem((NItem.EPartType)Random.Range(0,3));
         for(int i = 0; i < 3; i++)
         {
