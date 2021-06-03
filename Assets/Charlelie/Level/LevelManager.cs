@@ -209,6 +209,9 @@ public class LevelManager : MonoBehaviour
 
     public void UpdateDataValues()
     {
+        if (!bool.Parse(PlayerPrefs.GetString("FirstGame", "false")) && LevelData.GetGold() != 0)
+            PlayerPrefs.SetString("FirstGame", "true");
+
         Inventory.inventory.AddGolds(LevelData.GetGold());
         Inventory.inventory.AddSouls(LevelData.GetSouls());
         foreach (NItem.ItemScriptableObject so in LevelData.GetSO())
