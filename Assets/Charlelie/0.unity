@@ -1231,6 +1231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab1e490bbde6c044ea1956ec6f4367f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goldPlace: {x: -6, y: -2}
   animCurveGold:
     serializedVersion: 2
     m_Curve:
@@ -1244,17 +1245,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.060772695
     - serializedVersion: 3
-      time: 0.32678694
-      value: 0.09081307
-      inSlope: -0.46573138
-      outSlope: -0.46573138
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.9924983
-      value: 0.0009082258
+      time: 0.34658504
+      value: 0.048271507
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1277,17 +1269,17 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.5408521
-      value: 0.15392536
-      inSlope: 0.7025971
-      outSlope: 0.7025971
+      time: 0.6423141
+      value: 0.13117903
+      inSlope: 0.615939
+      outSlope: 0.615939
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.23201847
+      outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
-      value: 1
+      time: 1.0050659
+      value: 1.0006217
       inSlope: 2
       outSlope: 2
       tangentMode: 0
@@ -1332,43 +1324,34 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.3884735
-      inSlope: -0.3118079
-      outSlope: -0.3118079
+      value: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.7554192
+      outWeight: 0
     - serializedVersion: 3
-      time: 0.12396919
-      value: 0.32594365
-      inSlope: -0.7361285
-      outSlope: -0.7361285
+      time: 0.14482135
+      value: 0.364457
+      inSlope: 2.2632194
+      outSlope: 2.2632194
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.16664107
+      inWeight: 0.3083575
+      outWeight: 0.23728114
     - serializedVersion: 3
-      time: 0.7684573
-      value: -0.4229758
-      inSlope: -1.3217771
-      outSlope: -1.3217771
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.20869146
-    - serializedVersion: 3
-      time: 0.9757389
-      value: -0.51799965
-      inSlope: -0.14302573
-      outSlope: -0.14302573
+      time: 0.36373013
+      value: 0.39175785
+      inSlope: -1.2233118
+      outSlope: -1.2233118
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.9998376
-      value: -0.52289796
+      time: 1.0002406
+      value: -1.5541601
       inSlope: -1.9828489
       outSlope: -1.9828489
       tangentMode: 0
@@ -2198,10 +2181,6 @@ PrefabInstance:
     - target: {fileID: 2944601760752728138, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
-      propertyPath: easyDungeon.part1.maxEnemiesInRoom
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6246008579936257100, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
       propertyPath: m_Name

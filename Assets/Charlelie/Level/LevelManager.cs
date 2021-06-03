@@ -40,7 +40,8 @@ public static class LevelData
 
     public static void AddGold(int value)
     {
-        _gold += value;
+        _gold += value * LootManager.lootManager.goldValue;
+        Debug.Log("Gold: " + _gold);
     }
 
     public static void AddSouls(int value)
@@ -65,7 +66,6 @@ public class LevelManager : MonoBehaviour
     public GameObject combatPrefab, shop, obliterate, levelFinishedTxt, losePanel;
     GameObject combatRef;
     MapManager mapManager;
-    public Text testTxt;
     public bool fightFMiniBoss, fightSMiniBoss = false;
     static LevelManager _levelManager;
     [Header("Rate for fighting room")]
@@ -86,46 +86,29 @@ public class LevelManager : MonoBehaviour
     }
 
 
-    // Start is called before the first frame update
     void Start()
     {
         levelName = FindObjectOfType<CGameManager>().GetLevelName();
         mapManager = MapManager.GetInstance();
         LoadLevel();
         mapManager.level = level;
-        testTxt.text = "Start Map Init";
         mapManager.Init();
-        testTxt.text = "Start Map Generation";
         mapManager.GenerateMap();
-        //mapManager.InitPlayerPoint();
-        testTxt.text = "Start Init PlayerPoint";
         FindObjectOfType<PlayerPoint>().Init();
-        testTxt.text = "Start Link Rooms";
         mapManager.MapLinkRooms();
-        testTxt.text = "Start Randomize Shop";
-        mapManager.RandomizeShop();     //Something wrong here
-        testTxt.text = "Start Check StartToEnd";
+        mapManager.RandomizeShop();
         mapManager.StartToEnd(PlayerPoint._playerPoint.startRoom, 0);
-        testTxt.text = "Start StartRoom()";
         StartRoom();
-        testTxt.text = "Disable Shop";
         shop.SetActive(false);
-        testTxt.text = "Disable Obliterate";
         obliterate.SetActive(false);
         EnnemyManager._enemyManager.SetRoomsDiff(mapManager.testMax);
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
         
     }
+
 
     void LoadLevel()
     {
         level = SaveSystem.Load(levelName);
-        //testTxt.text = level.endRoom.pos.GetLength(0).ToString() + ", " + level.endRoom.pos.GetLength(1).ToString();
     }
 
     public void WinFight()
@@ -149,7 +132,6 @@ public class LevelManager : MonoBehaviour
     public void StartRoom()
     {
         MapRoom room = PlayerPoint._playerPoint.onRoom;
-        testTxt.text = (room.pos.GetLength(0) + "  " + room.pos.GetLength(1)).ToString();
         switch (room.roomType)
         {
             case RoomType.BASE:
@@ -170,8 +152,6 @@ public class LevelManager : MonoBehaviour
                 break;
 
         }
-
-        testTxt.text = "Function done";
     }
 
     void CreateFight()
@@ -208,11 +188,6 @@ public class LevelManager : MonoBehaviour
         shop.SetActive(false);
     }
 
-    void SpawnBoss()
-    {
-        
-    }
-    
 
     public void Obliterate()
     {
@@ -227,22 +202,15 @@ public class LevelManager : MonoBehaviour
 
     public void ReturnToLobby()
     {
+        UpdateDataValues();
         LobbyManager.lobbyManager.LoadScene("FScene");
     }
 
-    /*public void OnGetLoot(Object loot)
-    {
-        switch (loot)
-        {
-            case /*Gold:
-                Add
-        }
-    }*/
 
     public void UpdateDataValues()
     {
         Inventory.inventory.AddGolds(LevelData.GetGold());
-        //Inventory.inventory.AddSouls(LevelData.GetSouls());
+        Inventory.inventory.AddSouls(LevelData.GetSouls());
         foreach (NItem.ItemScriptableObject so in LevelData.GetSO())
         {
             Inventory.inventory.AddItem(so);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SoulGO : LootItem<SoulGO>
 {
-    public SoulGO(Object objType) : base(objType)
+    public SoulGO(Object objType, Vector2 _pos) : base(objType, _pos)
     {
     }
 }

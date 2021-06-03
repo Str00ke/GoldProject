@@ -6,13 +6,16 @@ using UnityEngine;
 public class LootItem<T>
 {
     int amount;
-    Object obj;
-    GameObject instance;
+    public Object obj;
+    public GameObject instance;
+    public bool isAtGround = false;
+    public Vector2 pos;
 
-    public LootItem(Object _obj)
+    public LootItem(Object _obj, Vector2 _pos)
     {
         obj = _obj;
         amount = 0;
+        pos = _pos;
     }
 
     public void SetAmount(EPart ePart)
@@ -61,40 +64,31 @@ public class LootItem<T>
         
     }
 
-    public void InstantiateObject()
+    public void InstantiateObject(Vector2 vec)
     {
+        Debug.Log(pos);
         Debug.Log(amount);      
         if (typeof(T) == typeof(NItem.ItemScriptableObject))
         {
             var itemSO = obj as NItem.ItemScriptableObject;
             Sprite[] spr = itemSO.itemSprites;
-            GameObject go = MonoBehaviour.Instantiate(LootManager.lootManager.itemPrefab);
+            GameObject go = MonoBehaviour.Instantiate(LootManager.lootManager.itemPrefab, pos, Quaternion.identity);
             go.GetComponent<SpriteRenderer>().sprite = itemSO.itemUiSprite;
             go.GetComponent<SOLoot>().so = itemSO;
+            instance = go;
         }
         else
-          instance = (GameObject)MonoBehaviour.Instantiate(obj);
+          instance = (GameObject)MonoBehaviour.Instantiate(obj, vec, Quaternion.identity);
     }
 
-    public void MoveTowards(Vector2 vec)
-    {
-        Debug.Log("Start moving");
-        //MonoBehaviour.StartCoroutine(MoveC(new Vector2(0, 0), new Vector2(100, 100), 5.0f);
-    }
 
     public void ApplyToPlayer()
     {
-        float timer = 2500;
-        /*while(timer > 0)
-        {
-            timer -= Time.deltaTime;
-            Debug.Log(timer);
-        }*/
-
+        //Debug.Log("Apply");
         if (typeof(T) == typeof(GoldPrefab)) LevelData.AddGold(amount);
         else if (typeof(T) == typeof(SoulGO)) LevelData.AddSouls(amount);
         else if (typeof(T) == typeof(NItem.ItemScriptableObject)) LevelData.AddSoToList(obj as NItem.ItemScriptableObject);
-        MonoBehaviour.Destroy(instance, 10.0f);
+        MonoBehaviour.Destroy(instance, 0.5f);
     }   
 
     
