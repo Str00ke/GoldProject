@@ -20,6 +20,9 @@ public class StepScriptTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     // Start is called before the first frame update
     void Awake()
     {
+        parentCanvas.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
+        parentCanvas.GetComponent<Canvas>().worldCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
+        parentCanvas.transform.SetParent(GameObject.Find("CombatSceneTuto").transform);
         transform.localScale = new Vector3(0, 0, 0);
         StartCoroutine(PopUp());
     }
@@ -97,5 +100,10 @@ public class StepScriptTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHand
             yield return new WaitForSeconds(hideTextDelay);
         }
         StartCoroutine(ShowText(text));
+    }
+
+    public void ChangePos(GameObject g)
+    {
+        transform.position = new Vector3(g.transform.position.x, g.transform.position.y + 1.5f, g.transform.position.z);
     }
 }
