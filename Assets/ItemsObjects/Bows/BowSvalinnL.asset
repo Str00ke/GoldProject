@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f1b7c176c2dab46b42dfb6a9ffe6bb, type: 3}
+  m_Name: BowSvalinnL
+  m_EditorClassIdentifier: 
+  itemName: Shield Bow
+  health: 0
+  armor: 29
+  attack: 12
+  dodge: 0
+  criticalChance: 0
+  crititalDamage: 0
+  itemPartType: 2
+  itemType: 0
+  itemRarity: 1
+  itemWeaponType: 2
+  itemUiSprite: {fileID: 21300000, guid: 246f0c2ed91a4894ca2e112c77571356, type: 3}
+  itemSprites:
+  - {fileID: 21300000, guid: 246f0c2ed91a4894ca2e112c77571356, type: 3}
+  - {fileID: 21300000, guid: 527f4ee117bcada439e81b84b048dda2, type: 3}

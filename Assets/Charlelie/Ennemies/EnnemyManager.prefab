@@ -1,0 +1,159 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6246008579936257100
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2944601760752728138}
+  - component: {fileID: 4482750780731345827}
+  m_Layer: 0
+  m_Name: EnnemyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2944601760752728138
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6246008579936257100}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.22389162, y: 0.026977744, z: 84.56976}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4482750780731345827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6246008579936257100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 512c3aced94d1d649baa1eaf5965bcb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  easyDungeon:
+    dungeonType: 0
+    firstMiniBoss: {fileID: 11400000, guid: ceee71f78bcde234d946781c3b5b3fc7, type: 2}
+    secondMiniBoss: {fileID: 11400000, guid: 51471bdfd113efd4eb331132836fd6f7, type: 2}
+    boss: {fileID: 11400000, guid: 417cd056e06114d4795de06ebd6eb13d, type: 2}
+    part1:
+      maxEnemiesInRoom: 1
+      ennemiesPool:
+      - {fileID: 11400000, guid: 551c83fc69adb7f4887043d20f75e0ce, type: 2}
+      - {fileID: 11400000, guid: ce014b8a19ca93c4fb95b601f2c890e6, type: 2}
+      maxHealthMultiplicator: 1
+      damageRangeMultiplicator: 1
+      dodgeMultiplicator: 1
+      critChanceMultiplicator: 1
+      critDamageMultiplicator: 1
+      initiativeMultiplicator: 1
+      armorMultiplicator: 1
+    part2:
+      maxEnemiesInRoom: 2
+      ennemiesPool:
+      - {fileID: 11400000, guid: 551c83fc69adb7f4887043d20f75e0ce, type: 2}
+      - {fileID: 11400000, guid: ce014b8a19ca93c4fb95b601f2c890e6, type: 2}
+      maxHealthMultiplicator: 2
+      damageRangeMultiplicator: 2
+      dodgeMultiplicator: 2
+      critChanceMultiplicator: 2
+      critDamageMultiplicator: 2
+      initiativeMultiplicator: 2
+      armorMultiplicator: 2
+    part3:
+      maxEnemiesInRoom: 3
+      ennemiesPool:
+      - {fileID: 11400000, guid: 551c83fc69adb7f4887043d20f75e0ce, type: 2}
+      - {fileID: 11400000, guid: ce014b8a19ca93c4fb95b601f2c890e6, type: 2}
+      maxHealthMultiplicator: 3
+      damageRangeMultiplicator: 3
+      dodgeMultiplicator: 3
+      critChanceMultiplicator: 3
+      critDamageMultiplicator: 3
+      initiativeMultiplicator: 3
+      armorMultiplicator: 3
+    background: {fileID: 0}
+  moyenDungeon:
+    dungeonType: 0
+    firstMiniBoss: {fileID: 0}
+    secondMiniBoss: {fileID: 0}
+    boss: {fileID: 0}
+    part1:
+      maxEnemiesInRoom: 0
+      ennemiesPool: []
+      maxHealthMultiplicator: 0
+      damageRangeMultiplicator: 0
+      dodgeMultiplicator: 0
+      critChanceMultiplicator: 0
+      critDamageMultiplicator: 0
+      initiativeMultiplicator: 0
+      armorMultiplicator: 0
+    part2:
+      maxEnemiesInRoom: 0
+      ennemiesPool: []
+      maxHealthMultiplicator: 0
+      damageRangeMultiplicator: 0
+      dodgeMultiplicator: 0
+      critChanceMultiplicator: 0
+      critDamageMultiplicator: 0
+      initiativeMultiplicator: 0
+      armorMultiplicator: 0
+    part3:
+      maxEnemiesInRoom: 0
+      ennemiesPool: []
+      maxHealthMultiplicator: 0
+      damageRangeMultiplicator: 0
+      dodgeMultiplicator: 0
+      critChanceMultiplicator: 0
+      critDamageMultiplicator: 0
+      initiativeMultiplicator: 0
+      armorMultiplicator: 0
+    background: {fileID: 0}
+  hardDungeon:
+    dungeonType: 0
+    firstMiniBoss: {fileID: 0}
+    secondMiniBoss: {fileID: 0}
+    boss: {fileID: 0}
+    part1:
+      maxEnemiesInRoom: 0
+      ennemiesPool: []
+      maxHealthMultiplicator: 0
+      damageRangeMultiplicator: 0
+      dodgeMultiplicator: 0
+      critChanceMultiplicator: 0
+      critDamageMultiplicator: 0
+      initiativeMultiplicator: 0
+      armorMultiplicator: 0
+    part2:
+      maxEnemiesInRoom: 0
+      ennemiesPool: []
+      maxHealthMultiplicator: 0
+      damageRangeMultiplicator: 0
+      dodgeMultiplicator: 0
+      critChanceMultiplicator: 0
+      critDamageMultiplicator: 0
+      initiativeMultiplicator: 0
+      armorMultiplicator: 0
+    part3:
+      maxEnemiesInRoom: 0
+      ennemiesPool: []
+      maxHealthMultiplicator: 0
+      damageRangeMultiplicator: 0
+      dodgeMultiplicator: 0
+      critChanceMultiplicator: 0
+      critDamageMultiplicator: 0
+      initiativeMultiplicator: 0
+      armorMultiplicator: 0
+    background: {fileID: 0}

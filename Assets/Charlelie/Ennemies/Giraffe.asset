@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 470ec357602151341a5515c24ca19ad1, type: 3}
+  m_Name: Giraffe
+  m_EditorClassIdentifier: 
+  enemyName: Giraffe
+  maxHealth: 150
+  enemyType: 1
+  damageRange: {x: 17, y: 23}
+  dodge: 0.05
+  critChance: 0.05
+  critDamage: 0.75
+  initiative: 3
+  armor: 10
+  element: 0
+  enemyAbilities:
+  - {fileID: 11400000, guid: 339b3b47eb400d24e90347ae579ebbf6, type: 2}
+  - {fileID: 11400000, guid: 3aa29f96a43107e48a69b2579056750f, type: 2}
+  enemySpecialsAbilities:
+  - {fileID: 11400000, guid: 02961977e52a2704bb2f4a6314df180f, type: 2}

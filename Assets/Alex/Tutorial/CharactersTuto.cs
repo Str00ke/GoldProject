@@ -1,0 +1,479 @@
+using System.Collections;
+
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+
+public class CharactersTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+{
+    public bool onPointerHold;
+    public GameObject healthBarOutline;
+    public GameObject canvasChar;
+    public Vector2 debuffsInitialPos = new Vector2(-40, -10.5f);
+    public Vector2 buffsInitialPos = new Vector2(40, -10.5f);
+    [Header("Labels")]
+    public GameObject cursorNotPlayedYet;
+    public GameObject cursorSelected;
+    public GameObject cursorPlaying;
+    public string charName;
+    public Image stateIcon;
+    public Sprite[] stateIcons;
+    [Header("Abilities")]
+    public Ability[] abilities = new Ability[2];
+    public Ability[] abilitiesCristal = new Ability[2];
+    public enum CharType
+    {
+        ENEMY,
+        ALLY
+    }
+    public CharType charType;
+
+    public enum CurrentElement
+    {
+        BASE,
+        ICE,
+        ASH,
+        MUD,
+        PSY
+    }
+    public CurrentElement currentElement;
+    public enum ItemElement
+    {
+        BASE,
+        ICE,
+        ASH,
+        MUD,
+        PSY
+    }
+    public ItemElement itemElement;
+    [Header("Stats")]
+    public float health;
+    public float maxHealth;
+    public Vector2 damageRange;
+    public float initiative;
+    [HideInInspector]
+    public float dodge;
+    public float dodgeValue;
+    public float critChance;
+    public float critDamage;
+    public float armor;
+    public float armorValue;
+    [Range(0.0f, 1.0f)]
+    public float precision = 1;
+    public Slider healthBar;
+
+    [Header("Modificators")]
+    public float speedSlider;
+    public float healReceivedModif = 1.0f;
+    public float bleedingDmg;
+    public float armorModif = 0.3f;
+    public float dodgeModif = 0.2f;
+
+    [Header("StatusVariables")]
+    public int statusPerLine = 0;
+    public int statusPerLineMax = 6;
+    public int statusLines = 0;
+    public List<StatusTuto1> statusList = new List<StatusTuto1>();
+    public List<GameObject> prefabsIconStatus;
+    public bool stunned;
+    public bool confusion;
+    public int turnsConfusionValue = 2;
+    public int turnsConfusion;
+    public float holdCharacValue;
+    public float holdCharac;
+
+    [Header("Status Attributes")]
+    public float armorBonus = 0;
+    public float precisionMalus = 0;
+    public float healBonus = 0;
+    public float dodgeBonus = 0;
+    public float critDamageBonus = 0;
+    public float critChanceBonus = 0;
+    public float damageBonus = 0;
+    public float healthDebuff = 0;
+    public int dotDamage = 0;
+    public int markDamage = 0;
+
+
+
+
+    [Header("CombatVariables")]
+    public GameObject floatingHealth;
+    public bool inDefenceMode = false;
+    public bool isTargetable;
+    public bool isMelee;
+    public bool isDead;
+    public bool hasPlayed;
+    public bool CanAttack;
+    public bool isSelected;
+    [HideInInspector]
+    public float durationDecreaseHealth; //animation time in seconds
+
+    [Header("Position")]
+    public int teamPosition;
+    public Vector2 posInitial;
+    public float offsetPos = 1.0f;
+    public float speedMove = 1.0f;
+    public float durationMove = 1.0f;
+
+
+    [Header("Animation")]
+    public Animator anim;
+
+
+    public void ChangePos()
+    {
+        UpdateMeleeState();
+        StartCoroutine(ChangePosCoroutine(durationMove));
+    }
+    public void UpdateMeleeState()
+    {
+        if (teamPosition >= 1)
+        {
+            isMelee = false;
+        }
+        else
+        {
+            isMelee = true;
+        }
+    }
+    public void InteractiveHoldToSelect()
+    {
+        if (holdCharac < holdCharacValue && onPointerHold)
+        {
+            transform.localScale = new Vector3(transform.localScale.x - Time.deltaTime / 5, transform.localScale.y - Time.deltaTime / 5, transform.localScale.z - Time.deltaTime / 5);
+        }
+        else if (holdCharac > holdCharacValue || !onPointerHold)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+    }
+    public void ChangeColor()
+    {
+        if (isSelected)
+        {
+            cursorSelected.SetActive(true);
+        }
+        else
+        {
+            cursorSelected.SetActive(false);
+        }
+        //Cursor playing display in NextCharAttack in CombatManager
+    }
+    public void UpdateStateIcon()
+    {
+        switch (currentElement)
+        {
+            case CurrentElement.BASE:
+                stateIcon.sprite = UITuto.uiTuto.stateIcons[4]; ;
+                break;
+            case CurrentElement.ICE:
+                stateIcon.sprite = UITuto.uiTuto.stateIcons[0];
+                break;
+            case CurrentElement.ASH:
+                stateIcon.sprite = UITuto.uiTuto.stateIcons[1];
+                break;
+            case CurrentElement.MUD:
+                stateIcon.sprite = UITuto.uiTuto.stateIcons[2];
+                break;
+            case CurrentElement.PSY:
+                stateIcon.sprite = UITuto.uiTuto.stateIcons[3];
+                break;
+        }
+    }
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        onPointerHold = true;
+    }
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        onPointerHold = false;
+    }
+    public void ChangeStats(string name, float maxHP, Vector2 dmgRange, int dodg, float critCh, float critDmg, int armr, int position)
+    {
+        charName = name;
+        maxHealth = maxHP;
+        damageRange = dmgRange;
+        dodge = dodg;
+        critChance = critCh;
+        critDamage = critDmg;
+        armor = armr;
+        teamPosition = position;
+    }
+    //---------------------------SIMPLE ATTACK FUNCTION----------------------------
+    public void LaunchAttack(CharactersTuto receiver, Ability ability)
+    {
+        Debug.Log(receiver.gameObject.name);
+        float dmg = Mathf.Round(Random.Range(damageRange.x, damageRange.y));
+        dmg *= (ability.multiplicator / 100);
+        if (Random.Range(0, 100) < receiver.dodge)
+        {
+            receiver.ShowFloatingHealth("Dodge", true);
+        }
+        else
+        {
+            //-CRITIC DAMAGE-
+            if (Random.Range(0.0f, 1.0f) < this.critChance)
+            {
+                FindObjectOfType<CameraScript>().CamShake(0.4f, 0.3f);
+                dmg += dmg * this.critDamage;
+            }
+            else
+            {
+                FindObjectOfType<CameraScript>().CamShake(0.2f, 0.05f);
+            }
+
+            //-ARMOR MODIF ON DAMAGE-
+            dmg -= receiver.armor;
+            dmg = dmg < 0 ? 0 : dmg;
+            //-ELEMENTAL REACTIONS-
+            receiver.TakeDamage(dmg, durationDecreaseHealth);
+            receiver.ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), ability.elementType.ToString()));
+        }
+    }
+    //--------------------------------HEAL FUNCTION------------------------------------------------
+    public void LaunchHeal(CharactersTuto receiver, Ability ability)
+    {
+        float healing = Mathf.Round(Random.Range(damageRange.x, damageRange.y));
+        healing *= (ability.multiplicator / 100);
+        healing *= healReceivedModif;
+        healing = Mathf.Round(healing);
+        receiver.ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), ability.elementType.ToString()));
+        receiver.TakeHealing(healing, durationDecreaseHealth);
+    }
+    public void LaunchBuff(CharactersTuto receiver, Ability ability)
+    {
+        switch (ability.elementType)
+        {
+            case Ability.ElementType.ASH:
+                StatusTuto1 s0 = new StatusTuto1(receiver, ability.bonusmalus, ability, StatusTuto1.StatusTypes.DAMAGEBONUS);
+                break;
+            case Ability.ElementType.ICE:
+
+                if (ability.crHealType == Ability.CristalHealType.BOOST)
+                {
+                    StatusTuto1 s = new StatusTuto1(receiver, ability.bonusmalus, ability, StatusTuto1.StatusTypes.CRITDAMAGEBONUS);
+                }
+                else if (ability.crHealType == Ability.CristalHealType.DRINK)
+                {
+                    StatusTuto1 s = new StatusTuto1(receiver, ability.bonusmalus, ability, StatusTuto1.StatusTypes.CRITRATEBONUS);
+                }
+                break;
+            case Ability.ElementType.MUD:
+                if (ability.crHealType == Ability.CristalHealType.BOOST)
+                {
+                    StatusTuto1 s = new StatusTuto1(receiver, ability.bonusmalus, ability, StatusTuto1.StatusTypes.ARMORBONUS);
+                }
+                else if (ability.crHealType == Ability.CristalHealType.DRINK)
+                {
+                    StatusTuto1 s = new StatusTuto1(receiver, ability.bonusmalus, ability, StatusTuto1.StatusTypes.DODGEBONUSFLAT);
+                }
+                break;
+            case Ability.ElementType.PSY:
+                if (ability.crHealType == Ability.CristalHealType.BOOST)
+                {
+                    StatusTuto1 s = new StatusTuto1(receiver, ability.bonusmalus, ability, StatusTuto1.StatusTypes.DODGEBONUSFLAT);
+                }
+                else if (ability.crHealType == Ability.CristalHealType.DRINK)
+                {
+                    StatusTuto1 s = new StatusTuto1(receiver, ability.bonusmalus, ability, StatusTuto1.StatusTypes.CRITDAMAGEBONUS);
+                }
+                break;
+        }
+    }
+    public void LaunchDestruction(CharactersTuto receiver, Ability ability)
+    {
+        switch (ability.elementType)
+        {
+            case Ability.ElementType.ASH:
+                StatusTuto1 s0 = new StatusTuto1(receiver, ability.destruModif, ability, StatusTuto1.StatusTypes.ARMORMALUS);
+                StatusTuto1 s00 = new StatusTuto1(receiver, ability.bonusmalus, ability, StatusTuto1.StatusTypes.DAMAGEMALUS);
+                break;
+            case Ability.ElementType.ICE:
+                StatusTuto1 s1 = new StatusTuto1(receiver, ability.destruModif, ability, StatusTuto1.StatusTypes.ARMORMALUS);
+                StatusTuto1 s01 = new StatusTuto1(receiver, ability.bonusmalus, ability, StatusTuto1.StatusTypes.DODGEMALUS);
+                break;
+            case Ability.ElementType.MUD:
+                StatusTuto1 s2 = new StatusTuto1(receiver, ability.destruModif, ability, StatusTuto1.StatusTypes.ARMORMALUS);
+                StatusTuto1 s02 = new StatusTuto1(receiver, ability.bonusmalus, ability, StatusTuto1.StatusTypes.HEALTHDEBUFF);
+                break;
+            case Ability.ElementType.PSY:
+                StatusTuto1 s3 = new StatusTuto1(receiver, ability.destruModif, ability, StatusTuto1.StatusTypes.ARMORMALUS);
+                StatusTuto1 s03 = new StatusTuto1(receiver, ability.bonusmalus, ability, StatusTuto1.StatusTypes.ARMORMALUS);
+                break;
+        }
+    }
+    public void PutDot(CharactersTuto receiver, Ability ability)
+    {
+        float dmg = Mathf.Round(Random.Range(damageRange.x, damageRange.y));
+        dmg *= (ability.dotMult / 100);
+        StatusTuto1 s = new StatusTuto1(receiver, this, dmg, ability, StatusTuto1.StatusTypes.DOT, dmg);
+        Debug.Log("Caster " + gameObject.name + "Receiver : " + s.statusTarget.gameObject.name + "Dot damage " + s.dmg + " Dot element " + s.statusElement.ToString());
+    }
+    public void PutMark(CharactersTuto receiver, Ability ability)
+    {
+        float dmg = Mathf.Round(Random.Range(damageRange.x, damageRange.y));
+        dmg *= (ability.markMult / 100);
+        StatusTuto1 s = new StatusTuto1(receiver, this, dmg, ability, StatusTuto1.StatusTypes.MARK, dmg);
+        Debug.Log("Caster " + gameObject.name + "Receiver : " + s.statusTarget.gameObject.name + "Mark damage " + s.dmg + " Mark element " + s.statusElement.ToString());
+    }
+    public void ElementReactions(CurrentElement ndElement)
+    {
+        switch (currentElement)
+        {
+            case CurrentElement.BASE:
+                currentElement = ndElement;
+                break;
+            case CurrentElement.ASH:
+                if (ndElement == CurrentElement.ICE)
+                {
+                    StatusTuto1 s = new StatusTuto1(this, 0, 2, StatusTuto1.StatusTypes.STUN);
+                    currentElement = CurrentElement.BASE;
+                }
+                else if (ndElement == CurrentElement.MUD)
+                {
+                    confusion = true;
+                    turnsConfusion = turnsConfusionValue;
+                    currentElement = CurrentElement.BASE;
+                }
+                else if (ndElement == CurrentElement.PSY)
+                {
+                    Debug.Log("Nothing happened..");
+                    currentElement = CurrentElement.BASE;
+                }
+                break;
+            case CurrentElement.ICE:
+                if (ndElement == CurrentElement.ASH)
+                {
+                    StatusTuto1 s = new StatusTuto1(this, 0.3f, 2, StatusTuto1.StatusTypes.ARMORMALUS);
+                    currentElement = CurrentElement.BASE;
+                }
+                else if (ndElement == CurrentElement.MUD)
+                {
+                    Debug.Log("Nothing happened..");
+                    currentElement = CurrentElement.BASE;
+                }
+                else if (ndElement == CurrentElement.PSY)
+                {
+                    StatusTuto1 s = new StatusTuto1(this, 10, 2, StatusTuto1.StatusTypes.ARMORBONUS);
+                    currentElement = CurrentElement.BASE;
+                }
+                break;
+            case CurrentElement.MUD:
+                if (ndElement == CurrentElement.ASH)
+                {
+                    StatusTuto1 s = new StatusTuto1(this, 0.5f, 2, StatusTuto1.StatusTypes.HEALBONUS);
+                    currentElement = CurrentElement.BASE;
+                }
+                else if (ndElement == CurrentElement.ICE)
+                {
+                    Debug.Log("Nothing happened..");
+                    currentElement = CurrentElement.BASE;
+                }
+                else if (ndElement == CurrentElement.PSY)
+                {
+                    StatusTuto1 s = new StatusTuto1(this, 5.0f, 3, StatusTuto1.StatusTypes.BLEEDING);
+                    Debug.Log("Put bleeding");
+                    s.statusElement = StatusTuto1.StatusElement.BASE;
+                    currentElement = CurrentElement.BASE;
+                }
+                break;
+            case CurrentElement.PSY:
+                if (ndElement == CurrentElement.ASH)
+                {
+                    currentElement = CurrentElement.BASE;
+                    Debug.Log("Nothing happened..");
+                }
+                else if (ndElement == CurrentElement.ICE)
+                {
+                    StatusTuto1 s = new StatusTuto1(this, 0.5f, 2, StatusTuto1.StatusTypes.PRECISIONMALUS);
+                    currentElement = CurrentElement.BASE;
+                }
+                else if (ndElement == CurrentElement.MUD)
+                {
+                    StatusTuto1 s = new StatusTuto1(this, 5.0f, 2, StatusTuto1.StatusTypes.DODGEBONUSFLAT);
+                    currentElement = CurrentElement.BASE;
+                }
+                break;
+        }
+        UpdateStateIcon();
+    }
+    public void TakeHealing(float value, float duration)
+    {
+        ShowFloatingHealth(Mathf.Round(value).ToString(), false);
+        StartCoroutine(TakeHealingCor(value, duration));
+    }
+    public virtual IEnumerator TakeHealingCor(float value, float duration)
+    {
+        yield return null;
+    }
+
+    public void TakeDamageDots(StatusTuto1.StatusElement stElem, float dmg)
+    {
+        TakeDamage(dmg, durationDecreaseHealth);
+        Debug.Log("Receiver : " + gameObject.name + "Dot damage " + dmg + " Dot element " + stElem.ToString());
+        ElementReactions((CurrentElement)stElem);
+    }
+    public void TakeDamageMark(StatusTuto1.StatusElement stElem, float dmg)
+    {
+        TakeDamage(dmg, durationDecreaseHealth);
+        Debug.Log("Receiver : " + gameObject.name + "Mark damage " + dmg + " Mark element " + stElem.ToString());
+        ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), stElem.ToString()));
+    }
+    public void ShowFloatingHealth(string value, bool red)
+    {
+        GameObject go = Instantiate(floatingHealth, transform.position, Quaternion.identity, transform);
+        if (red)
+        {
+            go.GetComponentInChildren<TextMesh>().color = Color.red;
+        }
+        else
+        {
+            go.GetComponentInChildren<TextMesh>().color = Color.green;
+        }
+        go.GetComponentInChildren<TextMesh>().text = "" + value;
+        go.GetComponentInChildren<FloatingHealthScript>().StartCoroutine(go.GetComponentInChildren<FloatingHealthScript>().AnimateFloatingTextCor(go.GetComponentInChildren<FloatingHealthScript>().destroyDelay));
+    }
+
+    public virtual void TakeDamage(float value, float duration)
+    {
+        StartCoroutine(TakeDamageCor(value, duration));
+    }
+    public virtual IEnumerator TakeDamageCor(float value, float duration)
+    {
+        yield return null;
+    }
+
+    IEnumerator ChangePosCoroutine(float duration)
+    {
+        Vector3 startPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        Vector3 endPos = new Vector3(posInitial.x - offsetPos * teamPosition, posInitial.y);
+        float elapsed = 0.0f;
+        float ratio = 0.0f;
+        while (elapsed < duration)
+        {
+            ratio = elapsed / duration;
+            this.transform.position = Vector3.Lerp(startPos, endPos, ratio);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+    }
+    public void IsTargetable()
+    {
+        if (isTargetable)
+            healthBarOutline.SetActive(true);
+        else
+            healthBarOutline.SetActive(false);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawCube(transform.position + (Vector3)buffsInitialPos, new Vector3(0.1f, 0.1f, 0.1f));
+        Gizmos.DrawCube(transform.position + (Vector3)debuffsInitialPos, new Vector3(0.1f, 0.1f, 0.1f));
+        Gizmos.DrawCube((Vector3)posInitial, new Vector3(0.1f, 0.1f, 0.1f));
+
+    }
+}
