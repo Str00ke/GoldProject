@@ -287,6 +287,6 @@ public class Ally : Characters
                 c.RemoveItem((NItem.EPartType)i);
             }
         }
-        Destroy(c.gameObject);
+        CharacterManager.characterManager.RemoveCharacter(c);
     }
 }
