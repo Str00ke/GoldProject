@@ -204,7 +204,7 @@ public class LootManager : MonoBehaviour
     {
         lootOnGround.Remove(obj);
         obj.ApplyToPlayer();
-        Invoke("InvokeEndFight", 1.0f);
+        Invoke("InvokeEndFight", 1.75f);
     }
 
     void InvokeEndFight()
@@ -215,17 +215,22 @@ public class LootManager : MonoBehaviour
     IEnumerator MoveGoldToPlayer(GameObject go, LootItem<GoldPrefab> obj)
     {
         yield return new WaitForSeconds(2.0f);
+        Vector2 startPos = go.transform.position;
         float progress = 0;
         float curve = 0;
-        while (curve < 1)
+        while (curve < 1f)
         {
             progress = animCurveGold.Evaluate(curve);
-            go.transform.position = Vector2.MoveTowards(go.transform.position, goldPlace, progress);
-            curve += 0.01f;
+            //go.transform.position = Vector2.MoveTowards(go.transform.position, goldPlace, progress);
+            go.transform.position = Vector2.Lerp(startPos, goldPlace, progress);
+            curve += /*0.01f*/ Time.deltaTime * 3;
             yield return new WaitForSeconds(0.01f);
         }
         lootOnGround.Remove(obj);
         obj.ApplyToPlayer();
+
+        if (lootOnGround.Count <= 0)
+            Invoke("SpawnChest", 0.75f);
     }
 
     void SoulFloat(GameObject go)
@@ -257,7 +262,7 @@ public class LootManager : MonoBehaviour
         {
             progress = animCurveSoul.Evaluate(curve);
             go.transform.position = Vector3.Lerp(startPos, endPos, progress);
-            curve += 0.0025f;
+            curve += /*0.0025f*/ Time.deltaTime * 2;
             yield return null;
         }
         lootOnGround.Remove(obj);
@@ -278,7 +283,7 @@ public class LootManager : MonoBehaviour
                 obj.transform.position = new Vector2(obj.transform.position.x, obj.transform.position.y + (progress / 10));
             else
                 obj.transform.position = new Vector2(obj.transform.position.x, obj.transform.position.y - (progress / 10));
-            curve += 0.01f;
+            curve += /*0.01f*/ Time.deltaTime * 8;
             //Debug.Log(progress);
             yield return new WaitForSeconds(0.01f);
         }
