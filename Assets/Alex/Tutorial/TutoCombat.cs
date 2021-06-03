@@ -54,10 +54,11 @@ public class TutoCombat : MonoBehaviour
         switch (currentStepTuto)
         {
             case 0:
-                BreakTuto("An enemy appears! Stay behind me friends.");
+                yield return new WaitForSeconds(durationStep);
+                BreakTuto("An enemy appears! Stay behind me friends.", chars[0].gameObject);
                     break;
             case 1:
-                BreakTuto("(Hold a character to select it, use its ability!)");
+                BreakTuto("(Hold a character to select it, use its ability!)", this.gameObject);
                 break;
             case 2:
                 allyPlaying = chars[0];
@@ -69,7 +70,7 @@ public class TutoCombat : MonoBehaviour
                 chars[0].cursorPlaying.SetActive(false);
                 chars[0].cursorNotPlayedYet.SetActive(false);
                 allyPlaying = null;
-                BreakTuto("Be careful! He is going to attack!");
+                BreakTuto("Be careful! He is going to attack!", chars[0].gameObject);
                 break;
             case 4:
                 yield return new WaitForSeconds(durationStep);
@@ -80,7 +81,7 @@ public class TutoCombat : MonoBehaviour
                 GoNextStepTuto();
                 break;
             case 5:
-                BreakTuto("Don't worry i will heal you!");
+                BreakTuto("Don't worry i will heal you!", chars[1].gameObject);
                 break;
             case 6:
                 allyPlaying = chars[1];
@@ -91,7 +92,7 @@ public class TutoCombat : MonoBehaviour
                 chars[1].cursorNotPlayedYet.SetActive(false);
                 allyPlaying = null;
                 yield return new WaitForSeconds(durationStep);
-                BreakTuto("It's our turn now!");
+                BreakTuto("It's our turn now!", chars[2].gameObject);
                 break;
             case 8:
                 yield return new WaitForSeconds(durationStep);
@@ -113,7 +114,7 @@ public class TutoCombat : MonoBehaviour
                     }
                 }
                 yield return new WaitForSeconds(durationStep);
-                BreakTuto("He is weaker now!");
+                BreakTuto("He is weaker now!", chars[2].gameObject);
                 break;
             case 10:
                 foreach(AllyTuto a in allies)
@@ -171,7 +172,7 @@ public class TutoCombat : MonoBehaviour
                 allyPlaying = chars[0];
                 allyPlaying.cursorPlaying.SetActive(true);
                 yield return new WaitForSeconds(durationStep);
-                BreakTuto("The crystals seem to give us random powers... We have to use them wisely!");
+                BreakTuto("The crystals seem to give us random powers... We have to use them wisely!", allyPlaying.gameObject);
                 break;
             case 11:
                 //yield return new WaitForSeconds(durationStep);
@@ -181,7 +182,7 @@ public class TutoCombat : MonoBehaviour
                 allyPlaying.cursorNotPlayedYet.SetActive(false);
                 allyPlaying = null;
                 yield return new WaitForSeconds(durationStep);
-                BreakTuto("We can do it!");
+                BreakTuto("We can do it!", chars[0].gameObject);
                 break;
             case 13:
                 yield return new WaitForSeconds(durationStep);
@@ -193,7 +194,7 @@ public class TutoCombat : MonoBehaviour
                 allyPlaying.cursorNotPlayedYet.SetActive(false);
                 allyPlaying = null;
                 yield return new WaitForSeconds(durationStep);
-                BreakTuto("It's just a beast!");
+                BreakTuto("It's just a beast!", chars[2].gameObject);
                 break;
             case 15:
                 yield return new WaitForSeconds(durationStep);
@@ -206,17 +207,17 @@ public class TutoCombat : MonoBehaviour
                 allyPlaying = null;
                 yield return new WaitForSeconds(durationStep);
                 FindObjectOfType<CameraScript>().CamShake(durationStep, 0.3f);
-                BreakTuto("ENOUGH!!");
+                BreakTuto("ENOUGH!!", enemies[0].gameObject);
                 break;
             case 17:
-                BreakTuto("I will not let you go any further.");
+                BreakTuto("I will not let you go any further.", enemies[0].gameObject);
                 break;
             case 18:
-                BreakTuto("This .. is MY domain.");
+                BreakTuto("This .. is MY domain.", enemies[0].gameObject);
                 break;
             case 19:
                 enemies[0].damageRange = new Vector2(1000, 1500);
-                BreakTuto("Die now...");
+                BreakTuto("Die now...", enemies[0].gameObject);
                 break;
             case 20:
                 yield return new WaitForSeconds(durationStep);
@@ -232,6 +233,10 @@ public class TutoCombat : MonoBehaviour
                 GoNextStepTuto();
                 break;
             case 21:
+                yield return new WaitForSeconds(durationStep);
+                BreakTuto("Aaaaaargh!", this.gameObject);
+                break;
+            case 22:
                 float elapsed = 0.0f;
                 float ratio = 0.0f;
                 while (elapsed < durationStep)
@@ -254,11 +259,11 @@ public class TutoCombat : MonoBehaviour
         c.cursorPlaying.SetActive(false);
         c.cursorNotPlayedYet.SetActive(false);
     }
-    public void BreakTuto(string textTuto)
+    public void BreakTuto(string textTuto, GameObject g)
     {
         GameObject tutoPrefab = Instantiate(stepTutoButtonPrefab);
+        tutoPrefab.GetComponentInChildren<StepScriptTuto>().ChangePos(g);
         tutoPrefab.GetComponentInChildren<Text>().text = textTuto;
-        tutoPrefab.transform.SetParent(GameObject.Find("Canvas").transform);
     }
     public void GoNextStepTuto()
     {

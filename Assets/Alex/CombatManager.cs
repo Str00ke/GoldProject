@@ -163,7 +163,6 @@ public class CombatManager : MonoBehaviour
                     TurnPassed();
                 }
             }
-            yield return new WaitForSeconds(1.5f);
             if (currCharAttacking < fightersList.Count)
             {
                 fightersList[currCharAttacking].CanAttack = true;
@@ -178,6 +177,7 @@ public class CombatManager : MonoBehaviour
                 }
                 //UPDATE STATUS ON CHARACTER PLAYING
                 StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
+                yield return new WaitForSeconds(0.8f);
                 CharAttack(currCharAttacking);
             }
         }
