@@ -177,21 +177,10 @@ public class AbilitiesTuto : MonoBehaviour
                     a.isTargetable = false;
                 }
             }
-            else if (ab.crType == Ability.CristalAbilityType.OTHERS)
-            {
-                foreach (EnemyTuto e in TutoCombat.tutoCombat.enemies)
-                {
-                    e.isTargetable = true;
-                }
-                foreach (AllyTuto a in TutoCombat.tutoCombat.allies)
-                {
-                    a.isTargetable = false;
-                }
-            }
         }
         else
         {
-            if (ab.weaponAbilityType == Ability.WeaponAbilityType.DEFENSE)
+            if (ab.weaponAbilityType == Ability.WeaponAbilityType.DEFENCE)
             {
                 foreach (AllyTuto a in TutoCombat.tutoCombat.allies)
                 {
@@ -280,7 +269,7 @@ public class AbilitiesTuto : MonoBehaviour
                 }
             }
             else if (abilitySelected.ability.targetType == Ability.TargetType.RANGE || abilitySelected.ability.targetType == Ability.TargetType.MELEE
-                || abilitySelected.ability.crType == Ability.CristalAbilityType.ATTACK || abilitySelected.ability.crType == Ability.CristalAbilityType.OTHERS)
+                || abilitySelected.ability.crType == Ability.CristalAbilityType.ATTACK)
             {
                 if (TutoCombat.tutoCombat.charSelected && TutoCombat.tutoCombat.charSelected.isTargetable)
                 {
@@ -329,7 +318,7 @@ public class AbilitiesTuto : MonoBehaviour
         }
         else if (abi.objectType == Ability.ObjectType.WEAPON)
         {
-            if (abi.weaponAbilityType != Ability.WeaponAbilityType.DEFENSE)
+            if (abi.weaponAbilityType != Ability.WeaponAbilityType.DEFENCE)
             {
                 switch (abi.targetType)
                 {
@@ -422,16 +411,9 @@ public class AbilitiesTuto : MonoBehaviour
                     case Ability.CristalAttackType.MARK:
                         cm.allyPlaying.PutMark(cm.charSelected, a);
                         break;
-                }
-                break;
-            case Ability.CristalAbilityType.OTHERS:
-                switch (a.crSpecialType)
-                {
-                    case Ability.CristalSpecialType.DESTRUCTION:
+                    case Ability.CristalAttackType.DESTRUCTION:
                         cm.allyPlaying.LaunchDestruction(cm.charSelected, a);
                         cm.allyPlaying.LaunchAttack(cm.charSelected, a);
-                        break;
-                    case Ability.CristalSpecialType.COPY:
                         break;
                 }
                 break;

@@ -104,13 +104,8 @@ public class AbilityEditor : Editor
                     {
                         ability.markMult = EditorGUILayout.FloatField("Mark damage mod", ability.markMult);
                         ability.turnDuration = EditorGUILayout.IntField("Turns before explosion", ability.turnDuration);
-                    }
-                    break;
-                case Ability.CristalAbilityType.OTHERS:
-                    ability.crSpecialType = (Ability.CristalSpecialType)EditorGUILayout.EnumPopup("Cristal special ability ", ability.crSpecialType);
-                    if(ability.crSpecialType == Ability.CristalSpecialType.DESTRUCTION)
+                    }else if(ability.crAttackType == Ability.CristalAttackType.DESTRUCTION)
                     {
-
                         switch (ability.elementType)
                         {
                             case Ability.ElementType.ICE:
@@ -142,7 +137,7 @@ public class AbilityEditor : Editor
         {
             ability.targetType = (Ability.TargetType)EditorGUILayout.EnumPopup("Target ", ability.targetType);
             ability.weaponAbilityType = (Ability.WeaponAbilityType)EditorGUILayout.EnumPopup("Weapon type ", ability.weaponAbilityType);
-            if(ability.weaponAbilityType == Ability.WeaponAbilityType.DEFENSE)
+            if(ability.weaponAbilityType == Ability.WeaponAbilityType.DEFENCE)
                 ability.turnDuration = EditorGUILayout.IntField("Armor buff duration", ability.turnDuration);
         }
 
