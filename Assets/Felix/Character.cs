@@ -156,4 +156,9 @@ public class Character : MonoBehaviour
 
         return null;
     }
+
+    public void ResetHealth()
+    {
+        health = maxHealth;
+    }
 }

@@ -70,6 +70,12 @@ public class CharacterManager : MonoBehaviour
 
     public void RefreshTeamScene()
     {
+        for (int i = 0; i < 3; i++)
+        {
+            if (characters[i] != null)
+                characters[i].ResetHealth();
+        }
+
         for (int i = 0; i < slotsTeam.Length; i++)
         {
             bool charIsNull = AskForCharacter(i) == null;
