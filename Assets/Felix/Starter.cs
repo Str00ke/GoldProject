@@ -6,22 +6,30 @@ using UnityEngine.UI;
 
 public class Starter : MonoBehaviour
 {
+    private bool isTutorialEnded = false;
+
     [Header("Loading Screen")]
     private AsyncOperation loadingAsync;
     public GameObject loadingScene;
     public Image loadingSlider;
+    public string levelName = "FScene";
 
     private void Start()
     {
-        // If it's the player first launch
-        // then load tutorial
-        // LoadScene tuto
-
-        // Else load lobby
-        //LoadScene("FScene");
+        isTutorialEnded = bool.Parse(PlayerPrefs.GetString("TutoEnded", "false"));
 
         if (LobbyManager.lobbyManager)
             Destroy(LobbyManager.lobbyManager.mainCanvas.gameObject);
+    }
+
+    public void StartButton()
+    {
+        if (isTutorialEnded)
+            LoadScene(levelName);
+        else
+        {
+            LoadScene("TutoScene");
+        }
     }
 
     public void LoadScene(string sceneName)

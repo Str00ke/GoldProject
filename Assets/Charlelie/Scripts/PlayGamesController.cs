@@ -10,8 +10,6 @@ using UnityEngine.UI;
 
 public class PlayGamesController : MonoBehaviour {
 
-    public Text mainText;
-
     private void Awake()
     {
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
@@ -35,6 +33,10 @@ public class PlayGamesController : MonoBehaviour {
         PlayGamesPlatform.Activate();
         
     }
+    private void Start()
+    {
+        Authenticate();
+    }
 
     public void Authenticate()
     {
@@ -43,7 +45,7 @@ public class PlayGamesController : MonoBehaviour {
     
     void AuthenticateUser()
     {
-        if (!PlayGamesPlatform.Instance.IsAuthenticated())
+        if (PlayGamesPlatform.Instance.IsAuthenticated())
             return;
 
         Social.localUser.Authenticate((bool success) =>
@@ -51,16 +53,12 @@ public class PlayGamesController : MonoBehaviour {
             if (success == true)
             {
                 Debug.Log("Logged in to Google Play Games Services");
-                mainText.text = "Loged to Google Play Games Services";
-                mainText.color = Color.green;
                 AchievementsManager.Logged();
                 //SceneManager.LoadScene("LeaderboardUI");
             }
             else
             {
                 Debug.LogError("Unable to sign in to Google Play Games Services");
-                mainText.text = "Could not login to Google Play Games Services";
-                mainText.color = Color.red;
             }
         });
         
