@@ -56,7 +56,7 @@ public class LobbyManager : MonoBehaviour
     {
         isFirstGameDone = bool.Parse(PlayerPrefs.GetString("FirstGame", "false"));
         CloseAllMenu();
-        LevelManager.GetInstance().UpdateDataValues();
+        //LevelManager.GetInstance().UpdateDataValues();
     }
 
     public void SwitchLobbyUI()
@@ -181,5 +181,6 @@ public class LobbyManager : MonoBehaviour
 
         loadingScene.SetActive(false);
         SwitchLobbyUI();
+        
     }
 }

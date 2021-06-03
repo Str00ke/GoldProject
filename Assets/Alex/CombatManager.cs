@@ -368,7 +368,7 @@ public class CombatManager : MonoBehaviour
     public void RemoveEnemy(Enemy e)
     {
         int numPos = 0;
-        LootManager.lootManager.SetLoot(e.posInitial);
+        LootManager.lootManager.SetLoot(e.transform.position);
         for (int i = enemies.Count - 1; i >= 0; i--)
         {
             if (enemies[i] == e)
@@ -421,18 +421,19 @@ public class CombatManager : MonoBehaviour
 
     public void EndFightAfterLoot()
     {
-        /*FindObjectOfType<LevelManager>().WinFight();
+        FindObjectOfType<LevelManager>().WinFight();
         foreach (Ally a in allies)
         {
             CharacterManager.characterManager.AskForCharacter(a.teamPosition).health = (int)a.health;
-        }*/
+        }
     }
 
     public void Obliterate()
     {
-        for (int i = 0; i < enemies.Count; ++i)
+        /*for (int i = 0; i < enemies.Count; ++i)
         {
             RemoveEnemy(enemies[i]);
-        }
+        }*/
+        RemoveEnemy(enemies[0]);
     }
 }

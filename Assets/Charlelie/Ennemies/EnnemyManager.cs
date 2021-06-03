@@ -95,7 +95,6 @@ public class EnnemyManager : MonoBehaviour
 
     public Ennemy SetEnemyPool(Level level, MapRoom mapRoom)
     {
-        Debug.Log(mapRoom.distFromStart);
         if (mapRoom.distFromStart == easyMax && !LevelManager.GetInstance().fightFMiniBoss)
         {
             Debug.Log("First mini boss");

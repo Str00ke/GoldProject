@@ -64,7 +64,7 @@ public class LootItem<T>
         
     }
 
-    public void InstantiateObject()
+    public void InstantiateObject(Vector2 vec)
     {
         Debug.Log(pos);
         Debug.Log(amount);      
@@ -78,7 +78,7 @@ public class LootItem<T>
             instance = go;
         }
         else
-          instance = (GameObject)MonoBehaviour.Instantiate(obj, new Vector2(3, -0.5f), Quaternion.identity);
+          instance = (GameObject)MonoBehaviour.Instantiate(obj, vec, Quaternion.identity);
     }
 
 

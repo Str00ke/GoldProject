@@ -20,6 +20,7 @@ public class Chest : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData pointerEventData)
     {
         LootManager.lootManager.SetLootItem(transform.position);
+        Destroy(gameObject);
     }
 
 }

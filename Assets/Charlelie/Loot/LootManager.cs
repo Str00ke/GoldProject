@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class LootManager : MonoBehaviour
 {
-    public Vector2 goldPlace = new Vector2(-6, -2);
-    public Vector2 soulPlace = new Vector2(-1, 4);
+    Vector2 goldPlace = new Vector2(-6, 0);
+    Vector2 chestPlace = new Vector2(5.5f, 0);
+    //public Vector2 soulPlace = new Vector2(-1, 4);
     public static LootManager lootManager;
     public AnimationCurve animCurveGold;
     public AnimationCurve animCurveSoul;
@@ -14,6 +15,7 @@ public class LootManager : MonoBehaviour
     public AnimationCurve animCurveFalling;
     public List<object> lootOnGround = new List<object>();
     public GameObject chest;
+    public int goldValue = 50;
 
     [Header("Gold rate")]
     public float goldRatePart1;
@@ -59,8 +61,8 @@ public class LootManager : MonoBehaviour
     {
         LootItem<GoldPrefab> gold = GetLoot<GoldPrefab>(PlayerPoint._playerPoint.onRoom, pos);
         LootItem<SoulGO> soul = GetLoot<SoulGO>(PlayerPoint._playerPoint.onRoom, pos);
-        gold.InstantiateObject();
-        soul.InstantiateObject();
+        gold.InstantiateObject(pos);
+        soul.InstantiateObject(pos);
         lootOnGround.Add(gold);
         lootOnGround.Add(soul);
 
@@ -72,25 +74,28 @@ public class LootManager : MonoBehaviour
             }
         }));
 
-        StartCoroutine(ItemFall(soul.instance, (isDone) =>
+        SoulFloat(soul.instance);
+        /*StartCoroutine(ItemFall(soul.instance, (isDone) =>
         {
             if (isDone)
             {
                 soul.isAtGround = true;
             }
-        }));
+        }));*/
     }
 
     public void SetLootItem(Vector2 pos)
     {
+        Debug.Log(pos);
         LootItem<NItem.ItemScriptableObject> item = GetLoot<NItem.ItemScriptableObject>(PlayerPoint._playerPoint.onRoom, pos);
-        item.InstantiateObject();
+        item.InstantiateObject(pos);
         lootOnGround.Add(item);
         StartCoroutine(ItemFall(item.instance, (isDone) =>
         {
             if (isDone)
             {
                 item.isAtGround = true;
+                GiveLootToPlayer();
             }
         }));
     }
@@ -176,6 +181,7 @@ public class LootManager : MonoBehaviour
 
     public void GiveLootToPlayer()
     {
+        Debug.Log(lootOnGround.Count);
         foreach(object obj in lootOnGround)
         {
             if (obj as LootItem<GoldPrefab> != null)
@@ -185,12 +191,30 @@ public class LootManager : MonoBehaviour
             else if (obj as LootItem<SoulGO> != null)
             {
                 StartCoroutine(MoveSoulToCounter((obj as LootItem<SoulGO>).instance, (obj as LootItem<SoulGO>)));
+            } else if (obj as LootItem<NItem.ItemScriptableObject> != null)
+            {
+                GiveItem(obj as LootItem<NItem.ItemScriptableObject>);
             }
+
+            if (lootOnGround.Count <= 0) break;
         }
+    }
+
+    void GiveItem(LootItem<NItem.ItemScriptableObject> obj)
+    {
+        lootOnGround.Remove(obj);
+        obj.ApplyToPlayer();
+        Invoke("InvokeEndFight", 1.0f);
+    }
+
+    void InvokeEndFight()
+    {
+        CombatManager.combatManager.EndFightAfterLoot();
     }
 
     IEnumerator MoveGoldToPlayer(GameObject go, LootItem<GoldPrefab> obj)
     {
+        yield return new WaitForSeconds(2.0f);
         float progress = 0;
         float curve = 0;
         while (curve < 1)
@@ -202,18 +226,31 @@ public class LootManager : MonoBehaviour
         }
         lootOnGround.Remove(obj);
         obj.ApplyToPlayer();
+    }
 
-        if (lootOnGround.Count <= 0)
+    void SoulFloat(GameObject go)
+    {
+        /*float progress = 0;
+        Vector2 bound1 = new Vector2(go.transform.position.x, go.transform.position.y - 1);
+        Vector2 bound2 = new Vector2(go.transform.position.x, go.transform.position.y + 3);
+        float curve = 0;
+        while (curve < 1)
         {
-            yield return new WaitForSeconds(0.5f);
-            CombatManager.combatManager.EndFightAfterLoot();
-        }
+            //progress = Mathf.PingPong(Time.time, 1);
+            progress = animCurveSoul.Evaluate(curve);
+            go.transform.position = Vector2.Lerp(bound1, bound2, progress);
+            curve += 0.0025f;
+            Debug.Log(progress);
+        }*/
+        
+        
     }
 
     IEnumerator MoveSoulToCounter(GameObject go, LootItem<SoulGO> obj)
     {
+        yield return new WaitForSeconds(2.0f);
         Vector3 startPos = new Vector3(go.transform.position.x, go.transform.position.y, go.transform.position.z);
-        Vector3 endPos = soulPlace;
+        Vector3 endPos = new Vector2(go.transform.position.x, go.transform.position.y + 10);//soulPlace;
         float progress = 0;
         float curve = 0;
         while (curve < 1)
@@ -242,7 +279,7 @@ public class LootManager : MonoBehaviour
             else
                 obj.transform.position = new Vector2(obj.transform.position.x, obj.transform.position.y - (progress / 10));
             curve += 0.01f;
-            Debug.Log(progress);
+            //Debug.Log(progress);
             yield return new WaitForSeconds(0.01f);
         }
         isDone(true);
