@@ -25,6 +25,6 @@
   <string name="achievement_damage_dealer_gold" translatable="false">CgkIv6KQjKwJEAIQDQ</string>
   <!--achievement Damage dealer diamond-->
   <string name="achievement_damage_dealer_diamond" translatable="false">CgkIv6KQjKwJEAIQDg</string>
-  <!--leaderboard TestLeaderboard-->
-  <string name="leaderboard_testleaderboard" translatable="false">CgkIv6KQjKwJEAIQAw</string>
+  <!--leaderboard Soul Leaderboard-->
+  <string name="leaderboard_soul_leaderboard" translatable="false">CgkIv6KQjKwJEAIQDw</string>
 </resources>

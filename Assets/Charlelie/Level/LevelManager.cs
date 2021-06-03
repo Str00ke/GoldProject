@@ -62,7 +62,7 @@ public static class LevelData
 public class LevelManager : MonoBehaviour
 {
     public Level level;
-    string levelName;
+    public string levelName;
     public GameObject combatPrefab, shop, obliterate, levelFinishedTxt, losePanel;
     GameObject combatRef;
     MapManager mapManager;

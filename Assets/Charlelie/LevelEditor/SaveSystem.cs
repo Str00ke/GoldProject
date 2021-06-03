@@ -148,7 +148,7 @@ public static class SaveSystem
             byte[] results = request.downloadHandler.data;
             Level test = (Level)ByteArrayToObject(results);
             return test;*/
-            string path = "jar:file://" + Application.dataPath + "!/assets/Level1.level";
+            string path = "jar:file://" + Application.dataPath + "!/assets/" + LevelManager.GetInstance().levelName + ".level";
             WWW www = new WWW(path);
             while (!www.isDone) { }
 

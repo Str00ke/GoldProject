@@ -157,3 +157,9 @@ MonoBehaviour:
       initiativeMultiplicator: 0
       armorMultiplicator: 0
     background: {fileID: 0}
+  easyMin: 0
+  easyMax: 0
+  middleMin: 0
+  middleMax: 0
+  hardMin: 0
+  hardMax: 0

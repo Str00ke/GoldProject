@@ -68,7 +68,7 @@ public class PlayGamesController : MonoBehaviour {
 
     public static void PostToLeaderboard(long newScore)
     {
-        Social.ReportScore(newScore, GPGSIds.leaderboard_testleaderboard, (bool success) => {
+        Social.ReportScore(newScore, GPGSIds.leaderboard_soul_leaderboard, (bool success) => {
             if (success)
             {
                 Debug.Log("Posted new score to leaderboard");
@@ -83,7 +83,7 @@ public class PlayGamesController : MonoBehaviour {
     public static void ShowLeaderboardUI()
     {
         if (PlayGamesPlatform.Instance.IsAuthenticated())
-            PlayGamesPlatform.Instance.ShowLeaderboardUI(GPGSIds.leaderboard_testleaderboard);
+            PlayGamesPlatform.Instance.ShowLeaderboardUI(GPGSIds.leaderboard_soul_leaderboard);
     }
 
     public static void ShowAchievementsUI()
@@ -91,4 +91,22 @@ public class PlayGamesController : MonoBehaviour {
         if (PlayGamesPlatform.Instance.IsAuthenticated())
             Social.ShowAchievementsUI();
     }
+
+    void test() //Get score from leaderboard
+    {
+        PlayGamesPlatform.Instance.LoadScores(
+             GPGSIds.leaderboard_soul_leaderboard,
+             LeaderboardStart.PlayerCentered,
+             1,
+             LeaderboardCollection.Public,
+             LeaderboardTimeSpan.AllTime,
+         (LeaderboardScoreData data) => {
+             Debug.Log(data.Valid);
+             Debug.Log(data.Id);
+             Debug.Log(data.PlayerScore);
+             Debug.Log(data.PlayerScore.userID);
+             Debug.Log(data.PlayerScore.formattedValue);
+         });
+    }
+
 }
