@@ -429,15 +429,15 @@ public class CombatManager : MonoBehaviour
         {
             AchievementsManager.OnCombatEnd(this);
             LootManager.lootManager.GiveLootToPlayer();
-            LootManager.lootManager.SpawnChest();
-            if (LootManager.lootManager.lootOnGround.Count <= 0)
+            //LootManager.lootManager.SpawnChest();
+            /*if (LootManager.lootManager.lootOnGround.Count <= 0)
             {
                 FindObjectOfType<LevelManager>().WinFight();
                 foreach (Ally a in allies)
                 {
                     CharacterManager.characterManager.AskForCharacter(a.teamPosition).health = (int)a.health;
                 }
-            }       
+            }*/    
         }          
         else if (typeof(T) == typeof(Ally))
             FindObjectOfType<LevelManager>().LoseFight();

@@ -160,7 +160,7 @@ public class Ally : Characters
         critChance = cs.criticalChance;
         critDamage = cs.crititalDamage;
         armor = cs.armor;
-        health = maxHealth;
+        health = cs.health;
         healthBar.maxValue = maxHealth;
         healthBar.value = health;
         offsetPos *= -1;

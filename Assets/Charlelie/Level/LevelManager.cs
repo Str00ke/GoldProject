@@ -95,9 +95,9 @@ public class LevelManager : MonoBehaviour
         mapManager.Init();
         mapManager.GenerateMap();
         FindObjectOfType<PlayerPoint>().Init();
-        mapManager.MapLinkRooms();
-        mapManager.RandomizeShop();
+        mapManager.MapLinkRooms();     
         mapManager.StartToEnd(PlayerPoint._playerPoint.startRoom, 0);
+        mapManager.RandomizeShop();
         StartRoom();
         shop.SetActive(false);
         obliterate.SetActive(false);
@@ -209,6 +209,9 @@ public class LevelManager : MonoBehaviour
 
     public void UpdateDataValues()
     {
+        if (!bool.Parse(PlayerPrefs.GetString("FirstGame", "false")) && LevelData.GetGold() != 0)
+            PlayerPrefs.SetString("FirstGame", "true");
+
         Inventory.inventory.AddGolds(LevelData.GetGold());
         Inventory.inventory.AddSouls(LevelData.GetSouls());
         foreach (NItem.ItemScriptableObject so in LevelData.GetSO())
