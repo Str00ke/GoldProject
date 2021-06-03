@@ -258,7 +258,6 @@ public class MapManager : MonoBehaviour
             }
         }
         MapRoom roomChosen = tmp[Random.Range(0, tmp.Count - 1)];
-        Debug.Log(roomChosen);
-        roomChosen.SetToShop();
+        //roomChosen.SetToShop();
     }
 }
