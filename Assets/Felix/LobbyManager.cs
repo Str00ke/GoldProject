@@ -164,7 +164,7 @@ public class LobbyManager : MonoBehaviour
     {
         loadingScene.SetActive(true);
         loadingAsync = SceneManager.LoadSceneAsync(sceneName);
-        loadingAsync.allowSceneActivation = false;
+        loadingAsync.allowSceneActivation = false; //Might cause Crash!!!
 
         while (!loadingAsync.isDone)
         {
