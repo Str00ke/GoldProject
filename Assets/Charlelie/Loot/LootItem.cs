@@ -88,7 +88,7 @@ public class LootItem<T>
         if (typeof(T) == typeof(GoldPrefab)) LevelData.AddGold(amount);
         else if (typeof(T) == typeof(SoulGO)) LevelData.AddSouls(amount);
         else if (typeof(T) == typeof(NItem.ItemScriptableObject)) LevelData.AddSoToList(obj as NItem.ItemScriptableObject);
-        MonoBehaviour.Destroy(instance, 0.5f);
+        MonoBehaviour.Destroy(instance/*, 0.5f*/);
     }   
 
     

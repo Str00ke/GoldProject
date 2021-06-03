@@ -117,11 +117,11 @@ public class MapManager : MonoBehaviour
     Vector2 SetStartPoint()
     {
         Vector2 startPoint = Vector2.zero;
-        startPoint.x -= (level.mapW / 2) * 50;
-        startPoint.y += (level.mapH / 2) * 50;
-        if (level.mapH == 10)
+        startPoint.x -= (level.mapW / 2) * 125;
+        startPoint.y += (level.mapH / 2) * 90;
+        /*if (level.mapH == 10)
             startPoint.y -= 25f;
-
+        */
         return startPoint;
     }
 
@@ -148,10 +148,10 @@ public class MapManager : MonoBehaviour
                     index++;
                 }
 
-                currPoint.x += 50;
+                currPoint.x += 150;
             }
             currPoint.x = startPoint.x;
-            currPoint.y -= 50;
+            currPoint.y -= 100;
         }
        
     }
@@ -249,27 +249,16 @@ public class MapManager : MonoBehaviour
 
     public void RandomizeShop()
     {
-
-        //Debug.Log("Setting shop... ");
+        List<MapRoom> tmp = new List<MapRoom>();
         foreach (MapRoom room in roomArr)
         {
-            //Debug.Log(".");
-            if (room.roomType != RoomType.START && room.roomType != RoomType.END)
+            if (room != null && room.roomType != RoomType.START && room.roomType != RoomType.END && room.distFromStart != EnnemyManager._enemyManager.easyMax && room.distFromStart != EnnemyManager._enemyManager.middleMax && room.distFromStart > 2)
             {
-                //Debug.Log("..");
-                /*float rand = Random.Range(0, roomArr.Length);
-                if (rand > 5)
-                {
-                    Debug.Log("...");
-                    room.SetToShop();
-                    Debug.Log("ShopSet " + room.pos.GetLength(0) + " " + room.pos.GetLength(1));
-                    return;
-                }*/
-                //room.SetToShop();
-                return;
+                tmp.Add(room);
             }
         }
+        MapRoom roomChosen = tmp[Random.Range(0, tmp.Count - 1)];
+        Debug.Log(roomChosen);
+        roomChosen.SetToShop();
     }
-
-
 }

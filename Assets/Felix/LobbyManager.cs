@@ -181,6 +181,5 @@ public class LobbyManager : MonoBehaviour
 
         loadingScene.SetActive(false);
         SwitchLobbyUI();
-        
     }
 }

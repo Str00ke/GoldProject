@@ -66,15 +66,15 @@ public class LootManager : MonoBehaviour
         lootOnGround.Add(gold);
         lootOnGround.Add(soul);
 
-        StartCoroutine(ItemFall(gold.instance, (isDone) =>
+        /*StartCoroutine(ItemFall(gold.instance, (isDone) =>
         {
             if (isDone)
             {
                 gold.isAtGround = true;
             }
-        }));
+        }));*/
 
-        SoulFloat(soul.instance);
+        //SoulFloat(soul.instance);
         /*StartCoroutine(ItemFall(soul.instance, (isDone) =>
         {
             if (isDone)
@@ -95,7 +95,8 @@ public class LootManager : MonoBehaviour
             if (isDone)
             {
                 item.isAtGround = true;
-                GiveLootToPlayer();
+                Invoke("GiveLootToPlayer", 0.5f);
+                //GiveLootToPlayer();
             }
         }));
     }
@@ -181,30 +182,42 @@ public class LootManager : MonoBehaviour
 
     public void GiveLootToPlayer()
     {
+        bool isItem = false;
         Debug.Log(lootOnGround.Count);
-        foreach(object obj in lootOnGround)
+        for (int i = 0; i < lootOnGround.Count; ++i)
         {
-            if (obj as LootItem<GoldPrefab> != null)
+            Debug.Log("Loot: " + lootOnGround.Count);
+            if (lootOnGround[i] as LootItem<GoldPrefab> != null)
             {
-                StartCoroutine(MoveGoldToPlayer((obj as LootItem<GoldPrefab>).instance, (obj as LootItem<GoldPrefab>)));
+                //StartCoroutine(MoveGoldToPlayer((obj as LootItem<GoldPrefab>).instance, (obj as LootItem<GoldPrefab>)));
+                (lootOnGround[i] as LootItem<GoldPrefab>).ApplyToPlayer();                  
             }
-            else if (obj as LootItem<SoulGO> != null)
+            else if (lootOnGround[i] as LootItem<SoulGO> != null)
             {
-                StartCoroutine(MoveSoulToCounter((obj as LootItem<SoulGO>).instance, (obj as LootItem<SoulGO>)));
-            } else if (obj as LootItem<NItem.ItemScriptableObject> != null)
-            {
-                GiveItem(obj as LootItem<NItem.ItemScriptableObject>);
+                //StartCoroutine(MoveSoulToCounter((obj as LootItem<SoulGO>).instance, (obj as LootItem<SoulGO>)));
+                Debug.Log((lootOnGround[i] as LootItem<SoulGO>).instance);
+                (lootOnGround[i] as LootItem<SoulGO>).ApplyToPlayer();
             }
-
-            if (lootOnGround.Count <= 0) break;
+            else if (lootOnGround[i] as LootItem<NItem.ItemScriptableObject> != null)
+            {
+                //GiveItem(obj as LootItem<NItem.ItemScriptableObject>);
+                isItem = true;
+                (lootOnGround[i] as LootItem<NItem.ItemScriptableObject>).ApplyToPlayer();
+                Invoke("InvokeEndFight", 0.25f);
+                //InvokeEndFight();
+            }
+            //lootOnGround.RemoveAt(i);
         }
+        lootOnGround.Clear();
+        if (!isItem)
+            SpawnChest();
     }
 
     void GiveItem(LootItem<NItem.ItemScriptableObject> obj)
     {
         lootOnGround.Remove(obj);
         obj.ApplyToPlayer();
-        Invoke("InvokeEndFight", 1.0f);
+        Invoke("InvokeEndFight", 1.75f);
     }
 
     void InvokeEndFight()
@@ -215,17 +228,22 @@ public class LootManager : MonoBehaviour
     IEnumerator MoveGoldToPlayer(GameObject go, LootItem<GoldPrefab> obj)
     {
         yield return new WaitForSeconds(2.0f);
+        Vector2 startPos = go.transform.position;
         float progress = 0;
         float curve = 0;
-        while (curve < 1)
+        while (curve < 1f)
         {
             progress = animCurveGold.Evaluate(curve);
-            go.transform.position = Vector2.MoveTowards(go.transform.position, goldPlace, progress);
-            curve += 0.01f;
+            //go.transform.position = Vector2.MoveTowards(go.transform.position, goldPlace, progress);
+            go.transform.position = Vector2.Lerp(startPos, goldPlace, progress);
+            curve += /*0.01f*/ Time.deltaTime * 3;
             yield return new WaitForSeconds(0.01f);
         }
         lootOnGround.Remove(obj);
         obj.ApplyToPlayer();
+
+        if (lootOnGround.Count <= 0)
+            Invoke("SpawnChest", 0.75f);
     }
 
     void SoulFloat(GameObject go)
@@ -257,7 +275,7 @@ public class LootManager : MonoBehaviour
         {
             progress = animCurveSoul.Evaluate(curve);
             go.transform.position = Vector3.Lerp(startPos, endPos, progress);
-            curve += 0.0025f;
+            curve += /*0.0025f*/ Time.deltaTime * 2;
             yield return null;
         }
         lootOnGround.Remove(obj);
@@ -278,7 +296,7 @@ public class LootManager : MonoBehaviour
                 obj.transform.position = new Vector2(obj.transform.position.x, obj.transform.position.y + (progress / 10));
             else
                 obj.transform.position = new Vector2(obj.transform.position.x, obj.transform.position.y - (progress / 10));
-            curve += 0.01f;
+            curve += /*0.01f*/ Time.deltaTime * 8;
             //Debug.Log(progress);
             yield return new WaitForSeconds(0.01f);
         }
