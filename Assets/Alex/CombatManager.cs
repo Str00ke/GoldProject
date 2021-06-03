@@ -406,7 +406,7 @@ public class CombatManager : MonoBehaviour
         {
             AchievementsManager.OnCombatEnd(this);
             LootManager.lootManager.GiveLootToPlayer();
-            LootManager.lootManager.SpawnChest();
+            //LootManager.lootManager.SpawnChest();
             if (LootManager.lootManager.lootOnGround.Count <= 0)
             {
                 FindObjectOfType<LevelManager>().WinFight();
