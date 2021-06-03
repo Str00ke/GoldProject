@@ -196,10 +196,11 @@ public class CombatManager : MonoBehaviour
         }
         foreach (Ally a in allies)
         {
-            if (a.inDefenceMode)
+            if (a.inDefenceMode && !a.isDead)
             {
-                allyAttacked = a.teamPosition;
+                allyAttacked = allies.IndexOf(a);
                 inDefence = a;
+                break;
             }
         }
         if(allies.Count > 0)
