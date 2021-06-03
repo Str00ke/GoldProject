@@ -66,6 +66,14 @@ public class CharacterManager : MonoBehaviour
         SelectCharacterStats(indexChar);
     }
 
+    public void RemoveCharacter(Character character)
+    {
+        Destroy(character.gameObject);
+
+        RefreshTeamScene();
+        SelectCharacterStats(0);
+    }
+
     #region TeamScene
 
     public void RefreshTeamScene()
