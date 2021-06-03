@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GoldPrefab : LootItem<GoldPrefab>
 {
-    public GoldPrefab(Object objType) : base(objType)
+    public GoldPrefab(Object objType, Vector2 _pos) : base(objType, _pos)
     {
     }
 }

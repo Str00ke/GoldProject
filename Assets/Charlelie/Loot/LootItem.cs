@@ -9,11 +9,13 @@ public class LootItem<T>
     public Object obj;
     public GameObject instance;
     public bool isAtGround = false;
+    public Vector2 pos;
 
-    public LootItem(Object _obj)
+    public LootItem(Object _obj, Vector2 _pos)
     {
         obj = _obj;
         amount = 0;
+        pos = _pos;
     }
 
     public void SetAmount(EPart ePart)
@@ -64,28 +66,25 @@ public class LootItem<T>
 
     public void InstantiateObject()
     {
+        Debug.Log(pos);
         Debug.Log(amount);      
         if (typeof(T) == typeof(NItem.ItemScriptableObject))
         {
             var itemSO = obj as NItem.ItemScriptableObject;
             Sprite[] spr = itemSO.itemSprites;
-            GameObject go = MonoBehaviour.Instantiate(LootManager.lootManager.itemPrefab);
+            GameObject go = MonoBehaviour.Instantiate(LootManager.lootManager.itemPrefab, pos, Quaternion.identity);
             go.GetComponent<SpriteRenderer>().sprite = itemSO.itemUiSprite;
             go.GetComponent<SOLoot>().so = itemSO;
+            instance = go;
         }
         else
-          instance = (GameObject)MonoBehaviour.Instantiate(obj, new Vector2(2, 2), Quaternion.identity);
+          instance = (GameObject)MonoBehaviour.Instantiate(obj, new Vector2(3, -0.5f), Quaternion.identity);
     }
 
-    public void MoveTowards(Vector2 vec)
-    {
-        Debug.Log("Start moving");
-        //MonoBehaviour.StartCoroutine(MoveC(new Vector2(0, 0), new Vector2(100, 100), 5.0f);
-    }
 
     public void ApplyToPlayer()
     {
-        Debug.Log("Apply");
+        //Debug.Log("Apply");
         if (typeof(T) == typeof(GoldPrefab)) LevelData.AddGold(amount);
         else if (typeof(T) == typeof(SoulGO)) LevelData.AddSouls(amount);
         else if (typeof(T) == typeof(NItem.ItemScriptableObject)) LevelData.AddSoToList(obj as NItem.ItemScriptableObject);

@@ -368,6 +368,7 @@ public class CombatManager : MonoBehaviour
     public void RemoveEnemy(Enemy e)
     {
         int numPos = 0;
+        LootManager.lootManager.SetLoot(e.posInitial);
         for (int i = enemies.Count - 1; i >= 0; i--)
         {
             if (enemies[i] == e)
@@ -392,10 +393,10 @@ public class CombatManager : MonoBehaviour
         foreach (Enemy e in enemies)
         {
            if (e.teamPosition > numPos)
-            {
+           {
                 e.teamPosition--;
                 e.ChangePos();
-            }
+           }
         }
     }
     void EndFight<T>()
@@ -403,14 +404,28 @@ public class CombatManager : MonoBehaviour
         if (typeof(T) == typeof(Enemy))
         {
             AchievementsManager.OnCombatEnd(this);
-            FindObjectOfType<LevelManager>().WinFight();
-            foreach(Ally a in allies)
+            LootManager.lootManager.GiveLootToPlayer();
+            LootManager.lootManager.SpawnChest();
+            if (LootManager.lootManager.lootOnGround.Count <= 0)
             {
-                CharacterManager.characterManager.AskForCharacter(a.teamPosition).health = (int)a.health;
-            }
-        }           
+                FindObjectOfType<LevelManager>().WinFight();
+                foreach (Ally a in allies)
+                {
+                    CharacterManager.characterManager.AskForCharacter(a.teamPosition).health = (int)a.health;
+                }
+            }       
+        }          
         else if (typeof(T) == typeof(Ally))
             FindObjectOfType<LevelManager>().LoseFight();
+    }
+
+    public void EndFightAfterLoot()
+    {
+        /*FindObjectOfType<LevelManager>().WinFight();
+        foreach (Ally a in allies)
+        {
+            CharacterManager.characterManager.AskForCharacter(a.teamPosition).health = (int)a.health;
+        }*/
     }
 
     public void Obliterate()

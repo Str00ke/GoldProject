@@ -41,6 +41,7 @@ public static class LevelData
     public static void AddGold(int value)
     {
         _gold += value;
+        Debug.Log("Gold: " + _gold);
     }
 
     public static void AddSouls(int value)
@@ -113,6 +114,7 @@ public class LevelManager : MonoBehaviour
         testTxt.text = "Disable Obliterate";
         obliterate.SetActive(false);
         EnnemyManager._enemyManager.SetRoomsDiff(mapManager.testMax);
+        
     }
 
 
@@ -227,7 +229,8 @@ public class LevelManager : MonoBehaviour
 
     public void ReturnToLobby()
     {
-        LobbyManager.lobbyManager.LoadScene("FScene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("FScene");
+        //LobbyManager.lobbyManager.LoadScene("FScene");
     }
 
     /*public void OnGetLoot(Object loot)
@@ -242,7 +245,7 @@ public class LevelManager : MonoBehaviour
     public void UpdateDataValues()
     {
         Inventory.inventory.AddGolds(LevelData.GetGold());
-        //Inventory.inventory.AddSouls(LevelData.GetSouls());
+        Inventory.inventory.AddSouls(LevelData.GetSouls());
         foreach (NItem.ItemScriptableObject so in LevelData.GetSO())
         {
             Inventory.inventory.AddItem(so);
