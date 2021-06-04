@@ -126,12 +126,13 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                     linkedRoom[i].gameObject.SetActive(true);
                     linkedRoom[i].isDiscovered = true;
 
-
+                    Debug.Log("LINKLINKLINK");
                     GameObject go = new GameObject();
                     go.transform.parent = this.transform;
                     Image img = go.AddComponent<Image>();
                     img.sprite = hallwayImgs[Random.Range(0, hallwayImgs.Length)];
                     go.GetComponent<RectTransform>().sizeDelta = new Vector2(1f, 1f);
+                    go.GetComponent<RectTransform>().localScale = new Vector3(107.9573f, 107.9573f, 107.9573f);
                     go.GetComponent<Image>().raycastTarget = false;
                     if (linkedRoom[i].pos.GetLength(0) == pos.GetLength(0))
                     {
@@ -157,6 +158,8 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                             go.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, 90);
                         }
                     }
+                    go.transform.parent = MapManager.GetInstance().map.transform;
+                    go.transform.SetAsFirstSibling();
                 }
 
                 
