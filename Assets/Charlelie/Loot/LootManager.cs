@@ -71,7 +71,7 @@ public class LootManager : MonoBehaviour
     {
         LootItem<GoldPrefab> gold = GetLoot<GoldPrefab>(PlayerPoint._playerPoint.onRoom, pos);
         LootItem<SoulGO> soul = GetLoot<SoulGO>(PlayerPoint._playerPoint.onRoom, pos);
-        golds = gold.amount;
+        golds = gold.amount * goldValue;
         souls = soul.amount;
         Debug.Log(golds);
         gold.InstantiateObject(pos);
