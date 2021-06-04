@@ -449,6 +449,7 @@ public class CombatManager : MonoBehaviour
         foreach (Ally a in allies)
         {
             CharacterManager.characterManager.AskForCharacter(a.teamPosition).health = (int)a.health;
+            Debug.Log((int)a.health);
         }
     }
 

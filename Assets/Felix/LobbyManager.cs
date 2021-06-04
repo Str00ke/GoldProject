@@ -164,7 +164,7 @@ public class LobbyManager : MonoBehaviour
     {
         loadingScene.SetActive(true);
         loadingAsync = SceneManager.LoadSceneAsync(sceneName);
-        loadingAsync.allowSceneActivation = false;
+        loadingAsync.allowSceneActivation = false; //Might cause Crash!!!
 
         while (!loadingAsync.isDone)
         {
@@ -181,5 +181,11 @@ public class LobbyManager : MonoBehaviour
 
         loadingScene.SetActive(false);
         SwitchLobbyUI();
+    }
+
+    public void AddScoreToLeaderboard()
+    {
+        //int fVal = LevelData.GetSouls() + Inventory.inventory.souls;
+        PlayGamesController.PostToLeaderboard(Inventory.inventory.souls);
     }
 }

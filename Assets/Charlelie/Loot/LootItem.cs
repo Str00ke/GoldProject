@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class LootItem<T>
 {
-    int amount;
+    public int amount;
     public Object obj;
     public GameObject instance;
     public bool isAtGround = false;
@@ -26,6 +26,7 @@ public class LootItem<T>
             {
                 case EPart.PART1:
                     amount = (int)(1 * LootManager.lootManager.goldRatePart1);
+                    Debug.Log(LootManager.lootManager.goldRatePart1);
                     break;
 
                 case EPart.PART2:

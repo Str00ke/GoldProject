@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomSelect: {fileID: 7347785165549304847}
-  selectSpeed: 0.2
+  selectSpeed: 0.9
   linkedRoom:
   - {fileID: 0}
   - {fileID: 0}

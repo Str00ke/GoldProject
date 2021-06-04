@@ -163,7 +163,7 @@ public class MapManager : MonoBehaviour
 
     public void UpdateBtn()
     {
-        mapBtn.SetActive(!mapBtn.activeSelf);
+        //mapBtn.SetActive(!mapBtn.activeSelf);
     }
 
     public void InitPlayerPoint()
@@ -258,7 +258,6 @@ public class MapManager : MonoBehaviour
             }
         }
         MapRoom roomChosen = tmp[Random.Range(0, tmp.Count - 1)];
-        Debug.Log(roomChosen);
-        roomChosen.SetToShop();
+        //roomChosen.SetToShop();
     }
 }

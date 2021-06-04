@@ -66,16 +66,19 @@ public class PlayGamesController : MonoBehaviour {
 
     public static void PostToLeaderboard(long newScore)
     {
-        Social.ReportScore(newScore, GPGSIds.leaderboard_soul_leaderboard, (bool success) => {
-            if (success)
-            {
-                Debug.Log("Posted new score to leaderboard");
-            }
-            else
-            {
-                Debug.LogError("Unable to post new score to leaderboard");
-            }
-        });
+        if (PlayGamesPlatform.Instance.IsAuthenticated())
+        {
+            Social.ReportScore(newScore, GPGSIds.leaderboard_soul_leaderboard, (bool success) => {
+                if (success)
+                {
+                    Debug.Log("Posted new score to leaderboard");
+                }
+                else
+                {
+                    Debug.LogError("Unable to post new score to leaderboard");
+                }
+            });
+        }   
     }
 
     public static void ShowLeaderboardUI()
