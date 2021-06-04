@@ -85,6 +85,9 @@ public class Character : MonoBehaviour
     {
         int itemIndex = GetIndexItempart(itemPart);
 
+        if (items[itemIndex] == null)
+            return;
+
         SetStats(-items[itemIndex].health, -items[itemIndex].armor, -items[itemIndex].attack, -items[itemIndex].dodge, -items[itemIndex].criticalChance, -items[itemIndex].crititalDamage);
 
         items[itemIndex] = null;

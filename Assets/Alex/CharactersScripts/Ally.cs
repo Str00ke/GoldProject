@@ -273,8 +273,9 @@ public class Ally : Characters
         GetComponentInChildren<Canvas>().gameObject.SetActive(false);
         //GetComponentInChildren<DamagedBarScript>().gameObject.SetActive(false);
        // gameObject.SetActive(false);
-        body.sprite = head.sprite;
+        body.sprite = null;
         head.sprite = null;
+        weapon.sprite = null;
         Character c = CharacterManager.characterManager.AskForCharacter(teamPosition);
         c.RemoveItem(NItem.EPartType.Gem);
         c.RemoveItem((NItem.EPartType)Random.Range(0,3));

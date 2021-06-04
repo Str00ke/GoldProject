@@ -346,6 +346,9 @@ public class Inventory : MonoBehaviour
 
     public void AddGolds(int _golds)
     {
+        if (_golds == 0)
+            return;
+
         golds += _golds;
 
         if (golds < 0)
@@ -365,6 +368,9 @@ public class Inventory : MonoBehaviour
 
     public void AddSouls(int _souls)
     {
+        if (_souls == 0)
+            return;
+
         souls += _souls;
 
         if (souls < 0)
