@@ -24,9 +24,9 @@ public class Ally : Characters
         durationMove = 1.0f;
         healthBar = GameObject.Find(gameObject.name + "/CanvasChar/healthBar").GetComponent<Slider>();
         canvasChar = GameObject.Find(gameObject.name + "/CanvasChar");
-        cursorNotPlayedYet = GameObject.Find(gameObject.name + "/CanvasChar/cursorNotPlayedYet");
-        cursorSelected = GameObject.Find(gameObject.name + "/CanvasChar/cursorSelected");
-        cursorPlaying = GameObject.Find(gameObject.name + "/CanvasChar/cursorPlaying");
+        cursorNotPlayedYet = GameObject.Find(gameObject.name + "/CanvasChar/Cursors/cursorNotPlayedYet");
+        cursorSelected = GameObject.Find(gameObject.name + "/CanvasChar/Cursors/cursorSelected");
+        cursorPlaying = GameObject.Find(gameObject.name + "/CanvasChar/Cursors/cursorPlaying");
         cursorSelected.SetActive(false);
         cursorPlaying.SetActive(false);
         durationDecreaseHealth = 1.0f;
@@ -41,7 +41,6 @@ public class Ally : Characters
     void Update()
     {
         IsTargetable();
-        ChangeColor();
 
         InteractiveHoldToSelect();
         if (onPointerHold)
@@ -59,9 +58,11 @@ public class Ally : Characters
                 if (CombatManager.combatManager.charSelected != null)
                 {
                     CombatManager.combatManager.charSelected.isSelected = false;
+                    CombatManager.combatManager.charSelected.gameObject.GetComponentInChildren<CursorEffectsScript>().DeactivateCursor(CombatManager.combatManager.charSelected.cursorSelected);
                     CombatManager.combatManager.charSelected = null;
                 }
                 isSelected = true;
+                GetComponentInChildren<CursorEffectsScript>().ActivateCursor(cursorSelected);
                 CombatManager.combatManager.charSelected = this;
                 UIManager.uiManager.statsUI.SetActive(true);
             }

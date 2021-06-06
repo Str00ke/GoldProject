@@ -29,7 +29,6 @@ public class Enemy : Characters
     void Update()
     {
         IsTargetable();
-        ChangeColor();
         InteractiveHoldToSelect();
         if (onPointerHold)
         {
@@ -46,9 +45,11 @@ public class Enemy : Characters
                 if (CombatManager.combatManager.charSelected != null)
                 {
                     CombatManager.combatManager.charSelected.isSelected = false;
+                    CombatManager.combatManager.charSelected.gameObject.GetComponentInChildren<CursorEffectsScript>().DeactivateCursor(CombatManager.combatManager.charSelected.cursorSelected);
                     CombatManager.combatManager.charSelected = null;
                 }
-                isSelected = true;
+                isSelected = true; 
+                GetComponentInChildren<CursorEffectsScript>().ActivateCursor(cursorSelected);
                 CombatManager.combatManager.charSelected = this;
                 UIManager.uiManager.statsUI.SetActive(true);
             }
@@ -64,9 +65,9 @@ public class Enemy : Characters
         healthBar = GameObject.Find(gameObject.name + "/CanvasSlider/healthBar").GetComponent<Slider>();
         canvasChar = GameObject.Find(gameObject.name + "/CanvasSlider");
         healthBarOutline = GameObject.Find(gameObject.name + "/CanvasSlider/HealthBarOutline");
-        cursorNotPlayedYet = GameObject.Find(gameObject.name + "/CanvasSlider/cursorNotPlayedYet");
-        cursorSelected = GameObject.Find(gameObject.name + "/CanvasSlider/cursorSelected");
-        cursorPlaying = GameObject.Find(gameObject.name + "/CanvasSlider/cursorPlaying");
+        cursorNotPlayedYet = GameObject.Find(gameObject.name + "/CanvasSlider/Cursors/cursorNotPlayedYet");
+        cursorSelected = GameObject.Find(gameObject.name + "/CanvasSlider/Cursors/cursorSelected");
+        cursorPlaying = GameObject.Find(gameObject.name + "/CanvasSlider/Cursors/cursorPlaying");
         cursorSelected.SetActive(false);
         cursorPlaying.SetActive(false);
         healthBarOutline.SetActive(false);
@@ -119,6 +120,11 @@ public class Enemy : Characters
         endValue = Mathf.Round(endValue);
         healthBar.value = endValue;
         health = endValue;
+        if (health <= 0)
+        {
+            health = 0;
+            isDead = true;
+        }
         yield return new WaitForSeconds(duration);
         GetComponentInChildren<DamagedBarScript>().UpdateDamagedBar(endValue, duration, false);
         yield return new WaitForSeconds(duration);

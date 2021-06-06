@@ -239,11 +239,11 @@ public class Status
                 break;
             case StatusTypes.CRITDAMAGEBONUS:
                 statusTarget.critDamage -= diffModif;
-                statusTarget.critDamageBonus -= (int)diffModif;
+                statusTarget.critDamageBonus -= diffModif*100;
                 break;
             case StatusTypes.CRITRATEBONUS:
                 statusTarget.critChance -= diffModif;
-                statusTarget.critChanceBonus -= (int)diffModif;
+                statusTarget.critChanceBonus -= diffModif * 100;
                 break;
             case StatusTypes.DAMAGEBONUS:
                 statusTarget.damageRange.x -= diffModif;

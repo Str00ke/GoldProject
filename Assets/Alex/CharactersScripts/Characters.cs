@@ -158,11 +158,13 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (isSelected)
         {
-            cursorSelected.SetActive(true);
+            GetComponentInChildren<CursorEffectsScript>().ActivateCursor(cursorSelected);
+            //cursorSelected.SetActive(true);
         }
         else
         {
-            cursorSelected.SetActive(false);
+            //cursorSelected.SetActive(false);
+            GetComponentInChildren<CursorEffectsScript>().DeactivateCursor(cursorSelected);
         }
         //Cursor playing display in NextCharAttack in CombatManager
     }
@@ -190,7 +192,9 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         if (canBeSelected)
+        {
             onPointerHold = true;
+        }
     }
     public void OnPointerUp(PointerEventData eventData)
     {

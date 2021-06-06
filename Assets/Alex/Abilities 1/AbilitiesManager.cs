@@ -143,16 +143,33 @@ public class AbilitiesManager : MonoBehaviour
         {
             if (ab.crType == Ability.CristalAbilityType.HEAL)
             {
-                foreach (Ally a in CombatManager.combatManager.allies)
+                if (ab.crHealType == Ability.CristalHealType.BATH && ab.elementType == Ability.ElementType.PSY)
                 {
-                    if (!a.isDead)
-                        a.isTargetable = true;
-                    else
-                        a.isTargetable = false;
+                    foreach (Ally a in CombatManager.combatManager.allies)
+                    {
+                        if (!a.isDead)
+                            a.isTargetable = true;
+                        else
+                            a.isTargetable = false;
+                    }
+                    foreach (Enemy e in CombatManager.combatManager.enemies)
+                    {
+                        e.isTargetable = true;
+                    }
                 }
-                foreach (Enemy e in CombatManager.combatManager.enemies)
+                else
                 {
-                    e.isTargetable = false;
+                    foreach (Ally a in CombatManager.combatManager.allies)
+                    {
+                        if (!a.isDead)
+                            a.isTargetable = true;
+                        else
+                            a.isTargetable = false;
+                    }
+                    foreach (Enemy e in CombatManager.combatManager.enemies)
+                    {
+                        e.isTargetable = false;
+                    }
                 }
             }
             else if (ab.crType == Ability.CristalAbilityType.ATTACK)
@@ -173,34 +190,18 @@ public class AbilitiesManager : MonoBehaviour
             switch (ab.targetType)
             {
                 case Ability.TargetType.ALLIES:
-                    if(ab.crHealType == Ability.CristalHealType.BATH && ab.elementType == Ability.ElementType.PSY)
-                    {
+                    
                         foreach (Ally a in CombatManager.combatManager.allies)
                         {
-                            if (!a.isDead)
-                                a.isTargetable = true;
-                            else
+                            if (!a.isDead && a != CombatManager.combatManager.allyPlaying)
                                 a.isTargetable = false;
-                        }
-                        foreach (Enemy e in CombatManager.combatManager.enemies)
-                        {
-                            e.isTargetable = true;
-                        }
-                    }
-                    else
-                    {
-                        foreach (Ally a in CombatManager.combatManager.allies)
-                        {
-                            if (!a.isDead)
-                                a.isTargetable = true;
                             else
-                                a.isTargetable = false;
+                                a.isTargetable = true;
                         }
                         foreach (Enemy e in CombatManager.combatManager.enemies)
                         {
                             e.isTargetable = false;
                         }
-                    }
                     break;
                 case Ability.TargetType.RANGE:
                     foreach (Enemy e in CombatManager.combatManager.enemies)
@@ -290,9 +291,9 @@ public class AbilitiesManager : MonoBehaviour
         AbilityAction(abilitySelected.ability);
         //WAIT FOR NEXT CHAR ATTACK
         CombatManager.combatManager.NextCharAttack();
-        lastAbilityLaunched = abilitySelected.ability;
         abilitySelected.isSelected = false;
         abilitySelected = null;
+        ClearTargets();
         yield return null;
     }
     public void AbilityAction(Ability abi)
@@ -367,7 +368,10 @@ public class AbilitiesManager : MonoBehaviour
                     foreach (Status s in cm.allyPlaying.statusList)
                     {
                         if (s.statusType == Status.StatusTypes.DEFENCE)
+                        {
+                            s1 = s;
                             s.turnsActive = 2;
+                        }
                     }
                     if(s1 == null)
                         s1 = new Status(cm.allyPlaying, Mathf.Round(cm.allyPlaying.armor * 0.6f), abi, Status.StatusTypes.ARMORBONUS);

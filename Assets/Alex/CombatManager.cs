@@ -101,7 +101,8 @@ public class CombatManager : MonoBehaviour
         //SORT BY INITIATIVE
         SortFightersInit();
         fightersList[currCharAttacking].CanAttack = true;
-        fightersList[currCharAttacking].cursorPlaying.SetActive(true);
+        //fightersList[currCharAttacking].cursorPlaying.SetActive(true);
+        fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().ActivateCursor(fightersList[currCharAttacking].cursorPlaying);
         if (fightersList[currCharAttacking].charType == Characters.CharType.ALLY)
         {
             allyPlaying = (Ally)fightersList[currCharAttacking];
@@ -135,13 +136,16 @@ public class CombatManager : MonoBehaviour
         {
             fightersList[currCharAttacking].CanAttack = false;
             fightersList[currCharAttacking].hasPlayed = true;
-            fightersList[currCharAttacking].cursorNotPlayedYet.SetActive(false);
+            //fightersList[currCharAttacking].cursorNotPlayedYet.SetActive(false);
+            fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().DeactivateCursor(fightersList[currCharAttacking].cursorNotPlayedYet);
         }
+        AbilitiesManager.abilitiesManager.ClearTargets();
         yield return new WaitForSeconds(fightersList[currCharAttacking].durationDecreaseHealth * 2);
         if (currCharAttacking >= 0)
         {
             if(fightersList[currCharAttacking].cursorPlaying)
-                fightersList[currCharAttacking].cursorPlaying.SetActive(false);
+                fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().DeactivateCursor(fightersList[currCharAttacking].cursorPlaying);
+            //fightersList[currCharAttacking].cursorPlaying.SetActive(false);
         }
         currCharAttacking++;
         if (currCharAttacking >= fightersList.Count)
@@ -153,9 +157,11 @@ public class CombatManager : MonoBehaviour
             while (!fightersList[currCharAttacking] || fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead)
             {
                 StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
-                fightersList[currCharAttacking].cursorPlaying.SetActive(true);
+                //fightersList[currCharAttacking].cursorPlaying.SetActive(true);
+                fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().ActivateCursor(fightersList[currCharAttacking].cursorPlaying);
                 yield return new WaitForSeconds(1.5f);
-                fightersList[currCharAttacking].cursorPlaying.SetActive(false);
+                fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().DeactivateCursor(fightersList[currCharAttacking].cursorPlaying);
+                //fightersList[currCharAttacking].cursorPlaying.SetActive(false);
                 currCharAttacking++;
                 //---------------- ---IF EVERY FIGHTERS HAVE PLAYED -> NEXT TURN----------------------------
                 if (currCharAttacking >= fightersList.Count)
@@ -166,7 +172,8 @@ public class CombatManager : MonoBehaviour
             if (currCharAttacking < fightersList.Count)
             {
                 fightersList[currCharAttacking].CanAttack = true;
-                fightersList[currCharAttacking].cursorPlaying.SetActive(true);
+                //fightersList[currCharAttacking].cursorPlaying.SetActive(true);
+                fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().ActivateCursor(fightersList[currCharAttacking].cursorPlaying);
                 if (fightersList[currCharAttacking].charType == Characters.CharType.ALLY)
                 {
                     allyPlaying = (Ally)fightersList[currCharAttacking];
@@ -343,7 +350,8 @@ public class CombatManager : MonoBehaviour
             if (!c.isDead)
             {
                 c.hasPlayed = false;
-                fightersList[currCharAttacking].cursorNotPlayedYet.SetActive(true);
+                //fightersList[currCharAttacking].cursorNotPlayedYet.SetActive(true);
+                c.GetComponentInChildren<CursorEffectsScript>().ActivateCursor(c.cursorNotPlayedYet);
             }
         }
         foreach (Enemy e in enemies)
@@ -351,7 +359,8 @@ public class CombatManager : MonoBehaviour
             if (!e.isDead)
             {
                 e.hasPlayed = false;
-                fightersList[currCharAttacking].cursorNotPlayedYet.SetActive(true);
+                //fightersList[currCharAttacking].cursorNotPlayedYet.SetActive(true);
+                e.GetComponentInChildren<CursorEffectsScript>().ActivateCursor(e.cursorNotPlayedYet);
             }
         }
         while (fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead || !fightersList[currCharAttacking])
@@ -367,7 +376,8 @@ public class CombatManager : MonoBehaviour
 
         StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
         fightersList[currCharAttacking].CanAttack = true;
-        fightersList[currCharAttacking].cursorPlaying.SetActive(true);
+        //fightersList[currCharAttacking].cursorPlaying.SetActive(true);
+        fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().ActivateCursor(fightersList[currCharAttacking].cursorPlaying);
         if (fightersList[currCharAttacking].charType == Characters.CharType.ALLY)
         {
             allyPlaying = (Ally)fightersList[currCharAttacking];
