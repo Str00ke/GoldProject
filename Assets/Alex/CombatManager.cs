@@ -101,7 +101,6 @@ public class CombatManager : MonoBehaviour
         //SORT BY INITIATIVE
         SortFightersInit();
         fightersList[currCharAttacking].CanAttack = true;
-        //fightersList[currCharAttacking].cursorPlaying.SetActive(true);
         fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().ActivateCursor(fightersList[currCharAttacking].cursorPlaying);
         if (fightersList[currCharAttacking].charType == Characters.CharType.ALLY)
         {
@@ -132,20 +131,18 @@ public class CombatManager : MonoBehaviour
     }
    IEnumerator NextCharAttackCor()
     {
-        if(currCharAttacking >= 0)
+        if(fightersList[currCharAttacking] && currCharAttacking >= 0)
         {
             fightersList[currCharAttacking].CanAttack = false;
             fightersList[currCharAttacking].hasPlayed = true;
-            //fightersList[currCharAttacking].cursorNotPlayedYet.SetActive(false);
             fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().DeactivateCursor(fightersList[currCharAttacking].cursorNotPlayedYet);
         }
         AbilitiesManager.abilitiesManager.ClearTargets();
         yield return new WaitForSeconds(fightersList[currCharAttacking].durationDecreaseHealth * 2);
         if (currCharAttacking >= 0)
         {
-            if(fightersList[currCharAttacking].cursorPlaying)
+            if (fightersList[currCharAttacking].cursorPlaying)
                 fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().DeactivateCursor(fightersList[currCharAttacking].cursorPlaying);
-            //fightersList[currCharAttacking].cursorPlaying.SetActive(false);
         }
         currCharAttacking++;
         if (currCharAttacking >= fightersList.Count)
@@ -156,12 +153,16 @@ public class CombatManager : MonoBehaviour
         {
             while (!fightersList[currCharAttacking] || fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead)
             {
-                StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
-                //fightersList[currCharAttacking].cursorPlaying.SetActive(true);
-                fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().ActivateCursor(fightersList[currCharAttacking].cursorPlaying);
+                    StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
+                if (fightersList[currCharAttacking].cursorPlaying)
+                {
+                    fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().ActivateCursor(fightersList[currCharAttacking].cursorPlaying);
+                }
                 yield return new WaitForSeconds(1.5f);
-                fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().DeactivateCursor(fightersList[currCharAttacking].cursorPlaying);
-                //fightersList[currCharAttacking].cursorPlaying.SetActive(false);
+                if (fightersList[currCharAttacking].cursorPlaying)
+                {
+                    fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().DeactivateCursor(fightersList[currCharAttacking].cursorPlaying);
+                }
                 currCharAttacking++;
                 //---------------- ---IF EVERY FIGHTERS HAVE PLAYED -> NEXT TURN----------------------------
                 if (currCharAttacking >= fightersList.Count)
@@ -183,9 +184,13 @@ public class CombatManager : MonoBehaviour
                     allyPlaying = null;
                 }
                 //UPDATE STATUS ON CHARACTER PLAYING
+                yield return new WaitForSeconds(0.5f);
                 StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
-                yield return new WaitForSeconds(0.8f);
-                CharAttack(currCharAttacking);
+                yield return new WaitForSeconds(fightersList[currCharAttacking].durationDecreaseHealth*1.5f);
+                if (fightersList[currCharAttacking])
+                    CharAttack(currCharAttacking);
+                else
+                    NextCharAttack();
             }
         }
     }

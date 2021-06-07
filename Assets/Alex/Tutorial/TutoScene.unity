@@ -4968,11 +4968,11 @@ MonoBehaviour:
   statsCharLeft: {fileID: 0}
   turnsText: {fileID: 0}
   stateIcons:
-  - {fileID: 21300000, guid: a97298cfea1b1f845b38d2898af89cde, type: 3}
-  - {fileID: 21300000, guid: a49e145b357eab44cb4177e4e0884f30, type: 3}
-  - {fileID: 21300000, guid: 7cdbcc557d4a785448c3492f15b00f70, type: 3}
-  - {fileID: 21300000, guid: 225a47f27e565a5448dde947a2b4003c, type: 3}
-  - {fileID: 21300000, guid: 5a1baae19eafd6f49b4bd766517d2f06, type: 3}
+  - {fileID: 21300000, guid: c5992cda35a526d479d6d3b84237abcc, type: 3}
+  - {fileID: 21300000, guid: 1efbc1df8623fb44386448900720b5a1, type: 3}
+  - {fileID: 21300000, guid: 9fbe9a8f95a21934abcf74be9ab889eb, type: 3}
+  - {fileID: 21300000, guid: ac7a4accc19833a4c90bd2ad08a8b3ad, type: 3}
+  - {fileID: 21300000, guid: 5d054729af2f4af448eac92eb2913a1b, type: 3}
 --- !u!114 &1181179929918187473
 MonoBehaviour:
   m_ObjectHideFlags: 0

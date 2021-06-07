@@ -17,6 +17,9 @@ public class StatusManager : MonoBehaviour
     public float statusOffset = 0.13f;
     public int statusId;
 
+    [Header("UI Status")]
+    public GameObject panelStatus;
+
     private void Awake()
     {
         if (statusManager == null)
@@ -102,17 +105,10 @@ public class StatusManager : MonoBehaviour
         }
         c.statusPerLine--;
         c.statusLines = c.statusPerLine < 0 ? c.statusLines-1 : c.statusLines;
-        /*c.statusLines = 0;
-        c.statusPerLine = 0;
-        foreach (GameObject g in c.prefabsIconStatus)
-        {
-            g.transform.position = c.transform.position + new Vector3(c.debuffsInitialPos.x + (statusOffset * (c.statusPerLine - c.statusPerLineMax * c.statusLines)), c.debuffsInitialPos.y - (statusOffset * (c.statusPerLine / c.statusPerLineMax)));
-            c.statusPerLine++;
-            if (c.statusPerLine >= c.statusPerLineMax)
-            {
-                c.statusLines++;
-                c.statusPerLine = 0;
-            }
-        }*/
+    }
+
+    public void DisplayStatusCharacter(Status[] arrStatus)
+    {
+
     }
 }
