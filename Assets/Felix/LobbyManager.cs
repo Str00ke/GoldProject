@@ -114,6 +114,16 @@ public class LobbyManager : MonoBehaviour
         lobbyState = ELobbyState.Shop;
 
         CharacterManager.characterManager.SelectCharacterStats(CharacterManager.characterManager.selectedChar);
+        RectTransform content = ShopMenu.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<RectTransform>();
+        Vector2 size;
+        size.x = content.sizeDelta.x;
+
+        int nbItems = content.transform.childCount + 5;
+        while (nbItems % 5 != 0)
+            nbItems--;
+
+        size.y = nbItems / 5 * 225f - 25f;
+        content.sizeDelta = size;
     }
 
     public void ItemToBuy(NItem.ItemScriptableObject item)

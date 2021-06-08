@@ -17,7 +17,6 @@ public class Enemy : Characters
         anim = this.GetComponent<Animator>();
         durationMove = 1.0f;
         durationDecreaseHealth = 1.0f;
-
         //ISTARGETABLE FOR ABILITIES
         isTargetable = false;
         UpdateMeleeState();
@@ -88,6 +87,9 @@ public class Enemy : Characters
         health = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = health;
+        Debug.Log(this.GetComponent<SpriteRenderer>().sprite.bounds.size.y);
+        cursorSelected.transform.position = new Vector3(cursorSelected.transform.position.x, GetComponent<SpriteRenderer>().sprite.bounds.size.y / 5, cursorSelected.transform.position.z);
+        cursorPlaying.transform.position = new Vector3(cursorPlaying.transform.position.x, GetComponent<SpriteRenderer>().sprite.bounds.size.y / 5, cursorPlaying.transform.position.z);
     }
 
     void SetEnemyImg()

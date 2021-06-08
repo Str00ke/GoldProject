@@ -363,7 +363,6 @@ public class AbilitiesManager : MonoBehaviour
             {
                 if (cm.charSelected.isTargetable)
                 {
-                    Status defStatus = new Status(cm.allyPlaying, 0, abi, Status.StatusTypes.DEFENCE);
                     Status s1 = null;
                     foreach (Status s in cm.allyPlaying.statusList)
                     {
@@ -374,7 +373,10 @@ public class AbilitiesManager : MonoBehaviour
                         }
                     }
                     if(s1 == null)
-                        s1 = new Status(cm.allyPlaying, Mathf.Round(cm.allyPlaying.armor * 0.6f), abi, Status.StatusTypes.ARMORBONUS);
+                    {
+                        s1 = new Status(cm.allyPlaying, 0, abi, Status.StatusTypes.DEFENCE);
+                    }
+                    new Status(cm.allyPlaying, Mathf.Round(cm.allyPlaying.armor * 0.6f), abi, Status.StatusTypes.ARMORBONUS);
                 }
             }
         }
