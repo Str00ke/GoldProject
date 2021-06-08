@@ -2302,6 +2302,62 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part2.armorMultiplicator
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part2.dodgeMultiplicator
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part3.armorMultiplicator
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part3.dodgeMultiplicator
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part2.maxHealthMultiplicator
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part3.maxHealthMultiplicator
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part2.critChanceMultiplicator
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part2.critDamageMultiplicator
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part2.initiativeMultiplicator
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part3.critChanceMultiplicator
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part3.critDamageMultiplicator
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part3.initiativeMultiplicator
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part2.damageRangeMultiplicator
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: easyDungeon.part3.damageRangeMultiplicator
+      value: 1.4
+      objectReference: {fileID: 0}
     - target: {fileID: 6246008579936257100, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
       propertyPath: m_Name
       value: EnnemyManager
