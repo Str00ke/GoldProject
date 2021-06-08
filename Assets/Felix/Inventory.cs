@@ -4,8 +4,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+public class InventorySave
+{
+    //List<GameObject>
+}
+
 public class Inventory : MonoBehaviour
 {
+    public NItem.ItemScriptableObject[] nItems;
+
     public RectTransform mainCanvas;
     public int golds = 0;
     public int souls = 0;
@@ -20,7 +27,7 @@ public class Inventory : MonoBehaviour
 
     [Header("Item Inventory")]
     private int nbLines = 0;
-    private List<GameObject> itemList = new List<GameObject>();
+    public List<GameObject> itemList = new List<GameObject>();
     private GameObject itemPanelTarget;
     private Character characterItemChoosed;
 
@@ -38,6 +45,7 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
+       
         inventory = this;
 
         panelItem.SetActive(false);
@@ -63,6 +71,32 @@ public class Inventory : MonoBehaviour
         CloseItemPanel();
 
         ResetButtonSelection();
+    }
+
+    public void LoadInventory()
+    {
+        List<Dictionary<string, NItem.ERarity>> nItemsList = SaveSystem.LoadInventory();
+        Debug.Log(nItemsList.Count);
+        Debug.Log(nItems.Length);
+        for (int i = 0; i < nItemsList.Count; ++i)
+        {
+            Debug.Log("Keys : " + nItemsList[i].Keys.ToString());
+            foreach(NItem.ItemScriptableObject item in nItems)
+            {
+                if (nItemsList[i].ContainsKey(item.itemName) && nItemsList[i].ContainsValue(item.itemRarity))
+                {
+                    AddItem(item);
+                    break;
+                }
+            }            
+        }
+    }
+
+    public void LoadMoney()
+    {
+        (int, int) data = SaveSystem.LoadMoney();
+        AddGolds(data.Item1);
+        AddSouls(data.Item2);
     }
 
     public void AddItem(NItem.ItemScriptableObject item)

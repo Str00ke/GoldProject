@@ -1,5 +1,28 @@
 using UnityEngine;
 
+[System.Serializable]
+public class CharSave
+{
+    public string charSoName;
+    public string[] itemsName;
+    public int index;
+
+    public CharSave(Character _char, int _index)
+    {
+        charSoName = _char.charSO.charName;
+        itemsName = new string[_char.items.Length];
+        for (int i = 0; i < _char.items.Length; ++i)
+        {
+            if (_char.items[i] != null)
+            {
+                itemsName[i] = _char.items[i].itemName;
+                Debug.Log(itemsName[i]);            
+            }
+        }
+        index = _index;
+    }
+}
+
 public class Character : MonoBehaviour
 {
     public enum ECharacterType
@@ -9,7 +32,7 @@ public class Character : MonoBehaviour
         Char2
     }
 
-    private CharacterScriptableObject charSO;
+    public CharacterScriptableObject charSO;
 
     public string charName;
     public int health;
@@ -25,7 +48,7 @@ public class Character : MonoBehaviour
     public Sprite charHead;
     public Sprite[] itemSprites;
 
-    private NItem.ItemScriptableObject[] items;
+    public NItem.ItemScriptableObject[] items;
 
     private void Awake()
     {
@@ -35,6 +58,7 @@ public class Character : MonoBehaviour
 
     public void SetCharacterScriptableObject(CharacterScriptableObject characterScriptableObject)
     {
+        charSO = characterScriptableObject;
         charName = characterScriptableObject.charName;
         health = characterScriptableObject.health;
         maxHealth = characterScriptableObject.health;
@@ -59,18 +83,21 @@ public class Character : MonoBehaviour
         SetStats(item.health, item.armor, item.attack, item.dodge, item.criticalChance, item.crititalDamage);
 
         items[itemIndex] = item;
-
+        Debug.Log(items[itemIndex].itemName + "  " + itemIndex);
         if (item.itemPartType == NItem.EPartType.Gem)
         {
             itemSprites[0] = item.itemSprites[0];
+            Debug.Log("0");
         }
         else if (item.itemPartType == NItem.EPartType.Head)
         {
             itemSprites[1] = item.itemSprites[(int)characterType];
+            Debug.Log("1");
         }
         else if (item.itemPartType == NItem.EPartType.Body)
         {
             itemSprites[2] = item.itemSprites[(int)characterType];
+            Debug.Log("2");
         }
         else if (item.itemPartType == NItem.EPartType.Weapon)
         {
@@ -78,6 +105,7 @@ public class Character : MonoBehaviour
             {
                 itemSprites[i + 3] = item.itemSprites[i];
             }
+            Debug.Log("3");
         }
     }
 

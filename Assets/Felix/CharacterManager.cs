@@ -48,6 +48,57 @@ public class CharacterManager : MonoBehaviour
         characters[indexChar] = character;
     }
 
+    public void LoadCharacters()
+    {
+        CharSave[] chars = SaveSystem.LoadPlayers();
+        if (chars.Length > 0) LobbyManager.lobbyManager.playButton.interactable = true;
+        for (int i = 0; i < chars.Length; ++i)
+        {
+            if (chars[i] != null)
+                ReCreateChar(chars[i]);
+        }
+    }
+
+    public void ReCreateChar(CharSave _char) 
+    {
+        Debug.Log("IndexPrimo: " + _char.index);
+        if (AskForCharacter(_char.index) != null)
+            return;
+
+        Debug.Log("Index: " + _char.index);
+        CharacterScriptableObject charSo = null;
+        foreach (CharacterScriptableObject so in charactersScriptable)
+        {
+            if (so.charName == _char.charSoName)
+            {
+                charSo = so;
+                break;
+            }
+        }
+
+        
+
+        GameObject nGameObject = new GameObject("Character");
+        nGameObject.transform.parent = gameObject.transform;
+        Character nChar = nGameObject.AddComponent<Character>();
+        nChar.SetCharacterScriptableObject(charSo);
+        for (int i = 0; i < _char.itemsName.Length; ++i)
+        {
+            foreach (NItem.ItemScriptableObject item in Inventory.inventory.nItems)
+            {
+                if (item.itemName == _char.itemsName[i])
+                {
+                    nChar.AddItem(item, item.itemPartType);
+                    break;
+                }
+            }
+        }
+        characters[_char.index] = nChar;
+        RefreshTeamScene();
+        SelectCharacterStats(_char.index);
+    }
+
+
     public void SummonCharacter(int indexChar)
     {
         if (AskForCharacter(indexChar) != null)

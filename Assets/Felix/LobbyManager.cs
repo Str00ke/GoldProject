@@ -56,7 +56,10 @@ public class LobbyManager : MonoBehaviour
     {
         isFirstGameDone = bool.Parse(PlayerPrefs.GetString("FirstGame", "false"));
         CloseAllMenu();
-        //LevelManager.GetInstance().UpdateDataValues();
+        //LevelManager.GetInstance().UpdateDataValues();        
+        Inventory.inventory.LoadInventory();
+        Inventory.inventory.LoadMoney();
+        CharacterManager.characterManager.LoadCharacters();
     }
 
     public void SwitchLobbyUI()
@@ -187,5 +190,32 @@ public class LobbyManager : MonoBehaviour
     {
         //int fVal = LevelData.GetSouls() + Inventory.inventory.souls;
         PlayGamesController.PostToLeaderboard(Inventory.inventory.souls);
+    }
+
+    void OnApplicationQuit()
+    {
+        SaveSystem.SaveInventory();
+        SaveSystem.SaveMoney();
+        SaveSystem.SavePlayers();
+    }
+
+    void OnApplicationPause(bool pauseStatus)
+    {
+        SaveSystem.SaveInventory();
+        SaveSystem.SaveMoney();
+        SaveSystem.SavePlayers();
+    }
+
+    public void SaveInventory()
+    {
+        //SaveSystem.SaveInventory();
+        //SaveSystem.SaveMoney();
+        SaveSystem.SavePlayers();
+    }
+
+    public void LoadInventory()
+    {
+        Inventory.inventory.LoadInventory();
+        Inventory.inventory.LoadMoney();
     }
 }

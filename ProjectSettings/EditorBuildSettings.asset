@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Felix/Starter.unity
-    guid: d5535194a032b9f46a77bc0533a25e0f
-  - enabled: 1
     path: Assets/Felix/FScene.unity
     guid: 37903177126894448bd30f50d8af4510
+  - enabled: 1
+    path: Assets/Felix/Starter.unity
+    guid: d5535194a032b9f46a77bc0533a25e0f
   - enabled: 1
     path: Assets/Charlelie/Level/Level.unity
     guid: 81066796c9328bb49b0a9255b693e701
