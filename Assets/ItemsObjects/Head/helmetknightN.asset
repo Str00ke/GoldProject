@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f1b7c176c2dab46b42dfb6a9ffe6bb, type: 3}
   m_Name: helmetknightN
   m_EditorClassIdentifier: 
-  itemName: Knight Helmet
+  itemName: Knight Helmet N
   health: 15
   armor: 5
   attack: 0
