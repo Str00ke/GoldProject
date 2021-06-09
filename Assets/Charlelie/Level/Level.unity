@@ -1818,8 +1818,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -147}
-  m_SizeDelta: {x: 502.24, y: 94.17}
+  m_AnchoredPosition: {x: -0.000021458, y: -227}
+  m_SizeDelta: {x: 807.81, y: 222.129}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &627462346
 MonoBehaviour:
@@ -1843,18 +1843,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 98918d61967632e40a5aa8a8b2a5cb48, type: 3}
-    m_FontSize: 54
+    m_FontSize: 80
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 10
-    m_MaxSize: 69
+    m_MinSize: 8
+    m_MaxSize: 80
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Are you sure?
+  m_Text: Are you sure you want to leave with your loot?
 --- !u!222 &627462347
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3882,7 +3882,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Retry
+  m_Text: Menu
 --- !u!222 &1351329416
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4473,7 +4473,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1043196670}
         m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: Retry
+        m_MethodName: ReturnToLobby
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5645,7 +5645,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.4000244}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &8000779872451142614

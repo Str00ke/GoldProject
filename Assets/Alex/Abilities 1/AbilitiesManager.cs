@@ -66,11 +66,11 @@ public class AbilitiesManager : MonoBehaviour
 
     public void DisplayAbilities() 
     {
-        if (CombatManager.combatManager.allyPlaying && !CombatManager.combatManager.allyPlaying.hasPlayed) 
+        if (CombatManager.combatManager.allyPlaying && !CombatManager.combatManager.allyPlaying.hasPlayed && CombatManager.combatManager.enemies.Count > 0) 
         {
             abilitiesUI.SetActive(true);
             ChangeUIAbilities();
-        }else if(CombatManager.combatManager.allyPlaying && CombatManager.combatManager.allyCombo && !CombatManager.combatManager.allyPlaying.hasPlayed)
+        }else if(CombatManager.combatManager.allyPlaying && CombatManager.combatManager.allyCombo && !CombatManager.combatManager.allyPlaying.hasPlayed && CombatManager.combatManager.enemies.Count <= 0)
         {
             abilitiesUI.SetActive(false);
         }

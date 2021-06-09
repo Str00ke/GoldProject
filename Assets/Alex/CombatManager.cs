@@ -153,7 +153,7 @@ public class CombatManager : MonoBehaviour
         {
             while (fightersList[currCharAttacking] == null || fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead)
             {
-                if(fightersList[currCharAttacking] != null)
+                if(fightersList[currCharAttacking] != null && !fightersList[currCharAttacking].isDead)
                 {
                     StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
                     if (fightersList[currCharAttacking].cursorPlaying)
