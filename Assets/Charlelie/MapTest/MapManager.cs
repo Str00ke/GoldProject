@@ -10,7 +10,7 @@ public class MapManager : MonoBehaviour
     Vector2 direction;
     Vector2 currPos;
     public MapRoom[,] roomsList;
-    MapRoom[] roomArr;
+    public MapRoom[] roomArr;
     public GameObject mapRoom;
     public GameObject map, mapHolder, mapBtn;
     public MapRoom onRoom;

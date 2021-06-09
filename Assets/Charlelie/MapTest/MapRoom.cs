@@ -61,7 +61,6 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             GetComponent<Image>().color = Color.red;
         }
-
     }
 
     void Update()
@@ -118,10 +117,37 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (isFinished)
             return;
-
+        Debug.Log(MapManager.GetInstance().roomArr.Length);
         isFinished = true;
-        //Debug.Log("Discovering");
-        if (roomType == RoomType.END)
+        if (roomType != RoomType.START)
+        {
+            if (distFromStart == EnnemyManager._enemyManager.easyMax)
+            {
+                foreach (MapRoom room in MapManager.GetInstance().roomArr)
+                {
+                    if (room != null && room.distFromStart == EnnemyManager._enemyManager.easyMax && PlayerPoint._playerPoint.onRoom != room)
+                    {
+                        room.GetComponent<Image>().color = Color.white;
+                    }
+                }
+            }
+            else if (distFromStart == EnnemyManager._enemyManager.middleMax)
+            {
+                Debug.Log("MiddleMax");
+                foreach (MapRoom room in MapManager.GetInstance().roomArr)
+                {
+                    if (room != null && room.distFromStart == EnnemyManager._enemyManager.middleMax && PlayerPoint._playerPoint.onRoom != room)
+                    {
+                        Debug.Log("We got one");
+                        room.GetComponent<Image>().color = Color.white;
+                    }
+                }
+            }
+        }
+        
+
+            //Debug.Log("Discovering");
+            if (roomType == RoomType.END)
         {
             Debug.Log("Level finished!");
             LevelManager.GetInstance().levelFinishedTxt.SetActive(true);
@@ -132,6 +158,8 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             {
                 if (!linkedRoom[i].isDiscovered)
                 {
+                    if (linkedRoom[i].distFromStart == EnnemyManager._enemyManager.easyMax || linkedRoom[i].distFromStart == EnnemyManager._enemyManager.middleMax)
+                        linkedRoom[i].GetComponent<Image>().color = new Color(255, 0, 224);
                     linkedRoom[i].gameObject.SetActive(true);
                     linkedRoom[i].isDiscovered = true;
 

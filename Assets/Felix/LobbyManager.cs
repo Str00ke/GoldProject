@@ -222,6 +222,7 @@ public class LobbyManager : MonoBehaviour
         Inventory.inventory.LoadInventory();
         Inventory.inventory.LoadMoney();
         CharacterManager.characterManager.LoadCharacters();
+        AddScoreToLeaderboard();
     }
 
     /*public void SaveInventory()

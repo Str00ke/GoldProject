@@ -31,30 +31,28 @@ public static class AchievementsManager
 
     public static void DamageDeal(float value)
     {
-        string achType = "";
+        List<string> achTypes = new List<string>();
         if (value >= 20)
         {
+            achTypes.Add(GPGSIds.achievement_damage_dealer_copper);
             if (value >= 50)
             {
+                achTypes.Add(GPGSIds.achievement_damage_dealer_silver);
                 if (value >= 100)
                 {
+                    achTypes.Add(GPGSIds.achievement_damage_dealer_gold);
                     if (value >= 200)
                     {
-                        achType = GPGSIds.achievement_damage_dealer_diamond;
-                    }
-                    else
-                        achType = GPGSIds.achievement_damage_dealer_gold;
-                }
-                else
-                    achType = GPGSIds.achievement_damage_dealer_silver;
-            }
-            else
-                achType = GPGSIds.achievement_damage_dealer_copper;
+                        achTypes.Add(GPGSIds.achievement_damage_dealer_diamond);
+                    }    
+                }     
+            }            
         }
         else
             return;
 
-        UnlockAchievement(achType);
+        for (int i = 0; i < achTypes.Count - 1; ++i)
+            UnlockAchievement(achTypes[i]);
     }
 
     public static void OnCombatEnd(CombatManager combatManager)
