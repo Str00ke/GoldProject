@@ -24,15 +24,23 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public Text textNbr;
     public int roomNbr;
     public Sprite[] hallwayImgs;
+    bool haveANbr = false;
 
     //Remplacer GameObject par les types une foit ajoutés
     GameObject[] ennemies;
     GameObject[] chests;
     bool isShop;
 
-    public void SetNbr()
+    public void SetNbr(int nbr)
     {
-        textNbr.text = roomNbr.ToString();
+        if (!haveANbr)
+        {
+            roomNbr = nbr;
+            textNbr.text = roomNbr.ToString();
+            distFromStart = roomNbr;
+            haveANbr = true;
+        }
+        
     }
 
     public void Init()
@@ -116,6 +124,7 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (roomType == RoomType.END)
         {
             Debug.Log("Level finished!");
+            LevelManager.GetInstance().levelFinishedTxt.SetActive(true);
         }
         for (int i = 0; i < 4; ++i)
         {
@@ -126,7 +135,6 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                     linkedRoom[i].gameObject.SetActive(true);
                     linkedRoom[i].isDiscovered = true;
 
-                    Debug.Log("LINKLINKLINK");
                     GameObject go = new GameObject();
                     go.transform.parent = this.transform;
                     Image img = go.AddComponent<Image>();
@@ -162,8 +170,8 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                     go.transform.SetAsFirstSibling();
                 }
 
-                
-                
+
+
                 /*LineRenderer lr = go.AddComponent<LineRenderer>();
                 Material mat = new Material(Shader.Find("Unlit/Texture"));
                 lr.material = mat;

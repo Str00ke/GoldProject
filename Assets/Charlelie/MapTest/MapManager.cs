@@ -145,6 +145,8 @@ public class MapManager : MonoBehaviour
                     room.GetComponent<MapRoom>().Init();
                     if (room.GetComponent<MapRoom>().roomType != RoomType.START)
                         room.SetActive(false);
+                    /*else
+                        room.GetComponent<MapRoom>().OnFinishRoom();*/
                     index++;
                 }
 
@@ -204,18 +206,67 @@ public class MapManager : MonoBehaviour
         FindObjectOfType<PlayerPoint>().onRoom.OnFinishRoom();
     }
 
+    public IEnumerator Test()
+    {
+        yield return StartCoroutine(StartTO(PlayerPoint._playerPoint.startRoom, 0, (isDone) => {
+            LevelManager.GetInstance().Continue();
+        }));
+    }
+
+    public IEnumerator StartTO(MapRoom room, int index, System.Action<bool> isDone)
+    {
+        room.SetNbr(index);
+        testArr.Add(room);
+        for (int i = 0; i < 4; ++i)
+        {
+            
+            if (room.linkedRoom[i] != null && !testArr.Contains(room.linkedRoom[i]))
+            {
+                if (room.linkedRoom[i].roomType == RoomType.END)
+                {
+                    testArr.Add(room.linkedRoom[i]);
+                    /*room.linkedRoom[i].roomNbr = index;
+                    testMax = room.roomNbr;*/
+                    room.linkedRoom[i].SetNbr(index + 1);
+                    testMax = index + 1;
+                    yield return new WaitForSeconds(0.01f);
+                    isDone(true);
+                    //StartCoroutine(StartTO(room.linkedRoom[i], index + 1, isDone));
+                } else
+                    room.linkedRoom[i].SetNbr(index + 1);
+            }
+        }
+        index++;
+        for (int i = 0; i < 4; ++i)
+        {
+            if (room.linkedRoom[i] != null && !testArr.Contains(room.linkedRoom[i]))
+            {
+                
+                if (testMax == 0)
+                {
+                    yield return new WaitForSeconds(0.01f);
+                    StartCoroutine(StartTO(room.linkedRoom[i], index, isDone));
+                }   
+                else if (index + 1 >= testMax && room.linkedRoom[i].roomType != RoomType.END)
+                {
+                    yield return new WaitForSeconds(0.01f);
+                    StartCoroutine(StartTO(room.linkedRoom[i], index, isDone));
+                }
+            }
+        }
+    }
 
     public void StartToEnd(MapRoom room, int index)
     {
         //Debug.Log("Index: " + index);
-        room.roomNbr = index;
+        //room.roomNbr = index;
         //Debug.Log("Room nbr: " + room.roomNbr);
-        room.SetNbr();
+        room.SetNbr(index);
         
         rTestDone++;
         rDistFromStart++;
         //index++;
-        room.distFromStart = rDistFromStart;
+        //room.distFromStart = rDistFromStart;
         //Debug.Log(rTestDone);
         testArr.Add(room);
         bool result = false;
@@ -223,22 +274,30 @@ public class MapManager : MonoBehaviour
         {
             if (room.linkedRoom[i] != null && !testArr.Contains(room.linkedRoom[i]))
             {
-                if (room.linkedRoom[i].roomType == RoomType.END)
+                room.linkedRoom[i].SetNbr(index + 1);
+            }
+        }
+        index++;
+        for (int i = 0; i < 4; ++i)
+        {
+            if (room.linkedRoom[i] != null && !testArr.Contains(room.linkedRoom[i]))
+            {
+                if(room.linkedRoom[i].roomType == RoomType.END)
                 {
                     //Debug.Log("ARRIVED!!!");
                     //Debug.Log("Arrival at: " + index + 1);
-                    room.linkedRoom[i].roomNbr = index + 1;
+                    room.linkedRoom[i].roomNbr = index;
                     testMax = room.roomNbr;
                     StartToEnd(room.linkedRoom[i], index + 1);
                     result = true;
                 }
-                //Debug.Log("++= " + (room.roomNbr + 1));
                 if (testMax == 0)
-                    StartToEnd(room.linkedRoom[i], (room.roomNbr + 1));
-                else if (index + 1 > testMax && room.linkedRoom[i].roomType != RoomType.END)
+                    StartToEnd(room.linkedRoom[i], index);
+                else if (index + 1 >= testMax && room.linkedRoom[i].roomType != RoomType.END)
                     StartToEnd(room.linkedRoom[i], index);
             }
         }
+
         rTestDone--;
 
         if (rTestDone <= 1)
