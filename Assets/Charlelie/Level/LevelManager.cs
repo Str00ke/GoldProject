@@ -95,8 +95,19 @@ public class LevelManager : MonoBehaviour
         mapManager.Init();
         mapManager.GenerateMap();
         FindObjectOfType<PlayerPoint>().Init();
-        mapManager.MapLinkRooms();     
-        mapManager.StartToEnd(PlayerPoint._playerPoint.startRoom, 0);
+        mapManager.MapLinkRooms();
+        StartCoroutine(mapManager.Test());
+        //mapManager.StartToEnd(PlayerPoint._playerPoint.startRoom, 0);
+        /*mapManager.RandomizeShop();
+        StartRoom();
+        shop.SetActive(false);
+        obliterate.SetActive(false);
+        EnnemyManager._enemyManager.SetRoomsDiff(mapManager.testMax);
+        LevelData.EraseData();*/
+    }
+
+    public void Continue()
+    {
         mapManager.RandomizeShop();
         StartRoom();
         shop.SetActive(false);
@@ -104,7 +115,6 @@ public class LevelManager : MonoBehaviour
         EnnemyManager._enemyManager.SetRoomsDiff(mapManager.testMax);
         LevelData.EraseData();
     }
-
 
     void LoadLevel()
     {
@@ -144,8 +154,9 @@ public class LevelManager : MonoBehaviour
                 break;
 
             case RoomType.END:
-                room.OnFinishRoom();
-                levelFinishedTxt.SetActive(true);
+                /*room.OnFinishRoom();
+                levelFinishedTxt.SetActive(true);*/
+                CreateFight();
                 break;
 
             case RoomType.START:
