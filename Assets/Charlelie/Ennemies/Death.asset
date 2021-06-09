@@ -22,5 +22,11 @@ MonoBehaviour:
   initiative: 15
   armor: 30
   element: 0
-  enemyAbilities: []
-  enemySpecialsAbilities: []
+  enemyAbilities:
+  - {fileID: 11400000, guid: 339b3b47eb400d24e90347ae579ebbf6, type: 2}
+  - {fileID: 11400000, guid: 3aa29f96a43107e48a69b2579056750f, type: 2}
+  - {fileID: 11400000, guid: f0c37bc5ce7359f4a82efb16e0badc74, type: 2}
+  enemySpecialsAbilities:
+  - {fileID: 11400000, guid: ee2b8cc13192047429db8f42ba4f5b5c, type: 2}
+  - {fileID: 11400000, guid: 02961977e52a2704bb2f4a6314df180f, type: 2}
+  - {fileID: 11400000, guid: 084393e7d21f5b440a686b49b84dc8bf, type: 2}
