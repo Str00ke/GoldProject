@@ -151,17 +151,20 @@ public class CombatManager : MonoBehaviour
         }
         else
         {
-            while (!fightersList[currCharAttacking] || fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead)
+            while (fightersList[currCharAttacking] == null || fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead)
             {
+                if(fightersList[currCharAttacking] != null)
+                {
                     StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
-                if (fightersList[currCharAttacking].cursorPlaying)
-                {
-                    fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().ActivateCursor(fightersList[currCharAttacking].cursorPlaying);
-                }
-                yield return new WaitForSeconds(1.5f);
-                if (fightersList[currCharAttacking].cursorPlaying)
-                {
-                    fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().DeactivateCursor(fightersList[currCharAttacking].cursorPlaying);
+                    if (fightersList[currCharAttacking].cursorPlaying)
+                    {
+                        fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().ActivateCursor(fightersList[currCharAttacking].cursorPlaying);
+                    }
+                    yield return new WaitForSeconds(1.5f);
+                    if (fightersList[currCharAttacking].cursorPlaying)
+                    {
+                        fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().DeactivateCursor(fightersList[currCharAttacking].cursorPlaying);
+                    }
                 }
                 currCharAttacking++;
                 //---------------- ---IF EVERY FIGHTERS HAVE PLAYED -> NEXT TURN----------------------------
