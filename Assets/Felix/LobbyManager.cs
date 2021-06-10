@@ -59,6 +59,7 @@ public class LobbyManager : MonoBehaviour
         //LevelManager.GetInstance().UpdateDataValues();
         AddScoreToLeaderboard();
         LoadData();
+        Debug.Log("Hello");
     }
 
     public void SwitchLobbyUI()
@@ -193,6 +194,12 @@ public class LobbyManager : MonoBehaviour
 
         loadingScene.SetActive(false);
         SwitchLobbyUI();
+        OnSceneChange(sceneName);
+    }
+
+    void OnSceneChange(string sceneName)
+    {
+        if (sceneName == "FScene") AddScoreToLeaderboard();
     }
 
     public void AddScoreToLeaderboard()
