@@ -16,6 +16,7 @@ public class Inventory : MonoBehaviour
     public RectTransform mainCanvas;
     public int golds = 0;
     public int souls = 0;
+    public int death = 0;
 
     [Header("UI gold & souls")]
     public Text goldText;
@@ -94,9 +95,15 @@ public class Inventory : MonoBehaviour
 
     public void LoadMoney()
     {
-        (int, int) data = SaveSystem.LoadMoney();
+        (int, int, int) data = SaveSystem.LoadMoney();
         AddGolds(data.Item1);
         AddSouls(data.Item2);
+        death = data.Item3;
+    }
+
+    public void AddDeath(int value)
+    {
+        death += value;
     }
 
     public void AddItem(NItem.ItemScriptableObject item)

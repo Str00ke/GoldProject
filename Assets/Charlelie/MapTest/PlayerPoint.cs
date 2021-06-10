@@ -40,5 +40,9 @@ public class PlayerPoint : MonoBehaviour
     {
         transform.position = room.transform.position;
         onRoom = room;
+        if (!room.isFinished && room.roomType != RoomType.START)
+            LevelManager.GetInstance().enterRoom.SetActive(true);
+        else if(LevelManager.GetInstance().enterRoom.activeSelf && room.isFinished)
+            LevelManager.GetInstance().enterRoom.SetActive(false);
     }
 }

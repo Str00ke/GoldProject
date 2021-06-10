@@ -401,6 +401,7 @@ public class CombatManager : MonoBehaviour
 
         allies.Remove(a);
         hasDied = true;
+        LevelData.AddDeath();
         if (allies.Count <= 0)
         {
             FindObjectOfType<LevelManager>().losePanel.SetActive(true);
@@ -447,6 +448,10 @@ public class CombatManager : MonoBehaviour
         {
             AchievementsManager.OnCombatEnd(this);
             LootManager.lootManager.GiveLootToPlayer();
+            if (PlayerPoint._playerPoint.onRoom.distFromStart == EnnemyManager._enemyManager.easyMax)
+                LevelManager.GetInstance().isFirstMiniBossDead = true;
+            else if (PlayerPoint._playerPoint.onRoom.distFromStart == EnnemyManager._enemyManager.middleMax)
+                LevelManager.GetInstance().isSecondMiniBossDead = true;
             //LootManager.lootManager.SpawnChest();
             /*if (LootManager.lootManager.lootOnGround.Count <= 0)
             {
@@ -455,7 +460,7 @@ public class CombatManager : MonoBehaviour
                 {
                     CharacterManager.characterManager.AskForCharacter(a.teamPosition).health = (int)a.health;
                 }
-            }*/    
+            }*/
         }          
         else if (typeof(T) == typeof(Ally))
             FindObjectOfType<LevelManager>().LoseFight();

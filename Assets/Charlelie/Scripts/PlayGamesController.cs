@@ -64,7 +64,7 @@ public class PlayGamesController : MonoBehaviour {
         
     }
 
-    public static void PostToLeaderboard(long newScore)
+    public static void PostToSoulLeaderboard(long newScore)
     {
         Debug.Log("Try to post score to leadeboard");
         if (PlayGamesPlatform.Instance.IsAuthenticated())
@@ -84,10 +84,35 @@ public class PlayGamesController : MonoBehaviour {
             Debug.Log("Can't post score because you're not authenticated");
     }
 
-    public static void ShowLeaderboardUI()
+    public static void PostToDeathLeaderboard(long newScore)
+    {
+        if (PlayGamesPlatform.Instance.IsAuthenticated())
+        {
+            Social.ReportScore(newScore, GPGSIds.leaderboard_death_leaderboard, (bool success) => {
+                if (success)
+                {
+                    Debug.Log("Posted new score to leaderboard");
+                }
+                else
+                {
+                    Debug.LogError("Unable to post new score to leaderboard");
+                }
+            });
+        }
+        else
+            Debug.Log("Can't post score because you're not authenticated");
+    }
+
+    public static void ShowSoulLeaderboardUI()
     {
         if (PlayGamesPlatform.Instance.IsAuthenticated())
             PlayGamesPlatform.Instance.ShowLeaderboardUI(GPGSIds.leaderboard_soul_leaderboard);
+    }
+
+    public static void ShowDeathLeaderboardUI()
+    {
+        if (PlayGamesPlatform.Instance.IsAuthenticated())
+            PlayGamesPlatform.Instance.ShowLeaderboardUI(GPGSIds.leaderboard_death_leaderboard);
     }
 
     public static void ShowAchievementsUI()

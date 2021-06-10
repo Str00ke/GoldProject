@@ -247,7 +247,7 @@ public class LootManager : MonoBehaviour
 
     public void InvokeEndFight()
     {
-        CombatManager.combatManager.EndFightAfterLoot();
+        LevelManager.GetInstance().FadeInOut(true);
     }
 
     IEnumerator MoveGoldToPlayer(GameObject go, LootItem<GoldPrefab> obj)
