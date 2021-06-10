@@ -804,6 +804,13 @@ MonoBehaviour:
     m_RotationOrder: 4
   chest: {fileID: 1801086865202201366, guid: be3b75ac135f1474b9746cd3985a4e8f, type: 3}
   goldValue: 50
+  lootRImgArr:
+  - {fileID: 21300000, guid: 3aee5b247cc471444b7a2f8e71f43d41, type: 3}
+  - {fileID: 21300000, guid: 80b20923a48ef004d854f6bf08236172, type: 3}
+  - {fileID: 21300000, guid: 225c3c1bdd1f3ba42ba6b13719837931, type: 3}
+  - {fileID: 21300000, guid: 60095fc4bd6d9ba43b171a73af1d7a39, type: 3}
+  - {fileID: 21300000, guid: 6518468d110da614e8b719e5cf84bde8, type: 3}
+  lootRImg: {fileID: 1962562039}
   panel: {fileID: 1273108854}
   goldTxt: {fileID: 475411581}
   soulTxt: {fileID: 1501780684}

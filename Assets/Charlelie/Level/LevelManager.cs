@@ -84,6 +84,7 @@ public class LevelManager : MonoBehaviour
     public bool fightFMiniBoss, fightSMiniBoss, isFirstMiniBossDead, isSecondMiniBossDead = false;
     public MapRoom firstMiniBossRoom, secondMiniBossRoom;
     public Image fader;
+    bool fadeInActive, fadeOutActive = false;
     static LevelManager _levelManager;
     [Header("Rate for fighting room")]
     public float fightRate = 30;
@@ -176,6 +177,8 @@ public class LevelManager : MonoBehaviour
 
     IEnumerator FadeOutCor(float startOff, System.Action<bool> isDone)
     {
+        fader.maskable = true;
+        fader.raycastTarget = true;
         yield return startOff;
         if (!fader.gameObject.activeSelf)
             fader.gameObject.SetActive(true);
@@ -184,19 +187,28 @@ public class LevelManager : MonoBehaviour
             fader.color = Color.black;
         while (fader.color.a > 0)
         {
-            Debug.Log(fader.color.a);
-            a -= Time.deltaTime / 2;
+            if (a <= 0.5f)
+                a -= Time.deltaTime;
+            else
+                a -= Time.deltaTime / 2;
+
             fader.color = new Color(0, 0, 0, a);
+            
             yield return Time.deltaTime;
         }
+        fader.color = new Color(0, 0, 0, 0);
         //fader.gameObject.SetActive(false);
         yield return null;
+        fader.maskable = false;
+        fader.raycastTarget = false;
         isDone(true);
         
     }
 
     IEnumerator FadeInCor(float startOff, System.Action<bool> isDone)
     {
+        fader.maskable = true;
+        fader.raycastTarget = true;
         yield return startOff;
         if (!fader.gameObject.activeSelf)
             fader.gameObject.SetActive(true);
@@ -205,13 +217,14 @@ public class LevelManager : MonoBehaviour
             fader.color = new Color(0, 0, 0, 0);
         while (fader.color.a < 1)
         {
-            Debug.Log(fader.color.a);
             a += Time.deltaTime;
             fader.color = new Color(0, 0, 0, a);
             yield return Time.deltaTime;
         }
         //fader.gameObject.SetActive(false);
         yield return null;
+        fader.maskable = false;
+        fader.raycastTarget = false;
         isDone(true);
     }
 
