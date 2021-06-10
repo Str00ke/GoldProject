@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     public GameObject posInitialStatusPanel;
     public Text statusPanelLabelChar;
     public GameObject buttonStatus;
+    public GameObject prefabDisplayStatus;
     public List<GameObject> goStatus;
     public float offsetStatus;
 
@@ -102,22 +103,19 @@ public class UIManager : MonoBehaviour
         statusPanelLabelChar.text = cm.charSelected.charName;
         foreach (Status s in cm.charSelected.statusList)
         {
-            GameObject NewObj = new GameObject(); 
-            Image NewImage = NewObj.AddComponent<Image>(); 
-            NewImage.sprite = s.statusSprite; 
-            NewObj.GetComponent<RectTransform>().SetParent(posInitialStatusPanel.transform); 
-            NewObj.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
-            NewObj.transform.localPosition = new Vector3(0, 0 - offsetStatus * cm.charSelected.statusList.IndexOf(s), 1);
-            NewObj.SetActive(true);
 
-            GameObject textObj = new GameObject();
-            Text newText = textObj.AddComponent<Text>();
-            newText.text = s.statusType.ToString();
-            newText.text += "\nTurns : " + s.turnsActive;
-            textObj.GetComponent<RectTransform>().SetParent(NewObj.transform);
-            textObj.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
-            textObj.transform.localPosition = new Vector3(0 + offsetStatus, 0, 1);
-            textObj.SetActive(true);
+            GameObject NewObj = Instantiate(prefabDisplayStatus, posInitialStatusPanel.transform);
+            NewObj.GetComponent<Image>().sprite = s.statusSprite; 
+            NewObj.SetActive(true);
+            NewObj.GetComponentInChildren<Text>().text = s.statusType.ToString();
+            if (s.statusType == Status.StatusTypes.Dot || s.statusType == Status.StatusTypes.Bleeding || s.statusType == Status.StatusTypes.Mark)
+            {
+                NewObj.GetComponentInChildren<Text>().text += "\nDamage : " + s.dmg;
+            }else
+            {
+                NewObj.GetComponentInChildren<Text>().text += "\nModif : " + s.diffModif;
+            }
+            NewObj.GetComponentInChildren<Text>().text += "\nTurns : " + s.turnsActive;
             goStatus.Add(NewObj);
         }
     }

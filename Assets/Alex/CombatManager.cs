@@ -302,16 +302,16 @@ public class CombatManager : MonoBehaviour
                         targets.Add(allyAtt);
                         foreach (Status s1 in allyAtt.statusList)
                         {
-                            if (s1.statusType == Status.StatusTypes.DEFENCE)
+                            if (s1.statusType == Status.StatusTypes.Defence)
                                 s1.RevertStatus();
-                            else if (s1.statusType == Status.StatusTypes.STUN)
+                            else if (s1.statusType == Status.StatusTypes.Stun)
                             {
                                 s = s1;
                                 s1.turnsActive = 1;
                             }
                         }
                         if(s == null)
-                            s = new Status(allyAtt, 0, 1, Status.StatusTypes.STUN);
+                            s = new Status(allyAtt, 0, 1, Status.StatusTypes.Stun);
                     }
                     else
                     {
@@ -319,16 +319,16 @@ public class CombatManager : MonoBehaviour
                         Status s = null;
                         foreach (Status s1 in allyAtt.statusList)
                         {
-                            if (s1.statusType == Status.StatusTypes.DEFENCE)
+                            if (s1.statusType == Status.StatusTypes.Defence)
                                 s1.RevertStatus();
-                            else if (s1.statusType == Status.StatusTypes.STUN)
+                            else if (s1.statusType == Status.StatusTypes.Stun)
                             {
                                 s = s1;
                                 s1.turnsActive = 1;
                             }
                         }
                         if (s == null)
-                            s = new Status(allyAtt, 0, 1, Status.StatusTypes.STUN);
+                            s = new Status(allyAtt, 0, 1, Status.StatusTypes.Stun);
                         targets.Add(allyAtt);
                     }
                 }

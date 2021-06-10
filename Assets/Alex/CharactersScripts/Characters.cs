@@ -69,6 +69,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public float dodgeModif = 0.2f;
 
     [Header("StatusVariables")]
+    public GameObject statusLayoutGroup;
     public List<Status> statusList = new List<Status>();
     public Vector2 debuffsInitialPos = new Vector2(-40, -10.5f);
     public List<GameObject> prefabsIconStatus;
@@ -266,37 +267,37 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         switch (ability.elementType)
         {
             case Ability.ElementType.ASH:
-                Status s0 = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.DAMAGEBONUS);
+                Status s0 = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.DamageBonus);
                 break;
             case Ability.ElementType.ICE:
 
                 if (ability.crHealType == Ability.CristalHealType.BOOST)
                 {
-                    Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.CRITDAMAGEBONUS);
+                    Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.CriticDamageBonus);
                 }
                 else if (ability.crHealType == Ability.CristalHealType.DRINK)
                 {
-                    Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.CRITRATEBONUS);
+                    Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.CriticRateBonus);
                 }
                 break;
             case Ability.ElementType.MUD:
                 if (ability.crHealType == Ability.CristalHealType.BOOST)
                 {
-                    Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.ARMORBONUS);
+                    Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.ArmorBonus);
                 }
                 else if (ability.crHealType == Ability.CristalHealType.DRINK)
                 {
-                    Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.DODGEBONUSFLAT);
+                    Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.DodgeBonus);
                 }
                 break;
             case Ability.ElementType.PSY:
                 if (ability.crHealType == Ability.CristalHealType.BOOST)
                 {
-                    Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.DODGEBONUSFLAT);
+                    Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.DodgeBonus);
                 }
                 else if (ability.crHealType == Ability.CristalHealType.DRINK)
                 {
-                    Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.CRITDAMAGEBONUS);
+                    Status s = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.CriticDamageBonus);
                 }
                 break;
         }
@@ -307,20 +308,20 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         switch (ability.elementType)
         {
             case Ability.ElementType.ASH:
-                Status s0 = new Status(receiver, ability.destruModif, ability, Status.StatusTypes.ARMORMALUS);
-                Status s00 = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.DAMAGEMALUS);
+                Status s0 = new Status(receiver, ability.destruModif, ability, Status.StatusTypes.ArmorMalus);
+                Status s00 = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.DamageMalus);
                 break;
             case Ability.ElementType.ICE:
-                Status s1 = new Status(receiver, ability.destruModif, ability, Status.StatusTypes.ARMORMALUS);
-                Status s01 = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.DODGEMALUS);
+                Status s1 = new Status(receiver, ability.destruModif, ability, Status.StatusTypes.ArmorMalus);
+                Status s01 = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.DodgeMalus);
                 break;
             case Ability.ElementType.MUD:
-                Status s2 = new Status(receiver, ability.destruModif, ability, Status.StatusTypes.ARMORMALUS);
-                Status s02 = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.HEALTHDEBUFF);
+                Status s2 = new Status(receiver, ability.destruModif, ability, Status.StatusTypes.ArmorMalus);
+                Status s02 = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.HealthDebuff);
                 break;
             case Ability.ElementType.PSY:
-                Status s3 = new Status(receiver, ability.destruModif, ability, Status.StatusTypes.ARMORMALUS);
-                Status s03 = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.ARMORMALUS);
+                Status s3 = new Status(receiver, ability.destruModif, ability, Status.StatusTypes.ArmorMalus);
+                Status s03 = new Status(receiver, ability.bonusmalus, ability, Status.StatusTypes.ArmorMalus);
                 break;
         }
     }
@@ -328,14 +329,14 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         float dmg = Mathf.Round(Random.Range(damageRange.x, damageRange.y));
         dmg *= (ability.dotMult / 100);
-        Status s = new Status(receiver, this, dmg, ability, Status.StatusTypes.DOT, dmg);
+        Status s = new Status(receiver, this, dmg, ability, Status.StatusTypes.Dot, dmg);
         Debug.Log("Caster " + gameObject.name + "Receiver : " + s.statusTarget.gameObject.name + "Dot damage " + s.dmg + " Dot element " + s.statusElement.ToString());
     }
     public void PutMark(Characters receiver, Ability ability)
     {
         float dmg = Mathf.Round(Random.Range(damageRange.x, damageRange.y));
         dmg *= (ability.markMult / 100);
-        Status s = new Status(receiver, this, dmg, ability, Status.StatusTypes.MARK, dmg);
+        Status s = new Status(receiver, this, dmg, ability, Status.StatusTypes.Mark, dmg);
         Debug.Log("Caster " + gameObject.name + "Receiver : " + s.statusTarget.gameObject.name + "Mark damage " + s.dmg + " Mark element " + s.statusElement.ToString());
     }
     public void ElementReactions(CurrentElement ndElement)
@@ -351,16 +352,16 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                     Status s = null;
                     foreach (Status s1 in statusList)
                     {
-                        if (s1.statusType == Status.StatusTypes.DEFENCE)
+                        if (s1.statusType == Status.StatusTypes.Defence)
                             s1.RevertStatus();
-                        else if (s1.statusType == Status.StatusTypes.STUN)
+                        else if (s1.statusType == Status.StatusTypes.Stun)
                         {
                             s = s1;
                             s1.turnsActive = 1;
                         }
                     }
                     if (s == null)
-                        s = new Status(this, 0, 1, Status.StatusTypes.STUN);
+                        s = new Status(this, 0, 1, Status.StatusTypes.Stun);
                     currentElement = CurrentElement.BASE;
                 }
                 else if (ndElement == CurrentElement.MUD)
@@ -378,7 +379,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             case CurrentElement.ICE:
                 if (ndElement == CurrentElement.ASH)
                 {
-                    Status s = new Status(this, 0.3f, 2, Status.StatusTypes.ARMORMALUS);
+                    Status s = new Status(this, 0.3f, 2, Status.StatusTypes.ArmorMalus);
                     currentElement = CurrentElement.BASE;
                 }
                 else if (ndElement == CurrentElement.MUD)
@@ -388,14 +389,14 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 }
                 else if (ndElement == CurrentElement.PSY)
                 {
-                    Status s = new Status(this, 10, 2, Status.StatusTypes.ARMORBONUS);
+                    Status s = new Status(this, 10, 2, Status.StatusTypes.ArmorBonus);
                     currentElement = CurrentElement.BASE;
                 }
                 break;
             case CurrentElement.MUD:
                 if (ndElement == CurrentElement.ASH)
                 {
-                    Status s = new Status(this, 0.5f, 2, Status.StatusTypes.HEALBONUS);
+                    Status s = new Status(this, 0.5f, 2, Status.StatusTypes.HealBonus);
                     currentElement = CurrentElement.BASE;
                 }
                 else if (ndElement == CurrentElement.ICE)
@@ -405,7 +406,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 }
                 else if (ndElement == CurrentElement.PSY)
                 {
-                    Status s = new Status(this, 5.0f, 2, Status.StatusTypes.BLEEDING);
+                    Status s = new Status(this, 5.0f, 2, Status.StatusTypes.Bleeding);
                     Debug.Log("Put bleeding");
                     s.statusElement = Status.StatusElement.BASE;
                     currentElement = CurrentElement.BASE;
@@ -419,12 +420,12 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 }
                 else if (ndElement == CurrentElement.ICE)
                 {
-                    Status s = new Status(this, 0.5f, 2, Status.StatusTypes.PRECISIONMALUS);
+                    Status s = new Status(this, 0.5f, 2, Status.StatusTypes.PrecisionMalus);
                     currentElement = CurrentElement.BASE;
                 }
                 else if (ndElement == CurrentElement.MUD)
                 {
-                    Status s = new Status(this, 5.0f, 2, Status.StatusTypes.DODGEBONUSFLAT);
+                    Status s = new Status(this, 5.0f, 2, Status.StatusTypes.DodgeBonus);
                     currentElement = CurrentElement.BASE;
                 }
                 break;

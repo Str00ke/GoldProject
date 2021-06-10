@@ -68,6 +68,7 @@ public class Enemy : Characters
         cursorNotPlayedYet = GameObject.Find(gameObject.name + "/CanvasSlider/Cursors/cursorNotPlayedYet");
         cursorSelected = GameObject.Find(gameObject.name + "/CanvasSlider/Cursors/cursorSelected");
         cursorPlaying = GameObject.Find(gameObject.name + "/CanvasSlider/Cursors/cursorPlaying");
+        statusLayoutGroup = GameObject.Find(gameObject.name + "/CanvasSlider/StatusLayoutGroup");
         cursorSelected.SetActive(false);
         cursorPlaying.SetActive(false);
         healthBarOutline.SetActive(false);
