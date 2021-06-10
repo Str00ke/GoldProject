@@ -176,7 +176,6 @@ public class CombatManager : MonoBehaviour
             if (currCharAttacking < fightersList.Count)
             {
                 fightersList[currCharAttacking].CanAttack = true;
-                //fightersList[currCharAttacking].cursorPlaying.SetActive(true);
                 fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().ActivateCursor(fightersList[currCharAttacking].cursorPlaying);
                 if (fightersList[currCharAttacking].charType == Characters.CharType.ALLY)
                 {

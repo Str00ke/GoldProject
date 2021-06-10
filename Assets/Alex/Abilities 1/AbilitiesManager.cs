@@ -430,22 +430,14 @@ public class AbilitiesManager : MonoBehaviour
         }
         else if (a.crType == Ability.CristalAbilityType.ATTACK)
         {
-            switch (a.crAttackType)
+            if(a.crAttackType == Ability.CristalAttackType.MARK)
             {
-                case Ability.CristalAttackType.NORMAL:
-                    cm.allyPlaying.LaunchAttack(cm.charSelected, a);
-                    break;
-                case Ability.CristalAttackType.DOT:
-                    cm.allyPlaying.LaunchAttack(cm.charSelected, a);
-                    cm.allyPlaying.PutDot(cm.charSelected, a);
-                    break;
-                case Ability.CristalAttackType.MARK:
-                    cm.allyPlaying.PutMark(cm.charSelected, a);
-                    break;
-                case Ability.CristalAttackType.DESTRUCTION:
-                    cm.allyPlaying.LaunchDestruction(cm.charSelected, a);
-                    cm.allyPlaying.LaunchAttack(cm.charSelected, a);
-                    break;
+                cm.allyPlaying.PutMark(cm.charSelected, a);
+            }
+            else
+            {
+                //DOT AND DESTRUCTION INSIDE LAUNCH ATTACK
+                cm.allyPlaying.LaunchAttack(cm.charSelected, a);
             }
         }
         ChangeAbilities();

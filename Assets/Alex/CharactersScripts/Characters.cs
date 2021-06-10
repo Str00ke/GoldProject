@@ -234,7 +234,10 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             {
                 FindObjectOfType<CameraScript>().CamShake(0.2f, 0.05f);
             }
-
+            if (ability.crAttackType == Ability.CristalAttackType.DESTRUCTION)
+                LaunchDestruction(receiver, ability);
+            else if (ability.crAttackType == Ability.CristalAttackType.DOT)
+                PutDot(receiver, ability);
             //-ARMOR MODIF ON DAMAGE-
             dmg -= receiver.armor;
             dmg = dmg < 0 ? 0 : dmg;

@@ -110,7 +110,6 @@ public class Status
                     break;
                 case StatusTypes.HealBonus:
                     diffModif = bonusmalus;
-                    diffModif = Mathf.Round(diffModif);
                     statusTarget.healBonus += (int)diffModif;
                     statusTarget.healReceivedModif += diffModif;
                     buffOrDebuff = BuffOrDebuff.BUFF;
@@ -143,14 +142,12 @@ public class Status
                     break;
                 case StatusTypes.CriticDamageBonus:
                     diffModif = bonusmalus;
-                    diffModif = Mathf.Round(diffModif);
                     statusTarget.critDamageBonus += Mathf.Round(diffModif * 100);
                     statusTarget.critDamage += diffModif;
                     buffOrDebuff = BuffOrDebuff.BUFF;
                     break;
                 case StatusTypes.CriticRateBonus:
                     diffModif = bonusmalus;
-                    diffModif = Mathf.Round(diffModif);
                     statusTarget.critChanceBonus += Mathf.Round(diffModif * 100);
                     statusTarget.critChance += diffModif;
                     buffOrDebuff = BuffOrDebuff.BUFF;
