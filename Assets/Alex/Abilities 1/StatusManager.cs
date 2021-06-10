@@ -55,6 +55,13 @@ public class StatusManager : MonoBehaviour
     {
         GameObject temp = Instantiate(prefabIconStatus, c.statusLayoutGroup.transform);
         temp.name = "Status" + status.statusId;
+
+        /*if(c.statusPerLine >= c.statusPerLineMax)
+        {
+            c.statusLines++;
+            c.statusPerLine = 0;
+        }*/
+       // temp.transform.position = c.transform.position + new Vector3(c.debuffsInitialPos.x + (statusOffset * (c.prefabsIconStatus.Count - c.statusPerLineMax * c.statusLines)), c.debuffsInitialPos.y - (statusOffset  * c.statusLines));
         c.prefabsIconStatus.Add(temp);
         if (status.statusType == Status.StatusTypes.Dot || status.statusType == Status.StatusTypes.Bleeding)
         {
@@ -92,15 +99,28 @@ public class StatusManager : MonoBehaviour
     }
     public void DeleteDisplayStatus(Characters c, Status status)
     {
+        /*int indDestroyed = 0;
+        Vector3 posDestroyed = Vector3.zero;*/
         for (int i = c.prefabsIconStatus.Count - 1; i >= 0; i--)
         {
             if ("Status" + status.statusId == c.prefabsIconStatus[i].name)
             {
                 GameObject temp = c.prefabsIconStatus[i];
+                //posDestroyed = temp.transform.position;
                 c.prefabsIconStatus.Remove(temp);
                 Destroy(temp);
+                //indDestroyed = i;
             }
         }
+
+        /*for(int i = indDestroyed; i < c.prefabsIconStatus.Count; i++)
+        {
+            Vector3 temp = c.prefabsIconStatus[i].transform.position;
+            c.prefabsIconStatus[i].transform.position = posDestroyed;
+            posDestroyed = temp;
+        }
+        c.statusPerLine--;
+        c.statusLines = c.statusPerLine < 0 ? c.statusLines-1 : c.statusLines;*/
     }
 
     public void DisplayStatusCharacter(Status[] arrStatus)
