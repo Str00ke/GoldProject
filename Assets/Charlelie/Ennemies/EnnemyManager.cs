@@ -97,6 +97,7 @@ public class EnnemyManager : MonoBehaviour
     {
         if (mapRoom.distFromStart == easyMax && !LevelManager.GetInstance().fightFMiniBoss)
         {
+            LevelManager.GetInstance().firstMiniBossRoom = mapRoom;
             Debug.Log("First mini boss");
             LevelManager.GetInstance().fightFMiniBoss = true;
             switch (level.levelType)
@@ -114,6 +115,7 @@ public class EnnemyManager : MonoBehaviour
         } 
         else if (mapRoom.distFromStart == middleMax && !LevelManager.GetInstance().fightSMiniBoss)
         {
+            LevelManager.GetInstance().secondMiniBossRoom = mapRoom;
             LevelManager.GetInstance().fightSMiniBoss = true;
             switch (level.levelType)
             {

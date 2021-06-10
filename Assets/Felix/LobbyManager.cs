@@ -205,7 +205,8 @@ public class LobbyManager : MonoBehaviour
     public void AddScoreToLeaderboard()
     {
         //int fVal = LevelData.GetSouls() + Inventory.inventory.souls;
-        PlayGamesController.PostToLeaderboard(Inventory.inventory.souls);
+        PlayGamesController.PostToSoulLeaderboard(Inventory.inventory.souls);
+        PlayGamesController.PostToDeathLeaderboard(Inventory.inventory.death);
         Debug.Log("Adding " + Inventory.inventory.souls + " to leaderboard");
     }
 

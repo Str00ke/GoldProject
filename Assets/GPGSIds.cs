@@ -26,6 +26,7 @@ public static class GPGSIds
 {
         public const string achievement_damage_dealer_copper = "CgkIv6KQjKwJEAIQCw"; // <GPGSID>
         public const string achievement_damage_dealer_gold = "CgkIv6KQjKwJEAIQDQ"; // <GPGSID>
+        public const string leaderboard_death_leaderboard = "CgkIv6KQjKwJEAIQEA"; // <GPGSID>
         public const string achievement_what_is_that = "CgkIv6KQjKwJEAIQBA"; // <GPGSID>
         public const string achievement_immortel = "CgkIv6KQjKwJEAIQBw"; // <GPGSID>
         public const string achievement_invicible = "CgkIv6KQjKwJEAIQBg"; // <GPGSID>

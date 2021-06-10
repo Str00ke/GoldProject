@@ -7,8 +7,8 @@ public static class LevelData
 {
     static int _gold = 0;
     static int _souls = 0;
+    static int _deaths = 0;
     static List<NItem.ItemScriptableObject> _so = new List<NItem.ItemScriptableObject>();
-
 
     public static void SetData(int gold, int souls, List<NItem.ItemScriptableObject> so)
     {
@@ -26,6 +26,11 @@ public static class LevelData
     public static int GetSouls()
     {
         return _souls;
+    }
+
+    public static int GetDeaths()
+    {
+        return _deaths;
     }
 
     public static List<NItem.ItemScriptableObject> GetSO()
@@ -49,11 +54,21 @@ public static class LevelData
         _souls += value;
     }
 
+    public static void AddDeath()
+    {
+        _deaths++;
+    }
+
     public static void EraseData()
     {
         _gold = 0;
         _souls = 0;
         _so.Clear();
+    }
+
+    public static void EraseDeath()
+    {
+        _deaths = 0;
     }
 }
 
@@ -63,10 +78,13 @@ public class LevelManager : MonoBehaviour
 {
     public Level level;
     public string levelName;
-    public GameObject combatPrefab, shop, obliterate, levelFinishedTxt, losePanel, pauseButton;
+    public GameObject combatPrefab, shop, obliterate, levelFinishedTxt, losePanel, pauseButton, enterRoom;
     GameObject combatRef;
     MapManager mapManager;
-    public bool fightFMiniBoss, fightSMiniBoss = false;
+    public bool fightFMiniBoss, fightSMiniBoss, isFirstMiniBossDead, isSecondMiniBossDead = false;
+    public MapRoom firstMiniBossRoom, secondMiniBossRoom;
+    public Image fader;
+    bool fadeInActive, fadeOutActive = false;
     static LevelManager _levelManager;
     [Header("Rate for fighting room")]
     public float fightRate = 30;
@@ -88,6 +106,7 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
+        FadeOut();
         levelName = FindObjectOfType<CGameManager>().GetLevelName();
         mapManager = MapManager.GetInstance();
         LoadLevel();
@@ -103,7 +122,7 @@ public class LevelManager : MonoBehaviour
         shop.SetActive(false);
         obliterate.SetActive(false);
         EnnemyManager._enemyManager.SetRoomsDiff(mapManager.testMax);
-        LevelData.EraseData();*/
+        LevelData.EraseData();*/   
     }
 
     public void Continue()
@@ -114,6 +133,99 @@ public class LevelManager : MonoBehaviour
         obliterate.SetActive(false);
         EnnemyManager._enemyManager.SetRoomsDiff(mapManager.testMax);
         LevelData.EraseData();
+        LevelData.EraseDeath();
+    }
+
+    void FadeOut()
+    {
+        StartCoroutine(FadeOutCor(0.25f, isDone => { 
+            if (isDone)
+            {
+
+            }
+        }));
+    }
+
+    void FadeIn()
+    {
+        StartCoroutine(FadeInCor(0, isDone => {
+            if (isDone)
+            {
+
+            }
+        }));
+    }
+
+    public void FadeInOut(bool isInFight)
+    {
+        StartCoroutine(FadeInCor(0, isDone => {
+            if (isDone)
+            {
+                if (!isInFight)
+                    StartRoom();
+                else
+                    CombatManager.combatManager.EndFightAfterLoot();
+                StartCoroutine(FadeOutCor(0.5f, isDone => {
+                    if (isDone)
+                    {
+                        
+                    }
+                }));
+            }
+        }));
+    }
+
+    IEnumerator FadeOutCor(float startOff, System.Action<bool> isDone)
+    {
+        fader.maskable = true;
+        fader.raycastTarget = true;
+        yield return startOff;
+        if (!fader.gameObject.activeSelf)
+            fader.gameObject.SetActive(true);
+        float a = 1;
+        if (fader.color.a < 1)
+            fader.color = Color.black;
+        while (fader.color.a > 0)
+        {
+            if (a <= 0.5f)
+                a -= Time.deltaTime;
+            else
+                a -= Time.deltaTime / 2;
+
+            fader.color = new Color(0, 0, 0, a);
+            
+            yield return Time.deltaTime;
+        }
+        fader.color = new Color(0, 0, 0, 0);
+        //fader.gameObject.SetActive(false);
+        yield return null;
+        fader.maskable = false;
+        fader.raycastTarget = false;
+        isDone(true);
+        
+    }
+
+    IEnumerator FadeInCor(float startOff, System.Action<bool> isDone)
+    {
+        fader.maskable = true;
+        fader.raycastTarget = true;
+        yield return startOff;
+        if (!fader.gameObject.activeSelf)
+            fader.gameObject.SetActive(true);
+        float a = 0;
+        if (fader.color.a > 0)
+            fader.color = new Color(0, 0, 0, 0);
+        while (fader.color.a < 1)
+        {
+            a += Time.deltaTime;
+            fader.color = new Color(0, 0, 0, a);
+            yield return Time.deltaTime;
+        }
+        //fader.gameObject.SetActive(false);
+        yield return null;
+        fader.maskable = false;
+        fader.raycastTarget = false;
+        isDone(true);
     }
 
     void LoadLevel()
@@ -143,6 +255,7 @@ public class LevelManager : MonoBehaviour
     public void StartRoom()
     {
         MapRoom room = PlayerPoint._playerPoint.onRoom;
+        enterRoom.SetActive(false);
         switch (room.roomType)
         {
             case RoomType.BASE:
@@ -231,6 +344,7 @@ public class LevelManager : MonoBehaviour
         {
             Inventory.inventory.AddItem(so);
         }
+        Inventory.inventory.AddDeath(LevelData.GetDeaths());
         //LobbyManager.lobbyManager.AddScoreToLeaderboard();
     }
 }

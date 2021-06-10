@@ -80,7 +80,7 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             if (selectTime >= roomWidth)
             {
                 GoToRoom();
-                FindObjectOfType<LevelManager>().StartRoom();
+                //FindObjectOfType<LevelManager>().StartRoom();
             }
         }
 
@@ -117,7 +117,6 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (isFinished)
             return;
-        Debug.Log(MapManager.GetInstance().roomArr.Length);
         isFinished = true;
         if (roomType != RoomType.START)
         {
@@ -125,7 +124,7 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             {
                 foreach (MapRoom room in MapManager.GetInstance().roomArr)
                 {
-                    if (room != null && room.distFromStart == EnnemyManager._enemyManager.easyMax && PlayerPoint._playerPoint.onRoom != room)
+                    if (room != null && room.distFromStart == EnnemyManager._enemyManager.easyMax && PlayerPoint._playerPoint.onRoom != room && room != LevelManager.GetInstance().firstMiniBossRoom)
                     {
                         room.GetComponent<Image>().color = Color.white;
                     }
@@ -133,12 +132,10 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             }
             else if (distFromStart == EnnemyManager._enemyManager.middleMax)
             {
-                Debug.Log("MiddleMax");
                 foreach (MapRoom room in MapManager.GetInstance().roomArr)
                 {
-                    if (room != null && room.distFromStart == EnnemyManager._enemyManager.middleMax && PlayerPoint._playerPoint.onRoom != room)
+                    if (room != null && room.distFromStart == EnnemyManager._enemyManager.middleMax && PlayerPoint._playerPoint.onRoom != room && room != LevelManager.GetInstance().secondMiniBossRoom)
                     {
-                        Debug.Log("We got one");
                         room.GetComponent<Image>().color = Color.white;
                     }
                 }
@@ -146,8 +143,7 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
         
 
-            //Debug.Log("Discovering");
-            if (roomType == RoomType.END)
+        if (roomType == RoomType.END)
         {
             Debug.Log("Level finished!");
             LevelManager.GetInstance().levelFinishedTxt.SetActive(true);
@@ -158,7 +154,7 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             {
                 if (!linkedRoom[i].isDiscovered)
                 {
-                    if (linkedRoom[i].distFromStart == EnnemyManager._enemyManager.easyMax || linkedRoom[i].distFromStart == EnnemyManager._enemyManager.middleMax)
+                    if ((linkedRoom[i].distFromStart == EnnemyManager._enemyManager.easyMax && !LevelManager.GetInstance().isFirstMiniBossDead) || (linkedRoom[i].distFromStart == EnnemyManager._enemyManager.middleMax && !LevelManager.GetInstance().isSecondMiniBossDead))
                         linkedRoom[i].GetComponent<Image>().color = new Color(255, 0, 224);
                     linkedRoom[i].gameObject.SetActive(true);
                     linkedRoom[i].isDiscovered = true;

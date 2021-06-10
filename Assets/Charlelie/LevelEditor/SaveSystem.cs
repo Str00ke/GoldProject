@@ -349,7 +349,7 @@ public static class SaveSystem
             File.Create(path).Dispose();
         }
 
-        (int, int) money = (Inventory.inventory.golds, Inventory.inventory.souls);
+        (int, int, int) money = (Inventory.inventory.golds, Inventory.inventory.souls, Inventory.inventory.death);
 
         BinaryFormatter formatter = new BinaryFormatter();
 
@@ -362,7 +362,7 @@ public static class SaveSystem
         stream.Close();
     }
 
-    public static (int, int) LoadMoney()
+    public static (int, int, int) LoadMoney()
     {
         if (Application.platform == RuntimePlatform.Android)
         {
@@ -376,7 +376,7 @@ public static class SaveSystem
             }
             Stream fileStream = File.Open(path, FileMode.Open, FileAccess.Read);
             BinaryFormatter formatter = new BinaryFormatter();
-            (int, int) data = ((int, int))formatter.Deserialize(fileStream);
+            (int, int, int) data = ((int, int, int))formatter.Deserialize(fileStream);
             fileStream.Close();
             return data;
         }
@@ -390,14 +390,14 @@ public static class SaveSystem
                                        FileMode.Open,
                                        FileAccess.ReadWrite,
                                        FileShare.ReadWrite);
-                (int, int) data = ((int, int))formatter.Deserialize(file);
+                (int, int, int) data = ((int, int, int))formatter.Deserialize(file);
                 file.Close();
                 return data;
             }
             else
             {
                 Debug.LogError("Error: Save file not found in: " + path);
-                return (0, 0);
+                return (0, 0, 0);
             }
         }
     }
