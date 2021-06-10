@@ -17,7 +17,6 @@ public class Starter : MonoBehaviour
     private void Start()
     {
         isTutorialEnded = bool.Parse(PlayerPrefs.GetString("TutoEnded", "false"));
-
         if (LobbyManager.lobbyManager)
             Destroy(LobbyManager.lobbyManager.mainCanvas.gameObject);
     }

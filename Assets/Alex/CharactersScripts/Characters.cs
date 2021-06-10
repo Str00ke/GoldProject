@@ -454,7 +454,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void ShowFloatingHealth(string value, bool red)
     {
-        GameObject go = Instantiate(floatingHealth, transform.position, Quaternion.identity, transform);
+        GameObject go = Instantiate(floatingHealth, transform.position, Quaternion.identity);
         if (red)
         {
             go.GetComponentInChildren<TextMesh>().color = Color.red;

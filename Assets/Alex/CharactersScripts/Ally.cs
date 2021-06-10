@@ -67,6 +67,7 @@ public class Ally : Characters
                 isSelected = true;
                 GetComponentInChildren<CursorEffectsScript>().ActivateCursor(cursorSelected);
                 CombatManager.combatManager.charSelected = this;
+                UIManager.uiManager.buttonStatus.SetActive(true);
                 UIManager.uiManager.statsUI.SetActive(true);
             }
         }
