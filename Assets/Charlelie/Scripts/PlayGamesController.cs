@@ -66,8 +66,10 @@ public class PlayGamesController : MonoBehaviour {
 
     public static void PostToLeaderboard(long newScore)
     {
+        Debug.Log("Try to post score to leadeboard");
         if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
+            Debug.Log("I'm authenticated");
             Social.ReportScore(newScore, GPGSIds.leaderboard_soul_leaderboard, (bool success) => {
                 if (success)
                 {
@@ -78,7 +80,8 @@ public class PlayGamesController : MonoBehaviour {
                     Debug.LogError("Unable to post new score to leaderboard");
                 }
             });
-        }   
+        } else
+            Debug.Log("Can't post score because you're not authenticated");
     }
 
     public static void ShowLeaderboardUI()

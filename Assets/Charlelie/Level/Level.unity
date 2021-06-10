@@ -2339,6 +2339,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part1.maxEnemiesInRoom
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
       propertyPath: easyDungeon.part2.armorMultiplicator
       value: 1.2
       objectReference: {fileID: 0}
