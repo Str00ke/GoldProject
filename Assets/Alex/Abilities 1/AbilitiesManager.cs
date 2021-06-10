@@ -26,6 +26,8 @@ public class AbilitiesManager : MonoBehaviour
     public Ability[] cristalsPsy;
     public Ability[] abilitiesEnemies;
 
+    public bool canAttack = false;
+    public bool isAttackFinished = false;
 
 
     private void Awake()
@@ -285,17 +287,43 @@ public class AbilitiesManager : MonoBehaviour
     }
     public IEnumerator AllyActionAbilityCor()
     {
-        //PANEL QUI DESCEND
-        //WAIT FOR SECONDS DUREE DE L'ANIM
-        //ABILITY ACTION - EFFETS PARTICULES OU QUOI
+        Ally ally = CombatManager.combatManager.allyPlaying;
+
+        if ((abilitySelected.ability.objectType == Ability.ObjectType.WEAPON && abilitySelected.ability.weaponAbilityType != Ability.WeaponAbilityType.DEFENCE) || abilitySelected.ability.crType == Ability.CristalAbilityType.ATTACK)
+        {
+            if (ally.weaponType == NItem.EWeaponType.Staff)
+                ally.GetComponent<Animator>().SetTrigger("AttackStaff");
+            else if (ally.weaponType == NItem.EWeaponType.Sword)
+                ally.GetComponent<Animator>().SetTrigger("AttackSword");
+            else if (ally.weaponType == NItem.EWeaponType.Bow)
+                ally.GetComponent<Animator>().SetTrigger("AttackBow");
+        }
+        else if (abilitySelected.ability.crType == Ability.CristalAbilityType.HEAL || abilitySelected.ability.weaponAbilityType == Ability.WeaponAbilityType.DEFENCE)
+        {
+            canAttack = true;
+            isAttackFinished = true;
+        }
+
+        while (!canAttack)
+            yield return null;
+
         AbilityAction(abilitySelected.ability);
+
+        while (!isAttackFinished)
+            yield return null;
+
         //WAIT FOR NEXT CHAR ATTACK
         CombatManager.combatManager.NextCharAttack();
         abilitySelected.isSelected = false;
         abilitySelected = null;
+        canAttack = false;
+        isAttackFinished = false;
         ClearTargets();
         yield return null;
     }
+
+
+
     public void AbilityAction(Ability abi)
     {
         var cm = CombatManager.combatManager;

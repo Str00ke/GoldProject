@@ -14,6 +14,9 @@ public class Ally : Characters
     public Sprite weaponSpriteBase;
     public Sprite weaponSpriteAnim;
     public float holdAllyCombo;
+
+    public NItem.EWeaponType weaponType;
+
     private void Start()
     {
         holdAllyCombo = holdCharacValue*2;
@@ -128,6 +131,8 @@ public class Ally : Characters
         helmet.sprite = cs.itemSprites[1];
         bodyArmor.sprite = cs.itemSprites[2];
         weaponSpriteBase = cs.itemSprites[3];
+        weaponType = cs.GetItem(NItem.EPartType.Weapon).itemWeaponType;
+
         switch (cs.GetItem(NItem.EPartType.Weapon).itemWeaponType)
         {
             case NItem.EWeaponType.Sword:
@@ -290,5 +295,21 @@ public class Ally : Characters
             }
         }
         CharacterManager.characterManager.RemoveCharacter(c);
+    }
+
+    private void CanAttackEvent()
+    {
+        AbilitiesManager.abilitiesManager.canAttack = true;
+        weapon.sprite = weaponSpriteBase;
+    }
+
+    private void IsAttackFinished()
+    {
+        AbilitiesManager.abilitiesManager.isAttackFinished = true;
+    }
+
+    private void BendingBow()
+    {
+        weapon.sprite = weaponSpriteAnim;
     }
 }
