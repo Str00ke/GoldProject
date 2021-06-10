@@ -11,6 +11,7 @@ public class Status
     public float dmg;
     public Ability abi;
     public int statusId;
+    public Sprite statusSprite;
     public enum StatusElement
     {
         BASE,

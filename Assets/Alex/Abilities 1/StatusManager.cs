@@ -66,17 +66,35 @@ public class StatusManager : MonoBehaviour
         temp.transform.position = c.transform.position + new Vector3(c.debuffsInitialPos.x + (statusOffset * (c.prefabsIconStatus.Count - c.statusPerLineMax * c.statusLines)), c.debuffsInitialPos.y - (statusOffset  * c.statusLines));
         c.prefabsIconStatus.Add(temp);
         if (status.statusType == Status.StatusTypes.DOT || status.statusType == Status.StatusTypes.BLEEDING)
+        {
             temp.GetComponent<Image>().sprite = dotStatusSprite;
+            status.statusSprite = dotStatusSprite;
+        }
         else if(status.statusType == Status.StatusTypes.MARK)
+        {
             temp.GetComponent<Image>().sprite = markStatusSprite;
+            status.statusSprite = markStatusSprite;
+        }
         else if (status.statusType == Status.StatusTypes.STUN)
+        {
             temp.GetComponent<Image>().sprite = stunStatusSprite;
+            status.statusSprite = stunStatusSprite;
+        }
         else if (status.statusType == Status.StatusTypes.DEFENCE)
+        {
             temp.GetComponent<Image>().sprite = defenceStatusSprite;
+            status.statusSprite = defenceStatusSprite;
+        }
         else if(status.buffOrDebuff == Status.BuffOrDebuff.BUFF)
+        {
             temp.GetComponent<Image>().sprite = buffStatusSprite;
+            status.statusSprite = buffStatusSprite;
+        }
         else
+        {
             temp.GetComponent<Image>().sprite = debuffStatusSprite;
+            status.statusSprite = debuffStatusSprite;
+        }
 
 
         c.statusPerLine++;
