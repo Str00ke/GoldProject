@@ -304,21 +304,20 @@ public class AbilitiesManager : MonoBehaviour
             isAttackFinished = true;
         }
 
+        AbilityAction(abilitySelected.ability);
+        abilitySelected.isSelected = false;
+        abilitySelected = null;
+        ClearTargets();
         while (!canAttack)
             yield return null;
-
-        AbilityAction(abilitySelected.ability);
 
         while (!isAttackFinished)
             yield return null;
 
         //WAIT FOR NEXT CHAR ATTACK
         CombatManager.combatManager.NextCharAttack();
-        abilitySelected.isSelected = false;
-        abilitySelected = null;
         canAttack = false;
         isAttackFinished = false;
-        ClearTargets();
         yield return null;
     }
 
@@ -394,7 +393,7 @@ public class AbilitiesManager : MonoBehaviour
                     Status s1 = null;
                     foreach (Status s in cm.allyPlaying.statusList)
                     {
-                        if (s.statusType == Status.StatusTypes.DEFENCE)
+                        if (s.statusType == Status.StatusTypes.Defence)
                         {
                             s1 = s;
                             s.turnsActive = 2;
@@ -402,9 +401,9 @@ public class AbilitiesManager : MonoBehaviour
                     }
                     if(s1 == null)
                     {
-                        s1 = new Status(cm.allyPlaying, 0, abi, Status.StatusTypes.DEFENCE);
+                        s1 = new Status(cm.allyPlaying, 0, abi, Status.StatusTypes.Defence);
                     }
-                    new Status(cm.allyPlaying, Mathf.Round(cm.allyPlaying.armor * 0.6f), abi, Status.StatusTypes.ARMORBONUS);
+                    new Status(cm.allyPlaying, Mathf.Round(cm.allyPlaying.armor * 0.6f), abi, Status.StatusTypes.ArmorBonus);
                 }
             }
         }
