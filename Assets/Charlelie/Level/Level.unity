@@ -1169,6 +1169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e6f5a365f66a042810fc1301d2d53a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomArr: []
   mapRoom: {fileID: 201072278542349976, guid: bd91523d1b6cf3c418183c5aa764a8ac, type: 3}
   map: {fileID: 958367869}
   mapHolder: {fileID: 1388042957}
@@ -2200,7 +2201,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 707532276}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
