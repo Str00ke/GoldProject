@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f1b7c176c2dab46b42dfb6a9ffe6bb, type: 3}
   m_Name: helmetunbreakableL
   m_EditorClassIdentifier: 
-  itemName: Unbreakable Helmet
+  itemName: Unbreakable Helmet L
   health: 0
   armor: 41
   attack: 0
