@@ -28,6 +28,7 @@ public class AbilitiesManager : MonoBehaviour
 
     public bool canAttack = false;
     public bool isAttackFinished = false;
+    private bool abilitiesUiShow = true;
 
 
     private void Awake()
@@ -68,6 +69,9 @@ public class AbilitiesManager : MonoBehaviour
 
     public void DisplayAbilities() 
     {
+        if (!abilitiesUiShow) return;
+
+
         if (CombatManager.combatManager.allyPlaying && !CombatManager.combatManager.allyPlaying.hasPlayed && CombatManager.combatManager.enemies.Count > 0) 
         {
             abilitiesUI.SetActive(true);
@@ -90,6 +94,13 @@ public class AbilitiesManager : MonoBehaviour
             abilityUI.SetActive(false);
         }
     }
+
+    private void HideUI()
+    {
+        abilitiesUI.SetActive(false);
+        actionButton.SetActive(false);
+    }
+
     public void ChangeUIAbilities()
     {
         if (abilitiesUI.activeSelf)
@@ -251,6 +262,8 @@ public class AbilitiesManager : MonoBehaviour
     }
     public void DisplayActionButton() 
     {
+        if (!abilitiesUiShow) return;
+
         if (abilitySelected && CombatManager.combatManager.allyPlaying && !CombatManager.combatManager.allyPlaying.hasPlayed)
         {
             if(abilitySelected.ability.targetType == Ability.TargetType.ALLIES || abilitySelected.ability.crType == Ability.CristalAbilityType.HEAL)
@@ -304,20 +317,25 @@ public class AbilitiesManager : MonoBehaviour
             isAttackFinished = true;
         }
 
-        AbilityAction(abilitySelected.ability);
-        abilitySelected.isSelected = false;
-        abilitySelected = null;
-        ClearTargets();
+        abilitiesUiShow = false;
+        HideUI();
+
         while (!canAttack)
             yield return null;
 
+        AbilityAction(abilitySelected.ability);
+
         while (!isAttackFinished)
-            yield return null;
+            yield return null;  
 
         //WAIT FOR NEXT CHAR ATTACK
         CombatManager.combatManager.NextCharAttack();
+        abilitiesUiShow = true;
+        abilitySelected.isSelected = false;
+        abilitySelected = null;
         canAttack = false;
         isAttackFinished = false;
+        ClearTargets();
         yield return null;
     }
 
