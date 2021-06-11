@@ -2,24 +2,25 @@ using UnityEngine.Audio;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using System.Collections;
 
 public class AudioManager : MonoBehaviour
 {
-    public Sound[] sounds;
-    public static AudioManager instance;
+    public List<Sound> sounds;
+    public static AudioManager audioManager;
 
 
     void Awake()
     {
-        if (instance == null)
-            instance = this;
+        if (audioManager == null)
+            audioManager = this;
         else
         {
             Destroy(gameObject);
             return;
         }
         DontDestroyOnLoad(gameObject);
-
 
         foreach (Sound s in sounds)
         {
@@ -31,11 +32,11 @@ public class AudioManager : MonoBehaviour
     }
     private void Start()
     {
-        Play("Theme");
+        Play("ThemeMenu");
     }
     public void Play(string name)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = sounds.Find(x => x.name == name);
         if (s == null)
         {
             Debug.LogWarning("Sound : " + name + "not found!");
@@ -43,37 +44,39 @@ public class AudioManager : MonoBehaviour
         }
 
         s.source.pitch = s.pitch;
-        if (name == "Theme")
-        {
-            s.volume = 0.01f;
-        }
-        else if (name == "OpenDoor")
-        {
-            s.volume = 0.65f;
-        }
-        else if (name == "Jump1" || name == "Jump2" || name == "Jump3" || name == "Jump4")
-        {
-            s.volume = 0.05f;
-        }
-        else
-        {
-            s.volume = 0.2f;
-        }
+
         s.source.volume = s.volume;
         s.source.Play();
     }
+
     public void StopPlaying(string sound)
     {
-        Sound s = Array.Find(sounds, item => item.name == sound);
+        Sound s = sounds.Find(x => x.name == sound);
         if (s == null)
         {
             Debug.LogWarning("Sound: " + name + " not found!");
             return;
         }
-
         s.source.volume = s.volume;
         s.source.pitch = s.pitch;
-
         s.source.Stop();
+    }
+
+    public void ReduceVolumeVFX(float vol)
+    {
+        foreach (Sound s in sounds)
+        {
+            if (s.soundType == Sound.SoundType.VFX)
+                s.source.volume = vol;
+        }
+    }
+    public void ReduceVolumeMusic(float vol)
+    {
+        Debug.Log(vol);
+        foreach (Sound s in sounds)
+        {
+            if (s.soundType == Sound.SoundType.MUSIC)
+                s.source.volume = vol;
+        }
     }
 }
