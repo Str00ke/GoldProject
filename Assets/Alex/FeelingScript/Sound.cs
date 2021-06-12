@@ -6,6 +6,12 @@ public class Sound
 {
     public string name;
     public AudioClip clip;
+    public enum SoundType
+    {
+        MUSIC,
+        VFX
+    }
+    public SoundType soundType;
 
     [Range(0f, 1f)]
     public float volume;

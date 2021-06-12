@@ -50,6 +50,7 @@ public class Enemy : Characters
                 isSelected = true; 
                 GetComponentInChildren<CursorEffectsScript>().ActivateCursor(cursorSelected);
                 CombatManager.combatManager.charSelected = this;
+                UIManager.uiManager.buttonStatus.SetActive(true);
                 UIManager.uiManager.statsUI.SetActive(true);
             }
         }
@@ -67,6 +68,7 @@ public class Enemy : Characters
         cursorNotPlayedYet = GameObject.Find(gameObject.name + "/CanvasSlider/Cursors/cursorNotPlayedYet");
         cursorSelected = GameObject.Find(gameObject.name + "/CanvasSlider/Cursors/cursorSelected");
         cursorPlaying = GameObject.Find(gameObject.name + "/CanvasSlider/Cursors/cursorPlaying");
+        statusLayoutGroup = GameObject.Find(gameObject.name + "/CanvasSlider/StatusLayoutGroup");
         cursorSelected.SetActive(false);
         cursorPlaying.SetActive(false);
         healthBarOutline.SetActive(false);
@@ -112,6 +114,10 @@ public class Enemy : Characters
 
     public override void TakeDamage(float value, float duration)
     {
+        if(enemyType == EEnemyType.SNAKE)
+        {
+            AudioManager.audioManager.Play("SnakeTakeDamage");
+        }
         StartCoroutine(TakeDamageCor(value, duration));
     }
     public override IEnumerator TakeDamageCor(float value, float duration)

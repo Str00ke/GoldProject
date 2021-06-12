@@ -26,6 +26,9 @@ public class AbilitiesManager : MonoBehaviour
     public Ability[] cristalsPsy;
     public Ability[] abilitiesEnemies;
 
+    public bool canAttack = false;
+    public bool isAttackFinished = false;
+    private bool abilitiesUiShow = true;
 
 
     private void Awake()
@@ -66,6 +69,9 @@ public class AbilitiesManager : MonoBehaviour
 
     public void DisplayAbilities() 
     {
+        if (!abilitiesUiShow) return;
+
+
         if (CombatManager.combatManager.allyPlaying && !CombatManager.combatManager.allyPlaying.hasPlayed && CombatManager.combatManager.enemies.Count > 0) 
         {
             abilitiesUI.SetActive(true);
@@ -88,6 +94,13 @@ public class AbilitiesManager : MonoBehaviour
             abilityUI.SetActive(false);
         }
     }
+
+    private void HideUI()
+    {
+        abilitiesUI.SetActive(false);
+        actionButton.SetActive(false);
+    }
+
     public void ChangeUIAbilities()
     {
         if (abilitiesUI.activeSelf)
@@ -249,6 +262,8 @@ public class AbilitiesManager : MonoBehaviour
     }
     public void DisplayActionButton() 
     {
+        if (!abilitiesUiShow) return;
+
         if (abilitySelected && CombatManager.combatManager.allyPlaying && !CombatManager.combatManager.allyPlaying.hasPlayed)
         {
             if(abilitySelected.ability.targetType == Ability.TargetType.ALLIES || abilitySelected.ability.crType == Ability.CristalAbilityType.HEAL)
@@ -285,17 +300,47 @@ public class AbilitiesManager : MonoBehaviour
     }
     public IEnumerator AllyActionAbilityCor()
     {
-        //PANEL QUI DESCEND
-        //WAIT FOR SECONDS DUREE DE L'ANIM
-        //ABILITY ACTION - EFFETS PARTICULES OU QUOI
+        Ally ally = CombatManager.combatManager.allyPlaying;
+
+        if ((abilitySelected.ability.objectType == Ability.ObjectType.WEAPON && abilitySelected.ability.weaponAbilityType != Ability.WeaponAbilityType.DEFENCE) || abilitySelected.ability.crType == Ability.CristalAbilityType.ATTACK)
+        {
+            if (ally.weaponType == NItem.EWeaponType.Staff)
+                ally.GetComponent<Animator>().SetTrigger("AttackStaff");
+            else if (ally.weaponType == NItem.EWeaponType.Sword)
+                ally.GetComponent<Animator>().SetTrigger("AttackSword");
+            else if (ally.weaponType == NItem.EWeaponType.Bow)
+                ally.GetComponent<Animator>().SetTrigger("AttackBow");
+        }
+        else if (abilitySelected.ability.crType == Ability.CristalAbilityType.HEAL || abilitySelected.ability.weaponAbilityType == Ability.WeaponAbilityType.DEFENCE)
+        {
+            canAttack = true;
+            isAttackFinished = true;
+        }
+
+        abilitiesUiShow = false;
+        HideUI();
+
+        while (!canAttack)
+            yield return null;
+
         AbilityAction(abilitySelected.ability);
+
+        while (!isAttackFinished)
+            yield return null;  
+
         //WAIT FOR NEXT CHAR ATTACK
         CombatManager.combatManager.NextCharAttack();
+        abilitiesUiShow = true;
         abilitySelected.isSelected = false;
         abilitySelected = null;
+        canAttack = false;
+        isAttackFinished = false;
         ClearTargets();
         yield return null;
     }
+
+
+
     public void AbilityAction(Ability abi)
     {
         var cm = CombatManager.combatManager;
@@ -366,7 +411,7 @@ public class AbilitiesManager : MonoBehaviour
                     Status s1 = null;
                     foreach (Status s in cm.allyPlaying.statusList)
                     {
-                        if (s.statusType == Status.StatusTypes.DEFENCE)
+                        if (s.statusType == Status.StatusTypes.Defence)
                         {
                             s1 = s;
                             s.turnsActive = 2;
@@ -374,9 +419,9 @@ public class AbilitiesManager : MonoBehaviour
                     }
                     if(s1 == null)
                     {
-                        s1 = new Status(cm.allyPlaying, 0, abi, Status.StatusTypes.DEFENCE);
+                        s1 = new Status(cm.allyPlaying, 0, abi, Status.StatusTypes.Defence);
                     }
-                    new Status(cm.allyPlaying, Mathf.Round(cm.allyPlaying.armor * 0.6f), abi, Status.StatusTypes.ARMORBONUS);
+                    new Status(cm.allyPlaying, Mathf.Round(cm.allyPlaying.armor * 0.6f), abi, Status.StatusTypes.ArmorBonus);
                 }
             }
         }
@@ -403,22 +448,14 @@ public class AbilitiesManager : MonoBehaviour
         }
         else if (a.crType == Ability.CristalAbilityType.ATTACK)
         {
-            switch (a.crAttackType)
+            if(a.crAttackType == Ability.CristalAttackType.MARK)
             {
-                case Ability.CristalAttackType.NORMAL:
-                    cm.allyPlaying.LaunchAttack(cm.charSelected, a);
-                    break;
-                case Ability.CristalAttackType.DOT:
-                    cm.allyPlaying.LaunchAttack(cm.charSelected, a);
-                    cm.allyPlaying.PutDot(cm.charSelected, a);
-                    break;
-                case Ability.CristalAttackType.MARK:
-                    cm.allyPlaying.PutMark(cm.charSelected, a);
-                    break;
-                case Ability.CristalAttackType.DESTRUCTION:
-                    cm.allyPlaying.LaunchDestruction(cm.charSelected, a);
-                    cm.allyPlaying.LaunchAttack(cm.charSelected, a);
-                    break;
+                cm.allyPlaying.PutMark(cm.charSelected, a);
+            }
+            else
+            {
+                //DOT AND DESTRUCTION INSIDE LAUNCH ATTACK
+                cm.allyPlaying.LaunchAttack(cm.charSelected, a);
             }
         }
         ChangeAbilities();

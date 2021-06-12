@@ -14,6 +14,11 @@ public class Ally : Characters
     public Sprite weaponSpriteBase;
     public Sprite weaponSpriteAnim;
     public float holdAllyCombo;
+    [Header("Character Items & Scriptable Object")]
+    public Character.ECharacterType charaType;
+    public NItem.EWeaponType weaponType;
+    public Sprite[] deadBodies;
+
     private void Start()
     {
         holdAllyCombo = holdCharacValue*2;
@@ -27,6 +32,7 @@ public class Ally : Characters
         cursorNotPlayedYet = GameObject.Find(gameObject.name + "/CanvasChar/Cursors/cursorNotPlayedYet");
         cursorSelected = GameObject.Find(gameObject.name + "/CanvasChar/Cursors/cursorSelected");
         cursorPlaying = GameObject.Find(gameObject.name + "/CanvasChar/Cursors/cursorPlaying");
+        statusLayoutGroup = GameObject.Find(gameObject.name + "/CanvasChar/StatusLayoutGroup");
         cursorSelected.SetActive(false);
         cursorPlaying.SetActive(false);
         durationDecreaseHealth = 1.0f;
@@ -64,70 +70,23 @@ public class Ally : Characters
                 isSelected = true;
                 GetComponentInChildren<CursorEffectsScript>().ActivateCursor(cursorSelected);
                 CombatManager.combatManager.charSelected = this;
+                UIManager.uiManager.buttonStatus.SetActive(true);
                 UIManager.uiManager.statsUI.SetActive(true);
             }
         }
     }
-
-    public void CreateChar(string name) 
-    {
-        charName = name;
-        maxHealth = Random.Range(50,80);
-        damageRange = new Vector2(Random.Range(10, 12), Random.Range(15, 18));
-        dodge = Random.Range(5, 25);
-        initiative = Random.Range(1, 14);
-        critChance = Random.Range(0.1f, 0.25f);
-        critDamage = Random.Range(0.75f, 1);
-        armor = Random.Range(10, 25);
-        health = maxHealth;
-        healthBar.maxValue = maxHealth;
-        healthBar.value = health;
-        offsetPos *= -1;
-
-
-        switch (itemElement)
-        {
-            case ItemElement.ASH:
-                while (abilitiesCristal[0] == abilitiesCristal[1])
-                {
-                    abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsAsh[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsAsh.Length)];
-                    abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsAsh[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsAsh.Length)];
-                }
-                break;
-            case ItemElement.ICE:
-                while (abilitiesCristal[0] == abilitiesCristal[1])
-                {
-                    abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsIce[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsIce.Length)];
-                    abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsIce[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsIce.Length)];
-                }
-                break;
-            case ItemElement.MUD:
-                while (abilitiesCristal[0] == abilitiesCristal[1])
-                {
-                    abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsMud[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsMud.Length)];
-                    abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsMud[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsMud.Length)];
-                }
-                break;
-            case ItemElement.PSY:
-                while (abilitiesCristal[0] == abilitiesCristal[1])
-                {
-                    abilitiesCristal[0] = AbilitiesManager.abilitiesManager.cristalsPsy[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsPsy.Length)];
-                    abilitiesCristal[1] = AbilitiesManager.abilitiesManager.cristalsPsy[Random.Range(0, AbilitiesManager.abilitiesManager.cristalsPsy.Length)];
-                }
-                break;
-        }
-    }
-
     public void CreateChar(Character cs, int teamPos)
     {
-        // charName = cs.charName;
-        charName = "Char0" + teamPos;
+        charName = cs.charName;
         //Sprites
         head.sprite = cs.charHead;
         body.sprite = cs.itemSprites[0];
         helmet.sprite = cs.itemSprites[1];
         bodyArmor.sprite = cs.itemSprites[2];
         weaponSpriteBase = cs.itemSprites[3];
+        charaType = cs.characterType;
+        weaponType = cs.GetItem(NItem.EPartType.Weapon).itemWeaponType;
+
         switch (cs.GetItem(NItem.EPartType.Weapon).itemWeaponType)
         {
             case NItem.EWeaponType.Sword:
@@ -274,9 +233,17 @@ public class Ally : Characters
         GetComponentInChildren<Canvas>().gameObject.SetActive(false);
         //GetComponentInChildren<DamagedBarScript>().gameObject.SetActive(false);
        // gameObject.SetActive(false);
-        body.sprite = null;
         head.sprite = null;
         weapon.sprite = null;
+        bodyArmor.sprite = null;
+        helmet.sprite = null;
+        if (charaType == Character.ECharacterType.Char0)
+            body.sprite = deadBodies[0];
+        else if (charaType == Character.ECharacterType.Char1)
+            body.sprite = deadBodies[1];
+        else if (charaType == Character.ECharacterType.Char2)
+            body.sprite = deadBodies[2];
+
         Character c = CharacterManager.characterManager.AskForCharacter(teamPosition);
         c.RemoveItem(NItem.EPartType.Gem);
         c.RemoveItem((NItem.EPartType)Random.Range(0,3));
@@ -290,5 +257,21 @@ public class Ally : Characters
             }
         }
         CharacterManager.characterManager.RemoveCharacter(c);
+    }
+
+    private void CanAttackEvent()
+    {
+        AbilitiesManager.abilitiesManager.canAttack = true;
+        weapon.sprite = weaponSpriteBase;
+    }
+
+    private void IsAttackFinished()
+    {
+        AbilitiesManager.abilitiesManager.isAttackFinished = true;
+    }
+
+    private void BendingBow()
+    {
+        weapon.sprite = weaponSpriteAnim;
     }
 }

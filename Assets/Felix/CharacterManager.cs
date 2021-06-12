@@ -112,7 +112,7 @@ public class CharacterManager : MonoBehaviour
         nChar.AddItem(stickSo, NItem.EPartType.Weapon);
 
         characters[indexChar] = nChar;
-
+        AudioManager.audioManager.Play("Summon");
         RefreshTeamScene();
         SelectCharacterStats(indexChar);
     }

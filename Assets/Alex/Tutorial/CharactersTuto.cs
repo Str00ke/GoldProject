@@ -268,13 +268,13 @@ public class CharactersTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHand
                 }
                 else if (ability.crHealType == Ability.CristalHealType.DRINK)
                 {
-                    StatusTuto1 s = new StatusTuto1(receiver, ability.bonusmalus, ability, StatusTuto1.StatusTypes.DODGEBONUSFLAT);
+                    StatusTuto1 s = new StatusTuto1(receiver, ability.bonusmalus, ability, StatusTuto1.StatusTypes.DodgeBonusFLAT);
                 }
                 break;
             case Ability.ElementType.PSY:
                 if (ability.crHealType == Ability.CristalHealType.BOOST)
                 {
-                    StatusTuto1 s = new StatusTuto1(receiver, ability.bonusmalus, ability, StatusTuto1.StatusTypes.DODGEBONUSFLAT);
+                    StatusTuto1 s = new StatusTuto1(receiver, ability.bonusmalus, ability, StatusTuto1.StatusTypes.DodgeBonusFLAT);
                 }
                 else if (ability.crHealType == Ability.CristalHealType.DRINK)
                 {
@@ -388,12 +388,12 @@ public class CharactersTuto : MonoBehaviour, IPointerDownHandler, IPointerUpHand
                 }
                 else if (ndElement == CurrentElement.ICE)
                 {
-                    StatusTuto1 s = new StatusTuto1(this, 0.5f, 2, StatusTuto1.StatusTypes.PRECISIONMALUS);
+                    StatusTuto1 s = new StatusTuto1(this, 0.5f, 2, StatusTuto1.StatusTypes.PrecisionMalus);
                     currentElement = CurrentElement.BASE;
                 }
                 else if (ndElement == CurrentElement.MUD)
                 {
-                    StatusTuto1 s = new StatusTuto1(this, 5.0f, 2, StatusTuto1.StatusTypes.DODGEBONUSFLAT);
+                    StatusTuto1 s = new StatusTuto1(this, 5.0f, 2, StatusTuto1.StatusTypes.DodgeBonusFLAT);
                     currentElement = CurrentElement.BASE;
                 }
                 break;
