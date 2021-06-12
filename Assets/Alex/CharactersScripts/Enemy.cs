@@ -114,6 +114,10 @@ public class Enemy : Characters
 
     public override void TakeDamage(float value, float duration)
     {
+        if(enemyType == EEnemyType.SNAKE)
+        {
+            AudioManager.audioManager.Play("SnakeTakeDamage");
+        }
         StartCoroutine(TakeDamageCor(value, duration));
     }
     public override IEnumerator TakeDamageCor(float value, float duration)

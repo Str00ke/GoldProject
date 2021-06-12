@@ -67,7 +67,10 @@ public class AudioManager : MonoBehaviour
         foreach (Sound s in sounds)
         {
             if (s.soundType == Sound.SoundType.VFX)
+            {
+                s.volume = vol;
                 s.source.volume = vol;
+            }
         }
     }
     public void ReduceVolumeMusic(float vol)
@@ -76,7 +79,10 @@ public class AudioManager : MonoBehaviour
         foreach (Sound s in sounds)
         {
             if (s.soundType == Sound.SoundType.MUSIC)
+            {
+                s.volume = vol;
                 s.source.volume = vol;
+            }
         }
     }
 }
