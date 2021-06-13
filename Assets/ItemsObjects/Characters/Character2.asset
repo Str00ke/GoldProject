@@ -17,8 +17,8 @@ MonoBehaviour:
   armor: 5
   attack: 5
   initiative: 5
-  dodge: 0.05
-  criticalChance: 0.05
-  crititalDamage: 0.75
+  dodge: 5
+  criticalChance: 5
+  crititalDamage: 75
   characterType: 1
   characterHead: {fileID: 21300000, guid: 6bb69ba7f94a19b40a2f120b7c4af6a7, type: 3}
