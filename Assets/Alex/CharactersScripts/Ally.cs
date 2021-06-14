@@ -164,9 +164,69 @@ public class Ally : Characters
         }
     }
 
+    public override void LaunchAttack(Characters receiver, Ability ability)
+    {
+        float dmg = Mathf.Round(Random.Range(damageRange.x, damageRange.y));
+        switch (weaponType)
+        {
+            case NItem.EWeaponType.Bow:
+                AudioManager.audioManager.Play("AllyAttackBow");
+                break;
+            case NItem.EWeaponType.Staff:
+                AudioManager.audioManager.Play("AllyAttackBow");
+                break;
+            case NItem.EWeaponType.Sword:
+                AudioManager.audioManager.Play("AllyAttackSword");
+                break;
+        }
+        dmg *= (ability.multiplicator / 100);
+        if (Random.Range(0, 100) < receiver.dodge)
+        {
+            receiver.ShowFloatingHealth("Dodge", true);
+            AudioManager.audioManager.Play("Dodge");
+        }
+        else
+        {
+            //-CRITIC DAMAGE-
+            if (Random.Range(0.0f, 1.0f) < this.critChance/100)
+            {
+                FindObjectOfType<CameraScript>().CamShake(0.4f, 0.3f);
+                dmg += dmg * this.critDamage;
+            }
+            else
+            {
+                FindObjectOfType<CameraScript>().CamShake(0.2f, 0.05f);
+            }
+            if (ability.crAttackType == Ability.CristalAttackType.DESTRUCTION)
+            {
+
+                LaunchDestruction(receiver, ability);
+            }
+            else if (ability.crAttackType == Ability.CristalAttackType.DOT)
+            {
+                PutDot(receiver, ability);
+            }
+            //-ARMOR MODIF ON DAMAGE-
+            dmg -= receiver.armor;
+            dmg = dmg < 0 ? 0 : dmg;
+
+            //-ELEMENTAL REACTIONS-
+
+            receiver.TakeDamage(dmg, durationDecreaseHealth);
+
+            receiver.ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), ability.elementType.ToString()));
+
+            if (receiver.GetType() == typeof(Enemy))
+            {
+                AchievementsManager.DamageDeal(dmg);
+            }
+        }
+    }
+
     public override IEnumerator TakeDamageCor(float value, float duration)
     {
         GetComponentInChildren<DamagedBarScript>().gameObject.GetComponentInChildren<Image>().color = Color.grey;
+        AudioManager.audioManager.Play("AllyTakeDamage");
         CombatManager.combatManager.hasTookDamage = true;
         ShowFloatingHealth(Mathf.Round(value).ToString(), true);
         float startValue = healthBar.value;

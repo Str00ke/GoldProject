@@ -392,9 +392,9 @@ public class CharacterManager : MonoBehaviour
             statsUIPanel.transform.GetChild(0).GetComponent<Text>().text = " Health " + characters[indexChar].maxHealth;
             statsUIPanel.transform.GetChild(1).GetComponent<Text>().text = " Armor " + characters[indexChar].armor;
             statsUIPanel.transform.GetChild(2).GetComponent<Text>().text = " Attack " + characters[indexChar].attack;
-            statsUIPanel.transform.GetChild(3).GetComponent<Text>().text = " Dodge " + characters[indexChar].dodge * 100f + "%";
-            statsUIPanel.transform.GetChild(4).GetComponent<Text>().text = " Crit " + characters[indexChar].criticalChance * 100f + "%";
-            statsUIPanel.transform.GetChild(5).GetComponent<Text>().text = " CritDmg " + characters[indexChar].crititalDamage * 100f + "%";
+            statsUIPanel.transform.GetChild(3).GetComponent<Text>().text = " Dodge " + characters[indexChar].dodge + "%";
+            statsUIPanel.transform.GetChild(4).GetComponent<Text>().text = " Crit " + characters[indexChar].criticalChance + "%";
+            statsUIPanel.transform.GetChild(5).GetComponent<Text>().text = " CritDmg " + characters[indexChar].crititalDamage + "%";
         }
     }
 
@@ -429,17 +429,17 @@ public class CharacterManager : MonoBehaviour
         }
         else if (valueName == "" && item.dodge > 0)
         {
-            statsUIPanel.transform.GetChild(0).GetComponent<Text>().text = " Dodge " + item.dodge * 100f + "%";
+            statsUIPanel.transform.GetChild(0).GetComponent<Text>().text = " Dodge " + item.dodge + "%";
             valueName = "Dodge";
         }
         else if (valueName == "" && item.criticalChance > 0)
         {
-            statsUIPanel.transform.GetChild(0).GetComponent<Text>().text = " Crit " + item.criticalChance * 100f + "%";
+            statsUIPanel.transform.GetChild(0).GetComponent<Text>().text = " Crit " + item.criticalChance + "%";
             valueName = "Crit%";
         }
         else if (valueName == "" && item.crititalDamage > 0)
         {
-            statsUIPanel.transform.GetChild(0).GetComponent<Text>().text = " CritDmg " + item.crititalDamage * 100f + "%";
+            statsUIPanel.transform.GetChild(0).GetComponent<Text>().text = " CritDmg " + item.crititalDamage + "%";
             valueName = "CritDmg";
         }
 
@@ -457,15 +457,15 @@ public class CharacterManager : MonoBehaviour
         }
         else if (valueName != "Dodge" && item.dodge > 0)
         {
-            statsUIPanel.transform.GetChild(3).GetComponent<Text>().text = " Dodge " + item.dodge * 100f + "%";
+            statsUIPanel.transform.GetChild(3).GetComponent<Text>().text = " Dodge " + item.dodge + "%";
         }
         else if (valueName != "Crit%" && item.criticalChance > 0)
         {
-            statsUIPanel.transform.GetChild(3).GetComponent<Text>().text = " Crit " + item.criticalChance * 100f + "%";
+            statsUIPanel.transform.GetChild(3).GetComponent<Text>().text = " Crit " + item.criticalChance + "%";
         }
         else if (valueName != "CritDmg" && item.crititalDamage > 0)
         {
-            statsUIPanel.transform.GetChild(3).GetComponent<Text>().text = " CritDmg " + item.crititalDamage * 100f + "%";
+            statsUIPanel.transform.GetChild(3).GetComponent<Text>().text = " CritDmg " + item.crititalDamage + "%";
         }
         else if (item.itemType.ToString() != "None")
         {
@@ -487,7 +487,18 @@ public class CharacterManager : MonoBehaviour
         Character character = AskForCharacter(characterIndex);
 
         Inventory.inventory.AddItem(item);
-
+        switch (item.itemPartType)
+        {
+            case NItem.EPartType.Body:
+                AudioManager.audioManager.Play("ArmorSet");
+                break;
+            case NItem.EPartType.Weapon:
+                AudioManager.audioManager.Play("SwordSet");
+                break;
+            case NItem.EPartType.Gem:
+                AudioManager.audioManager.Play("CrystalSet");
+                break;
+        }
         character.RemoveItem(item.itemPartType);
 
         RefreshTeamScene();
@@ -519,6 +530,7 @@ public class CharacterManager : MonoBehaviour
         if (indexChar <= 0)
             return;
 
+        AudioManager.audioManager.Play("ButtonEffect");
         Character characterTemp = characters[indexChar];
         characters[indexChar] = characters[indexChar - 1];
         characters[indexChar - 1] = characterTemp;
@@ -533,6 +545,7 @@ public class CharacterManager : MonoBehaviour
         if (indexChar >= characters.Length - 1)
             return;
 
+        AudioManager.audioManager.Play("ButtonEffect");
         Character characterTemp = characters[indexChar];
         characters[indexChar] = characters[indexChar + 1];
         characters[indexChar + 1] = characterTemp;

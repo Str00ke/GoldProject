@@ -421,6 +421,7 @@ public class AbilitiesManager : MonoBehaviour
                     {
                         s1 = new Status(cm.allyPlaying, 0, abi, Status.StatusTypes.Defence);
                     }
+                    AudioManager.audioManager.Play("AllyDefence");
                     new Status(cm.allyPlaying, Mathf.Round(cm.allyPlaying.armor * 0.6f), abi, Status.StatusTypes.ArmorBonus);
                 }
             }
@@ -435,12 +436,15 @@ public class AbilitiesManager : MonoBehaviour
             switch (a.crHealType)
             {
                 case Ability.CristalHealType.BOOST:
+                    AudioManager.audioManager.Play("CrystalBoost");
                     cm.allyPlaying.LaunchBuff(cm.charSelected, a);
                     break;
                 case Ability.CristalHealType.BATH:
+                    AudioManager.audioManager.Play("CrystalBath");
                     AbilityBath(a);
                     break;
                 case Ability.CristalHealType.DRINK:
+                    AudioManager.audioManager.Play("CrystalDrink");
                     cm.allyPlaying.LaunchHeal(cm.charSelected, a);
                     cm.allyPlaying.LaunchBuff(cm.charSelected, a);
                     break;

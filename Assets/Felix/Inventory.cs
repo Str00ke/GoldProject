@@ -60,6 +60,7 @@ public class Inventory : MonoBehaviour
 
     public void OpenInventory()
     {
+        AudioManager.audioManager.Play("OpenInventory");
         LobbyManager.lobbyManager.lobbyState = ELobbyState.Inventory;
 
         inventoryGo.SetActive(true);
@@ -347,21 +348,32 @@ public class Inventory : MonoBehaviour
         switch (item.itemPartType.ToString())
         {
             case "Head":
+                AudioManager.audioManager.Play("ArmorSet");
                 lastItem = character.GetItem(NItem.EPartType.Head);
                 character.AddItem(item, NItem.EPartType.Head);
                 break;
             
             case "Body":
+                AudioManager.audioManager.Play("ArmorSet");
                 lastItem = character.GetItem(NItem.EPartType.Body);
                 character.AddItem(item, NItem.EPartType.Body);
                 break;
 
             case "Weapon":
                 lastItem = character.GetItem(NItem.EPartType.Weapon);
+                if(item.itemWeaponType == NItem.EWeaponType.Sword)
+                {
+                    AudioManager.audioManager.Play("SwordSet");
+                }
+                else
+                {
+                    AudioManager.audioManager.Play("Staff&BowSet");
+                }
                 character.AddItem(item, NItem.EPartType.Weapon);
                 break;
 
             case "Gem":
+                AudioManager.audioManager.Play("CrystalSet");
                 lastItem = character.GetItem(NItem.EPartType.Gem);
                 character.AddItem(item, NItem.EPartType.Gem);
                 break;
@@ -387,6 +399,7 @@ public class Inventory : MonoBehaviour
 
     public void AddGolds(int _golds)
     {
+        AudioManager.audioManager.Play("AddCoins");
         if (_golds == 0)
             return;
 

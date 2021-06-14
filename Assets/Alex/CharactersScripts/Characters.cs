@@ -214,45 +214,8 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         teamPosition = position;
     }
     //---------------------------SIMPLE ATTACK FUNCTION----------------------------
-    public void LaunchAttack(Characters receiver, Ability ability)
+    public virtual void LaunchAttack(Characters receiver, Ability ability)
     {
-        float dmg = Mathf.Round(Random.Range(damageRange.x, damageRange.y));
-        dmg *= (ability.multiplicator / 100);
-        if(Random.Range(0,100) < receiver.dodge)
-        {
-            receiver.ShowFloatingHealth("Dodge", true);
-        }
-        else
-        {
-            //-CRITIC DAMAGE-
-            if (Random.Range(0.0f, 1.0f) < this.critChance)
-            {
-                FindObjectOfType<CameraScript>().CamShake(0.4f, 0.3f);
-                dmg += dmg * this.critDamage;
-            }
-            else
-            {
-                FindObjectOfType<CameraScript>().CamShake(0.2f, 0.05f);
-            }
-            if (ability.crAttackType == Ability.CristalAttackType.DESTRUCTION)
-                LaunchDestruction(receiver, ability);
-            else if (ability.crAttackType == Ability.CristalAttackType.DOT)
-                PutDot(receiver, ability);
-            //-ARMOR MODIF ON DAMAGE-
-            dmg -= receiver.armor;
-            dmg = dmg < 0 ? 0 : dmg;
-
-            //-ELEMENTAL REACTIONS-
-           
-            receiver.TakeDamage(dmg, durationDecreaseHealth);
-
-            receiver.ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), ability.elementType.ToString()));
-
-            if (receiver.GetType() == typeof(Enemy))
-            {
-                AchievementsManager.DamageDeal(dmg);
-            }
-        }
     }
 
     //--------------------------------HEAL FUNCTION------------------------------------------------
@@ -308,6 +271,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
     public void LaunchDestruction(Characters receiver, Ability ability)
     {
+        AudioManager.audioManager.Play("CrystalDestruction");
         switch (ability.elementType)
         {
             case Ability.ElementType.ASH:
@@ -330,6 +294,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
     public void PutDot(Characters receiver, Ability ability)
     {
+        AudioManager.audioManager.Play("CrystalDot");
         float dmg = Mathf.Round(Random.Range(damageRange.x, damageRange.y));
         dmg *= (ability.dotMult / 100);
         Status s = new Status(receiver, this, dmg, ability, Status.StatusTypes.Dot, dmg);
@@ -337,6 +302,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
     public void PutMark(Characters receiver, Ability ability)
     {
+        AudioManager.audioManager.Play("CrystalPutMark");
         float dmg = Mathf.Round(Random.Range(damageRange.x, damageRange.y));
         dmg *= (ability.markMult / 100);
         Status s = new Status(receiver, this, dmg, ability, Status.StatusTypes.Mark, dmg);
@@ -451,6 +417,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
     public void TakeDamageMark(Status.StatusElement stElem, float dmg)
     {
+        AudioManager.audioManager.Play("CrystalMark");
         TakeDamage(dmg, durationDecreaseHealth);
         Debug.Log("Receiver : " + gameObject.name + "Mark damage " + dmg + " Mark element " + stElem.ToString());
         ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), stElem.ToString()));
