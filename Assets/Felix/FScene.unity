@@ -5062,9 +5062,9 @@ MonoBehaviour:
   level1Btn: {fileID: 1276196199}
   level1Name: Level1
   level2Btn: {fileID: 2100162301}
-  level2Name: Level2
+  level2Name: level2
   level3Btn: {fileID: 1864827764}
-  level3Name: Level3
+  level3Name: level3
 --- !u!4 &568211287
 Transform:
   m_ObjectHideFlags: 0

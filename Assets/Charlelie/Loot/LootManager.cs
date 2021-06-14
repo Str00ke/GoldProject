@@ -21,13 +21,16 @@ public class LootManager : MonoBehaviour
     int golds, souls;
     LootItem<NItem.ItemScriptableObject> itemHold;
     public Sprite[] lootRImgArr = new Sprite[5];
+    public Button gemLoot;
     public Image lootRImg;
+    public Image gemRImg;
 
     [Header("Result panel")]
     public GameObject panel;
     public Text goldTxt;
     public Text soulTxt;
     public Image itemImg;
+    public Image gemImg;
 
     [Header("Gold rate")]
     public float goldRatePart1;
@@ -65,14 +68,15 @@ public class LootManager : MonoBehaviour
         if (lootManager != null && lootManager != this)
             Destroy(gameObject);
 
-        lootManager = this;   
+        lootManager = this;
+        gemLoot.onClick.AddListener(OnGemClicked);
     }
 
 
     public void SetLoot(Vector2 pos)
     {
-        LootItem<GoldPrefab> gold = GetLoot<GoldPrefab>(PlayerPoint._playerPoint.onRoom, pos);
-        LootItem<SoulGO> soul = GetLoot<SoulGO>(PlayerPoint._playerPoint.onRoom, pos);
+        LootItem<GoldPrefab> gold = GetLoot<GoldPrefab>(PlayerPoint._playerPoint.onRoom, pos, false);
+        LootItem<SoulGO> soul = GetLoot<SoulGO>(PlayerPoint._playerPoint.onRoom, pos, false);
         golds = gold.amount * goldValue;
         souls = soul.amount;
         gold.InstantiateObject(pos);
@@ -80,31 +84,24 @@ public class LootManager : MonoBehaviour
         lootOnGround.Add(gold);
         lootOnGround.Add(soul);
 
-        /*StartCoroutine(ItemFall(gold.instance, (isDone) =>
-        {
-            if (isDone)
-            {
-                gold.isAtGround = true;
-            }
-        }));*/
-
-        //SoulFloat(soul.instance);
-        /*StartCoroutine(ItemFall(soul.instance, (isDone) =>
-        {
-            if (isDone)
-            {
-                soul.isAtGround = true;
-            }
-        }));*/
     }
 
     public void SetLootItem(Vector2 pos)
     {
-        LootItem<NItem.ItemScriptableObject> item = GetLoot<NItem.ItemScriptableObject>(PlayerPoint._playerPoint.onRoom, pos);
+        LootItem<NItem.ItemScriptableObject> item = GetLoot<NItem.ItemScriptableObject>(PlayerPoint._playerPoint.onRoom, pos, false);
         item.InstantiateObject(pos);
         lootOnGround.Add(item);
         lootRImg.sprite = lootRImgArr[(int)((item.obj as NItem.ItemScriptableObject).itemRarity)];
         itemImg.sprite = item.instance.GetComponent<SpriteRenderer>().sprite;
+
+        if (EnnemyManager._enemyManager.CheckIfOnBossRoom(PlayerPoint._playerPoint.onRoom))
+        {
+            LootItem<NItem.ItemScriptableObject> gem = GetLoot<NItem.ItemScriptableObject>(PlayerPoint._playerPoint.onRoom, pos, true);
+            lootOnGround.Add(gem);
+            gemImg.sprite = (gem.obj as NItem.ItemScriptableObject).itemUiSprite;
+            gemRImg.sprite = lootRImgArr[(int)((gem.obj as NItem.ItemScriptableObject).itemRarity)];
+        }
+
         StartCoroutine(ItemFall(item.instance, (isDone) =>
         {
             if (isDone)
@@ -116,7 +113,7 @@ public class LootManager : MonoBehaviour
         }));
     }
 
-    public LootItem<T> GetLoot<T>(MapRoom room, Vector2 pos)
+    public LootItem<T> GetLoot<T>(MapRoom room, Vector2 pos, bool isGem)
     {
         EPart edP = EnnemyManager._enemyManager.RoomDiffMult(room.distFromStart);
         if (typeof(T) == typeof(NItem.ItemScriptableObject))
@@ -124,9 +121,9 @@ public class LootManager : MonoBehaviour
             if (EnnemyManager._enemyManager.CheckIfOnBossRoom(room))
             {
                 LootItem<T> lootItem = null;
-                if (room.distFromStart == EnnemyManager._enemyManager.easyMax) lootItem = new LootItem<T>(GetItemByRarity(itemRarityMiniBoss1), pos);
-                else if (room.distFromStart == EnnemyManager._enemyManager.middleMax) lootItem = new LootItem<T>(GetItemByRarity(itemRarityMiniBoss2), pos);
-                else if (room.roomType == RoomType.END) lootItem = new LootItem<T>(GetItemByRarity(itemRarityBoss), pos);
+                if (room.distFromStart == EnnemyManager._enemyManager.easyMax) lootItem = new LootItem<T>(GetItemByRarity(itemRarityMiniBoss1, isGem), pos);
+                else if (room.distFromStart == EnnemyManager._enemyManager.middleMax) lootItem = new LootItem<T>(GetItemByRarity(itemRarityMiniBoss2, isGem), pos);
+                else if (room.roomType == RoomType.END) lootItem = new LootItem<T>(GetItemByRarity(itemRarityBoss, isGem), pos);
                 return lootItem;
             }
             
@@ -176,20 +173,28 @@ public class LootManager : MonoBehaviour
 
         foreach (NItem.ItemScriptableObject obj in soDropList)
         {
-            if (obj.itemRarity == rarity)
+            if (obj.itemRarity == rarity && obj.itemPartType != NItem.EPartType.Gem)
                 tmp.Add(obj);
         }
 
         return tmp;
     }
 
-    NItem.ItemScriptableObject GetItemByRarity(NItem.ERarity rarity)
+    NItem.ItemScriptableObject GetItemByRarity(NItem.ERarity rarity, bool isGem)
     {
         List<NItem.ItemScriptableObject> tmp = new List<NItem.ItemScriptableObject>();
         foreach (NItem.ItemScriptableObject obj in soDropList)
         {
-            if (obj.itemRarity == rarity)
-                tmp.Add(obj);
+            if (isGem)
+            {
+                if (obj.itemRarity == rarity && obj.itemPartType == NItem.EPartType.Gem)
+                    tmp.Add(obj);
+            } else
+            {
+                if (obj.itemRarity == rarity && obj.itemPartType != NItem.EPartType.Gem)
+                    tmp.Add(obj);
+            }
+            
         }
         return tmp[Random.Range(0, tmp.Count)];
     }
@@ -248,6 +253,16 @@ public class LootManager : MonoBehaviour
 
     public void InvokeEndFight()
     {
+        if (EnnemyManager._enemyManager.CheckIfOnBossRoom(PlayerPoint._playerPoint.onRoom))
+        {
+            gemLoot.gameObject.SetActive(true);
+        }else
+            LevelManager.GetInstance().FadeInOut(true);
+    }
+
+    void OnGemClicked()
+    {
+        gemLoot.gameObject.SetActive(false);
         LevelManager.GetInstance().FadeInOut(true);
     }
 
