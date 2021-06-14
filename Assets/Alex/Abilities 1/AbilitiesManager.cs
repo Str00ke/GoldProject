@@ -435,12 +435,15 @@ public class AbilitiesManager : MonoBehaviour
             switch (a.crHealType)
             {
                 case Ability.CristalHealType.BOOST:
+                    AudioManager.audioManager.Play("CrystalBoost");
                     cm.allyPlaying.LaunchBuff(cm.charSelected, a);
                     break;
                 case Ability.CristalHealType.BATH:
+                    AudioManager.audioManager.Play("CrystalBath");
                     AbilityBath(a);
                     break;
                 case Ability.CristalHealType.DRINK:
+                    AudioManager.audioManager.Play("CrystalDrink");
                     cm.allyPlaying.LaunchHeal(cm.charSelected, a);
                     cm.allyPlaying.LaunchBuff(cm.charSelected, a);
                     break;

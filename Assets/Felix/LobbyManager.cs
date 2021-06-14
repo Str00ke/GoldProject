@@ -143,7 +143,7 @@ public class LobbyManager : MonoBehaviour
             return;
 
         Inventory.inventory.AddGolds(-price);
-
+        AudioManager.audioManager.Play("Purchase");
         Inventory.inventory.AddItem(itemToBuy);
         itemToBuy = null;
     }

@@ -487,7 +487,18 @@ public class CharacterManager : MonoBehaviour
         Character character = AskForCharacter(characterIndex);
 
         Inventory.inventory.AddItem(item);
-
+        switch (item.itemPartType)
+        {
+            case NItem.EPartType.Body:
+                AudioManager.audioManager.Play("ArmorSet");
+                break;
+            case NItem.EPartType.Weapon:
+                AudioManager.audioManager.Play("SwordSet");
+                break;
+            case NItem.EPartType.Gem:
+                AudioManager.audioManager.Play("CrystalSet");
+                break;
+        }
         character.RemoveItem(item.itemPartType);
 
         RefreshTeamScene();
@@ -519,6 +530,7 @@ public class CharacterManager : MonoBehaviour
         if (indexChar <= 0)
             return;
 
+        AudioManager.audioManager.Play("ButtonEffect");
         Character characterTemp = characters[indexChar];
         characters[indexChar] = characters[indexChar - 1];
         characters[indexChar - 1] = characterTemp;
@@ -533,6 +545,7 @@ public class CharacterManager : MonoBehaviour
         if (indexChar >= characters.Length - 1)
             return;
 
+        AudioManager.audioManager.Play("ButtonEffect");
         Character characterTemp = characters[indexChar];
         characters[indexChar] = characters[indexChar + 1];
         characters[indexChar + 1] = characterTemp;

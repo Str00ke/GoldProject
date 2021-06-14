@@ -3617,71 +3617,8 @@ MonoBehaviour:
     pitch: 1
     loop: 1
     source: {fileID: 0}
-  - name: Sword00
-    clip: {fileID: 8300000, guid: 352ddff7b8e142447bc60d6580ee6e11, type: 3}
-    soundType: 1
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: Sword01
-    clip: {fileID: 8300000, guid: a47738efe9fa11f42ab7150f6bef9f5b, type: 3}
-    soundType: 1
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: Sword02
-    clip: {fileID: 8300000, guid: 29ebf7409d9609545bee23dbf491c934, type: 3}
-    soundType: 1
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: Staff00
-    clip: {fileID: 8300000, guid: 3827263f646cd88449a8b3fad846c812, type: 3}
-    soundType: 1
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: Bow00
-    clip: {fileID: 8300000, guid: 3252dab1def229f40944e81c87cef2c2, type: 3}
-    soundType: 1
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: Ash00
-    clip: {fileID: 8300000, guid: 76e5f9623489f744bb78fc66c0698e9e, type: 3}
-    soundType: 1
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: Ash01
-    clip: {fileID: 8300000, guid: b6fb8f7144885d94e92ec335772b6c55, type: 3}
-    soundType: 1
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: CrystalAttack00
-    clip: {fileID: 8300000, guid: 0bcc3f325d191c847af091dc95bed63b, type: 3}
-    soundType: 1
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: CrystalBath00
-    clip: {fileID: 8300000, guid: 44f2b401a69c832428ccf245dec16e29, type: 3}
-    soundType: 1
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: CrystalBoost00
-    clip: {fileID: 8300000, guid: e1efa3c9bd3756c47947a4dd6a6fb6fe, type: 3}
+  - name: UnlockAchievement
+    clip: {fileID: 8300000, guid: 31b44b32467f62f4d92a09dd472b7bbf, type: 3}
     soundType: 1
     volume: 1
     pitch: 1
@@ -3695,14 +3632,210 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: Summon
-    clip: {fileID: 8300000, guid: 34e622afc4212444c97a1fc60fc100d5, type: 3}
+    clip: {fileID: 8300000, guid: 182030df9072c0548a1cad41d4a5c1bf, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Purchase
+    clip: {fileID: 8300000, guid: d4c632d99e821044587399f7f3821ed4, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: SnakeAttack
+    clip: {fileID: 8300000, guid: 441d41c60b5fc054c870b4174c69c9e1, type: 3}
     soundType: 1
     volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: SnakeTakeDamage
-    clip: {fileID: 8300000, guid: 83016f4f48d927d449f1f2c2a2c40036, type: 3}
+    clip: {fileID: 8300000, guid: cdf9d7c50bc091c4ba81ed79e02be111, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: SnakeDeath
+    clip: {fileID: 8300000, guid: 880109a6664556949ad6f287b8c45188, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: GiraffeDeath
+    clip: {fileID: 8300000, guid: 90a7f0700f4101c47b02fee65faa91c6, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: GiraffeAttack
+    clip: {fileID: 8300000, guid: 2bd9954a049aa1b45be6cf7d6476839f, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: GiraffeTakeDamage
+    clip: {fileID: 8300000, guid: 120c5f9534aca954db6ac07eebbd0a7c, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: DeathVoice
+    clip: {fileID: 8300000, guid: 23a7f5a7e0d8af34aa980a121b96e396, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: DeathAttack
+    clip: {fileID: 8300000, guid: 8e1fdcdec0886b440b8ab1cab21bf8ac, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: DeathTakeDamage
+    clip: {fileID: 8300000, guid: 63bbe9bf4f8224b498c1a09e12f80d50, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CrystalDot
+    clip: {fileID: 8300000, guid: f839cb7d3a8a55f48926fddaa5b13079, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CrystalPutMark
+    clip: {fileID: 8300000, guid: cfe6d0436c6821e47ba3dd6c01758d86, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CrystalMark
+    clip: {fileID: 8300000, guid: ec815233a7ea1bd47aebf368f48be10f, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CrystalDrink
+    clip: {fileID: 8300000, guid: 499b529e7dcb3f34caf10976065f67e9, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CrystalDestruction
+    clip: {fileID: 8300000, guid: 6e915865c53f7ea4781fc02000440fd8, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CrystalBoost
+    clip: {fileID: 8300000, guid: bef798d2ecf9aff418da3c71adad5647, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CrystalBath
+    clip: {fileID: 8300000, guid: 012fb282067f052488dbd2a43936b9c4, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CrystalAttackNormal
+    clip: {fileID: 8300000, guid: 7164bfe809070aa48b1def4f5d16781d, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: ChestOpen
+    clip: {fileID: 8300000, guid: 816a7744e83fe1545b105611b733b6fa, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AllyAttackBow
+    clip: {fileID: 8300000, guid: a326dfbfc0a71884e8ebc64530cc9a47, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AllyAttackSword
+    clip: {fileID: 8300000, guid: 437231007113c6244b25de654f2b766a, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AllyDeath
+    clip: {fileID: 8300000, guid: fe94c068f8f53d747be8bd7a5bdd0a37, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AllyTakeDamage
+    clip: {fileID: 8300000, guid: 43c9934cbda011245b48f8159d56c303, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Dodge
+    clip: {fileID: 8300000, guid: 27366af7a4100a74faa8e15dc167eee9, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Staff&BowSet
+    clip: {fileID: 8300000, guid: 37eea09b7fce0534991c6022c9ec3f2a, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: SwordSet
+    clip: {fileID: 8300000, guid: 4de672db5c9ab004fa5566f28566feb6, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: ArmorSet
+    clip: {fileID: 8300000, guid: cf3e4b84f2c0ca24eac0e1096a1387af, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CrystalSet
+    clip: {fileID: 8300000, guid: fa9e143ef7381f741957c2f69e49adec, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AddCoins
+    clip: {fileID: 8300000, guid: f5ae1ca9f54e5fb43b82446c6aa975d1, type: 3}
     soundType: 1
     volume: 1
     pitch: 1

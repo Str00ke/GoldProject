@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class Chest : MonoBehaviour, IPointerClickHandler
 {
+    public Sprite chestOpen;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +21,9 @@ public class Chest : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData pointerEventData)
     {
         LootManager.lootManager.SetLootItem(transform.position);
-        Destroy(gameObject);
+        AudioManager.audioManager.Play("ChestOpen");
+        gameObject.GetComponent<SpriteRenderer>().sprite = chestOpen;
+        Destroy(gameObject, 1.0f);
     }
 
 }

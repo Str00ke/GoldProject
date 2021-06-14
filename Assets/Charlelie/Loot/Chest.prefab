@@ -122,3 +122,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ca903a13b19d254eafdc708d5e2014f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chestOpen: {fileID: 21300000, guid: 403cc808140b6404dade15780d4478e2, type: 3}
