@@ -2303,6 +2303,62 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.boss
+      value: 
+      objectReference: {fileID: 11400000, guid: 417cd056e06114d4795de06ebd6eb13d, type: 2}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.boss
+      value: 
+      objectReference: {fileID: 11400000, guid: 417cd056e06114d4795de06ebd6eb13d, type: 2}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.dungeonType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.dungeonType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.firstMiniBoss
+      value: 
+      objectReference: {fileID: 11400000, guid: ceee71f78bcde234d946781c3b5b3fc7, type: 2}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.secondMiniBoss
+      value: 
+      objectReference: {fileID: 11400000, guid: 51471bdfd113efd4eb331132836fd6f7, type: 2}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.firstMiniBoss
+      value: 
+      objectReference: {fileID: 11400000, guid: ceee71f78bcde234d946781c3b5b3fc7, type: 2}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.secondMiniBoss
+      value: 
+      objectReference: {fileID: 11400000, guid: 51471bdfd113efd4eb331132836fd6f7, type: 2}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part1.maxEnemiesInRoom
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part2.maxEnemiesInRoom
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part3.maxEnemiesInRoom
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part1.maxEnemiesInRoom
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part2.maxEnemiesInRoom
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part3.maxEnemiesInRoom
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
       propertyPath: easyDungeon.part2.armorMultiplicator
       value: 1.2
       objectReference: {fileID: 0}
@@ -2319,12 +2375,72 @@ PrefabInstance:
       value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part1.armorMultiplicator
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part1.dodgeMultiplicator
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part2.armorMultiplicator
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part2.dodgeMultiplicator
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part3.armorMultiplicator
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part3.dodgeMultiplicator
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part1.armorMultiplicator
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part1.dodgeMultiplicator
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part2.armorMultiplicator
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part2.dodgeMultiplicator
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part3.armorMultiplicator
+      value: 2.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part3.dodgeMultiplicator
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
       propertyPath: easyDungeon.part2.maxHealthMultiplicator
       value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
       propertyPath: easyDungeon.part3.maxHealthMultiplicator
       value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part1.maxHealthMultiplicator
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part2.maxHealthMultiplicator
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part3.maxHealthMultiplicator
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
       propertyPath: easyDungeon.part2.critChanceMultiplicator
@@ -2351,6 +2467,66 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part1.critChanceMultiplicator
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part1.critDamageMultiplicator
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part1.ennemiesPool.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part1.initiativeMultiplicator
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part2.critChanceMultiplicator
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part2.critDamageMultiplicator
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part2.ennemiesPool.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part2.initiativeMultiplicator
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part3.critChanceMultiplicator
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part3.critDamageMultiplicator
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part3.ennemiesPool.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part3.initiativeMultiplicator
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part1.maxHealthMultiplicator
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part2.maxHealthMultiplicator
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part3.maxHealthMultiplicator
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
       propertyPath: easyDungeon.part2.damageRangeMultiplicator
       value: 1.2
       objectReference: {fileID: 0}
@@ -2358,6 +2534,126 @@ PrefabInstance:
       propertyPath: easyDungeon.part3.damageRangeMultiplicator
       value: 1.4
       objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part1.damageRangeMultiplicator
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part2.damageRangeMultiplicator
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part3.damageRangeMultiplicator
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part1.critChanceMultiplicator
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part1.critDamageMultiplicator
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part1.ennemiesPool.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part1.initiativeMultiplicator
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part2.critChanceMultiplicator
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part2.critDamageMultiplicator
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part2.ennemiesPool.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part2.initiativeMultiplicator
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part3.critChanceMultiplicator
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part3.critDamageMultiplicator
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part3.ennemiesPool.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part3.initiativeMultiplicator
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part1.damageRangeMultiplicator
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part2.damageRangeMultiplicator
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part3.damageRangeMultiplicator
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part1.ennemiesPool.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 551c83fc69adb7f4887043d20f75e0ce, type: 2}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part1.ennemiesPool.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: ce014b8a19ca93c4fb95b601f2c890e6, type: 2}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part2.ennemiesPool.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 551c83fc69adb7f4887043d20f75e0ce, type: 2}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part2.ennemiesPool.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: ce014b8a19ca93c4fb95b601f2c890e6, type: 2}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part3.ennemiesPool.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 551c83fc69adb7f4887043d20f75e0ce, type: 2}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: hardDungeon.part3.ennemiesPool.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: ce014b8a19ca93c4fb95b601f2c890e6, type: 2}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part1.ennemiesPool.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 551c83fc69adb7f4887043d20f75e0ce, type: 2}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part1.ennemiesPool.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: ce014b8a19ca93c4fb95b601f2c890e6, type: 2}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part2.ennemiesPool.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 551c83fc69adb7f4887043d20f75e0ce, type: 2}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part2.ennemiesPool.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: ce014b8a19ca93c4fb95b601f2c890e6, type: 2}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part3.ennemiesPool.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 551c83fc69adb7f4887043d20f75e0ce, type: 2}
+    - target: {fileID: 4482750780731345827, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
+      propertyPath: moyenDungeon.part3.ennemiesPool.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: ce014b8a19ca93c4fb95b601f2c890e6, type: 2}
     - target: {fileID: 6246008579936257100, guid: d220c440bf978cf46ac09a32d7f07eb1, type: 3}
       propertyPath: m_Name
       value: EnnemyManager
