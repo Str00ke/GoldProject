@@ -421,6 +421,7 @@ public class AbilitiesManager : MonoBehaviour
                     {
                         s1 = new Status(cm.allyPlaying, 0, abi, Status.StatusTypes.Defence);
                     }
+                    AudioManager.audioManager.Play("AllyDefence");
                     new Status(cm.allyPlaying, Mathf.Round(cm.allyPlaying.armor * 0.6f), abi, Status.StatusTypes.ArmorBonus);
                 }
             }

@@ -77,9 +77,9 @@ public class UIManager : MonoBehaviour
         statsCharRightModifs.text = c.dotDamage > 0 ? "<color=red>-" + c.dotDamage + "</color> " : "";
         statsCharRight.text += "\nDamage  " + Mathf.Round(c.damageRange.x) + " - " + Mathf.Round(c.damageRange.y);
         statsCharRightModifs.text += c.damageBonus < 0 ? "\n<color=red>" + c.damageBonus + "</color> " : "\n<color=green>+" + c.damageBonus + "</color> ";
-        statsCharRight.text += "\nCritic Chance  " + Mathf.Round(c.critChance * 100) + "%";
+        statsCharRight.text += "\nCritic Chance  " + Mathf.Round(c.critChance) + "%";
         statsCharRightModifs.text += c.critChanceBonus < 0 ? "\n<color=red>" + c.critChanceBonus + "</color> " : "\n<color=green>+" + c.critChanceBonus + "</color> ";
-        statsCharRight.text += "\nCritic Damage  " + Mathf.Round(c.critDamage * 100) + "%";
+        statsCharRight.text += "\nCritic Damage  " + Mathf.Round(c.critDamage) + "%";
         statsCharRightModifs.text += c.critDamageBonus < 0 ? "\n<color=red>" + c.critDamageBonus + "</color> " : "\n<color=green>+" + c.critDamageBonus + "</color> ";
     }
 

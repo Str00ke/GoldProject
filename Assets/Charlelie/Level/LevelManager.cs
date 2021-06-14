@@ -284,6 +284,7 @@ public class LevelManager : MonoBehaviour
 
     void CreateFight()
     {
+        AudioManager.audioManager.Play("EnterCombat");
         AudioManager.audioManager.StopPlaying("ThemeMenu");
         AudioManager.audioManager.StopPlaying("ThemeMap");
         AudioManager.audioManager.Play("ThemeFight");

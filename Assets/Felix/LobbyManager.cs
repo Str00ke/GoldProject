@@ -72,6 +72,7 @@ public class LobbyManager : MonoBehaviour
     {
         RefreshLockedButton();
 
+        AudioManager.audioManager.Play("ButtonEffect");
         Inventory.inventory.CloseInventory();
         ShopMenu.SetActive(false);
 
@@ -101,6 +102,7 @@ public class LobbyManager : MonoBehaviour
 
     public void Play()
     {
+        AudioManager.audioManager.Play("ButtonEffect");
         LoadScene("Level");
     }
 
@@ -109,6 +111,7 @@ public class LobbyManager : MonoBehaviour
         if (!isFirstGameDone)
             return;
 
+        AudioManager.audioManager.Play("OpenShop");
         ShopMenu.SetActive(true); 
 
         lobbyState = ELobbyState.Shop;
