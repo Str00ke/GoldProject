@@ -169,6 +169,9 @@ public class LobbyManager : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
+        AudioManager.audioManager.StopPlaying("ThemeFight");
+        AudioManager.audioManager.StopPlaying("ThemeMenu");
+        AudioManager.audioManager.Play("ThemeMap");
         StartCoroutine(LoadingScreen(sceneName));
         lobbyState = ELobbyState.Loading;
     }

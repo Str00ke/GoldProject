@@ -199,14 +199,6 @@ public class Enemy : Characters
         if (health <= 0)
         {
             health = 0;
-            isDead = true;
-        }
-        yield return new WaitForSeconds(duration);
-        GetComponentInChildren<DamagedBarScript>().UpdateDamagedBar(endValue, duration, false);
-        yield return new WaitForSeconds(duration);
-        if (health <= 0)
-        {
-            health = 0;
             if (enemyType == EEnemyType.SNAKE)
             {
                 AudioManager.audioManager.Play("SnakeDeath");
@@ -219,6 +211,14 @@ public class Enemy : Characters
             {
                 AudioManager.audioManager.Play("GiraffeDeath");
             }
+            isDead = true;
+        }
+        yield return new WaitForSeconds(duration);
+        GetComponentInChildren<DamagedBarScript>().UpdateDamagedBar(endValue, duration, false);
+        yield return new WaitForSeconds(duration);
+        if (health <= 0)
+        {
+            health = 0;
             isDead = true;
         }
         if (!removed && isDead)
