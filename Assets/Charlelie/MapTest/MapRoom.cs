@@ -24,15 +24,23 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public Text textNbr;
     public int roomNbr;
     public Sprite[] hallwayImgs;
+    bool haveANbr = false;
 
     //Remplacer GameObject par les types une foit ajoutés
     GameObject[] ennemies;
     GameObject[] chests;
     bool isShop;
 
-    public void SetNbr()
+    public void SetNbr(int nbr)
     {
-        textNbr.text = roomNbr.ToString();
+        if (!haveANbr)
+        {
+            roomNbr = nbr;
+            textNbr.text = roomNbr.ToString();
+            distFromStart = roomNbr;
+            haveANbr = true;
+        }
+        
     }
 
     public void Init()
@@ -53,7 +61,6 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             GetComponent<Image>().color = Color.red;
         }
-
     }
 
     void Update()
@@ -73,7 +80,7 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             if (selectTime >= roomWidth)
             {
                 GoToRoom();
-                FindObjectOfType<LevelManager>().StartRoom();
+                //FindObjectOfType<LevelManager>().StartRoom();
             }
         }
 
@@ -110,12 +117,36 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (isFinished)
             return;
-
         isFinished = true;
-        //Debug.Log("Discovering");
+        if (roomType != RoomType.START)
+        {
+            if (distFromStart == EnnemyManager._enemyManager.easyMax)
+            {
+                foreach (MapRoom room in MapManager.GetInstance().roomArr)
+                {
+                    if (room != null && room.distFromStart == EnnemyManager._enemyManager.easyMax && PlayerPoint._playerPoint.onRoom != room && room != LevelManager.GetInstance().firstMiniBossRoom)
+                    {
+                        room.GetComponent<Image>().color = Color.white;
+                    }
+                }
+            }
+            else if (distFromStart == EnnemyManager._enemyManager.middleMax)
+            {
+                foreach (MapRoom room in MapManager.GetInstance().roomArr)
+                {
+                    if (room != null && room.distFromStart == EnnemyManager._enemyManager.middleMax && PlayerPoint._playerPoint.onRoom != room && room != LevelManager.GetInstance().secondMiniBossRoom)
+                    {
+                        room.GetComponent<Image>().color = Color.white;
+                    }
+                }
+            }
+        }
+        
+
         if (roomType == RoomType.END)
         {
             Debug.Log("Level finished!");
+            LevelManager.GetInstance().levelFinishedTxt.SetActive(true);
         }
         for (int i = 0; i < 4; ++i)
         {
@@ -123,10 +154,11 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             {
                 if (!linkedRoom[i].isDiscovered)
                 {
+                    if ((linkedRoom[i].distFromStart == EnnemyManager._enemyManager.easyMax && !LevelManager.GetInstance().isFirstMiniBossDead) || (linkedRoom[i].distFromStart == EnnemyManager._enemyManager.middleMax && !LevelManager.GetInstance().isSecondMiniBossDead))
+                        linkedRoom[i].GetComponent<Image>().color = new Color(255, 0, 224);
                     linkedRoom[i].gameObject.SetActive(true);
                     linkedRoom[i].isDiscovered = true;
 
-                    Debug.Log("LINKLINKLINK");
                     GameObject go = new GameObject();
                     go.transform.parent = this.transform;
                     Image img = go.AddComponent<Image>();
@@ -162,8 +194,8 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                     go.transform.SetAsFirstSibling();
                 }
 
-                
-                
+
+
                 /*LineRenderer lr = go.AddComponent<LineRenderer>();
                 Material mat = new Material(Shader.Find("Unlit/Texture"));
                 lr.material = mat;

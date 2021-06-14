@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f1b7c176c2dab46b42dfb6a9ffe6bb, type: 3}
   m_Name: StaffVoidL
   m_EditorClassIdentifier: 
-  itemName: Void Staff
+  itemName: Void Staff L
   health: 0
   armor: 0
   attack: 64

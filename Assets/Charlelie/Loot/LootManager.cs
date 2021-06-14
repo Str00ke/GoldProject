@@ -20,6 +20,8 @@ public class LootManager : MonoBehaviour
     public int goldValue = 50;
     int golds, souls;
     LootItem<NItem.ItemScriptableObject> itemHold;
+    public Sprite[] lootRImgArr = new Sprite[5];
+    public Image lootRImg;
 
     [Header("Result panel")]
     public GameObject panel;
@@ -73,7 +75,6 @@ public class LootManager : MonoBehaviour
         LootItem<SoulGO> soul = GetLoot<SoulGO>(PlayerPoint._playerPoint.onRoom, pos);
         golds = gold.amount * goldValue;
         souls = soul.amount;
-        Debug.Log(golds);
         gold.InstantiateObject(pos);
         soul.InstantiateObject(pos);
         lootOnGround.Add(gold);
@@ -99,11 +100,10 @@ public class LootManager : MonoBehaviour
 
     public void SetLootItem(Vector2 pos)
     {
-        Debug.Log(pos);
         LootItem<NItem.ItemScriptableObject> item = GetLoot<NItem.ItemScriptableObject>(PlayerPoint._playerPoint.onRoom, pos);
         item.InstantiateObject(pos);
         lootOnGround.Add(item);
-        //itemHold = item;
+        lootRImg.sprite = lootRImgArr[(int)((item.obj as NItem.ItemScriptableObject).itemRarity)];
         itemImg.sprite = item.instance.GetComponent<SpriteRenderer>().sprite;
         StartCoroutine(ItemFall(item.instance, (isDone) =>
         {
@@ -198,6 +198,7 @@ public class LootManager : MonoBehaviour
     {
         goldTxt.text = golds.ToString();
         soulTxt.text = souls.ToString();
+        //switch (ite)
         //itemImg.sprite = itemHold.instance.GetComponent<SpriteRenderer>().sprite;
         panel.SetActive(true);
     }
@@ -247,7 +248,7 @@ public class LootManager : MonoBehaviour
 
     public void InvokeEndFight()
     {
-        CombatManager.combatManager.EndFightAfterLoot();
+        LevelManager.GetInstance().FadeInOut(true);
     }
 
     IEnumerator MoveGoldToPlayer(GameObject go, LootItem<GoldPrefab> obj)

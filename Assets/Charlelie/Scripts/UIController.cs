@@ -39,9 +39,9 @@ public class UIController : MonoBehaviour {
         }*/
     }
 
-    public void OnButtonShowLeaderboard()
+    public void OnButtonShowSoulLeaderboard()
     {
         Debug.Log("Showing leaderboard");
-        PlayGamesController.ShowLeaderboardUI();
+        PlayGamesController.ShowSoulLeaderboardUI();
     }
 }

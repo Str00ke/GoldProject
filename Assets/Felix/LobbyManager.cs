@@ -57,6 +57,9 @@ public class LobbyManager : MonoBehaviour
         isFirstGameDone = bool.Parse(PlayerPrefs.GetString("FirstGame", "false"));
         CloseAllMenu();
         //LevelManager.GetInstance().UpdateDataValues();
+        AddScoreToLeaderboard();
+        LoadData();
+        Debug.Log("Hello");
     }
 
     public void SwitchLobbyUI()
@@ -140,7 +143,7 @@ public class LobbyManager : MonoBehaviour
             return;
 
         Inventory.inventory.AddGolds(-price);
-
+        AudioManager.audioManager.Play("Purchase");
         Inventory.inventory.AddItem(itemToBuy);
         itemToBuy = null;
     }
@@ -191,11 +194,58 @@ public class LobbyManager : MonoBehaviour
 
         loadingScene.SetActive(false);
         SwitchLobbyUI();
+        OnSceneChange(sceneName);
+    }
+
+    void OnSceneChange(string sceneName)
+    {
+        if (sceneName == "FScene") AddScoreToLeaderboard();
     }
 
     public void AddScoreToLeaderboard()
     {
         //int fVal = LevelData.GetSouls() + Inventory.inventory.souls;
-        PlayGamesController.PostToLeaderboard(Inventory.inventory.souls);
+        PlayGamesController.PostToSoulLeaderboard(Inventory.inventory.souls);
+        PlayGamesController.PostToDeathLeaderboard(Inventory.inventory.death);
+        Debug.Log("Adding " + Inventory.inventory.souls + " to leaderboard");
     }
+
+    void OnApplicationQuit()
+    {
+        SaveData();
+    }
+
+    void OnApplicationPause(bool pauseStatus)
+    {
+        SaveData();
+    }
+
+    public void SaveData()
+    {
+        SaveSystem.SaveInventory();
+        SaveSystem.SaveMoney();
+        SaveSystem.SavePlayers();
+    }
+
+    public void LoadData()
+    {
+        Debug.Log("Load Data");
+        Inventory.inventory.LoadInventory();
+        Inventory.inventory.LoadMoney();
+        CharacterManager.characterManager.LoadCharacters();
+        
+    }
+
+    /*public void SaveInventory()
+    {
+        //SaveSystem.SaveInventory();
+        //SaveSystem.SaveMoney();
+        SaveSystem.SavePlayers();
+    }
+
+    public void LoadInventory()
+    {
+        Inventory.inventory.LoadInventory();
+        Inventory.inventory.LoadMoney();
+    }*/
 }

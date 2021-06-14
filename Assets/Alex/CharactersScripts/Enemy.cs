@@ -50,6 +50,7 @@ public class Enemy : Characters
                 isSelected = true; 
                 GetComponentInChildren<CursorEffectsScript>().ActivateCursor(cursorSelected);
                 CombatManager.combatManager.charSelected = this;
+                UIManager.uiManager.buttonStatus.SetActive(true);
                 UIManager.uiManager.statsUI.SetActive(true);
             }
         }
@@ -67,6 +68,7 @@ public class Enemy : Characters
         cursorNotPlayedYet = GameObject.Find(gameObject.name + "/CanvasSlider/Cursors/cursorNotPlayedYet");
         cursorSelected = GameObject.Find(gameObject.name + "/CanvasSlider/Cursors/cursorSelected");
         cursorPlaying = GameObject.Find(gameObject.name + "/CanvasSlider/Cursors/cursorPlaying");
+        statusLayoutGroup = GameObject.Find(gameObject.name + "/CanvasSlider/StatusLayoutGroup");
         cursorSelected.SetActive(false);
         cursorPlaying.SetActive(false);
         healthBarOutline.SetActive(false);
@@ -110,8 +112,80 @@ public class Enemy : Characters
         }
     }
 
+    public override void LaunchAttack(Characters receiver, Ability ability)
+    {
+        float dmg = Mathf.Round(Random.Range(damageRange.x, damageRange.y));
+        switch (enemyType)
+        {
+            case (EEnemyType.SNAKE):
+                AudioManager.audioManager.Play("SnakeAttack");
+                break;
+
+            case (EEnemyType.GIRAFFE):
+                AudioManager.audioManager.Play("GiraffeAttack");
+                break;
+
+            case (EEnemyType.DEATH):
+                AudioManager.audioManager.Play("DeathAttack");
+                break;
+        }
+        dmg *= (ability.multiplicator / 100);
+        if (Random.Range(0, 100) < receiver.dodge)
+        {
+            receiver.ShowFloatingHealth("Dodge", true);
+            AudioManager.audioManager.Play("Dodge");
+        }
+        else
+        {
+            //-CRITIC DAMAGE-
+            if (Random.Range(0.0f, 1.0f) < this.critChance)
+            {
+                FindObjectOfType<CameraScript>().CamShake(0.4f, 0.3f);
+                dmg += dmg * this.critDamage;
+            }
+            else
+            {
+                FindObjectOfType<CameraScript>().CamShake(0.2f, 0.05f);
+            }
+            if (ability.crAttackType == Ability.CristalAttackType.DESTRUCTION)
+            {
+                LaunchDestruction(receiver, ability);
+            }
+            else if (ability.crAttackType == Ability.CristalAttackType.DOT)
+            {
+                PutDot(receiver, ability);
+            }
+            //-ARMOR MODIF ON DAMAGE-
+            dmg -= receiver.armor;
+            dmg = dmg < 0 ? 0 : dmg;
+
+            //-ELEMENTAL REACTIONS-
+
+            receiver.TakeDamage(dmg, durationDecreaseHealth);
+
+            receiver.ElementReactions((CurrentElement)System.Enum.Parse(typeof(CurrentElement), ability.elementType.ToString()));
+
+            if (receiver.GetType() == typeof(Enemy))
+            {
+                AchievementsManager.DamageDeal(dmg);
+            }
+        }
+    }
+
+
     public override void TakeDamage(float value, float duration)
     {
+        if(enemyType == EEnemyType.SNAKE)
+        {
+            AudioManager.audioManager.Play("SnakeTakeDamage");
+        }else if(enemyType == EEnemyType.DEATH)
+        {
+            AudioManager.audioManager.Play("DeathTakeDamage");
+        }
+        else if (enemyType == EEnemyType.GIRAFFE)
+        {
+            AudioManager.audioManager.Play("GiraffeTakeDamage");
+        }
         StartCoroutine(TakeDamageCor(value, duration));
     }
     public override IEnumerator TakeDamageCor(float value, float duration)
@@ -133,6 +207,18 @@ public class Enemy : Characters
         if (health <= 0)
         {
             health = 0;
+            if (enemyType == EEnemyType.SNAKE)
+            {
+                AudioManager.audioManager.Play("SnakeDeath");
+            }
+            else if (enemyType == EEnemyType.DEATH)
+            {
+                AudioManager.audioManager.Play("DeathDeath");
+            }
+            else if (enemyType == EEnemyType.GIRAFFE)
+            {
+                AudioManager.audioManager.Play("GiraffeDeath");
+            }
             isDead = true;
         }
         if (!removed && isDead)

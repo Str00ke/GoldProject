@@ -27,4 +27,6 @@
   <string name="achievement_damage_dealer_diamond" translatable="false">CgkIv6KQjKwJEAIQDg</string>
   <!--leaderboard Soul Leaderboard-->
   <string name="leaderboard_soul_leaderboard" translatable="false">CgkIv6KQjKwJEAIQDw</string>
+  <!--leaderboard Death Leaderboard-->
+  <string name="leaderboard_death_leaderboard" translatable="false">CgkIv6KQjKwJEAIQEA</string>
 </resources>

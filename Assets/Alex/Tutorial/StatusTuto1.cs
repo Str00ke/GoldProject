@@ -31,8 +31,8 @@ public class StatusTuto1
         ARMORBONUS,
         ARMORMALUS,
         HEALBONUS,
-        PRECISIONMALUS,
-        DODGEBONUSFLAT,
+        PrecisionMalus,
+        DodgeBonusFLAT,
         DODGEMALUS,
         CRITDAMAGEBONUS,
         CRITRATEBONUS,
@@ -117,7 +117,7 @@ public class StatusTuto1
                     statusTarget.healReceivedModif += diffModif;
                     buffOrDebuff = BuffOrDebuff.BUFF;
                     break;
-                case StatusTypes.PRECISIONMALUS:
+                case StatusTypes.PrecisionMalus:
                     if (statusTarget.precision < 1.0f)
                     {
                         statusTarget.precision = diffModif;
@@ -129,7 +129,7 @@ public class StatusTuto1
                     }
                     buffOrDebuff = BuffOrDebuff.DEBUFF;
                     break;
-                case StatusTypes.DODGEBONUSFLAT:
+                case StatusTypes.DodgeBonusFLAT:
                     diffModif = bonusmalus;
                     statusTarget.dodgeBonus += (int)diffModif;
                     statusTarget.dodge += diffModif;
@@ -214,10 +214,10 @@ public class StatusTuto1
                 statusTarget.healReceivedModif -= diffModif;
                 statusTarget.healBonus -= (int)diffModif;
                 break;
-            case StatusTypes.PRECISIONMALUS:
+            case StatusTypes.PrecisionMalus:
                 statusTarget.precision += diffModif;
                 break;
-            case StatusTypes.DODGEBONUSFLAT:
+            case StatusTypes.DodgeBonusFLAT:
                 statusTarget.dodge -= diffModif;
                 statusTarget.dodgeBonus -= (int)diffModif;
                 break;

@@ -191,10 +191,6 @@ public static class SaveSystem
 
     public static Level ReadFile(byte[] arr)
     {
-        //I have to read the file which I have wrote to an byte array            
-
-        //And now is what I have to do with the byte array of file is to convert it back to object which I have wrote it into a file
-        //I am using MemoryStream to convert byte array back to the original object.
         MemoryStream memStream = new MemoryStream(arr);
         BinaryFormatter binForm = new BinaryFormatter();
         Level obj = (Level)binForm.Deserialize(memStream);
@@ -233,6 +229,265 @@ public static class SaveSystem
         return level;
     }
 
+    public static void SaveInventory()
+    {
+        string path = "";
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            path = Application.persistentDataPath + "/InventoryList.data";
+
+            //Stream fileStream = File.Open(filename, FileMode.Create, FileAccess.Write);
+        }
+        else
+        {
+            path = absPath + "/InventoryList.data";
+        }
+
+            
+        if (!File.Exists(path))
+        {
+            File.Create(path).Dispose();
+        }
+        Debug.Log(Inventory.inventory.itemList.Count);
+        if (Inventory.inventory.itemList.Count <= 0) return;
+
+        //can be optimized with using int key or hash instead of dict => prevent iterate through list by instantiate object with the key.
+        List<Dictionary<string, NItem.ERarity>> itemsList = new List<Dictionary<string, NItem.ERarity>>(Inventory.inventory.itemList.Count);
+        for (int i = 0; i < Inventory.inventory.itemList.Count; ++i)
+        {
+            itemsList.Add(new Dictionary<string, NItem.ERarity>() 
+            {
+                { Inventory.inventory.itemList[i].GetComponent<ItemInInventory>().item.itemName, Inventory.inventory.itemList[i].GetComponent<ItemInInventory>().item.itemRarity } 
+            });            
+        }
+        //itemsList.AddRange(LoadInventory());
+        Debug.Log(itemsList.Count);
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        FileStream stream = new FileStream(path,
+                                       FileMode.Open,
+                                       FileAccess.ReadWrite,
+                                       FileShare.ReadWrite);
+        formatter.Serialize(stream, itemsList);
+        Debug.Log("Saved in: " + path);
+        stream.Close();
+    }
+
+    public static List<Dictionary<string, NItem.ERarity>> LoadInventory()
+    {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            string path = Application.persistentDataPath + "/InventoryList.data";
+            Debug.Log("Try to load: " + path);
+            if (File.Exists(path)) Debug.Log("File exist");
+            else
+            {
+                Debug.Log("File don't exist");
+                File.Create(path);
+            }
+            Stream fileStream = File.Open(path, FileMode.Open, FileAccess.Read);
+            if (fileStream.Length <= 0) return new List<Dictionary<string, NItem.ERarity>>();
+            BinaryFormatter formatter = new BinaryFormatter();
+            List<Dictionary<string, NItem.ERarity>> list = (List<Dictionary<string, NItem.ERarity>>)formatter.Deserialize(fileStream);
+            Debug.Log(list.Count);
+            fileStream.Close();
+            //List<Dictionary<string, NItem.ERarity>> list = ReadItems(results);
+            if (list.Count <= 0)
+            {
+                Debug.Log("This bich empty. YEET!!");
+                return new List<Dictionary<string, NItem.ERarity>>();
+            } else
+            {
+                Debug.Log(list.Count);
+                List<Dictionary<string, NItem.ERarity>> itemList = list;
+                return itemList;
+                    
+
+            }
+            
+        } else
+        {
+            string path = absPath + "/InventoryList.data";
+            if (File.Exists(path))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                FileStream file = new FileStream(path,
+                                       FileMode.Open,
+                                       FileAccess.ReadWrite,
+                                       FileShare.ReadWrite);
+                if (file.Length <= 0) return new List<Dictionary<string, NItem.ERarity>>();
+                List<Dictionary<string, NItem.ERarity>> data = formatter.Deserialize(file) as List<Dictionary<string, NItem.ERarity>>;
+                Debug.Log(data.Count);
+                file.Close();
+                return data;
+            }
+            else
+            {
+                Debug.LogError("Error: Save file not found in: " + path);
+                return null;
+
+            }
+        }
+        
+    }
+
+    public static void SaveMoney()
+    {
+        string path = "";
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            path = Application.persistentDataPath + "/Money.data";
+        }
+        else
+        {
+            path = absPath + "/Money.data";
+        }
+
+
+        if (!File.Exists(path))
+        {
+            File.Create(path).Dispose();
+        }
+
+        (int, int, int) money = (Inventory.inventory.golds, Inventory.inventory.souls, Inventory.inventory.death);
+
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        FileStream stream = new FileStream(path,
+                                       FileMode.Open,
+                                       FileAccess.ReadWrite,
+                                       FileShare.ReadWrite);
+        formatter.Serialize(stream, money);
+        Debug.Log("Saved in: " + path);
+        stream.Close();
+    }
+
+    public static (int, int, int) LoadMoney()
+    {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            string path = Application.persistentDataPath + "/Money.data";
+            Debug.Log("Try to load: " + path);
+            if (File.Exists(path)) Debug.Log("File exist");
+            else
+            {
+                Debug.Log("File don't exist");
+                File.Create(path);
+            }
+            Stream fileStream = File.Open(path, FileMode.Open, FileAccess.Read);
+            BinaryFormatter formatter = new BinaryFormatter();
+            (int, int, int) data = ((int, int, int))formatter.Deserialize(fileStream);
+            fileStream.Close();
+            return data;
+        }
+        else
+        {
+            string path = absPath + "/Money.data";
+            if (File.Exists(path))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                FileStream file = new FileStream(path,
+                                       FileMode.Open,
+                                       FileAccess.ReadWrite,
+                                       FileShare.ReadWrite);
+                (int, int, int) data = ((int, int, int))formatter.Deserialize(file);
+                file.Close();
+                return data;
+            }
+            else
+            {
+                Debug.LogError("Error: Save file not found in: " + path);
+                return (0, 0, 0);
+            }
+        }
+    }
+
+    public static void SavePlayers()
+    {
+        string path = "";
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            path = Application.persistentDataPath + "/Chars.data";
+        }
+        else
+        {
+            path = absPath + "/Chars.data";
+        }
+
+
+        if (!File.Exists(path))
+        {
+            File.Create(path).Dispose();
+        }
+
+        CharSave[] chars = new CharSave[3];
+        for (int i = 0; i < 3; ++i)
+        {
+            if (CharacterManager.characterManager.AskForCharacter(i) != null)
+                chars[i] = new CharSave(CharacterManager.characterManager.AskForCharacter(i), i);
+        }
+
+
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        FileStream stream = new FileStream(path,
+                                       FileMode.Open,
+                                       FileAccess.ReadWrite,
+                                       FileShare.ReadWrite);
+        formatter.Serialize(stream, chars);
+        Debug.Log("Saved in: " + path);
+        stream.Close();
+    }
+
+    public static CharSave[] LoadPlayers()
+    {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            string path = Application.persistentDataPath + "/Chars.data";
+            Debug.Log("Try to load: " + path);
+            if (File.Exists(path)) Debug.Log("File exist");
+            else
+            {
+                Debug.Log("File don't exist");
+                File.Create(path);
+            }
+            Stream fileStream = File.Open(path, FileMode.Open, FileAccess.Read);
+            BinaryFormatter formatter = new BinaryFormatter();
+            CharSave[] data = (CharSave[])formatter.Deserialize(fileStream);
+            fileStream.Close();
+            return data;
+        }
+        else
+        {
+            string path = absPath + "/Chars.data";
+            if (File.Exists(path))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                FileStream file = new FileStream(path,
+                                       FileMode.Open,
+                                       FileAccess.ReadWrite,
+                                       FileShare.ReadWrite);
+                if (file.Length <= 0) return null;
+                else Debug.Log(file.Length);
+                CharSave[] data = (CharSave[])formatter.Deserialize(file);
+                file.Close();
+                return data;
+            }
+            else
+            {
+                Debug.LogError("Error: Save file not found in: " + path);
+                return null;
+            }
+        }
+    }
+
+    public static List<Dictionary<string, NItem.ERarity>> ReadItems(byte[] arr)
+    {
+        MemoryStream memStream = new MemoryStream(arr);
+        BinaryFormatter binForm = new BinaryFormatter();
+        List<Dictionary<string, NItem.ERarity>> obj = (List<Dictionary<string, NItem.ERarity>>)binForm.Deserialize(memStream);
+        return obj;
+    }
 }
 
 public class StaticCoroutine : MonoBehaviour

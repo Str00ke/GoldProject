@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f1b7c176c2dab46b42dfb6a9ffe6bb, type: 3}
   m_Name: BowGashadokuroE
   m_EditorClassIdentifier: 
-  itemName: Bone Bow
+  itemName: Bone Bow E
   health: 0
   armor: 0
   attack: 38
   dodge: 0
-  criticalChance: 0.15
+  criticalChance: 15
   crititalDamage: 0
   itemPartType: 2
   itemType: 0

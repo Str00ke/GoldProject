@@ -79,7 +79,7 @@ public class EnnemyManager : MonoBehaviour
 
         hardMin = middleMax + 1;
         hardMax = maxNbr;
-        //Debug.Log(easyMax + " " + middleMax + " " + hardMax);
+        Debug.Log(easyMax + " " + middleMax + " " + hardMax);
     }
 
     public EPart RoomDiffMult(int roomNbr)
@@ -97,6 +97,7 @@ public class EnnemyManager : MonoBehaviour
     {
         if (mapRoom.distFromStart == easyMax && !LevelManager.GetInstance().fightFMiniBoss)
         {
+            LevelManager.GetInstance().firstMiniBossRoom = mapRoom;
             Debug.Log("First mini boss");
             LevelManager.GetInstance().fightFMiniBoss = true;
             switch (level.levelType)
@@ -114,6 +115,7 @@ public class EnnemyManager : MonoBehaviour
         } 
         else if (mapRoom.distFromStart == middleMax && !LevelManager.GetInstance().fightSMiniBoss)
         {
+            LevelManager.GetInstance().secondMiniBossRoom = mapRoom;
             LevelManager.GetInstance().fightSMiniBoss = true;
             switch (level.levelType)
             {
@@ -233,13 +235,13 @@ public class EnnemyManager : MonoBehaviour
                 break;
         }
 
-        enemy.maxHealth *= dP.maxHealthMultiplicator;
-        enemy.damageRange *= dP.damageRangeMultiplicator;
-        enemy.dodge *= dP.dodgeMultiplicator;
+        enemy.maxHealth = Mathf.Round(enemy.maxHealth * dP.maxHealthMultiplicator);
+        enemy.damageRange = new Vector2( Mathf.Round(enemy.damageRange.x * dP.damageRangeMultiplicator), Mathf.Round(enemy.damageRange.y * dP.damageRangeMultiplicator));
+        enemy.dodge = Mathf.Round(enemy.dodge * dP.dodgeMultiplicator);
         enemy.critChance *= dP.critChanceMultiplicator;
         enemy.critDamage *= dP.critDamageMultiplicator;
-        enemy.initiative *= dP.initiativeMultiplicator;
-        enemy.armor *= dP.armorMultiplicator;
+        enemy.initiative = Mathf.Round(enemy.initiative * dP.initiativeMultiplicator);
+        enemy.armor = Mathf.Round(enemy.armor * dP.armorMultiplicator);
     }
 
     public int GetMaxEnemiesInRoom(Level level, MapRoom room)

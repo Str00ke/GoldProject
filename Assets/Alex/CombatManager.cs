@@ -151,17 +151,20 @@ public class CombatManager : MonoBehaviour
         }
         else
         {
-            while (!fightersList[currCharAttacking] || fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead)
+            while (fightersList[currCharAttacking] == null || fightersList[currCharAttacking].stunned || fightersList[currCharAttacking].isDead)
             {
+                if(fightersList[currCharAttacking] != null && !fightersList[currCharAttacking].isDead)
+                {
                     StatusManager.statusManager.UpdateStatus(fightersList[currCharAttacking]);
-                if (fightersList[currCharAttacking].cursorPlaying)
-                {
-                    fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().ActivateCursor(fightersList[currCharAttacking].cursorPlaying);
-                }
-                yield return new WaitForSeconds(1.5f);
-                if (fightersList[currCharAttacking].cursorPlaying)
-                {
-                    fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().DeactivateCursor(fightersList[currCharAttacking].cursorPlaying);
+                    if (fightersList[currCharAttacking].cursorPlaying)
+                    {
+                        fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().ActivateCursor(fightersList[currCharAttacking].cursorPlaying);
+                    }
+                    yield return new WaitForSeconds(1.5f);
+                    if (fightersList[currCharAttacking].cursorPlaying)
+                    {
+                        fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().DeactivateCursor(fightersList[currCharAttacking].cursorPlaying);
+                    }
                 }
                 currCharAttacking++;
                 //---------------- ---IF EVERY FIGHTERS HAVE PLAYED -> NEXT TURN----------------------------
@@ -173,7 +176,6 @@ public class CombatManager : MonoBehaviour
             if (currCharAttacking < fightersList.Count)
             {
                 fightersList[currCharAttacking].CanAttack = true;
-                //fightersList[currCharAttacking].cursorPlaying.SetActive(true);
                 fightersList[currCharAttacking].GetComponentInChildren<CursorEffectsScript>().ActivateCursor(fightersList[currCharAttacking].cursorPlaying);
                 if (fightersList[currCharAttacking].charType == Characters.CharType.ALLY)
                 {
@@ -202,10 +204,6 @@ public class CombatManager : MonoBehaviour
     {
         Ally inDefence = null;
         int allyAttacked = Random.Range(0, allies.Count);
-        /*while (allies[allyAttacked].isDead) 
-        {
-            allyAttacked = Random.Range(0, allies.Count);
-        }*/
         foreach (Ally a in allies)
         {
             if (a.inDefenceMode && !a.isDead)
@@ -299,16 +297,16 @@ public class CombatManager : MonoBehaviour
                         targets.Add(allyAtt);
                         foreach (Status s1 in allyAtt.statusList)
                         {
-                            if (s1.statusType == Status.StatusTypes.DEFENCE)
+                            if (s1.statusType == Status.StatusTypes.Defence)
                                 s1.RevertStatus();
-                            else if (s1.statusType == Status.StatusTypes.STUN)
+                            else if (s1.statusType == Status.StatusTypes.Stun)
                             {
                                 s = s1;
                                 s1.turnsActive = 1;
                             }
                         }
                         if(s == null)
-                            s = new Status(allyAtt, 0, 1, Status.StatusTypes.STUN);
+                            s = new Status(allyAtt, 0, 1, Status.StatusTypes.Stun);
                     }
                     else
                     {
@@ -316,16 +314,16 @@ public class CombatManager : MonoBehaviour
                         Status s = null;
                         foreach (Status s1 in allyAtt.statusList)
                         {
-                            if (s1.statusType == Status.StatusTypes.DEFENCE)
+                            if (s1.statusType == Status.StatusTypes.Defence)
                                 s1.RevertStatus();
-                            else if (s1.statusType == Status.StatusTypes.STUN)
+                            else if (s1.statusType == Status.StatusTypes.Stun)
                             {
                                 s = s1;
                                 s1.turnsActive = 1;
                             }
                         }
                         if (s == null)
-                            s = new Status(allyAtt, 0, 1, Status.StatusTypes.STUN);
+                            s = new Status(allyAtt, 0, 1, Status.StatusTypes.Stun);
                         targets.Add(allyAtt);
                     }
                 }
@@ -398,6 +396,7 @@ public class CombatManager : MonoBehaviour
 
         allies.Remove(a);
         hasDied = true;
+        LevelData.AddDeath();
         if (allies.Count <= 0)
         {
             FindObjectOfType<LevelManager>().losePanel.SetActive(true);
@@ -444,6 +443,10 @@ public class CombatManager : MonoBehaviour
         {
             AchievementsManager.OnCombatEnd(this);
             LootManager.lootManager.GiveLootToPlayer();
+            if (PlayerPoint._playerPoint.onRoom.distFromStart == EnnemyManager._enemyManager.easyMax)
+                LevelManager.GetInstance().isFirstMiniBossDead = true;
+            else if (PlayerPoint._playerPoint.onRoom.distFromStart == EnnemyManager._enemyManager.middleMax)
+                LevelManager.GetInstance().isSecondMiniBossDead = true;
             //LootManager.lootManager.SpawnChest();
             /*if (LootManager.lootManager.lootOnGround.Count <= 0)
             {
@@ -452,7 +455,7 @@ public class CombatManager : MonoBehaviour
                 {
                     CharacterManager.characterManager.AskForCharacter(a.teamPosition).health = (int)a.health;
                 }
-            }*/    
+            }*/
         }          
         else if (typeof(T) == typeof(Ally))
             FindObjectOfType<LevelManager>().LoseFight();

@@ -40,6 +40,12 @@ public class TutoCombat : MonoBehaviour
             Destroy(gameObject);
     }
 
+    public void DebugEnd()
+    {
+        currentStepTuto = 22;
+        TutorialFunction();
+    }
+
     private void Start()
     {
         fadePanel = GameObject.Find("FadePanel");

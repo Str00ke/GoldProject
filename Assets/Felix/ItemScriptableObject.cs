@@ -39,6 +39,7 @@ namespace NItem
     }
 
     [CreateAssetMenu(fileName = "Item", menuName = "ScriptableObjects/Item", order = 1)]
+    [System.Serializable]
     public class ItemScriptableObject : ScriptableObject
     {
         public string itemName;

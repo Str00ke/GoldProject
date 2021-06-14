@@ -4,11 +4,19 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+public class InventorySave
+{
+    //List<GameObject>
+}
+
 public class Inventory : MonoBehaviour
 {
+    public NItem.ItemScriptableObject[] nItems;
+
     public RectTransform mainCanvas;
     public int golds = 0;
     public int souls = 0;
+    public int death = 0;
 
     [Header("UI gold & souls")]
     public Text goldText;
@@ -20,7 +28,7 @@ public class Inventory : MonoBehaviour
 
     [Header("Item Inventory")]
     private int nbLines = 0;
-    private List<GameObject> itemList = new List<GameObject>();
+    public List<GameObject> itemList = new List<GameObject>();
     private GameObject itemPanelTarget;
     private Character characterItemChoosed;
 
@@ -38,6 +46,7 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
+       
         inventory = this;
 
         panelItem.SetActive(false);
@@ -63,6 +72,38 @@ public class Inventory : MonoBehaviour
         CloseItemPanel();
 
         ResetButtonSelection();
+    }
+
+    public void LoadInventory()
+    {
+        List<Dictionary<string, NItem.ERarity>> nItemsList = SaveSystem.LoadInventory();
+        Debug.Log(nItemsList.Count);
+        Debug.Log(nItems.Length);
+        for (int i = 0; i < nItemsList.Count; ++i)
+        {
+            Debug.Log("Keys : " + nItemsList[i].Keys.ToString());
+            foreach(NItem.ItemScriptableObject item in nItems)
+            {
+                if (nItemsList[i].ContainsKey(item.itemName) && nItemsList[i].ContainsValue(item.itemRarity))
+                {
+                    AddItem(item);
+                    break;
+                }
+            }            
+        }
+    }
+
+    public void LoadMoney()
+    {
+        (int, int, int) data = SaveSystem.LoadMoney();
+        AddGolds(data.Item1);
+        AddSouls(data.Item2);
+        death = data.Item3;
+    }
+
+    public void AddDeath(int value)
+    {
+        death += value;
     }
 
     public void AddItem(NItem.ItemScriptableObject item)
@@ -306,21 +347,32 @@ public class Inventory : MonoBehaviour
         switch (item.itemPartType.ToString())
         {
             case "Head":
+                AudioManager.audioManager.Play("ArmorSet");
                 lastItem = character.GetItem(NItem.EPartType.Head);
                 character.AddItem(item, NItem.EPartType.Head);
                 break;
             
             case "Body":
+                AudioManager.audioManager.Play("ArmorSet");
                 lastItem = character.GetItem(NItem.EPartType.Body);
                 character.AddItem(item, NItem.EPartType.Body);
                 break;
 
             case "Weapon":
                 lastItem = character.GetItem(NItem.EPartType.Weapon);
+                if(item.itemWeaponType == NItem.EWeaponType.Sword)
+                {
+                    AudioManager.audioManager.Play("SwordSet");
+                }
+                else
+                {
+                    AudioManager.audioManager.Play("Staff&BowSet");
+                }
                 character.AddItem(item, NItem.EPartType.Weapon);
                 break;
 
             case "Gem":
+                AudioManager.audioManager.Play("CrystalSet");
                 lastItem = character.GetItem(NItem.EPartType.Gem);
                 character.AddItem(item, NItem.EPartType.Gem);
                 break;
@@ -346,6 +398,7 @@ public class Inventory : MonoBehaviour
 
     public void AddGolds(int _golds)
     {
+        AudioManager.audioManager.Play("AddCoins");
         if (_golds == 0)
             return;
 
