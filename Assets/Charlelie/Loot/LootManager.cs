@@ -209,23 +209,23 @@ public class LootManager : MonoBehaviour
         //Debug.Log(lootOnGround.Count);
         for (int i = 0; i < lootOnGround.Count; ++i)
         {
-            Debug.Log("Loot: " + lootOnGround.Count);
+            //Debug.Log("Loot: " + lootOnGround.Count);
             if (lootOnGround[i] as LootItem<GoldPrefab> != null)
             {
-                Debug.Log("Loot: Gold");
+                //Debug.Log("Loot: Gold");
                 //StartCoroutine(MoveGoldToPlayer((obj as LootItem<GoldPrefab>).instance, (obj as LootItem<GoldPrefab>)));
-                Debug.Log("amount: " + (lootOnGround[i] as LootItem<GoldPrefab>).amount);
+                //Debug.Log("amount: " + (lootOnGround[i] as LootItem<GoldPrefab>).amount);
                 (lootOnGround[i] as LootItem<GoldPrefab>).ApplyToPlayer();                  
             }
             else if (lootOnGround[i] as LootItem<SoulGO> != null)
             {
-                Debug.Log("Loot: Soul");
+                //Debug.Log("Loot: Soul");
                 //StartCoroutine(MoveSoulToCounter((obj as LootItem<SoulGO>).instance, (obj as LootItem<SoulGO>)));
                 (lootOnGround[i] as LootItem<SoulGO>).ApplyToPlayer();
             }
             else if (lootOnGround[i] as LootItem<NItem.ItemScriptableObject> != null)
             {
-                Debug.Log("IsItem");
+                //Debug.Log("IsItem");
                 //GiveItem(obj as LootItem<NItem.ItemScriptableObject>);
                 isItem = true;
                 (lootOnGround[i] as LootItem<NItem.ItemScriptableObject>).ApplyToPlayer();

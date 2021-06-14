@@ -24,7 +24,7 @@ public class CursorEffectsScript : MonoBehaviour
     public void ActivateCursor(GameObject cursor)
     {
         cursor.SetActive(true);
-        Debug.Log("ActiavetCursor");
+        //Debug.Log("ActiavetCursor");
         StartCoroutine(ActivateCursorCor(cursor));
     }
 

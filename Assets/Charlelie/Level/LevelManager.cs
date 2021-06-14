@@ -46,7 +46,7 @@ public static class LevelData
     public static void AddGold(int value)
     {
         _gold += value * LootManager.lootManager.goldValue;
-        Debug.Log("Gold: " + _gold);
+        //Debug.Log("Gold: " + _gold);
     }
 
     public static void AddSouls(int value)

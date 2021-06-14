@@ -67,8 +67,8 @@ public class LootItem<T>
 
     public void InstantiateObject(Vector2 vec)
     {
-        Debug.Log(pos);
-        Debug.Log(amount);      
+        //Debug.Log(pos);
+        //Debug.Log(amount);      
         if (typeof(T) == typeof(NItem.ItemScriptableObject))
         {
             var itemSO = obj as NItem.ItemScriptableObject;

@@ -61,11 +61,11 @@ public class CharacterManager : MonoBehaviour
 
     public void ReCreateChar(CharSave _char) 
     {
-        Debug.Log("IndexPrimo: " + _char.index);
+        //Debug.Log("IndexPrimo: " + _char.index);
         if (AskForCharacter(_char.index) != null)
             return;
 
-        Debug.Log("Index: " + _char.index);
+        //Debug.Log("Index: " + _char.index);
         CharacterScriptableObject charSo = null;
         foreach (CharacterScriptableObject so in charactersScriptable)
         {

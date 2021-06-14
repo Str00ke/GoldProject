@@ -16,7 +16,7 @@ public class CharSave
             if (_char.items[i] != null)
             {
                 itemsName[i] = _char.items[i].itemName;
-                Debug.Log(itemsName[i]);            
+                //Debug.Log(itemsName[i]);            
             }
         }
         index = _index;
@@ -83,21 +83,21 @@ public class Character : MonoBehaviour
         SetStats(item.health, item.armor, item.attack, item.dodge, item.criticalChance, item.crititalDamage);
 
         items[itemIndex] = item;
-        Debug.Log(items[itemIndex].itemName + "  " + itemIndex);
+        //Debug.Log(items[itemIndex].itemName + "  " + itemIndex);
         if (item.itemPartType == NItem.EPartType.Gem)
         {
             itemSprites[0] = item.itemSprites[0];
-            Debug.Log("0");
+            //Debug.Log("0");
         }
         else if (item.itemPartType == NItem.EPartType.Head)
         {
             itemSprites[1] = item.itemSprites[(int)characterType];
-            Debug.Log("1");
+            //Debug.Log("1");
         }
         else if (item.itemPartType == NItem.EPartType.Body)
         {
             itemSprites[2] = item.itemSprites[(int)characterType];
-            Debug.Log("2");
+            //Debug.Log("2");
         }
         else if (item.itemPartType == NItem.EPartType.Weapon)
         {
@@ -105,7 +105,7 @@ public class Character : MonoBehaviour
             {
                 itemSprites[i + 3] = item.itemSprites[i];
             }
-            Debug.Log("3");
+            //Debug.Log("3");
         }
     }
 
