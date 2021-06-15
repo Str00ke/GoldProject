@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Bone Cloak E
   health: 87
   armor: 0
-  attack: 303
+  attack: 30
   dodge: 0
   criticalChance: 0
   crititalDamage: 0

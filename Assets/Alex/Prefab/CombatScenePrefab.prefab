@@ -3641,6 +3641,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8891764705989458737, guid: 02c134b32dc5dfe45802c997ce43bed4, type: 3}
   m_PrefabInstance: {fileID: 4027346261063163087}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5512941361385547775 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8891764705989458736, guid: 02c134b32dc5dfe45802c997ce43bed4, type: 3}
+  m_PrefabInstance: {fileID: 4027346261063163087}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7422386929417570807
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4148,6 +4159,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 565372100983629699, guid: e0c5d37e059a79843933dbfe2d0462b4, type: 3}
+      propertyPath: optionsButton
+      value: 
+      objectReference: {fileID: 5512941361385547775}
     - target: {fileID: 565372100983629701, guid: e0c5d37e059a79843933dbfe2d0462b4, type: 3}
       propertyPath: m_Name
       value: OptionsMenu
