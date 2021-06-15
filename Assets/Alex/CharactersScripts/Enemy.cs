@@ -76,11 +76,12 @@ public class Enemy : Characters
         enemyType = e.enemyType;
         SetEnemyImg();
         damageRange = e.damageRange;
-        dodge = e.dodge * 100;
+        dodge = e.dodge;
         critChance = e.critChance;
         critDamage = e.critDamage;
         initiative = e.initiative;
         armor = e.armor;
+        enemySprites = e.enemySprites;
         enemyElement = e.element;
         abilities = e.enemyAbilities;
         abilitiesCristal = e.enemySpecialsAbilities;
@@ -100,20 +101,23 @@ public class Enemy : Characters
         {
             case (EEnemyType.SNAKE):
                 gameObject.GetComponent<SpriteRenderer>().sprite = EnemiesImgPath.GetSprite(EnemiesImgPath.Snake_Spr);
+                baseScale = new Vector3(0.3f,0.3f,1);
                 break;
 
             case (EEnemyType.GIRAFFE):
                 gameObject.GetComponent<SpriteRenderer>().sprite = EnemiesImgPath.GetSprite(EnemiesImgPath.Giraffe_Spr);
+                baseScale = new Vector3(0.4f, 0.4f, 1);
                 break;
 
             case (EEnemyType.DEATH):
                 gameObject.GetComponent<SpriteRenderer>().sprite = EnemiesImgPath.GetSprite(EnemiesImgPath.Death_Spr);
+                baseScale = new Vector3(0.4f, 0.4f, 1);
                 break;
         }
     }
 
     public override void LaunchAttack(Characters receiver, Ability ability)
-    {
+        {
         float dmg = Mathf.Round(Random.Range(damageRange.x, damageRange.y));
         switch (enemyType)
         {
@@ -138,10 +142,10 @@ public class Enemy : Characters
         else
         {
             //-CRITIC DAMAGE-
-            if (Random.Range(0.0f, 1.0f) < this.critChance)
+            if (Random.Range(0.0f, 1.0f) < this.critChance/100)
             {
                 FindObjectOfType<CameraScript>().CamShake(0.4f, 0.3f);
-                dmg += dmg * this.critDamage;
+                dmg += dmg * this.critDamage / 100;
             }
             else
             {

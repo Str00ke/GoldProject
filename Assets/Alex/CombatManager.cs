@@ -200,8 +200,10 @@ public class CombatManager : MonoBehaviour
     {
         StartCoroutine(EnemyAttackCor());
     }
-    IEnumerator EnemyAttackCor() 
+    IEnumerator EnemyAttackCor()
     {
+        fightersList[currCharAttacking].GetComponent<SpriteRenderer>().sprite = fightersList[currCharAttacking].enemySprites[1];
+        Characters c = fightersList[currCharAttacking];
         Ally inDefence = null;
         int allyAttacked = Random.Range(0, allies.Count);
         foreach (Ally a in allies)
@@ -220,6 +222,8 @@ public class CombatManager : MonoBehaviour
             Debug.Log(targets + "" + ab);
         }
         yield return new WaitForSeconds(fightersList[currCharAttacking].durationDecreaseHealth + 0.1f);
+        if(c)
+            c.GetComponent<SpriteRenderer>().sprite = c.enemySprites[0];
         NextCharAttack();
     }
     //---------------Referenced in EnemyAttack()-------------
