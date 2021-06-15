@@ -14,7 +14,7 @@ public class OptionsScript : MonoBehaviour
     {
         VFXSlider.value = PlayerPrefs.GetFloat("SFXVolume");
         MusicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
-        optionsButton = GameObject.Find("OptionsButton").GetComponent<Button>();
+        optionsButton = GameObject.Find("OptionsButton").GetComponent<Button>();    
         optionsButton.onClick.AddListener(() => PlayAudio("ButtonEffect"));
         optionsButton.onClick.AddListener(() => gameObject.SetActive(true));
         optionsButton.onClick.AddListener(() => optionsButton.gameObject.SetActive(false));

@@ -18,7 +18,7 @@ MonoBehaviour:
   attack: 115
   dodge: 0
   criticalChance: 0
-  crititalDamage: 0.5
+  crititalDamage: 50
   itemPartType: 1
   itemType: 0
   itemRarity: 0

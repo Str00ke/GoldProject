@@ -16,7 +16,7 @@ MonoBehaviour:
   health: 0
   armor: 9
   attack: 0
-  dodge: 0.07
+  dodge: 7
   criticalChance: 0
   crititalDamage: 0
   itemPartType: 1
