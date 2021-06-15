@@ -27,14 +27,13 @@ public class Ennemy : ScriptableObject
     public int maxHealth;
     public EEnemyType enemyType;
     public Vector2 damageRange;
-    [Range(0, 1)]
     public float dodge;
-    [Range(0, 1)]
     public float critChance;
     public float critDamage;
     public float initiative;
     public float armor;
     public EElement element;
+    public Sprite[] enemySprites;
     [Header("Abilities")]
     public Ability[] enemyAbilities;
     public Ability[] enemySpecialsAbilities;

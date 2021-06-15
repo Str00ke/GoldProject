@@ -148,7 +148,7 @@ public class Status
                     break;
                 case StatusTypes.CriticRateBonus:
                     diffModif = bonusmalus;
-                    statusTarget.critChanceBonus += Mathf.Round(diffModif * 100);
+                    statusTarget.critChanceBonus += Mathf.Round(diffModif);
                     statusTarget.critChance += diffModif;
                     buffOrDebuff = BuffOrDebuff.BUFF;
                     break;
@@ -241,7 +241,7 @@ public class Status
                 break;
             case StatusTypes.CriticRateBonus:
                 statusTarget.critChance -= diffModif;
-                statusTarget.critChanceBonus -= diffModif * 100;
+                statusTarget.critChanceBonus -= diffModif;
                 break;
             case StatusTypes.DamageBonus:
                 statusTarget.damageRange.x -= diffModif;
