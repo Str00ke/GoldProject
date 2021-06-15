@@ -293,16 +293,7 @@ public class LevelCreatorManager : MonoBehaviour
 
     bool CheckIfHolderFull()
     {
-        if (roomInHand.GetComponent<Room>().roomHolder.GetComponent<RoomHolder>().GetContainedRoom() != null)
-        {
-            //Debug.Log("true");
-            return true;
-        }
-        else
-        {
-            //Debug.Log("false");
-            return false;
-        }
+        return roomInHand.GetComponent<Room>().roomHolder.GetComponent<RoomHolder>().GetContainedRoom() != null;
     }
 
     public void EnterLevelName()

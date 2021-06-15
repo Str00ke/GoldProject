@@ -79,7 +79,7 @@ public class EnnemyManager : MonoBehaviour
 
         hardMin = middleMax + 1;
         hardMax = maxNbr;
-        Debug.Log(easyMax + " " + middleMax + " " + hardMax);
+        //Debug.Log(easyMax + " " + middleMax + " " + hardMax);
     }
 
     public EPart RoomDiffMult(int roomNbr)

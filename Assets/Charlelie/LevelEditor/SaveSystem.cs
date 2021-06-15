@@ -248,7 +248,7 @@ public static class SaveSystem
         {
             File.Create(path).Dispose();
         }
-        Debug.Log(Inventory.inventory.itemList.Count);
+        //Debug.Log(Inventory.inventory.itemList.Count);
         if (Inventory.inventory.itemList.Count <= 0) return;
 
         //can be optimized with using int key or hash instead of dict => prevent iterate through list by instantiate object with the key.
@@ -261,7 +261,7 @@ public static class SaveSystem
             });            
         }
         //itemsList.AddRange(LoadInventory());
-        Debug.Log(itemsList.Count);
+        //Debug.Log(itemsList.Count);
         BinaryFormatter formatter = new BinaryFormatter();
 
         FileStream stream = new FileStream(path,
@@ -269,7 +269,7 @@ public static class SaveSystem
                                        FileAccess.ReadWrite,
                                        FileShare.ReadWrite);
         formatter.Serialize(stream, itemsList);
-        Debug.Log("Saved in: " + path);
+        //Debug.Log("Saved in: " + path);
         stream.Close();
     }
 
@@ -358,7 +358,7 @@ public static class SaveSystem
                                        FileAccess.ReadWrite,
                                        FileShare.ReadWrite);
         formatter.Serialize(stream, money);
-        Debug.Log("Saved in: " + path);
+        //Debug.Log("Saved in: " + path);
         stream.Close();
     }
 
@@ -367,7 +367,7 @@ public static class SaveSystem
         if (Application.platform == RuntimePlatform.Android)
         {
             string path = Application.persistentDataPath + "/Money.data";
-            Debug.Log("Try to load: " + path);
+            //Debug.Log("Try to load: " + path);
             if (File.Exists(path)) Debug.Log("File exist");
             else
             {
@@ -435,7 +435,7 @@ public static class SaveSystem
                                        FileAccess.ReadWrite,
                                        FileShare.ReadWrite);
         formatter.Serialize(stream, chars);
-        Debug.Log("Saved in: " + path);
+        //Debug.Log("Saved in: " + path);
         stream.Close();
     }
 
@@ -468,7 +468,7 @@ public static class SaveSystem
                                        FileAccess.ReadWrite,
                                        FileShare.ReadWrite);
                 if (file.Length <= 0) return null;
-                else Debug.Log(file.Length);
+                //else Debug.Log(file.Length);
                 CharSave[] data = (CharSave[])formatter.Deserialize(file);
                 file.Close();
                 return data;

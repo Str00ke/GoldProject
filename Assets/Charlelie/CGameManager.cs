@@ -31,4 +31,9 @@ public class CGameManager : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
+
+    public void SaveProgressToPlayerPrefs(int currDungeon)
+    {
+        PlayerPrefs.SetInt("levelHigh", currDungeon);
+    }
 }

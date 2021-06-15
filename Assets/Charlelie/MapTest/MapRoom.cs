@@ -145,8 +145,7 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         if (roomType == RoomType.END)
         {
-            Debug.Log("Level finished!");
-            LevelManager.GetInstance().levelFinishedTxt.SetActive(true);
+            OnFinishLastRoom();
         }
         for (int i = 0; i < 4; ++i)
         {
@@ -209,6 +208,19 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
     }
 
+    void OnFinishLastRoom()
+    {
+        LevelManager.GetInstance().levelFinishedTxt.SetActive(true);
+        CGameManager gM = FindObjectOfType<CGameManager>();
+        LobbyManager lM = FindObjectOfType<LobbyManager>();
+        string l1 = lM.level1Name;
+        string l2 = lM.level2Name;
+        string l3 = lM.level3Name;
+        string currLvlName = gM.GetLevelName();
+        if (currLvlName == l1) gM.SaveProgressToPlayerPrefs(2);
+        else if (currLvlName == l2) gM.SaveProgressToPlayerPrefs(3);
+        else if (currLvlName == l3) gM.SaveProgressToPlayerPrefs(3);
+    }
     public void LinkRoom(MapRoom other)
     {
         for (int i = 0; i < 4; ++i)

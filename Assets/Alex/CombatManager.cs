@@ -219,7 +219,7 @@ public class CombatManager : MonoBehaviour
         {
             List<Characters> targets;
             Ability ab = EnemyAbilityAttack(allies[allyAttacked], out targets);
-            Debug.Log(targets + "" + ab);
+            //Debug.Log(targets + "" + ab);
         }
         yield return new WaitForSeconds(fightersList[currCharAttacking].durationDecreaseHealth + 0.1f);
         if(c)
@@ -471,7 +471,7 @@ public class CombatManager : MonoBehaviour
         foreach (Ally a in allies)
         {
             CharacterManager.characterManager.AskForCharacter(a.teamPosition).health = (int)a.health;
-            Debug.Log((int)a.health);
+            //Debug.Log((int)a.health);
         }
     }
 

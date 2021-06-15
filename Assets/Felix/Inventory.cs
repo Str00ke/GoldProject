@@ -78,11 +78,11 @@ public class Inventory : MonoBehaviour
     public void LoadInventory()
     {
         List<Dictionary<string, NItem.ERarity>> nItemsList = SaveSystem.LoadInventory();
-        Debug.Log(nItemsList.Count);
-        Debug.Log(nItems.Length);
+        //Debug.Log(nItemsList.Count);
+        //Debug.Log(nItems.Length);
         for (int i = 0; i < nItemsList.Count; ++i)
         {
-            Debug.Log("Keys : " + nItemsList[i].Keys.ToString());
+            //Debug.Log("Keys : " + nItemsList[i].Keys.ToString());
             foreach(NItem.ItemScriptableObject item in nItems)
             {
                 if (nItemsList[i].ContainsKey(item.itemName) && nItemsList[i].ContainsValue(item.itemRarity))

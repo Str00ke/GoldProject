@@ -29,15 +29,28 @@ public class LobbyManager : MonoBehaviour
     private GameObject itemsShopSelected = null;
 
     public bool isFirstGameDone = false;
+    int levelHigh = 0;
 
     [Header("Loading Screen")]
     private AsyncOperation loadingAsync;
     public GameObject loadingScene;
     public Image loadingSlider;
 
+    [Header("Level Selection")]
+    public Button level1Btn;
+    public string level1Name;
+    [Space]
+    public Button level2Btn;
+    public string level2Name;
+    [Space]
+    public Button level3Btn;
+    public string level3Name;
+
     private void Awake()
     {
-
+        level1Btn.onClick.AddListener(delegate { SetSceneThenPlay(level1Name); });
+        level2Btn.onClick.AddListener(delegate { SetSceneThenPlay(level2Name); });
+        level3Btn.onClick.AddListener(delegate { SetSceneThenPlay(level3Name); });
         if (lobbyManager != null)
         {
             /*if (!LobbyManager.lobbyManager.mainCanvas.transform.GetChild(0).gameObject.activeSelf)
@@ -52,14 +65,15 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
+
     private void Start()
     {
         isFirstGameDone = bool.Parse(PlayerPrefs.GetString("FirstGame", "false"));
+        RefreshDungeonSelection();
         CloseAllMenu();
         //LevelManager.GetInstance().UpdateDataValues();
         AddScoreToLeaderboard();
         LoadData();
-        Debug.Log("Hello");
     }
 
     public void SwitchLobbyUI()
@@ -71,8 +85,7 @@ public class LobbyManager : MonoBehaviour
     public void CloseAllMenu()
     {
         RefreshLockedButton();
-
-        AudioManager.audioManager.Play("ButtonEffect");
+        level1Btn.transform.parent.gameObject.SetActive(false);
         Inventory.inventory.CloseInventory();
         ShopMenu.SetActive(false);
 
@@ -100,9 +113,54 @@ public class LobbyManager : MonoBehaviour
             playButton.interactable = true;
     }
 
+    public void DebugDelete()
+    {
+        PlayerPrefs.DeleteKey("levelHigh");
+        RefreshDungeonSelection();
+    }
+
+    void RefreshDungeonSelection()
+    {
+        if (!PlayerPrefs.HasKey("levelHigh"))
+        {
+            PlayerPrefs.SetInt("levelHigh", 1);
+            PlayerPrefs.Save();
+        }
+
+        levelHigh = PlayerPrefs.GetInt("levelHigh");
+        Debug.Log("HIGH: " + levelHigh);
+        switch (levelHigh)
+        {
+            case 1:
+                level2Btn.interactable = false;
+                level2Btn.transform.GetChild(0).GetComponent<Text>().color = new Color(0.337f, 0.337f, 0.337f, 1);
+                level3Btn.interactable = false;
+                level3Btn.transform.GetChild(0).GetComponent<Text>().color = new Color(0.337f, 0.337f, 0.337f, 1);
+                break;
+
+            case 2:
+                level2Btn.interactable = true;
+                level2Btn.transform.GetChild(0).GetComponent<Text>().color = new Color(1, 1, 1, 1);
+                level3Btn.interactable = false;
+                level3Btn.transform.GetChild(0).GetComponent<Text>().color = new Color(0.337f, 0.337f, 0.337f, 1);
+                break;
+
+            case 3:
+                level3Btn.interactable = true;
+                level3Btn.transform.GetChild(0).GetComponent<Text>().color = new Color(1, 1, 1, 1);
+                break;
+        }
+    }
+
+    public void SetSceneThenPlay(string levelName)
+    {
+        CloseAllMenu();
+        FindObjectOfType<CGameManager>().SetLevelName(levelName);
+        Play();
+    }
+
     public void Play()
     {
-        AudioManager.audioManager.Play("ButtonEffect");
         LoadScene("Level");
     }
 
@@ -111,7 +169,6 @@ public class LobbyManager : MonoBehaviour
         if (!isFirstGameDone)
             return;
 
-        AudioManager.audioManager.Play("OpenShop");
         ShopMenu.SetActive(true); 
 
         lobbyState = ELobbyState.Shop;
@@ -146,7 +203,7 @@ public class LobbyManager : MonoBehaviour
             return;
 
         Inventory.inventory.AddGolds(-price);
-        AudioManager.audioManager.Play("Purchase");
+
         Inventory.inventory.AddItem(itemToBuy);
         itemToBuy = null;
     }
@@ -172,9 +229,6 @@ public class LobbyManager : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
-        AudioManager.audioManager.StopPlaying("ThemeFight");
-        AudioManager.audioManager.StopPlaying("ThemeMenu");
-        AudioManager.audioManager.Play("ThemeMap");
         StartCoroutine(LoadingScreen(sceneName));
         lobbyState = ELobbyState.Loading;
     }
@@ -205,15 +259,20 @@ public class LobbyManager : MonoBehaviour
 
     void OnSceneChange(string sceneName)
     {
-        if (sceneName == "FScene") AddScoreToLeaderboard();
+        if (sceneName == "FScene")
+        {
+            AddScoreToLeaderboard();
+            RefreshDungeonSelection();
+        }
+        
     }
 
     public void AddScoreToLeaderboard()
     {
         //int fVal = LevelData.GetSouls() + Inventory.inventory.souls;
         PlayGamesController.PostToSoulLeaderboard(Inventory.inventory.souls);
-        PlayGamesController.PostToDeathLeaderboard(Inventory.inventory.death);
-        Debug.Log("Adding " + Inventory.inventory.souls + " to leaderboard");
+        //PlayGamesController.PostToDeathLeaderboard(Inventory.inventory.death);
+        //Debug.Log("Adding " + Inventory.inventory.souls + " to leaderboard");
     }
 
     void OnApplicationQuit()
@@ -235,7 +294,7 @@ public class LobbyManager : MonoBehaviour
 
     public void LoadData()
     {
-        Debug.Log("Load Data");
+        //Debug.Log("Load Data");
         Inventory.inventory.LoadInventory();
         Inventory.inventory.LoadMoney();
         CharacterManager.characterManager.LoadCharacters();
