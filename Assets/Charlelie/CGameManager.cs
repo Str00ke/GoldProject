@@ -34,6 +34,7 @@ public class CGameManager : MonoBehaviour
 
     public void SaveProgressToPlayerPrefs(int currDungeon)
     {
-        PlayerPrefs.SetInt("levelHigh", currDungeon);
+        if (PlayerPrefs.GetInt("levelHigh") <= currDungeon)
+            PlayerPrefs.SetInt("levelHigh", currDungeon);
     }
 }

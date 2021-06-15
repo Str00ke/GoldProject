@@ -256,14 +256,19 @@ public class LootManager : MonoBehaviour
         if (EnnemyManager._enemyManager.CheckIfOnBossRoom(PlayerPoint._playerPoint.onRoom))
         {
             gemLoot.gameObject.SetActive(true);
-        }else
+        }
+        else
+        {
+            Destroy(FindObjectOfType<Chest>().gameObject);
             LevelManager.GetInstance().FadeInOut(true);
+        }
     }
 
     void OnGemClicked()
     {
         gemLoot.gameObject.SetActive(false);
         LevelManager.GetInstance().FadeInOut(true);
+        Destroy(FindObjectOfType<Chest>().gameObject);
     }
 
     IEnumerator MoveGoldToPlayer(GameObject go, LootItem<GoldPrefab> obj)

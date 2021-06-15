@@ -85,6 +85,7 @@ public class LobbyManager : MonoBehaviour
     public void CloseAllMenu()
     {
         RefreshLockedButton();
+        AudioManager.audioManager.Play("ButtonEffect");
         level1Btn.transform.parent.gameObject.SetActive(false);
         Inventory.inventory.CloseInventory();
         ShopMenu.SetActive(false);
@@ -161,6 +162,7 @@ public class LobbyManager : MonoBehaviour
 
     public void Play()
     {
+        AudioManager.audioManager.Play("ButtonEffect");
         LoadScene("Level");
     }
 
@@ -169,6 +171,7 @@ public class LobbyManager : MonoBehaviour
         if (!isFirstGameDone)
             return;
 
+        AudioManager.audioManager.Play("OpenShop");
         ShopMenu.SetActive(true); 
 
         lobbyState = ELobbyState.Shop;
@@ -229,6 +232,12 @@ public class LobbyManager : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
+        if (sceneName == "Level")
+        {
+            AudioManager.audioManager.StopPlaying("ThemeFight");
+            AudioManager.audioManager.StopPlaying("ThemeMenu");
+            AudioManager.audioManager.Play("ThemeMap");
+        }
         StartCoroutine(LoadingScreen(sceneName));
         lobbyState = ELobbyState.Loading;
     }
@@ -263,7 +272,10 @@ public class LobbyManager : MonoBehaviour
         {
             AddScoreToLeaderboard();
             RefreshDungeonSelection();
-        }
+            AudioManager.audioManager.StopPlaying("ThemeFight");
+            AudioManager.audioManager.Play("ThemeMenu");
+            AudioManager.audioManager.StopPlaying("ThemeMap");
+        } 
         
     }
 
