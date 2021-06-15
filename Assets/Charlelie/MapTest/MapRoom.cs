@@ -13,7 +13,7 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     bool isSelected = false;
     float roomWidth; //Same as height
     float selectTime = 0;
-    [Range(0.01f, 0.9f)]
+    [Range(0.0f, 0.0f)]
     public float selectSpeed;
     Vector2 startPos, currPos;
     public MapRoom[] linkedRoom = new MapRoom[4];
@@ -65,7 +65,7 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     void Update()
     {
-        if (isSelected)
+        /*if (isSelected)
         {
             currPos = transform.position;
             Vector2 vec = currPos - startPos;
@@ -82,7 +82,7 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 GoToRoom();
                 //FindObjectOfType<LevelManager>().StartRoom();
             }
-        }
+        }*/
 
             
     }
@@ -90,11 +90,12 @@ public class MapRoom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (this != FindObjectOfType<PlayerPoint>().onRoom)
+        GoToRoom();
+        /*if (this != FindObjectOfType<PlayerPoint>().onRoom)
         {
             isSelected = true;
             startPos = transform.position;
-        }
+        }*/
             
     }
 
