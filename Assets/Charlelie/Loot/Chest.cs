@@ -23,7 +23,7 @@ public class Chest : MonoBehaviour, IPointerClickHandler
         LootManager.lootManager.SetLootItem(transform.position);
         AudioManager.audioManager.Play("ChestOpen");
         gameObject.GetComponent<SpriteRenderer>().sprite = chestOpen;
-        Destroy(gameObject, 1.5f);
+        //Destroy(gameObject, 1.5f);
     }
 
 }

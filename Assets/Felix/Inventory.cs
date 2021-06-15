@@ -399,9 +399,10 @@ public class Inventory : MonoBehaviour
 
     public void AddGolds(int _golds)
     {
-        AudioManager.audioManager.Play("AddCoins");
         if (_golds == 0)
             return;
+
+        AudioManager.audioManager.Play("AddCoins");
 
         golds += _golds;
 
