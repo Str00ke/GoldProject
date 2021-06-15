@@ -121,6 +121,8 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     [Header("Animation")]
     public Animator anim;
+    public Vector3 baseScale;
+    public Sprite[] enemySprites;
     protected Characters charToAttack;
     protected float dmgToDeal;
 
@@ -134,7 +136,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (teamPosition >= 1)
         {
-            isMelee = false;
+            isMelee = false;    
         }
         else
         {
@@ -151,7 +153,7 @@ public class Characters : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             }
             else if (holdCharac > holdCharacValue || !onPointerHold)
             {
-                transform.localScale = new Vector3(1, 1, 1);
+                transform.localScale = baseScale;
             }
         }
     }

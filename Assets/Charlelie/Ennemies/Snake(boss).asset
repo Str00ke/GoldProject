@@ -16,12 +16,15 @@ MonoBehaviour:
   maxHealth: 250
   enemyType: 0
   damageRange: {x: 16, y: 22}
-  dodge: 0.1
-  critChance: 0.15
-  critDamage: 1.25
+  dodge: 10
+  critChance: 15
+  critDamage: 125
   initiative: 10
   armor: 6
   element: 1
+  enemySprites:
+  - {fileID: 21300000, guid: 8254c3c35af3a294ab4a76a119690bfa, type: 3}
+  - {fileID: 21300000, guid: bef2dbe376b452c4da3dd021c333bff3, type: 3}
   enemyAbilities:
   - {fileID: 11400000, guid: 339b3b47eb400d24e90347ae579ebbf6, type: 2}
   - {fileID: 11400000, guid: 3aa29f96a43107e48a69b2579056750f, type: 2}

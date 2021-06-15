@@ -60,6 +60,7 @@ public class Inventory : MonoBehaviour
 
     public void OpenInventory()
     {
+        AudioManager.audioManager.Play("OpenInventory");
         LobbyManager.lobbyManager.lobbyState = ELobbyState.Inventory;
 
         inventoryGo.SetActive(true);

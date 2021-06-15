@@ -3841,6 +3841,34 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: OpenShop
+    clip: {fileID: 8300000, guid: eed175293230e704c9bc8b42ba9c7045, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: OpenInventory
+    clip: {fileID: 8300000, guid: 4ae22c911bb2f9f4e8bdc653ee3af412, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: EnterCombat
+    clip: {fileID: 8300000, guid: 0298520a4badcb84d8fc67675c1c53ea, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AllyDefence
+    clip: {fileID: 8300000, guid: 0cd31b879d8411a48a0bf22c92524084, type: 3}
+    soundType: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &1495228976
 GameObject:
   m_ObjectHideFlags: 0

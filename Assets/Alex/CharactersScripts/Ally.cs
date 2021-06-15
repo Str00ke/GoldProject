@@ -42,6 +42,7 @@ public class Ally : Characters
         healthBarOutline.SetActive(false);
         UpdateMeleeState();
         UpdateStateIcon();
+        baseScale = transform.localScale;
     }
     // Update is called once per frame
     void Update()
@@ -188,10 +189,10 @@ public class Ally : Characters
         else
         {
             //-CRITIC DAMAGE-
-            if (Random.Range(0.0f, 1.0f) < this.critChance)
+            if (Random.Range(0.0f, 1.0f) < this.critChance/100)
             {
                 FindObjectOfType<CameraScript>().CamShake(0.4f, 0.3f);
-                dmg += dmg * this.critDamage;
+                dmg += dmg * this.critDamage/100;
             }
             else
             {

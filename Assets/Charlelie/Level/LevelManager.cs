@@ -235,6 +235,9 @@ public class LevelManager : MonoBehaviour
 
     public void WinFight()
     {
+        AudioManager.audioManager.StopPlaying("ThemeFight");
+        AudioManager.audioManager.StopPlaying("ThemeMenu");
+        AudioManager.audioManager.Play("ThemeMap");
         Destroy(combatRef);
         Ally[] alliesToDestroy = FindObjectsOfType<Ally>();
         foreach (Ally ally in alliesToDestroy)
@@ -281,6 +284,10 @@ public class LevelManager : MonoBehaviour
 
     void CreateFight()
     {
+        AudioManager.audioManager.Play("EnterCombat");
+        AudioManager.audioManager.StopPlaying("ThemeMenu");
+        AudioManager.audioManager.StopPlaying("ThemeMap");
+        AudioManager.audioManager.Play("ThemeFight");
         if (!FindObjectOfType<PlayerPoint>().onRoom.isFinished)
         {
             if (!EnnemyManager._enemyManager.CheckIfOnBossRoom(PlayerPoint._playerPoint.onRoom))
@@ -329,6 +336,9 @@ public class LevelManager : MonoBehaviour
     public void ReturnToLobby()
     {
         UpdateDataValues();
+        AudioManager.audioManager.StopPlaying("ThemeFight"); 
+        AudioManager.audioManager.StopPlaying("ThemeMap");
+        AudioManager.audioManager.Play("ThemeMenu");
         LobbyManager.lobbyManager.LoadScene("FScene");
     }
 
